@@ -1,16 +1,20 @@
 
 texdvi=dvilualatex -recorder
 
-default: sample2e.dvi
+default: test.dvi
 
-%.dvi: %.tex
-	$(texdvi) $<
+test.dvi: sample2e.dvi
+	ruby otfdvi.rb $< $@ 
 
-%.dt: %.dvi
-	dv2dt $< $@
 
-%.dvi: %.dt
-	dt2dv $< $@
+#%.dvi: %.tex
+#	$(texdvi) $<
+#
+#%.dt: %.dvi
+#	dv2dt $< $@
+#
+#%.dvi: %.dt
+#	dt2dv $< $@
 
 sample2x.ps: sample2x.dvi
 	dvips -u 01.map -j0 $<
