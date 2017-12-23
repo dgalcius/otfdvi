@@ -66,7 +66,7 @@ fileout = ARGV[1]
 
 dvi = Dvi.parse(File.open(filein, "rb"))
 
-fonttable = Array.new
+fonttable = Hash.new
 #ftable2 = Hash.new# [op.fontname, op.scale, op.checksum, op.design_size]=> {op.num, cnt}
 
 ## fonttable =
@@ -75,16 +75,77 @@ fonttable = Array.new
 ##  chars => [A, B, 1]
 ## }
 
+# fonttable = {
+#   "lmroman10-regular" => [A,B,Z],
+#  }
 
-dvi.each do |op|
- ## Get RUNTIMEINFO
-  if op.class == Dvi::Opcode::FntDef
-    puts op.inspect
-   if !fonttable.include?([op.fontname, op.scale, op.checksum, op.design_size])
-     fonttable <<  [op.fontname, op.scale, op.checksum, op.design_size]
-     puts "Font table entry: #{[op.fontname, op.scale, op.checksum, op.design_size].inspect}"
-   end
- end
+aglyphlist = Hash.new
+adobeglist = "glyphlist.txt"
+f = File.readlines(adobeglist)
+f.each do |l|
+  next if l=~/^#/
+  l=~/(.*?);(.*?)\n/
+  aglyphlist[$2] = $1
 end
 
+
+fontnumtable = Hash.new
+
+currentfontnum = 0
+
+dvi.each do |op|
+  ## Get RUNTIMEINFO
+#  puts op.inspect
+  if op.class == Dvi::Opcode::FntDef
+    #     puts op.inspect
+    puts op.fontname
+    fontid = [op.fontname, op.scale, op.checksum, op.design_size].join('-')
+    fontnum = op.num
+    if fontnumtable[fontid].nil?
+      fontnumtable[fontid] = fontnum
+    end
+    
+    ##    if !fonttable[fontid].is_empty?
+    if fonttable[fontnum].nil?
+      fonttable[fontnum] = Array.new
+    end
+ end
+    
+  if op.class == Dvi::Opcode::FntNum
+    currentfontnum = op.index
+  end
+
+   if op.class == Dvi::Opcode::SetChar
+     fonttable[currentfontnum] <<  "%04X" % op.index
+  end
+
+end
+
+
+psmapfile = File.basename(filein, ".dvi") + ".map"
+psmap = File.open(psmapfile, "w")
+mkfile = "00Makfile"
+mk = File.open(mkfile, "w")
+mk.puts "default: "
+#mk.puts "\n%.tfm: %.otf"
+#mk.puts "\totftotfm"
+
+puts fonttable.inspect
+puts i = fonttable[14][0]
+puts aglyphlist[i]
+fonttable.each do |font,symlist|
+  fontname = "font-#{font}"
+  encfont = fontname + ".enc"
+  f = File.open(encfont, "w")
+  f.puts "/#{fontname} ["
+  symlist.each do |sym|
+    f.puts "/" + aglyphlist[sym]
+  end
+  f.puts "] def"
+  f.close
+  puts fontname + " <" + encfont + " < xxxx.pfb" 
+end
+
+psmap.close
+mk.close
 puts "STOP"
