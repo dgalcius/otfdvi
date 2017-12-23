@@ -1,0 +1,23 @@
+otffonts=\
+lmroman10-regular.otf
+
+encfiles=font-14.enc
+tfmfiles=font-14.tfm
+
+default: otffonts tfmfiles pfbfiles
+	echo $(otffonts)
+
+otffonts: $(otffonts)
+
+%.otf:
+	./cpx $@
+
+tfmfiles: $(tfmfiles)
+
+%.tfm: %.enc
+	otftotfm --literal-encoding=$*.enc\
+  --vendor=lcdftools --typeface="$*"\
+  --no-type1 --no-encoding --no-map --verbose  lmroman10-regular.otf
+
+clean:
+	rm -rf $(otffonts)
