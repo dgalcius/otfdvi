@@ -1,16 +1,16 @@
 SHELL:=/usr/bin/env bash
-otffonts=lmroman10-regular.otf lmroman10-italic.otf
-encfiles=font14.enc font15.enc
-tfmfiles=font14.tfm font15.tfm
-htffiles=font14.htf font15.htf
+otffonts=%{otffonts}
+encfiles=%{encfiles}
+tfmfiles=%{tfmfiles}
+htffiles=%{htffiles}
 
-out=test
+out=%{output}
 mapfile=${out}.map
 dvifile=${out}.dvi
 psfile=${out}.ps
 pdffile=${out}.pdf
 
-verbose=
+verbose=%{verbose}
 
 define cp_k
 	if [[ ! -f $(1) ]]; then x=`kpsewhich $(1)`; cp $$x $(1) ; fi
@@ -49,7 +49,3 @@ ${pdffile}: ${psfile}
 clean:
 	rm -f $(otffonts) $(tfmfiles) $(encfiles) $(htffiles) $(mapfile) *.pfb
 
-font14.tfm: lmroman10-regular.otf
-	otftotfm --literal-encoding=font14.enc --vendor=ZZZ  --no-encoding $(verbose) --name=font14 lmroman10-regular.otf >> test.map
-font15.tfm: lmroman10-italic.otf
-	otftotfm --literal-encoding=font15.enc --vendor=ZZZ  --no-encoding $(verbose) --name=font15 lmroman10-italic.otf >> test.map

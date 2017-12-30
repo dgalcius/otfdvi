@@ -1,0 +1,21 @@
+#+TITLE: DVI with OTF to PS (or PDF)
+
+* Problem 1
+  
+  lualatex can produce a DVI file with OpenType files.
+  Standard DVIPS cannot produce a PS file from such a DVI.
+
+* Solution 1
+
+  This is more a workaround that a solution.
+  The idea is to convert a DVI with OTF fonts to DVI without
+  OTF fonts that  dvips can understand
+
+  #+BEGIN_SRC latex
+\documentclass{article}     
+\usepackage{fontspec}
+\begin{document}             
+A G
+\end{document}
+  #+END_SRC
+  
