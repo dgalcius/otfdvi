@@ -48,4 +48,7 @@ ${pdffile}: ${psfile}
 
 clean:
 	rm -f $(otffonts) $(tfmfiles) $(encfiles) $(htffiles) $(mapfile) *.pfb
+	rm -f ttfonts.map
+
+.FORCE:
 

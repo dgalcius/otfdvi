@@ -8,14 +8,23 @@ default: test.dvi
 test.dvi: sample2e.dvi 
 	ruby otfdvi.rb $< $@
 
+
+2: sample2e.dvi 
+	ruby otfdvi.rb --no-auto --no-htf $< test.dvi
+	dvips -j1 -u test.map -o sample2e.ps test.dvi
+	ps2pdf sample2e.ps
+#	rm -f test.* *.pfb *.enc *.tfm *.otf
+
 %.dvi: %.tex .FORCE
 	$(texdvi) $<
 
-%.html: sample2e.tex .FORCE
-	./dviluahtlatex $<
-	ruby otfdvi.rb  sample2e.dvi test.dvi
-	tex4ht -f/test.dvi  
-	t4ht -f/test.dvi  
+
+html: sample2e.tex .FORCE
+	./dviluahtlatex $< "xhtml,4,new-accents"
+	ruby otfdvi.rb --no-auto --inplace sample2e.dvi 
+	tex4ht -f/sample2e.dvi  
+	t4ht -f/sample2e.dvi
+	make -f 00Makefile clean
 
 
 clean:

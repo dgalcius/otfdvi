@@ -47,6 +47,10 @@ optparse = OptionParser.new do|opts|
    opts.on( '--no-auto', 'Run make with all pdf' ) do
    options[:auto] = false
    end
+   options[:htf] = true
+   opts.on( '--no-htf', 'Do not generate htf fonts' ) do
+   options[:htf] = false
+   end
       opts.on( '-v', '--version', 'Print version' ) do
       puts "#{prgfullname}, v.#{prgversion}. #{prgcredit}"
       exit
@@ -151,6 +155,28 @@ end
 
 TestFont.new("test1").run if debug
 
+
+def otftocss(otf, font)
+  f = Hash.new
+  g = Hash.new
+  run = "luaotfload-tool -n --find=file:#{otf} -i"
+  result = Kernel.`(run)#`
+  result.lines.each do |l|
+    if l =~ /\s*(.*?):\s*(.*?)\s*\n/
+      f[$1] = $2 if f[$1].nil?
+    end
+  end
+ 
+  puts otf
+  #puts f
+  
+  g["font-weight"] = f["weight"] if f["weight"] != "normal"
+  g["font-style"] = "italic"  if f["italicangle"].to_i != 0
+  g["font-family"] = "monospace" if f["monospaced"] == "true"
+  puts g
+  x = "htfcss: " + font + " " + g.map{|i,j| i + ": " + j + ";"}.join(" ")
+  return x
+end
 
 logger = Logger.new(STDOUT)
 logger.datetime_format = '%Y-%m-%d %H:%M:%S'
@@ -262,7 +288,7 @@ fx = File.open(fileout, "wb")
 Dvi.write(fx, dvi_modified)
 logger.info("Write DVI(modified) file: #{fileout}")
 
-psmapfile = File.basename(fileout, ".dvi") + ".map"
+psmapfile = "ttfonts.map"
 mkfile = config[:Makefile]
 mk = File.open(mkfile, "w")
 
@@ -273,7 +299,7 @@ htffiles = Array.new
 tfmtargets = Array.new
 
 target_tmp=<<END
-%{fontname}.tfm: %{otffontname}
+%{fontname}.tfm: %{otffontname} .FORCE
 	otftotfm --literal-encoding=%{fontname}.enc --vendor=ZZZ  --no-encoding $(verbose) --name=%{fontname} %{otffontname} >> %{psmapfile}
 END
 
@@ -289,19 +315,20 @@ fonts.keys.each do |fontid|
   htffile = fontname + ".htf"
   htffiles << htffile
   fh = File.open(encfile, "w")
-  fhi = File.open(htffile, "w")
+  fhi = File.open(htffile, "w") if options[:htf]
   fh.puts "/#{encname} ["
-  fhi.puts "#{fontname} 0 #{fonts[fontid].charlist.size-1}"
-  #fh.puts fonts[fontid].charlist.map{|i| aglyphlist[i]}
-  #fh.puts fonts[fontid].charlist.map{|i| "/" + aglyphlist["%04X" % i] }
-  x = fonts[fontid].charlist.map{|i| "/" + aglyphlist["%04X" % i] }
+  fhi.puts "#{fontname} 0 #{fonts[fontid].charlist.size-1}" if options[:htf]
+    x = fonts[fontid].charlist.map{|i| "/" + aglyphlist["%04X" % i] }
   y = Array.new(256){|i| x[i] || "/.notdef"}
   fh.puts y
-  fhi.puts fonts[fontid].charlist.map{|i| "'&#x" + "%04X" % i + ";' '' #{i.chr}(#{aglyphlist["%04X" % i]})" }
+  fhi.puts fonts[fontid].charlist.map{|i| "'&#x" + "%04X" % i + ";' '' #{i.chr}(#{aglyphlist["%04X" % i]})" } if options[:htf]
   fh.puts "] def"
-  fhi.puts "#{fontname} 0 #{fonts[fontid].charlist.size-1}"
+  fhi.puts "#{fontname} 0 #{fonts[fontid].charlist.size-1}" if options[:htf]
+  
+  cssstring = otftocss(otffontname, fontname)
+  fhi.puts cssstring if options[:htf]
   fh.close
-  fhi.close
+  fhi.close if options[:htf]
   
   tfmtarget = target_tmp % { :fontname => fontname, :otffontname => otffontname , :psmapfile => psmapfile}
   
@@ -335,5 +362,4 @@ if options[:auto] then
 else
   run = "make -f #{mkfile} all "
   x = Kernel.`(run)#`
-  File.unlink mkfile
 end

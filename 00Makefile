@@ -1,10 +1,10 @@
 SHELL:=/usr/bin/env bash
-otffonts=lmroman10-regular.otf lmroman10-italic.otf
-encfiles=font14.enc font15.enc
-tfmfiles=font14.tfm font15.tfm
-htffiles=font14.htf font15.htf
+otffonts=lmroman10-regular.otf lmroman10-italic.otf lmmono10-regular.otf lmroman10-bold.otf lmroman10-bolditalic.otf
+encfiles=font14.enc font24.enc font25.enc font23.enc font26.enc
+tfmfiles=font14.tfm font24.tfm font25.tfm font23.tfm font26.tfm
+htffiles=font14.htf font24.htf font25.htf font23.htf font26.htf
 
-out=test
+out=sample2e
 mapfile=${out}.map
 dvifile=${out}.dvi
 psfile=${out}.ps
@@ -49,7 +49,15 @@ ${pdffile}: ${psfile}
 clean:
 	rm -f $(otffonts) $(tfmfiles) $(encfiles) $(htffiles) $(mapfile) *.pfb
 
-font14.tfm: lmroman10-regular.otf
-	otftotfm --literal-encoding=font14.enc --vendor=ZZZ  --no-encoding $(verbose) --name=font14 lmroman10-regular.otf >> test.map
-font15.tfm: lmroman10-italic.otf
-	otftotfm --literal-encoding=font15.enc --vendor=ZZZ  --no-encoding $(verbose) --name=font15 lmroman10-italic.otf >> test.map
+.FORCE:
+
+font14.tfm: lmroman10-regular.otf .FORCE
+	otftotfm --literal-encoding=font14.enc --vendor=ZZZ  --no-encoding $(verbose) --name=font14 lmroman10-regular.otf >> ttfonts.map
+font24.tfm: lmroman10-italic.otf .FORCE
+	otftotfm --literal-encoding=font24.enc --vendor=ZZZ  --no-encoding $(verbose) --name=font24 lmroman10-italic.otf >> ttfonts.map
+font25.tfm: lmmono10-regular.otf .FORCE
+	otftotfm --literal-encoding=font25.enc --vendor=ZZZ  --no-encoding $(verbose) --name=font25 lmmono10-regular.otf >> ttfonts.map
+font23.tfm: lmroman10-bold.otf .FORCE
+	otftotfm --literal-encoding=font23.enc --vendor=ZZZ  --no-encoding $(verbose) --name=font23 lmroman10-bold.otf >> ttfonts.map
+font26.tfm: lmroman10-bolditalic.otf .FORCE
+	otftotfm --literal-encoding=font26.enc --vendor=ZZZ  --no-encoding $(verbose) --name=font26 lmroman10-bolditalic.otf >> ttfonts.map
