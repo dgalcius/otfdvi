@@ -5,6 +5,7 @@
 
 \documentclass{article}      % Specifies the document class
 \usepackage{fontspec}
+\usepackage{color}
                              % The preamble begins here.
 \title{An Example Document}  % Declares the document's title.
 \author{Leslie Lamport}      % Declares the author's name.
@@ -19,12 +20,26 @@
                              % \ip that is commented out.
 
 \begin{document}             % End of preamble and beginning of text.
+X
+%\maketitle                   % Produces the title.
 
-\maketitle                   % Produces the title.
+A\textit{X}G
 
-This is an example input file.  Comparing it with
-the output it generates can show you how to
-produce a simple document of your own.
+\texttt{mono spaced}
+
+\textbf{and bold}
+
+\textbf{and bold \textit{italic}}
+
+\Picture+{ align="right"}%
+    Text \textit{within} \textcolor{blue}{a} picture.
+\EndPicture
+    
+%This is an example input file.  Comparing it with
+%the output it generates can show you how to
+%produce a simple document of your own.
+
+\end{document}
 
 \section{Ordinary Text}      % Produces section heading.  Lower-level
                              % sections are begun with similar 
