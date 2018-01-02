@@ -44,13 +44,18 @@ optparse = OptionParser.new do|opts|
    options[:inplace] = true
    end
    options[:auto] = true
-   opts.on( '--no-auto', 'Run make with all pdf' ) do
+   opts.on( '--[no]-auto', 'Run make with all pdf' ) do
    options[:auto] = false
    end
    options[:htf] = true
-   opts.on( '--no-htf', 'Do not generate htf fonts' ) do
+   opts.on( '--[no]-htf', 'Do not generate htf fonts' ) do
    options[:htf] = false
    end
+   options[:psmap] = "ttfonts.map"
+   opts.on( '-u', '--psmap [FILE]', 'Output Postscript map file to [FILE]' ) do|file|
+   options[:psmap] = file
+   end
+
       opts.on( '-v', '--version', 'Print version' ) do
       puts "#{prgfullname}, v.#{prgversion}. #{prgcredit}"
       exit
@@ -75,31 +80,8 @@ rescue OptionParser::InvalidOption => e
 end
 
 debug = options[:debug]
-
-class FontEnc
-  attr_accessor :name
-
-  @@fontenc = Array.new()
-  
-  def initialize(name)
-    @name = name
-    #@enc = Array.new(256){".notdef"}
-    @num = Array.new() # max 256
-    @@fontenc.include?(name) ? raise("FontEnc: name is already in use ") : @@fontenc << name 
-  end
-
-  def add(s)
-    @enc.size == 256 ? raise("FontEnc: enc size should be < 256") : @enc << s 
-  end
-  
-  def to_dvipsenc()
-    error("not defined yet")
-  end
-
-  def to_htf()
-    error("not defined yet")
-  end
-end
+auto = options[:auto]
+htf = options[:htf]
 
 class Font
   attr_accessor :name
@@ -196,13 +178,15 @@ end
 logger.info("Read config file: #{ymlfile}")
 
 filein = ARGV[0]
-fileout = ARGV[1] if not ARGV[1].nil?
-
+fileout = ARGV[1] || fileout
+fileout = filein if options[:inplace]
 fileoutbase = File.basename(fileout, ".*")
-  
+psfileout = fileoutbase + ".ps"
+pdffileout = fileoutbase + ".pdf"
+
+
 logger.info("File in: #{filein}")
 logger.info("File out: #{fileout}")
-
 aglyphlist = Hash.new
 adobeglyphlistfile = config[:adobe_glyph_list]
 f = File.readlines(adobeglyphlistfile)
@@ -215,32 +199,23 @@ logger.info("Read adobe glyph list: #{adobeglyphlistfile}")
 
 dvi = Dvi.parse(File.open(filein, "rb"))
 logger.info("Parse DVI file: #{filein}")
-fileout = filein if options[:inplace]
-psfileout = fileoutbase + ".ps"
-pdffileout = fileoutbase + ".pdf"
 
 
-fonttable = Hash.new
 
+
+fonts = Hash.new
 ## Hash
 ## font = Font.new()
 ## font.id
 ## font.name
 ## font.type
 ## font.is_otf? .is_tfm?
-## font.otffilename## font.chrlist
+## font.otffilename
+## font.charlist == charset
 
-# "<fontname>" => [<list of chrs>]
-# fonttable = {
-#   "lmroman10-regular" => [A,B,Z],
-#  }
-
-fontnumtable = Hash.new
 currentfontnum = 0
 
-post = false
 dvi_modified = Array.new()
-fonts = Hash.new()
 dvi.each do |op|
   #  puts op.inspect
   if op.class == Dvi::Opcode::Pre
@@ -249,19 +224,12 @@ dvi.each do |op|
   end
 
   if op.class == Dvi::Opcode::FntDef
-    fontid = [op.fontname, op.scale, op.checksum, op.design_size].join('-')
     fontnum = op.num
     fonts[fontnum] = Font.new(op.fontname) if fonts[fontnum].nil?
-
-    fontenc = FontEnc.new(fontnum.to_s) if not post
-    op.fontname = "font#{fontnum}"
-        
-    if fontnumtable[fontid].nil?
-      fontnumtable[fontid] = fontnum
-    end
-    
-    if fonttable[fontnum].nil?
-      fonttable[fontnum] = Array.new
+  
+    if fonts[fontnum].is_otf?
+      puts "#{op.fontname} => font#{fontnum}" if debug
+      op.fontname = "font#{fontnum}" 
     end
   end
      
@@ -270,25 +238,25 @@ dvi.each do |op|
   end
 
   if op.class == Dvi::Opcode::SetChar
-  #  puts op.inspect
-    fonts[currentfontnum].add_to_charlist(op.index)
-    i = fonts[currentfontnum].charlist.index(op.index)
-    op.index = i
+    #  puts op.inspect
+    if fonts[currentfontnum].is_otf?
+      fonts[currentfontnum].add_to_charlist(op.index)
+      i = fonts[currentfontnum].charlist.index(op.index)
+      op.index = i
     end
-
-  if op.class == Dvi::Opcode::Post
-    post = true
   end
 
   dvi_modified << op
   
 end
 
+
 fx = File.open(fileout, "wb")
 Dvi.write(fx, dvi_modified)
 logger.info("Write DVI(modified) file: #{fileout}")
 
-psmapfile = "ttfonts.map"
+psmapfile = options[:psmap]
+
 mkfile = config[:Makefile]
 mk = File.open(mkfile, "w")
 
@@ -304,39 +272,43 @@ target_tmp=<<END
 END
 
 fonts.keys.each do |fontid|
-  fontname  = "font#{fontid}"
-  tfmfiles << fontname + ".tfm"
-  otffontname = fonts[fontid].otffilename + ".otf"
-  otffiles << otffontname
+  if fonts[fontid].is_otf?
+    puts "OTF: " + fonts[fontid].name if debug
+    fontname  = "font#{fontid}"
+    tfmfiles << fontname + ".tfm"
+    otffontname = fonts[fontid].otffilename + ".otf"
+    otffiles << otffontname
   
-  encname = fontname
-  encfile = encname + ".enc"
-  encfiles << encfile
-  htffile = fontname + ".htf"
-  htffiles << htffile
-  fh = File.open(encfile, "w")
-  fhi = File.open(htffile, "w") if options[:htf]
-  fh.puts "/#{encname} ["
-  fhi.puts "#{fontname} 0 #{fonts[fontid].charlist.size-1}" if options[:htf]
+    encname = fontname
+    encfile = encname + ".enc"
+    encfiles << encfile
+    htffile = fontname + ".htf"
+    htffiles << htffile
+    fh = File.open(encfile, "w")
+    fhi = File.open(htffile, "w") if options[:htf]
+    fh.puts "/#{encname} ["
+    fhi.puts "#{fontname} 0 #{fonts[fontid].charlist.size-1}" if options[:htf]
     x = fonts[fontid].charlist.map{|i| "/" + aglyphlist["%04X" % i] }
-  y = Array.new(256){|i| x[i] || "/.notdef"}
-  fh.puts y
-  fhi.puts fonts[fontid].charlist.map{|i| "'&#x" + "%04X" % i + ";' '' #{i.chr}(#{aglyphlist["%04X" % i]})" } if options[:htf]
-  fh.puts "] def"
-  fhi.puts "#{fontname} 0 #{fonts[fontid].charlist.size-1}" if options[:htf]
+    y = Array.new(256){|i| x[i] || "/.notdef"}
+    fh.puts y
+    fhi.puts fonts[fontid].charlist.map{|i| "'&#x" + "%04X" % i + ";' '' #{i.chr}(#{aglyphlist["%04X" % i]})" } if options[:htf]
+    fh.puts "] def"
+    fhi.puts "#{fontname} 0 #{fonts[fontid].charlist.size-1}" if options[:htf]
   
-  cssstring = otftocss(otffontname, fontname)
-  fhi.puts cssstring if options[:htf]
-  fh.close
-  fhi.close if options[:htf]
+    cssstring = otftocss(otffontname, fontname)
+    fhi.puts cssstring if options[:htf]
+    fh.close
+    fhi.close if options[:htf]
   
-  tfmtarget = target_tmp % { :fontname => fontname, :otffontname => otffontname , :psmapfile => psmapfile}
+    tfmtarget = target_tmp % { :fontname => fontname, :otffontname => otffontname , :psmapfile => psmapfile}
   
-
-  tfmtargets << tfmtarget
+    tfmtargets << tfmtarget
 
     logger.info("Write encoding file: #{encfile} for #{otffontname}")
-  logger.info("Write hyper text font file: #{htffile}")
+    logger.info("Write hyper text font file: #{htffile}")
+  else
+    puts "TFM: " + fonts[fontid].name if debug
+  end
 end  
 
 output = File.basename(fileout, ".*")
@@ -353,6 +325,8 @@ mk.puts tfmtargets
   
 mk.close
 logger.info("Write Makefile: #{mkfile}")
+
+exit 3
 
 if options[:auto] then
   run = "make -f #{mkfile} all pdf clean"
