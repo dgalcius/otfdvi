@@ -44,11 +44,11 @@ optparse = OptionParser.new do|opts|
    options[:inplace] = true
    end
    options[:auto] = true
-   opts.on( '--[no]-auto', 'Run make with all pdf' ) do
+   opts.on( '--no-auto', 'Run make with all pdf' ) do
    options[:auto] = false
    end
    options[:htf] = true
-   opts.on( '--[no]-htf', 'Do not generate htf fonts' ) do
+   opts.on( '--no-htf', 'Do not generate htf fonts' ) do
    options[:htf] = false
    end
    options[:psmap] = "ttfonts.map"
@@ -82,6 +82,7 @@ end
 debug = options[:debug]
 auto = options[:auto]
 htf = options[:htf]
+
 
 class Font
   attr_accessor :name
@@ -285,20 +286,22 @@ fonts.keys.each do |fontid|
     htffile = fontname + ".htf"
     htffiles << htffile
     fh = File.open(encfile, "w")
-    fhi = File.open(htffile, "w") if options[:htf]
+    puts htf.inspect
+    exit 13
+    fhi = File.open(htffile, "w") if htf
     fh.puts "/#{encname} ["
-    fhi.puts "#{fontname} 0 #{fonts[fontid].charlist.size-1}" if options[:htf]
+    fhi.puts "#{fontname} 0 #{fonts[fontid].charlist.size-1}" if htf
     x = fonts[fontid].charlist.map{|i| "/" + aglyphlist["%04X" % i] }
     y = Array.new(256){|i| x[i] || "/.notdef"}
     fh.puts y
-    fhi.puts fonts[fontid].charlist.map{|i| "'&#x" + "%04X" % i + ";' '' #{i.chr}(#{aglyphlist["%04X" % i]})" } if options[:htf]
+    fhi.puts fonts[fontid].charlist.map{|i| "'&#x" + "%04X" % i + ";' '' #{i.chr}(#{aglyphlist["%04X" % i]})" } if htf
     fh.puts "] def"
-    fhi.puts "#{fontname} 0 #{fonts[fontid].charlist.size-1}" if options[:htf]
+    fhi.puts "#{fontname} 0 #{fonts[fontid].charlist.size-1}" if htf
   
     cssstring = otftocss(otffontname, fontname)
-    fhi.puts cssstring if options[:htf]
+    fhi.puts cssstring if htf
     fh.close
-    fhi.close if options[:htf]
+    fhi.close if htf
   
     tfmtarget = target_tmp % { :fontname => fontname, :otffontname => otffontname , :psmapfile => psmapfile}
   
