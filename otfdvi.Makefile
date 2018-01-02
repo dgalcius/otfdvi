@@ -5,7 +5,7 @@ tfmfiles=%{tfmfiles}
 htffiles=%{htffiles}
 
 out=%{output}
-mapfile=${out}.map
+mapfile=%{psmapfile}
 dvifile=${out}.dvi
 psfile=${out}.ps
 pdffile=${out}.pdf

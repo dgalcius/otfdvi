@@ -283,11 +283,9 @@ fonts.keys.each do |fontid|
     encname = fontname
     encfile = encname + ".enc"
     encfiles << encfile
-    htffile = fontname + ".htf"
-    htffiles << htffile
+    htffile = fontname + ".htf" if htf
+    htffiles << htffile if htf
     fh = File.open(encfile, "w")
-    puts htf.inspect
-    exit 13
     fhi = File.open(htffile, "w") if htf
     fh.puts "/#{encname} ["
     fhi.puts "#{fontname} 0 #{fonts[fontid].charlist.size-1}" if htf
@@ -298,7 +296,7 @@ fonts.keys.each do |fontid|
     fh.puts "] def"
     fhi.puts "#{fontname} 0 #{fonts[fontid].charlist.size-1}" if htf
   
-    cssstring = otftocss(otffontname, fontname)
+    cssstring = otftocss(otffontname, fontname) if htf
     fhi.puts cssstring if htf
     fh.close
     fhi.close if htf
@@ -308,7 +306,7 @@ fonts.keys.each do |fontid|
     tfmtargets << tfmtarget
 
     logger.info("Write encoding file: #{encfile} for #{otffontname}")
-    logger.info("Write hyper text font file: #{htffile}")
+    logger.info("Write hyper text font file: #{htffile}") if htf
   else
     puts "TFM: " + fonts[fontid].name if debug
   end
@@ -319,6 +317,7 @@ mkbody = mktemp % { :otffonts => otffiles.join(" "),
                     :encfiles => encfiles.join(" "),
                     :tfmfiles => tfmfiles.join(" "),
                     :htffiles => htffiles.join(" "),
+                    :psmapfile => psmapfile,
                     :output => output,
                     :verbose => options[:verbose] ? '--verbose' : '' ,
 }
@@ -329,14 +328,13 @@ mk.puts tfmtargets
 mk.close
 logger.info("Write Makefile: #{mkfile}")
 
-exit 3
-
-if options[:auto] then
+if auto then
   run = "make -f #{mkfile} all pdf clean"
   logger.info("run system: #{run}")
   x = Kernel.exec(run)#`
   File.unlink mkfile
 else
   run = "make -f #{mkfile} all "
+  logger.info("run system: #{run}")
   x = Kernel.`(run)#`
 end
