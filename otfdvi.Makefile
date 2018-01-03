@@ -17,12 +17,6 @@ define cp_k
 endef
 
 
-define tfm_gen
-	otftotfm --name=$(1) --literal-encoding=$(1).enc\
-  --vendor=ZZZ --use-x-height\
-  --no-encoding $(verbose) $(2) >> $(3)
-endef
-
 default: all
 
 all: otffonts tfmfiles

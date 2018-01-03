@@ -1867,10 +1867,10 @@ fehinitialarabic;FED3
 fehmedialarabic;FED4
 feicoptic;03E5
 female;2640
-ff;FB00
-ffi;FB03
-ffl;FB04
-fi;FB01
+f_f;FB00
+f_f_i;FB03
+f_f_l;FB04
+f_i;FB01
 fifteencircle;246E
 fifteenparen;2482
 fifteenperiod;2496

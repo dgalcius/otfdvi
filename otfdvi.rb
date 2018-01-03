@@ -227,6 +227,7 @@ dvi.each do |op|
   if op.class == Dvi::Opcode::FntDef
     fontnum = op.num
     fonts[fontnum] = Font.new(op.fontname) if fonts[fontnum].nil?
+    puts op.fontname
   
     if fonts[fontnum].is_otf?
       puts "#{op.fontname} => font#{fontnum}" if debug
@@ -268,7 +269,7 @@ tfmtargets = Array.new
 
 target_tmp=<<END
 %{fontname}.tfm: %{otffontname} .FORCE
-	otftotfm --literal-encoding=%{fontname}.enc --vendor=ZZZ  --no-encoding $(verbose) --name=%{fontname} %{otffontname} >> %{psmapfile}
+	otftotfm --literal-encoding=%{fontname}.enc --vendor=UKWN   $(verbose) --name=%{fontname} --map-file=%{psmapfile}  --no-updmap --warn-missing %{otffontname} 
 END
 
 fonts.keys.each do |fontid|
@@ -300,7 +301,7 @@ fonts.keys.each do |fontid|
     fh.close
     fhi.close if htf
   
-    tfmtarget = target_tmp % { :fontname => fontname, :otffontname => otffontname , :psmapfile => psmapfile}
+    tfmtarget = target_tmp % { :fontname => fontname, :otffontname => otffontname , :psmapfile => psmapfile, :glyphlist => adobeglyphlistfile}
   
     tfmtargets << tfmtarget
 
