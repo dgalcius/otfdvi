@@ -16,12 +16,12 @@ test.dvi: sample2e.dvi
 	rm -f test.* *.pfb *.enc *.tfm *.otf
 
 2: sample2e.dvi 
-	ruby otfdvi.rb --no-auto --no-htf $< test.dvi
+	ruby otfdvi.rb --no-auto --no-htf --psmap test.map --debug $< test.dvi
 	dvips -j1 -u test.map -o sample2e.ps test.dvi
 	ps2pdf sample2e.ps
 #	rm -f test.* *.pfb *.enc *.tfm *.otf
 
-%.dvi: %.tex .FORCE
+%.dvi: %.tex 
 	$(texdvi) $<
 
 
@@ -34,5 +34,7 @@ html: sample2e.tex .FORCE
 
 
 clean:
-	rm -f *.aux *.dvi *.fls *.log 
+	rm -f *.aux *.dvi *.fls *.log
+	rm -f *.otf *.tfm *.htf *.enc *.pfb
+	rm -f 00Makefile *.map
 .FORCE:

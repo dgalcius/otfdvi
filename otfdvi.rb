@@ -7,7 +7,7 @@ require 'optparse'
 require 'yaml'
 require 'fileutils'
 require 'logger'
-require 'minitest'
+require 'minitest/autorun'
 
 prgname = 'otfdvi'
 prgfullname = 'Convert otfdvi (luaatex+fontspec) to dvips dvi'
@@ -102,6 +102,11 @@ class Font
       @type = 1
       @otffilename = $1
     end
+    if s =~ /file:(.*?):script=(.*?);.*?;/
+      @type = 1
+      @otffilename = $1
+      @script = $2
+    end
   end
   
   def is_otf?()
@@ -120,24 +125,19 @@ end
 class TestFont < Minitest::Test
   def setup
     @font = Font.new("[lmroman10-regular]:+tlig;")
+    @font2 = Font.new("file:lmroman17-regular:script=latn;+trep;+tlig;")
   end
 
   def test_if_otffont
     assert_equal true , @font.is_otf?
     assert_equal false, @font.is_tfm?
+    assert_equal true, @font2.is_otf?
   end
 
-#  def test_that_it_will_not_blend
-#    refute_match /^no/i, @meme.will_it_blend?
-#  end
-#
-#  def test_that_will_be_skipped
-#    skip "test this later"
-#  end
 end
 
-TestFont.new("test1").run if debug
 
+TestFont.new("test1").run if debug
 
 def otftocss(otf, font)
   f = Hash.new
@@ -238,8 +238,7 @@ dvi.each do |op|
     currentfontnum = op.index
   end
 
-  if op.class == Dvi::Opcode::SetChar
-    #  puts op.inspect
+  if op.class == Dvi::Opcode::SetChar || op.class == Dvi::Opcode::Set
     if fonts[currentfontnum].is_otf?
       fonts[currentfontnum].add_to_charlist(op.index)
       i = fonts[currentfontnum].charlist.index(op.index)
