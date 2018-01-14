@@ -18,7 +18,7 @@ for _, op  in ipairs(content) do
       op.comment = "otfdvi output " .. os.date("%Y.%m.%d:%H%M%S")
    end
 
-   table.insert(dvimodified, op) 
+   table.insert(dvimodified, op)
 end
 
 
