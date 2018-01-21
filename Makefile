@@ -8,6 +8,14 @@ default: test.dvi
 test.dvi: sample2e.dvi 
 	ruby otfdvi.rb $< $@
 
+diff: sample2e.dt out.dt
+	diff $^
+
+out.dvi: .FORCE
+	./otfdvi.lua
+
+%.dt: %.dvi
+	dv2dt $< $@
 
 1: sample2e.dvi 
 	ruby otfdvi.rb  $< test.dvi
