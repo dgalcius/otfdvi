@@ -11,7 +11,9 @@ dvifile:=$(baseout:=.dvi)
 psfile:=$(baseout:=.ps)
 pdffile:=$(baseout:=.pdf)
 
-verbose:=--verbose={{{verbose}}}
+{{#verbose}}
+verbose:=--verbose=true
+{{/verbose}}
 
 define cp_k
 	if [[ ! -f $(1) ]]; then x=`kpsewhich $(1)`; cp $$x $(1) ; fi
