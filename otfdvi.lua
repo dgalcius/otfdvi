@@ -58,7 +58,9 @@ for _, op  in ipairs(content) do
 
    if op._opcode == "fntnum" then
       currfontnum = op.index
-      ifonts[currfontnum].index = 0 
+      if (otffonts[currfontnum] and true) then
+         ifonts[currfontnum].index = 0
+      end
    end
 
    if op._opcode == "setchar" or op._opcode == "set" then
