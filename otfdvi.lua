@@ -1,55 +1,29 @@
 #!/usr/bin/env texlua
 
+-- local inspect  = require("inspect")
+local dvi      = require("dvi")
+local lustache = require("lustache")
+
 local kpse = kpse
 kpse.set_program_name("luatex")
--- kpse.set_program_name("texlua")
 local lua_font_dir = kpse.expand_var("$TEXMFSYSVAR")
 lua_font_dir = lua_font_dir  ..  "/luatex-cache/generic/fonts/otl/"
-
--- local foo = require("lmroman10-regular")
-
-local debug = false
-local inspect = require("inspect")
-local dvi     = require("dvi")
--- local lustache= require("lustache")
--- print (inspect(foo["creator"]))
--- print (inspect(foo["resources"]["filename"]))
--- print (inspect(foo["resources"]["unicodes"]))
-
--- i = kpse.find_file("lmroman10-bold.lua", "opentype fonts")
--- local info = fontloader.info("lmroman10-bold.otf")
--- filename = "lmroman10-bold.otf"
--- local font = fontloader.open(filename)
--- local metrics = fontloader.to_table(font)
--- myfont = fontloader.load_font(filename)
--- print(inspect(metrics.glyphs))
-
 
 local filein  = arg[1] or 'sample2e.dvi'
 local fileout = 'out.dvi'
 local psmapfile = 'ttfonts.map'
 local mkfile = '__Makefile'
+local fontprefix = "font"
+local debug = false
+local verbose = false
+
 local fhi = assert(io.open(filein, 'rb'))
 local fho = assert(io.open(fileout, 'wb'))
 local psf = assert(io.open(psmapfile, 'w'))
 local mkf = assert(io.open(mkfile, 'w'))
 
-local content = dvi.parse(fhi)
-local dvimodified = {}
-
-local otffonts = {}
-local fontprefix = "font"
-
-local otffiles = {}
-local encfiles = {}
-local tfmfiles = {}
-local htffiles = {}
-local mk_tfm_targets = {}
-local mk_target_template = [[
-{{{ fontname }}}.tfm: {{{ otffontname } .FORCE
-	otftotfm --literal-encoding={{{ fontname }}}.enc --vendor=UKWN   $(verbose) --name={{{ fontname }}} --map-file={{{ psmapfile }}}  --no-updmap --warn-missing {{{ otffontname }}} 
-END
-]]
+local content = dvi.parse(fhi) -- get table
+local dvimodified = {}         
 
 local function is_otf(fontname)
    local s = false
@@ -58,13 +32,13 @@ local function is_otf(fontname)
 end
 
 local currfontnum = 0
+local otffonts = {}
 local ifonts = { }
-local otf = false
+local otf = false -- is_otf?
 
 for _, op  in ipairs(content) do
-   
    if op._opcode == "pre" then
-       op.comment = " otfdvi output " .. os.date("%Y.%m.%d:%H%M")
+      op.comment = " otfdvi output " .. os.date("%Y.%m.%d:%H%M")
    end
 
    if op._opcode == "fntdef" then
@@ -91,7 +65,6 @@ for _, op  in ipairs(content) do
       if (otffonts[currfontnum] and true) then -- if otf font
          charlist = otffonts[currfontnum].charlist
          uclist = ifonts[currfontnum].charlist
-         -- print(inspect(uclist[op.index]))
          index = ifonts[currfontnum].index
          if uclist[op.index] == nil then -- char is not in a list yet
             table.insert(charlist, op.index)
@@ -103,15 +76,13 @@ for _, op  in ipairs(content) do
          end
          
          op.index = ifonts[currfontnum].charlist[op.index]
-         
       end
    end
 
    table.insert(dvimodified, op)
-
 end
 
-dvi.dump(fho, dvimodified)
+dvi.dump(fho, dvimodified) -- write modified DVI
 
 function reverse_table(t)
    local s = {}
@@ -121,17 +92,13 @@ function reverse_table(t)
    return s
 end
 
-
-function generate_glyphlist(name)
+--[[
+- read '<otf-font-file>.lua'
+--]]
+function get_glyphlist(name)
    local fontfile = lua_font_dir .. name .. ".lua"
-   local ghfile = name .. ".glyphlist"
-   local gh = assert(io.open(ghfile, 'w'))
    local luafont = dofile(fontfile)
    local uni = luafont["resources"]["unicodes"]
-   for glyph, ucode in pairs(uni) do
-      gh:write("/" .. glyph .. ";" .. ucode .. "\n")
-   end
-   io.close(gh)
    return uni
 end
 
@@ -140,12 +107,12 @@ end
 
 for i_s, v_s in pairs(otffonts) do
    local fontname = fontprefix .. i_s
-   local uni = generate_glyphlist(v_s.basename)
+   local uni = get_glyphlist(v_s.basename)
    otffonts[i_s].glyphlist = reverse_table(uni)
 end
 
 -- print(inspect(otffonts))
---print(inspect(#fonts[14].charlist))
+-- print(inspect(#fonts[14].charlist))
 
 function output_enc(fontname, list, glyphlist)
    local encfile = fontname .. ".enc"
@@ -167,9 +134,25 @@ function output_enc(fontname, list, glyphlist)
    io.close(glyh)
 end
 
+view = {} -- view model for lustache
+view.output = fileout
+view.psmapfile = psmapfile
+view.verbose = verbose
+view.targets = {}
 for i, v in pairs(otffonts) do
    fontname = fontprefix .. i
+   otfname = v.basename .. ".otf"
+   table.insert(view.targets, {fontname = fontname, otffontname =  otfname} )
    output_enc(fontname, v.charlist, v.glyphlist)
-   --output_htf(fontname, v.charlist, v.glyphlist)
 end
+
+-- template for lustache
+local lm = assert(io.open('lu_Makefile', 'r'))
+local tmpl = lm.read(lm, '*all')
+
+output = lustache:render(tmpl, view)
+mkf:write(output)
+mkf:close()
+
+
 

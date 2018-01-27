@@ -1,12 +1,16 @@
 SHELL:=/usr/bin/env bash
-fonts:={{#fonts}} {{.}} {{/fonts}}
-otffonts:={{#otffonts}} {{.}} {{/otffonts}}
-encfiles:=$(fonts:=.enc)
-tfmfiles:=$(fonts:=.tf)
-htffiles:=$(fonts:=.htf)
+fonts:={{#targets}} {{fontname}} {{/targets}}
+otffonts:={{#targets}} {{otffontname}} {{/targets}}
 
-baseout:={{{output}}}
-mapfile={{{psmapfile}}}
+encfiles:=$(fonts:=.enc)
+tfmfiles:=$(fonts:=.tfm)
+htffiles:=$(fonts:=.htf)
+glyphlistfiles:=$(otffonts:.otf=.glyphlist)
+
+
+output={{output}}
+baseout:=$(output:.dvi=)
+mapfile:={{psmapfile}}
 dvifile:=$(baseout:=.dvi)
 psfile:=$(baseout:=.ps)
 pdffile:=$(baseout:=.pdf)
@@ -44,15 +48,15 @@ $(pdffile): $(psfile)
 	ps2pdf $<
 
 clean:
-	rm -f $(otffonts) $(tfmfiles) $(encfiles) $(htffiles) $(mapfile) *.pfb
-	rm -f $(mapfile)
+	rm -f $(otffonts) $(tfmfiles) $(encfiles) $(htffiles) $(glyphlistfiles)
+	rm -f $(mapfile) *.pfb
 
 .FORCE:
 
 options:=--vendor=UKWN $(verbose) --no-updmap --warn-missing
 
-{{#tfm}}
-{{font}}.tfm: {{dep}} .FORCE
-	otftotfm --literal-encoding={{font}}.enc  --name={{font}} --map-file={{psmapfile}} $(options) {{dep}}
+{{#targets}}
+{{fontname}}.tfm: {{otffontname}} .FORCE
+	otftotfm --literal-encoding={{fontname}}.enc  --name={{fontname}} --map-file=$(mapfile) $(options) $<
 
-{{/tfm}}
+{{/targets}}
