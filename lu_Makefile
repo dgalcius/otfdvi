@@ -5,7 +5,7 @@ otffonts:={{#targets}} {{otffontname}} {{/targets}}
 encfiles:=$(fonts:=.enc)
 tfmfiles:=$(fonts:=.tfm)
 htffiles:=$(fonts:=.htf)
-glyphlistfiles:=$(fonts:=.glyphlist)
+glyphlistfiles:=$(fonts:=.glyphs)
 
 
 output={{output}}
@@ -42,7 +42,7 @@ $(otffonts):
 	 $(call cp_k,$@)
 
 $(psfile): $(dvifile)
-	dvips -j1 -u $(mapfile) -o $@ $<
+	dvips -M1 -j1 -u +$(mapfile) -o $@ $<
 
 $(pdffile): $(psfile)
 	ps2pdf $<
@@ -57,6 +57,6 @@ options:=--vendor=UKWN $(verbose) --no-updmap --warn-missing
 
 {{#targets}}
 {{fontname}}.tfm: {{otffontname}} .FORCE
-	otftotfm --literal-encoding={{fontname}}.enc  --name={{fontname}} --map-file=$(mapfile) $(options) $<
+	otftotfm --literal-encoding={{fontname}}.enc  --name={{fontname}} --map-file=$(mapfile) --glyphlist={{glyphsfontname}} $(options) $<
 
 {{/targets}}
