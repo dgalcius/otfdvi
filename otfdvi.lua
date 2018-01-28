@@ -1,6 +1,6 @@
 #!/usr/bin/env texlua
 
--- local inspect  = require("inspect")
+local inspect  = require("inspect")
 local dvi      = require("dvi")
 local lustache = require("lustache")
 
@@ -31,6 +31,11 @@ local function is_otf(fontname)
    return (j or s) and true, j
 end
 
+function debug_print(s)
+   if debug then
+      print(s)
+   end
+end
 local currfontnum = 0
 local otffonts = {}
 local ifonts = { }
@@ -39,18 +44,20 @@ local otf = false -- is_otf?
 for _, op  in ipairs(content) do
    if op._opcode == "pre" then
       op.comment = " otfdvi output " .. os.date("%Y.%m.%d:%H%M")
+      debug_print(op.comment)
    end
 
    if op._opcode == "fntdef" then
+      --debug_print("fntdef")
+      --debug_print(inspect(op))
       if is_otf(op.fontname) == true then
-         if debug == true then
-            print(op.fontname .. " => " .. fontprefix .. tostring(op.num))
-         end
+         debug_print(op.fontname .. " => " .. fontprefix .. tostring(op.num))
          local _, basename = is_otf(op.fontname)
          
          if otffonts[op.num] == nil then
             otffonts[op.num] = { fontname = op.fontname , basename = basename, charlist = {} }
             ifonts[op.num] = { charlist = {} }
+            ifonts[op.num].index = 0
             op.fontname = fontprefix .. tostring(op.num)
          end
       end
@@ -58,9 +65,10 @@ for _, op  in ipairs(content) do
 
    if op._opcode == "fntnum" then
       currfontnum = op.index
-      if (otffonts[currfontnum] and true) then
-         ifonts[currfontnum].index = 0
-      end
+      ---!FIXME
+--      if (otffonts[currfontnum] and true) then
+--         ifonts[currfontnum].index = 0
+--      end
    end
 
    if op._opcode == "setchar" or op._opcode == "set" then
@@ -84,6 +92,10 @@ for _, op  in ipairs(content) do
    table.insert(dvimodified, op)
 end
 
+debug_print("start: otffonts")
+debug_print(inspect(otffonts))
+debug_print("stop: otffonts")
+
 dvi.dump(fho, dvimodified) -- write modified DVI
 
 function reverse_table(t)
@@ -100,9 +112,17 @@ end
 function get_glyphlist(name)
    local fontfile = lua_font_dir .. name .. ".lua"
    local luafont = dofile(fontfile)
+   local ghfile = name .. ".glyphs"
+   local gh = assert(io.open(ghfile, 'w'))
    local uni = luafont["resources"]["unicodes"]
+   for glyph, ucode in pairs(uni) do
+      gh:write("/" .. glyph .. ";" .. ucode .. "\n")
+   end
+   io.close(gh)
    return uni
 end
+
+
 
 -- print(inspect(otffonts))
 -- print(lua_font_dir)
@@ -118,22 +138,24 @@ end
 
 function output_enc(fontname, list, glyphlist)
    local encfile = fontname .. ".enc"
-   local glyfile = fontname .. ".glyphlist"
+--   local glyfile = fontname .. ".gly"
    local efh = assert(io.open(encfile, 'w'))
-   local glyh = assert(io.open(glyfile, 'w'))
-   local s = "/" .. fontname .. "[\n"
+--   local glyh = assert(io.open(glyfile, 'w'))
+   local s_enc = "/" .. fontname .. "[\n"
    for i = 1, 256 do
       j = glyphlist[list[i]] or ".notdef"
-      -- print(j, list[i])
-      if not j == ".notdef" then
-         glyh:write("/" .. j .. ";" .. list[i] .. "\n")
-      end
-      s = s .. "/" .. j .. "\n"
+      --debug_print(j)
+      --debug_print( not j == ".notdef")
+    --  if not j == ".notdef" then
+    --     debug_print(">>" .. j)
+    --     glyh:write("/" .. j .. ";" .. list[i] .. "\n")
+    --  end
+      s_enc = s_enc .. "/" .. j .. "\n"
     end
-   s = s .. "] def\n"
-   efh:write(s)
+   s_enc = s_enc .. "] def\n"
+   efh:write(s_enc)
    io.close(efh)
-   io.close(glyh)
+--   io.close(glyh)
 end
 
 view = {} -- view model for lustache
@@ -144,7 +166,8 @@ view.targets = {}
 for i, v in pairs(otffonts) do
    fontname = fontprefix .. i
    otfname = v.basename .. ".otf"
-   table.insert(view.targets, {fontname = fontname, otffontname =  otfname} )
+   glyphsfontname = v.basename .. ".glyphs"
+   table.insert(view.targets, {fontname = fontname, otffontname =  otfname, glyphsfontname = glyphsfontname} )
    output_enc(fontname, v.charlist, v.glyphlist)
 end
 
