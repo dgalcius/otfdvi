@@ -2,6 +2,7 @@ SHELL=/usr/bin/env bash
 
 
 texdvi=dvilualatex -recorder
+otfdvi=./otfdvi.lua
 
 default: test.dvi
 
@@ -18,10 +19,10 @@ out.dvi: .FORCE
 	dv2dt $< $@
 
 1: sample2e.dvi 
-	ruby otfdvi.rb  $< test.dvi
-	dvips -j1 -u ttfonts.map -o sample2e.ps test.dvi
-	ps2pdf sample2e.ps
-	rm -f test.* *.pfb *.enc *.tfm *.otf
+	 $(otfdvi) $<
+	dv2dt sample2e.dvi sample2e.dt
+	dv2dt out.dvi out.dt
+	make -f __Makefile all pdf 
 
 2: sample2e.dvi 
 	ruby otfdvi.rb --no-auto --no-htf --psmap test.map --debug $< test.dvi
