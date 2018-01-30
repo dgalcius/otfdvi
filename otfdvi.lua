@@ -1,11 +1,12 @@
 #!/usr/bin/env texlua
 
+local kpse = kpse
+kpse.set_program_name("luatex")
+
 local inspect  = require("inspect")
 local dvi      = require("dvi")
 local lustache = require("lustache")
 
-local kpse = kpse
-kpse.set_program_name("luatex")
 local lua_font_dir = kpse.expand_var("$TEXMFSYSVAR")
 lua_font_dir = lua_font_dir  ..  "/luatex-cache/generic/fonts/otl/"
 
