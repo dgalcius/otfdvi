@@ -5,7 +5,7 @@ otffonts:={{#targets}} {{otffontname}} {{/targets}}
 encfiles:=$(fonts:=.enc)
 tfmfiles:=$(fonts:=.tfm)
 htffiles:=$(fonts:=.htf)
-glyphlistfiles:=$(fonts:=.glyphs)
+glyphlistfiles:=$(otffonts:.otf=.glyphs)
 
 
 output={{output}}
@@ -53,10 +53,10 @@ clean:
 
 .FORCE:
 
-options:=--vendor=UKWN $(verbose) --no-updmap --warn-missing
+options:=--vendor=UKWN $(verbose) --no-updmap --warn-missing --x-height=font
 
 {{#targets}}
 {{fontname}}.tfm: {{otffontname}} .FORCE
-	otftotfm --literal-encoding={{fontname}}.enc  --name={{fontname}} --map-file=$(mapfile) --glyphlist={{glyphsfontname}} $(options) $<
+	otftotfm --literal-encoding={{fontname}}.enc  --name={{fontname}} --map-file=$(mapfile) --glyphlist={{glyphsfontname}} --design-size={{design_size}}  $(options) $<
 
 {{/targets}}
