@@ -53,6 +53,12 @@ clean:
 
 .FORCE:
 
+dvipng: $(dvifile)
+	dvipng  $<
+
+dvitype: $(dvifile)
+	dvitype $<
+
 options:=--vendor=UKWN $(verbose) --no-updmap --warn-missing --x-height=font
 
 {{#targets}}
