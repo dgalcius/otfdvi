@@ -50,13 +50,13 @@ for _, op  in ipairs(content) do
 
    if op._opcode == "fntdef" then
       --debug_print("fntdef")
-      --debug_print(inspect(op))
+      debug_print(inspect(op))
       if is_otf(op.fontname) == true then
          debug_print(op.fontname .. " => " .. fontprefix .. tostring(op.num))
          local _, basename = is_otf(op.fontname)
          
          if otffonts[op.num] == nil then
-            otffonts[op.num] = { fontname = op.fontname , basename = basename, charlist = {} }
+            otffonts[op.num] = { fontname = op.fontname , basename = basename, charlist = {}, design_size = (op.design_size / 65536) }
             ifonts[op.num] = { charlist = {} }
             ifonts[op.num].index = 0
             op.fontname = fontprefix .. tostring(op.num)
@@ -93,9 +93,7 @@ for _, op  in ipairs(content) do
    table.insert(dvimodified, op)
 end
 
-debug_print("start: otffonts")
 debug_print(inspect(otffonts))
-debug_print("stop: otffonts")
 
 dvi.dump(fho, dvimodified) -- write modified DVI
 
@@ -116,11 +114,12 @@ function get_glyphlist(name)
    local ghfile = name .. ".glyphs"
    local gh = assert(io.open(ghfile, 'w'))
    local uni = luafont["resources"]["unicodes"]
+   local metadata = luafont["metadata"]
    for glyph, ucode in pairs(uni) do
       gh:write("/" .. glyph .. ";" .. ucode .. "\n")
    end
    io.close(gh)
-   return uni
+   return uni, metadata
 end
 
 
@@ -130,8 +129,9 @@ end
 
 for i_s, v_s in pairs(otffonts) do
    local fontname = fontprefix .. i_s
-   local uni = get_glyphlist(v_s.basename)
+   local uni, metadata = get_glyphlist(v_s.basename)
    otffonts[i_s].glyphlist = reverse_table(uni)
+   otffonts[i_s].metadata = metadata
 end
 
 -- print(inspect(otffonts))
@@ -168,7 +168,7 @@ for i, v in pairs(otffonts) do
    fontname = fontprefix .. i
    otfname = v.basename .. ".otf"
    glyphsfontname = v.basename .. ".glyphs"
-   table.insert(view.targets, {fontname = fontname, otffontname =  otfname, glyphsfontname = glyphsfontname} )
+   table.insert(view.targets, {fontname = fontname, otffontname =  otfname, glyphsfontname = glyphsfontname, design_size = v.design_size } )
    output_enc(fontname, v.charlist, v.glyphlist)
 end
 
