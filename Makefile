@@ -46,4 +46,9 @@ clean:
 	rm -f *.aux *.dvi *.fls *.log
 	rm -f *.otf *.tfm *.htf *.enc *.pfb
 	rm -f 00Makefile *.map
+	rm -f *.glyphlist
+	rm -f *.gly
+	rm -f *.glyphs
+	rm -f *.png
+
 .FORCE:
