@@ -20,9 +20,23 @@ out.dvi: .FORCE
 
 1: sample2e.dvi 
 	 $(otfdvi) $<
-	dv2dt sample2e.dvi sample2e.dt
-	dv2dt out.dvi out.dt
+#	dv2dt sample2e.dvi sample2e.dt
+#	dv2dt out.dvi out.dt
+#	make -f __Makefile all dvitype
 	make -f __Makefile all pdf 
+
+dvitype: sample2e.dvi 
+	 $(otfdvi) $<
+	make -f __Makefile all dvitype
+
+png: sample2e.dvi 
+	 $(otfdvi) $<
+	make -f __Makefile all dvipng
+
+svg: sample2e.dvi 
+	 $(otfdvi) $<
+	make -f __Makefile all svg clean
+
 
 2: sample2e.dvi 
 	ruby otfdvi.rb --no-auto --no-htf --psmap test.map --debug $< test.dvi
@@ -50,5 +64,5 @@ clean:
 	rm -f *.gly
 	rm -f *.glyphs
 	rm -f *.png
-
+	make -f __Makefile clean
 .FORCE:
