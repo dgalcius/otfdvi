@@ -50,6 +50,7 @@ $(pdffile): $(psfile)
 clean:
 	rm -f $(otffonts) $(tfmfiles) $(encfiles) $(htffiles) $(glyphlistfiles)
 	rm -f $(mapfile) *.pfb
+	rm -f __Makefile
 
 .FORCE:
 
