@@ -49,7 +49,6 @@ for _, op  in ipairs(content) do
    end
 
    if op._opcode == "fntdef" then
-      --debug_print("fntdef")
       debug_print(inspect(op))
       if is_otf(op.fontname) == true then
          debug_print(op.fontname .. " => " .. fontprefix .. tostring(op.num))
@@ -59,6 +58,8 @@ for _, op  in ipairs(content) do
             otffonts[op.num] = { fontname = op.fontname , basename = basename, charlist = {}, design_size = (op.design_size / 65536) }
             ifonts[op.num] = { charlist = {} }
             ifonts[op.num].index = 0
+            op.fontname = fontprefix .. tostring(op.num)
+         else
             op.fontname = fontprefix .. tostring(op.num)
          end
       end
