@@ -15,6 +15,7 @@ local fileout = 'out.dvi'
 local psmapfile = 'ttfonts.map'
 local mkfile = '__Makefile'
 local fontprefix = "font"
+local htf = true
 local debug = false
 local verbose = false
 
@@ -53,24 +54,20 @@ for _, op  in ipairs(content) do
       if is_otf(op.fontname) == true then
          debug_print(op.fontname .. " => " .. fontprefix .. tostring(op.num))
          local _, basename = is_otf(op.fontname)
-         
          if otffonts[op.num] == nil then
-            otffonts[op.num] = { fontname = op.fontname , basename = basename, charlist = {}, design_size = (op.design_size / 65536) }
+            otffonts[op.num] = { fontname = op.fontname ,
+                                 basename = basename,
+                                 charlist = {},
+                                 design_size = (op.design_size / 65536) }
             ifonts[op.num] = { charlist = {} }
             ifonts[op.num].index = 0
-            op.fontname = fontprefix .. tostring(op.num)
-         else
-            op.fontname = fontprefix .. tostring(op.num)
          end
+         op.fontname = fontprefix .. tostring(op.num)
       end
    end
 
    if op._opcode == "fntnum" then
       currfontnum = op.index
-      ---!FIXME
---      if (otffonts[currfontnum] and true) then
---         ifonts[currfontnum].index = 0
---      end
    end
 
    if op._opcode == "setchar" or op._opcode == "set" then
@@ -78,6 +75,7 @@ for _, op  in ipairs(content) do
          charlist = otffonts[currfontnum].charlist
          uclist = ifonts[currfontnum].charlist
          index = ifonts[currfontnum].index
+
          if uclist[op.index] == nil then -- char is not in a list yet
             table.insert(charlist, op.index)
             uclist[op.index] = index
@@ -123,20 +121,12 @@ function get_glyphlist(name)
    return uni, metadata
 end
 
-
-
--- print(inspect(otffonts))
--- print(lua_font_dir)
-
 for i_s, v_s in pairs(otffonts) do
    local fontname = fontprefix .. i_s
    local uni, metadata = get_glyphlist(v_s.basename)
    otffonts[i_s].glyphlist = reverse_table(uni)
    otffonts[i_s].metadata = metadata
 end
-
--- print(inspect(otffonts))
--- print(inspect(#fonts[14].charlist))
 
 function output_enc(fontname, list, glyphlist)
    local encfile = fontname .. ".enc"
@@ -160,6 +150,21 @@ function output_enc(fontname, list, glyphlist)
 --   io.close(glyh)
 end
 
+function output_htf(fontname, list, glyphlist)
+   local file = fontname .. ".htf"
+   local fh = assert(io.open(file, 'w'))
+   local ss = fontname .. " 0 " .. (#list-1) .. '\n'
+   local s = ss -- start
+   for i, j in ipairs(list) do
+      s = s .. "'&#x" .. string.format("%04X",j) ..";' ''  "
+      s = s .. string.format("    %-12s",glyphlist[j]) .. " " .. " " .. string.format("%-5s\n",j)
+   end
+   s = s .. ss -- stop
+   fh:write(s)
+   io.close(fh)
+   return true
+end
+
 view = {} -- view model for lustache
 view.output = fileout
 view.psmapfile = psmapfile
@@ -171,6 +176,7 @@ for i, v in pairs(otffonts) do
    glyphsfontname = v.basename .. ".glyphs"
    table.insert(view.targets, {fontname = fontname, otffontname =  otfname, glyphsfontname = glyphsfontname, design_size = v.design_size } )
    output_enc(fontname, v.charlist, v.glyphlist)
+   htf = htf and output_htf(fontname, v.charlist, v.glyphlist)
 end
 
 -- template for lustache
