@@ -130,27 +130,57 @@ end
 
 function output_enc(fontname, list, glyphlist)
    local encfile = fontname .. ".enc"
---   local glyfile = fontname .. ".gly"
    local efh = assert(io.open(encfile, 'w'))
---   local glyh = assert(io.open(glyfile, 'w'))
    local s_enc = "/" .. fontname .. "[\n"
    for i = 1, 256 do
       j = glyphlist[list[i]] or ".notdef"
-      --debug_print(j)
-      --debug_print( not j == ".notdef")
-    --  if not j == ".notdef" then
-    --     debug_print(">>" .. j)
-    --     glyh:write("/" .. j .. ";" .. list[i] .. "\n")
-    --  end
       s_enc = s_enc .. "/" .. j .. "\n"
     end
    s_enc = s_enc .. "] def\n"
    efh:write(s_enc)
    io.close(efh)
---   io.close(glyh)
+end
+function cssinfo(m)
+   --[[
+      family: sans-serif, serif, monospace, cursive, fantasy
+      family: Noto Sans, sans-serif
+      font-family: <fontname>, monospace (if monospaced)
+      font-style: normal, italic, oblique
+      font-weight: 100, 200, normal, 500, 600, bold, 900, etc.
+      font-variant: normal, small-caps, etc.
+      font-stretch: condensed, normal, expanded
+      font-feature-settings: 
+      /* enable small caps and use second swash alternate */
+      font-feature-settings: "smcp", "swsh" 2;
+      font-language-override: "SRB"; /* Serbian OpenType language tag */ 
+      @font-face {
+      font-family: main;
+      src: url(fonts/ffmeta.woff) format("woff");
+      font-variant: discretionary-ligatures;
+      }
+   --]]
+
+   local file = m.fontname .. ".mdata"
+   local fh = assert(io.open(file, 'w'))
+   fh:write(inspect(m))
+   fh:close()
+   local weight = m.weight
+   local width  = m.width
+   local style  = "normal"
+   local family = nil
+
+   if m.italicangle < 0 then
+      style = "italic"
+   end
+   
+   if m.monospaced == 'true' then
+      family = {["font-family"] = "monospace" }
+   end
+   
+   return { ["font-weight"] = weight, ["font-style"] = style, family }   
 end
 
-function output_htf(fontname, list, glyphlist)
+function output_htf(fontname, list, glyphlist, metadata)
    local file = fontname .. ".htf"
    local fh = assert(io.open(file, 'w'))
    local ss = fontname .. " 0 " .. (#list-1) .. '\n'
@@ -160,6 +190,14 @@ function output_htf(fontname, list, glyphlist)
       s = s .. string.format("    %-12s",glyphlist[j]) .. " " .. " " .. string.format("%-5s\n",j)
    end
    s = s .. ss -- stop
+   css = cssinfo(metadata)
+   htfcss = "htfcss: " .. fontname .. " "
+   for i, j in pairs(css) do
+      htfcss = htfcss .. i .. ": " .. j .. "; "
+   end
+   s = s .. "\n" .. htfcss
+--   print(htfcss)
+--   os.exit()
    fh:write(s)
    io.close(fh)
    return true
@@ -176,7 +214,7 @@ for i, v in pairs(otffonts) do
    glyphsfontname = v.basename .. ".glyphs"
    table.insert(view.targets, {fontname = fontname, otffontname =  otfname, glyphsfontname = glyphsfontname, design_size = v.design_size } )
    output_enc(fontname, v.charlist, v.glyphlist)
-   htf = htf and output_htf(fontname, v.charlist, v.glyphlist)
+   htf = htf and output_htf(fontname, v.charlist, v.glyphlist, v.metadata)
 end
 
 -- template for lustache
