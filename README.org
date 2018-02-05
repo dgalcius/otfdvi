@@ -26,3 +26,16 @@ dvips -j1-u test.map -o sample2e.ps test.dvi
 ps2pdf sample2e.ps
 #+END_SRC
 
+
+
+* Installation
+
+- lustache
+#+BEGIN_SRC sh
+$ cd ~/texmf/scripts/lua; git clone https://github.com/Olivine-Labs/lustache
+#+END_SRC
+
+ - dvi
+#+BEGIN_SRC sh
+$ cd ~/texmf/scripts/lua; git clone https://github.com/dgalcius/dvilua
+#+END_SRC
