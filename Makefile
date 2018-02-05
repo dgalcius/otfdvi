@@ -29,6 +29,13 @@ dvitype: sample2e.dvi
 	 $(otfdvi) $<
 	make -f __Makefile all dvitype
 
+ps: sample2e.ps
+
+%.ps:  %.tex
+	dvilualatex $*
+	$(otfdvi) $*.dvi
+	make -f __Makefile all
+
 png: sample2e.dvi 
 	 $(otfdvi) $<
 	make -f __Makefile all dvipng
