@@ -19,6 +19,9 @@ local htf = true
 local debug = false
 local verbose = false
 
+local conf_file = conf_file or "otfdvi.conf.lua"
+settings = require("otfdvi.conf.lua")
+
 local fhi = assert(io.open(filein, 'rb'))
 local fho = assert(io.open(fileout, 'wb'))
 local psf = assert(io.open(psmapfile, 'w'))
@@ -140,6 +143,7 @@ function output_enc(fontname, list, glyphlist)
    efh:write(s_enc)
    io.close(efh)
 end
+
 function cssinfo(m)
    --[[
       family: sans-serif, serif, monospace, cursive, fantasy
