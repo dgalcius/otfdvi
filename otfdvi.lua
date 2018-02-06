@@ -11,7 +11,7 @@ local inspect  = require("inspect")
 local dvi      = require("dvi")
 local lustache = require("lustache")
 
--- local l = require("luaotfload-tool.lua")
+local l = require("luaotfload-database.lua")
 --require("lualibs")
 --local l, m, n =
 --require "fontloader-basics-gen.lua"
