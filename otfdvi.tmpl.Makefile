@@ -49,7 +49,7 @@ $(pdffile): $(psfile)
 
 clean:
 	rm -f $(otffonts) $(tfmfiles) $(encfiles) $(htffiles) $(glyphlistfiles)
-	rm -f $(mapfile) *.pfb
+	rm -f $(mapfile) *.pfb *.mdata
 	rm -f __Makefile
 
 .FORCE:
