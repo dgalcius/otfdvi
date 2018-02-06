@@ -11,7 +11,12 @@ local inspect  = require("inspect")
 local dvi      = require("dvi")
 local lustache = require("lustache")
 
-local l = require("luaotfload-database.lua")
+fonts = { handlers = { otf = {} } }
+require("fontloader-basics-gen")
+--require("fontloader-2017-02-11")
+require("luaotfload-log")
+require("luaotfload-database")
+os.exit()
 --require("lualibs")
 --local l, m, n =
 --require "fontloader-basics-gen.lua"
