@@ -1,14 +1,41 @@
 #!/usr/bin/env texlua
 
 local kpse = kpse
+local version = kpse.version()
 kpse.set_program_name("luatex")
 
+
+require("l-lpeg")
+require("l-file")
 local inspect  = require("inspect")
 local dvi      = require("dvi")
 local lustache = require("lustache")
 
-local lua_font_dir = kpse.expand_var("$TEXMFSYSVAR")
-lua_font_dir = lua_font_dir  ..  "/luatex-cache/generic/fonts/otl/"
+-- local l = require("luaotfload-tool.lua")
+--require("lualibs")
+--local l, m, n =
+--require "fontloader-basics-gen.lua"
+--print(inspect(l))
+--print(l, m, n)
+--os.exit()
+
+local texmfvar = kpse.expand_var("$TEXMFSYSVAR")
+local lua_font_dir = ""
+local lua_font_names = texmfvar .. "/luatex-cache/generic/names/"
+
+-- TeX Live 2017
+if version == "kpathsea version 6.2.3" then
+   lua_font_dir = texmfvar  ..  "/luatex-cache/generic/fonts/otl/"
+end
+
+-- TeX Live 2015
+if version == "kpathsea version 6.2.1" then
+   lua_font_dir = texmfvar  ..  "/luatex-cache/generic/fonts/otf/"
+end
+
+
+
+
 
 local filein  = arg[1] or 'sample2e.dvi'
 local fileout = 'out.dvi'
@@ -19,21 +46,34 @@ local htf = true
 local debug = false
 local verbose = false
 
+local dirname = file.dirname(arg[0])
 local conf_file = conf_file or "otfdvi.conf.lua"
-settings = require("otfdvi.conf.lua")
+local settings = require(file.join(dirname, conf_file))
 
 local fhi = assert(io.open(filein, 'rb'))
 local fho = assert(io.open(fileout, 'wb'))
 local psf = assert(io.open(psmapfile, 'w'))
 local mkf = assert(io.open(mkfile, 'w'))
 
+
 local content = dvi.parse(fhi) -- get table
 local dvimodified = {}         
 
 local function is_otf(fontname)
    local s = false
-   local j, i = string.match(fontname, '%[(.*)%]:(.*)')
-   return (j or s) and true, j
+   local filename, script, features, mode, language = nil, nil, nil, nil, nil
+   -- [lmroman10-regular]:trep;+tlig;
+   filename, features = string.match(fontname, '%[(.*)%]:(.*)')
+   -- "file:lmroman10-regular:script=latn;+trep;+tlig;"
+   if filename == nil then
+      filename, script, features  = string.match(fontname, 'file:(.*):script=(.*);(.*)')
+   end
+   --  LatinModernRoman:mode=node;script=latn;language=DFLT;+tlig;
+   if filename == nil then
+      filename, mode, script, language, features  = string.match(fontname, '(.*):mode=(.*);script=(.*);language=(.*);(.*);')
+   end
+
+   return (filename or script) and true, filename
 end
 
 function debug_print(s)
@@ -222,7 +262,8 @@ for i, v in pairs(otffonts) do
 end
 
 -- template for lustache
-local lm = assert(io.open('lu_Makefile', 'r'))
+tmpl = file.join(dirname, settings['mkfile_tmpl'])
+local lm = assert(io.open(tmpl, 'r'))
 local tmpl = lm.read(lm, '*all')
 
 output = lustache:render(tmpl, view)
