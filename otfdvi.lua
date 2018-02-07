@@ -81,6 +81,45 @@ local function is_otf(fontname)
    return (filename or script) and true, filename, f
 end
 
+function read_psfonts()
+   local d = {}
+   local s = ""
+   local f = kpse.lookup("psfonts.map")
+   local fh = assert(io.open(f, 'r'))
+   for line in fh:lines() do
+      --tfm_file, fnt_name, enc_name, enc_file, pfb_file  = string.match(line, '(.*)%s(.*)%s"(.*)"%s<(.*)%s<(.*)')
+      tfm_file, rest = string.match(line, '(.*)%s')
+      print(tfm_file, rest)
+      os.exit()
+      table.insert(d, {tfm_file, fnt_name, enc_name, enc_file, pfb_file})
+   end
+   return d
+end
+
+--- local psmap = read_psfonts()
+-- print(inspect(psmap[1]))
+-- os.exit()
+
+--[[
+fontdata:
+   filename:
+   fullpath:
+   shape: I, BI, B
+   style: Italic, Bold, BoldItalic
+   mode:
+   script:
+   language:
+   features:
+   otf:
+ --]]
+
+function getfontdata(fontname)
+   local d = {}
+   print(fontname)
+   print(inspect(d))
+   os.exit()
+   return d
+end
 
 --[[
 
@@ -117,6 +156,9 @@ for _, op  in ipairs(content) do
 
    if op._opcode == "fntdef" then
       debug_print(inspect(op))
+      fontdata = getfontdata(op.fontname)
+      print(inspect(fontdata))
+      os.exit()
       if is_otf(op.fontname) == true then
          debug_print(op.fontname .. " => " .. fontprefix .. tostring(op.num))
          local _, basename, otfdata = is_otf(op.fontname)
