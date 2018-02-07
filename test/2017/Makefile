@@ -16,3 +16,5 @@ clean:
 	rm -f out*
 	rm -f *.aux *.log *.fls
 	rm -f __Makefile ttfonts.map
+
+.PRECIOUS: %.dvi
