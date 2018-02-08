@@ -6,10 +6,10 @@ ps: 01.ps 02.ps
 %.dvi:  %.tex
 	dvilualatex $*
 
-%.ps:  %.dvi
+%.pdf:  %.dvi
 	$(otfdvi) $*.dvi
 	make -f __Makefile all pdf clean
-
+	mv out.pdf $@ 
 
 
 clean:

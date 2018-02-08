@@ -195,12 +195,8 @@ function getfontdata(fontname)
          _otf, fullpath = lua_font_name(filename)
          print(fullpath)
       end
-      s()
-      os.exit()
-      if filename == nil then
-      else
-         _otf, fullpath = lua_font_name(filename)
-      end
+      -- s()
+      -- os.exit()
    end
 --   s()
    if filename == nil then
