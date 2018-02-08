@@ -16,7 +16,7 @@ local luaotfload_lookup_cache = texmfvar .. "/luatex-cache/generic/names/luaotfl
 local lookup_cache = dofile(luaotfload_lookup_cache)
 --print(inspect(lookup_cache))
 --print(inspect(lookup_cache["LatinModernRoman#655360"][1]))
-
+--os.exit()
 
 
 -- TeX Live 2017
@@ -81,6 +81,7 @@ local function is_otf(fontname)
    return (filename or script) and true, filename, f
 end
 
+--[[
 function read_psfonts()
    local d = {}
    local s = ""
@@ -95,10 +96,37 @@ function read_psfonts()
    end
    return d
 end
+--]]
 
 --- local psmap = read_psfonts()
 -- print(inspect(psmap[1]))
 -- os.exit()
+
+
+function get_real_font_file(v_s)
+   local fontfile = lua_font_dir .. v_s.basename .. ".lua"
+   local s = file.is_readable(fontfile)
+--   print(fontfile, inspect(s))
+   if s == false then
+
+      local i = ""
+      if v_s.otfdata.shape == nil then
+         i = v_s.fontname .. "#" .. v_s.design_size_dvi
+      else
+         i = v_s.fontname .. "#" .. string.lower(v_s.otfdata.shape) .. "#" .. v_s.design_size_dvi
+      end
+--      print(inspect(lookup_cache))
+      local otffile = lookup_cache[i][1]
+      fontfile = lua_font_dir .. file.nameonly(otffile) .. ".lua"
+      s = file.is_readable(fontfile)
+   end
+   if s == false then
+      print("Not found .lua file for font: ", v_s.basename, v_s.fontname)
+      os.exit()
+   end
+   return fontfile
+end
+
 
 --[[
 fontdata:
@@ -113,12 +141,57 @@ fontdata:
    otf:
  --]]
 
-function getfontdata(fontname)
+function getfontdata(opcode)
+   local fontname = opcode.fontname
+--   local f = get_real_font_file(opcode)
    local d = {}
    print(fontname)
+   local filename, fullpath, script, features, mode, language, shape, otf = nil
+   local tmp = nil
+   -- [lmroman10-regular]:trep;+tlig;
+   filename, features = string.match(fontname, '%[(.*)%]:(.*)')
+   if filename == nil then
+   else
+      tmp = lua_font_dir .. filename .. '.lua'
+      if file.is_readable(tmp) then
+         fullpath = tmp
+         otf = true
+      end
+   end
+   
+   -- "file:lmroman10-regular:script=latn;+trep;+tlig;"
+---[[
+   if filename == nil then
+      filename, script, features  = string.match(fontname, 'file:(.*):script=(.*);(.*)')
+      otf = true
+   end
+   --  LatinModernRoman:mode=node;script=latn;language=DFLT;+tlig;
+   if filename == nil then
+      filename, mode, script, language, features  = string.match(fontname, '(.*):mode=(.*);script=(.*);language=(.*);(.*);')
+      otf = true
+   end
+
+   local fi, fj = string.match(filename, '(.*)/(.*)$')
+
+   if fi == nil then
+   else
+      filename = fi
+      shape = fj 
+   end
+   
+--   local f = { filename = filename, mode = mode, script = script, language = language, features = features, shape = shape}
+--   return (filename or script) and true, filename, f
+--]]
+   d = { filename = filename,
+         fullpath = fullpath,
+         script = script,
+         features = features,
+         mode = mode,
+         language = language,
+         shape = shape,
+   }
    print(inspect(d))
-   os.exit()
-   return d
+   return otf, d
 end
 
 --[[
@@ -147,6 +220,7 @@ local currfontnum = 0
 local otffonts = {}
 local ifonts = { }
 local otf = false -- is_otf?
+local fontdata = {}
 
 for _, op  in ipairs(content) do
    if op._opcode == "pre" then
@@ -156,10 +230,8 @@ for _, op  in ipairs(content) do
 
    if op._opcode == "fntdef" then
       debug_print(inspect(op))
-      fontdata = getfontdata(op.fontname)
-      print(inspect(fontdata))
-      os.exit()
-      if is_otf(op.fontname) == true then
+      otf, fontdata = getfontdata(op)
+      if otf then
          debug_print(op.fontname .. " => " .. fontprefix .. tostring(op.num))
          local _, basename, otfdata = is_otf(op.fontname)
          if otffonts[op.num] == nil then
@@ -216,29 +288,6 @@ function reverse_table(t)
    return s
 end
 
-function get_real_font_file(v_s)
-   local fontfile = lua_font_dir .. v_s.basename .. ".lua"
-   local s = file.is_readable(fontfile)
---   print(fontfile, inspect(s))
-   if s == false then
-
-      local i = ""
-      if v_s.otfdata.shape == nil then
-         i = v_s.fontname .. "#" .. v_s.design_size_dvi
-      else
-         i = v_s.fontname .. "#" .. string.lower(v_s.otfdata.shape) .. "#" .. v_s.design_size_dvi
-      end
---      print(inspect(lookup_cache))
-      local otffile = lookup_cache[i][1]
-      fontfile = lua_font_dir .. file.nameonly(otffile) .. ".lua"
-      s = file.is_readable(fontfile)
-   end
-   if s == false then
-      print("Not found .lua file for font: ", v_s.basename, v_s.fontname)
-      os.exit()
-   end
-   return fontfile
-end
 
 --[[
 - read '<otf-font-file>.lua'
@@ -246,10 +295,10 @@ end
 function get_glyphlist(v_s)
    --   local fontfile = lua_font_dir .. name .. ".lua"
    local fontfile = get_real_font_file(v_s)
-   print(inspect(fontfile))
+--   print(inspect(fontfile))
 --   os.exit()
    local luafont = dofile(fontfile)
-   print(inspect(v_s.otfdata))
+--   print(inspect(v_s.otfdata))
    local ghfile = v_s.basename .. ".glyphs"
    local gh = assert(io.open(ghfile, 'w'))
    local uni = luafont["resources"]["unicodes"]
