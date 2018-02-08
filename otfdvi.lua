@@ -12,11 +12,18 @@ local lustache = require("lustache")
 
 local texmfvar = kpse.expand_var("$TEXMFSYSVAR")
 local lua_font_dir = ""
-local luaotfload_lookup_cache = texmfvar .. "/luatex-cache/generic/names/luaotfload-lookup-cache.lua"
+local luaotfload_lookup_cache = texmfvar .. "/luatex-cache/generic/names/luaotfload-lookup-cache.luc"
+local luaotfload_lookup_names = texmfvar .. "/luatex-cache/generic/names/luaotfload-names.luc"
 local lookup_cache = dofile(luaotfload_lookup_cache)
---print(inspect(lookup_cache))
---print(inspect(lookup_cache["LatinModernRoman#655360"][1]))
+local lookup_names = dofile(luaotfload_lookup_names)
+local font_cache = {}
+for i, j in pairs(lookup_cache) do
+   local s = string.split(i, '#')
+   font_cache[s[1]] = j[1]
+end
+--print(inspect(font_cache))
 --os.exit()
+--print(inspect(lookup_cache["LatinModernRoman#655360"][1]))
 
 
 -- TeX Live 2017
@@ -67,8 +74,10 @@ local function is_otf(fontname)
    --  LatinModernRoman:mode=node;script=latn;language=DFLT;+tlig;
    if filename == nil then
       filename, mode, script, language, features  = string.match(fontname, '(.*):mode=(.*);script=(.*);language=(.*);(.*);')
-   end
 
+    end
+
+   
    local fi, fj = string.match(filename, '(.*)/(.*)$')
 
    if fi == nil then
@@ -141,37 +150,63 @@ fontdata:
    otf:
  --]]
 
-function getfontdata(opcode)
-   local fontname = opcode.fontname
+function lua_font_name(filename)
+   local otf = false
+   local fullpath = ""
+   local tmp = lua_font_dir .. filename .. '.lua'
+   print(tmp)
+      if file.is_readable(tmp) then
+         fullpath = tmp
+         otf = true
+      end
+   return otf, fullpath   
+end
+
+function getfontdata(fontname)
 --   local f = get_real_font_file(opcode)
    local d = {}
-   print(fontname)
-   local filename, fullpath, script, features, mode, language, shape, otf = nil
+   local _otf = false
+   local s = function() print(fontname, "otf: " .. inspect(_otf)) end
+--   s()
+   local filename, fullpath, script, features, mode, language, shape  = nil
    local tmp = nil
    -- [lmroman10-regular]:trep;+tlig;
    filename, features = string.match(fontname, '%[(.*)%]:(.*)')
    if filename == nil then
    else
-      tmp = lua_font_dir .. filename .. '.lua'
-      if file.is_readable(tmp) then
-         fullpath = tmp
-         otf = true
-      end
+      _otf, fullpath = lua_font_name(filename)
    end
-   
+--   s()
    -- "file:lmroman10-regular:script=latn;+trep;+tlig;"
 ---[[
    if filename == nil then
       filename, script, features  = string.match(fontname, 'file:(.*):script=(.*);(.*)')
-      otf = true
+      if filename then
+         _otf = true
+      end
    end
+--   s()
    --  LatinModernRoman:mode=node;script=latn;language=DFLT;+tlig;
    if filename == nil then
-      filename, mode, script, language, features  = string.match(fontname, '(.*):mode=(.*);script=(.*);language=(.*);(.*);')
-      otf = true
+      
+      filename, mode, rest  = string.match(fontname, '(.*):mode=(.*);(.*)$')
+      print(filename)
+      if filename then
+         _otf, fullpath = lua_font_name(filename)
+         print(fullpath)
+      end
+      s()
+      os.exit()
+      if filename == nil then
+      else
+         _otf, fullpath = lua_font_name(filename)
+      end
    end
-
-   local fi, fj = string.match(filename, '(.*)/(.*)$')
+--   s()
+   if filename == nil then
+   else
+      local fi, fj = string.match(filename, '(.*)/(.*)$')
+   end
 
    if fi == nil then
    else
@@ -190,8 +225,12 @@ function getfontdata(opcode)
          language = language,
          shape = shape,
    }
-   print(inspect(d))
-   return otf, d
+   --   print(inspect(d))
+   s()
+  -- if fontname == "cmmi10" then
+  --    os.exit()
+  -- end
+   return _otf, d
 end
 
 --[[
@@ -230,17 +269,17 @@ for _, op  in ipairs(content) do
 
    if op._opcode == "fntdef" then
       debug_print(inspect(op))
-      otf, fontdata = getfontdata(op)
+      otf, fontdata = getfontdata(op.fontname)
       if otf then
          debug_print(op.fontname .. " => " .. fontprefix .. tostring(op.num))
-         local _, basename, otfdata = is_otf(op.fontname)
+         -- local _, basename, otfdata = is_otf(op.fontname)
          if otffonts[op.num] == nil then
             otffonts[op.num] = { fontname = op.fontname,
-                                 basename = basename,
+                                 basename = fontdata.filename,
                                  charlist = {},
                                  design_size = (op.design_size / 65536),
                                  design_size_dvi = op.design_size,
-                                 otfdata = otfdata,
+                                 otfdata = fontdata,
                                 }
             ifonts[op.num] = { charlist = {} }
             ifonts[op.num].index = 0
