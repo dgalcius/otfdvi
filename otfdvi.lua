@@ -1,5 +1,6 @@
 #!/usr/bin/env texlua
 
+local exit = os.exit
 local kpse = kpse
 local version = kpse.version()
 kpse.set_program_name("luatex")
@@ -42,6 +43,8 @@ end
 
 local filein  = arg[1] or 'sample2e.dvi'
 local fileout = 'out.dvi'
+local logfile = file.nameonly(fileout) .. ".otfdvi.log"
+local log = assert(io.open(logfile, 'w'))
 local psmapfile = 'ttfonts.map'
 local mkfile = '__Makefile'
 local fontprefix = "font"
@@ -62,7 +65,8 @@ local mkf = assert(io.open(mkfile, 'w'))
 local content = dvi.parse(fhi) -- get table
 local dvimodified = {}         
 
-local function is_otf(fontname)
+local function X_is_otf(fontname)
+   print(fontname)
    local s = false
    local filename, script, features, mode, language, shape = nil, nil, nil, nil, nil, nil
    -- [lmroman10-regular]:trep;+tlig;
@@ -112,7 +116,8 @@ end
 -- os.exit()
 
 
-function get_real_font_file(v_s)
+
+function Xget_real_font_file(v_s)
    local fontfile = lua_font_dir .. v_s.basename .. ".lua"
    local s = file.is_readable(fontfile)
 --   print(fontfile, inspect(s))
@@ -151,81 +156,122 @@ fontdata:
  --]]
 
 function lua_font_name(filename)
+   log:write("  luafontname:\n")
    local otf = false
-   local fullpath = ""
-   local tmp = lua_font_dir .. filename .. '.lua'
-   print(tmp)
-      if file.is_readable(tmp) then
-         fullpath = tmp
-         otf = true
+   local shortname, basename
+   local t_f, t_meta, t_format, t_filename, l_f
+   otf_filename = filename .. ".otf"
+   local full_path  = kpse.lookup(otf_filename)
+   if full_path then
+      shortname = file.basename(full_path)
+   else
+      shortname = font_cache[filename]
+      if shortname then
+         local index = lookup_names.files.base.system[shortname]
+         l_f = lookup_names.mappings[index]
+--         print(inspect(ll, {depth = 1}))
+--         print(inspect(l_f, {depth = 1}))
+--         exit()
       end
-   return otf, fullpath   
+      fullpath = l_f.fullpath
+   end
+
+   log:write("    shortname: ", tostring(shortname), "\n")
+   log:write("    fullname: ", tostring(fullpath), "\n")
+
+   if shortname == nil then
+      print("Font name: " .. filename .. " not found in font cache " .. luaotfload_lookup_cache)
+      print(inspect(lookup_names.files.bare, {depth = 2} ))
+      shortname = lookup_names[filename]
+   end
+   log:write("    lua_font_dir: ", tostring(lua_font_dir), "\n")
+
+   if l_f.subfont then
+      basename = file.nameonly(shortname) .. "-" .. l_f.subfont
+   else
+      basename = file.nameonly(shortname)
+   end
+   basename = string.lower(basename)
+   local lua_path = lua_font_dir .. basename .. '.luc'
+   log:write("    [try] lua_path: ", tostring(lua_path), "\n")
+   if file.is_readable(lua_path) then
+      
+      log:write("    lua_path: ", tostring(lua_path), "\n")
+      t_f = dofile(lua_path)
+      otf = true
+      
+   end
+      
+   
+   return otf, t_filename, t_f, shortname, basename
 end
 
 function getfontdata(fontname)
+   log:write("getfontdata:\n")
+   log:write("  dvifnt: ",fontname, "\n")
+   local tfm = kpse.lookup(fontname .. ".tfm")
+
 --   local f = get_real_font_file(opcode)
    local d = {}
+   local tmeta
    local _otf = false
    local s = function() print(fontname, "otf: " .. inspect(_otf)) end
 --   s()
-   local filename, fullpath, script, features, mode, language, shape  = nil
+   local dvi_filename, fullpath, script, features, mode, language, shape  = nil
    local tmp = nil
-   -- [lmroman10-regular]:trep;+tlig;
-   filename, features = string.match(fontname, '%[(.*)%]:(.*)')
-   if filename == nil then
-   else
-      _otf, fullpath = lua_font_name(filename)
-   end
---   s()
-   -- "file:lmroman10-regular:script=latn;+trep;+tlig;"
----[[
-   if filename == nil then
-      filename, script, features  = string.match(fontname, 'file:(.*):script=(.*);(.*)')
-      if filename then
-         _otf = true
+   if not tfm then
+      -- [lmroman10-regular]:trep;+tlig;
+      dvi_filename, features = string.match(fontname, '%[(.*)%]:(.*)')
+      if dvi_filename then
+         _otf, fullpath, tmeta, shortname, basename  = lua_font_name(dvi_filename)
       end
-   end
---   s()
-   --  LatinModernRoman:mode=node;script=latn;language=DFLT;+tlig;
-   if filename == nil then
-      
-      filename, mode, rest  = string.match(fontname, '(.*):mode=(.*);(.*)$')
-      print(filename)
-      if filename then
-         _otf, fullpath = lua_font_name(filename)
-         print(fullpath)
-      end
-      -- s()
-      -- os.exit()
-   end
---   s()
-   if filename == nil then
-   else
-      local fi, fj = string.match(filename, '(.*)/(.*)$')
-   end
 
-   if fi == nil then
-   else
-      filename = fi
-      shape = fj 
-   end
+      -- "file:lmroman10-regular:script=latn;+trep;+tlig;"
+      if dvi_filename == nil then
+         dvi_filename, script, features  = string.match(fontname, 'file:(.*):script=(.*);(.*)')
+         if dvi_filename then
+            _otf, fullpath, tmeta, shortname, basename  = lua_font_name(dvi_filename)
+         end
+      end
+      --  LatinModernRoman:mode=node;script=latn;language=DFLT;+tlig;
+      if dvi_filename == nil then
+         dvi_filename, mode, rest  = string.match(fontname, '(.*):mode=(.*);(.*)$')
+         log:write("  matched: ", dvi_filename, "\n")
+         if dvi_filename then
+            _otf, fullpath, tmeta, shortname, basename  = lua_font_name(dvi_filename)
+            log:write("  lua_font_name: ", tostring(_otf), "\n")
+            --exit()
+         end
+      end
+
+      if dvi_filename == nil then
+      else
+         local fi, fj = string.match(dvi_filename, '(.*)/(.*)$')
+      end
+
+      if fi == nil then
+      else
+         dvi_filename = fi
+         shape = fj 
+      end
    
 --   local f = { filename = filename, mode = mode, script = script, language = language, features = features, shape = shape}
 --   return (filename or script) and true, filename, f
 --]]
-   d = { filename = filename,
-         fullpath = fullpath,
-         script = script,
-         features = features,
-         mode = mode,
-         language = language,
-         shape = shape,
-   }
-   --   print(inspect(d))
-   s()
-  -- if fontname == "cmmi10" then
-  --    os.exit()
-  -- end
+      d = { dvi_filename = dvi_filename,
+            filename = shortname,
+            basename = basename,
+            fullpath = fullpath,
+            script = script,
+            features = features,
+            mode = mode,
+            language = language,
+            shape = shape,
+            cache = tmeta,
+      }
+
+   end
+   
    return _otf, d
 end
 
@@ -258,6 +304,12 @@ local otf = false -- is_otf?
 local fontdata = {}
 
 for _, op  in ipairs(content) do
+   local is_body = true
+
+   if op._opcode == "post" then
+     is_body = false   
+   end
+   
    if op._opcode == "pre" then
       op.comment = " otfdvi output " .. os.date("%Y.%m.%d:%H%M")
       debug_print(op.comment)
@@ -266,6 +318,7 @@ for _, op  in ipairs(content) do
    if op._opcode == "fntdef" then
       debug_print(inspect(op))
       otf, fontdata = getfontdata(op.fontname)
+
       if otf then
          debug_print(op.fontname .. " => " .. fontprefix .. tostring(op.num))
          -- local _, basename, otfdata = is_otf(op.fontname)
@@ -327,29 +380,28 @@ end
 --[[
 - read '<otf-font-file>.lua'
 --]]
-function get_glyphlist(v_s)
-   --   local fontfile = lua_font_dir .. name .. ".lua"
-   local fontfile = get_real_font_file(v_s)
---   print(inspect(fontfile))
---   os.exit()
-   local luafont = dofile(fontfile)
---   print(inspect(v_s.otfdata))
-   local ghfile = v_s.basename .. ".glyphs"
-   local gh = assert(io.open(ghfile, 'w'))
-   local uni = luafont["resources"]["unicodes"]
-   local metadata = luafont["metadata"]
-   for glyph, ucode in pairs(uni) do
+function write_glyphlist(filename, unicodes)
+   -- * -- * --
+   local gh = assert(io.open(filename, 'w'))
+   for glyph, ucode in pairs(unicodes) do
       gh:write("/" .. glyph .. ";" .. ucode .. "\n")
    end
    io.close(gh)
-   return uni, metadata
+   return true
 end
 
 for i_s, v_s in pairs(otffonts) do
-   local fontname = fontprefix .. i_s
-   local uni, metadata = get_glyphlist(v_s)
-   otffonts[i_s].glyphlist = reverse_table(uni)
+   local ghfilename = fontprefix .. i_s .. ".glyphs"
+--   local basename = v_s.otfdata.basename
+   local unicodes = v_s.otfdata.cache.resources.unicodes
+   local metadata = v_s.otfdata.cache.metadata
+   write_glyphlist(ghfilename, unicodes)
+   otffonts[i_s].glyphlist = reverse_table(unicodes)
    otffonts[i_s].metadata = metadata
+   otffonts[i_s].glyphsfile = ghfilename
+--   print(inspect(otffonts[i_s], {depth = 2}))
+--   exit()
+
 end
 
 function output_enc(fontname, list, glyphlist)
@@ -435,9 +487,11 @@ view.verbose = verbose
 view.targets = {}
 for i, v in pairs(otffonts) do
    fontname = fontprefix .. i
-   otfname = v.basename .. ".otf"
-   glyphsfontname = v.basename .. ".glyphs"
-   table.insert(view.targets, {fontname = fontname, otffontname =  otfname, glyphsfontname = glyphsfontname, design_size = v.design_size } )
+   table.insert(view.targets, { fontname = fontname,
+                                otffontname =  v.basename,
+                                glyphsfontname = v.glyphsfile,
+                                design_size = v.design_size }
+   )
    output_enc(fontname, v.charlist, v.glyphlist)
    htf = htf and output_htf(fontname, v.charlist, v.glyphlist, v.metadata)
 end
