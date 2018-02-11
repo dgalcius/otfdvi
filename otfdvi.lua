@@ -45,6 +45,8 @@ local filein  = arg[1] or 'sample2e.dvi'
 local fileout = 'out.dvi'
 local logfile = file.nameonly(fileout) .. ".otfdvi.log"
 local log = assert(io.open(logfile, 'w'))
+local logw = function(...) log:write(...) end
+logw("---", " !", "current time", "\n")
 local psmapfile = 'ttfonts.map'
 local mkfile = '__Makefile'
 local fontprefix = "font"
@@ -173,7 +175,11 @@ function lua_font_name(filename)
 --         print(inspect(l_f, {depth = 1}))
 --         exit()
       end
-      fullpath = l_f.fullpath
+      
+      if l_f then
+         fullpath = l_f.fullpath
+      end
+      
    end
 
    log:write("    shortname: ", tostring(shortname), "\n")
@@ -186,17 +192,19 @@ function lua_font_name(filename)
    end
    log:write("    lua_font_dir: ", tostring(lua_font_dir), "\n")
 
-   if l_f.subfont then
-      basename = file.nameonly(shortname) .. "-" .. l_f.subfont
-   else
-      basename = file.nameonly(shortname)
+   basename = file.nameonly(shortname)
+   if l_f then
+      if l_f.subfont then
+         basename = file.nameonly(shortname) .. "-" .. l_f.subfont
+      end
    end
+   
    basename = string.lower(basename)
    local lua_path = lua_font_dir .. basename .. '.luc'
-   log:write("    [try] lua_path: ", tostring(lua_path), "\n")
+   log:write("    lua_path(try): ", tostring(lua_path), "\n")
    if file.is_readable(lua_path) then
       
-      log:write("    lua_path: ", tostring(lua_path), "\n")
+      log:write("    lua_path(real): ", tostring(lua_path), "\n")
       t_f = dofile(lua_path)
       otf = true
       
@@ -207,8 +215,8 @@ function lua_font_name(filename)
 end
 
 function getfontdata(fontname)
-   log:write("getfontdata:\n")
-   log:write("  dvifnt: ",fontname, "\n")
+   log:write("- getfontdata:\n")
+   log:write("  dvifnt: '", fontname, "'\n")
    local tfm = kpse.lookup(fontname .. ".tfm")
 
 --   local f = get_real_font_file(opcode)
