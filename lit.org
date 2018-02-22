@@ -1,0 +1,24 @@
+
+* Options
+
+| Variable   | long option  | short option | default                 | alt                |
+|------------+--------------+--------------+-------------------------+--------------------|
+| filein     |              |              | ARG[1]                  |                    |
+| fileout    | --ouput      | -o           | ARG[2]                  |                    |
+| logfile    | --log        | -l           | fileout + ".otfdvi.log" |                    |
+| psmapfile  | --psmap      | -p           | ttfonts.map             |                    |
+| mkfile     | --mkfile     | -m           | __Makefile              |                    |
+| fontprefix | --fontprefix | -f           | font                    |                    |
+| htf        | --htf        | -H           | false                   | true               |
+| debug      | --debug      | -d           | false                   | true               |
+| verbose    | --verbose    | -V           | false                   | true               |
+| version    | --version    | -v           |                         |                    |
+| help       | --help       | -h           |                         |                    |
+| config     | --config     | -c           | otfdvi.conf.lua         |                    |
+| outputdir  | --outputdir  |              |                         |                    |
+| dryrun     | --dry-run    | -n           | false                   | true               |
+| inplace    | --inplace    | -i           | false                   | fileout == filein  |
+| auto       | --auto       | -a           | false                   | run __Makefile all |
+|            |              |              |                         |                    |
+   
+   
