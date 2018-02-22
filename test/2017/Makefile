@@ -1,7 +1,7 @@
 otfdvi:=../../otfdvi.lua
 
 
-ps: 01.ps 02.ps
+defaults: 01.pdf
 
 %.dvi:  %.tex
 	dvilualatex $*
@@ -16,6 +16,11 @@ clean:
 	rm -f out*
 	rm -f *.aux *.log *.fls
 	rm -f __Makefile ttfonts.map
+	rm -f *.glyphs
+
+test:
+#	$(otfdvi) foobar --help --output=123 --fake -n 999 -S lopas - -1 -2 -3
+	$(otfdvi) --version
 
 .PRECIOUS: %.dvi
 
