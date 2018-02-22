@@ -46,8 +46,6 @@ local long_opts = {
 local optarg
 local optind
 opts,optind,optarg = getopt.get_ordered_opts (arg, "hVvo:n:S:", long_opts)
-print(inspect(opts))
-print(inspect(optarg))
 
 for i, option in ipairs (opts) do
 --   if optarg [i] then
@@ -63,13 +61,17 @@ for i, option in ipairs (opts) do
    end
 end
 
+local j = 1
+local arg_left = {}
 for i = optind,#arg do
-   io.write (string.format ("ARGV [%s] = %s\n", i, arg [i]))
+   --io.write (string.format ("ARGV [%s] = %s\n", i, arg [i]))
+   arg_left[j] = arg[i]
+   j = j + 1
 end
 
 local options = {
-   filein  = arg[1],
-   fileout = "out.dvi",
+   filein  = arg_left[1],
+   fileout = arg_left[2] or "out.dvi",
    psmapfile = "ttfonts.map",
    mkfile = "__Makefile",
    fontprefix = "font", 
@@ -82,25 +84,17 @@ local options = {
    inplace = false,
    auto = false,
 }
-options.logfile = options.filein .. ".otfdvi.log"
+options.logfile = file.nameonly(options.filein) .. ".otfdvi.log"
 
-print(inspect(options))
-
-print("* end *")
-os.exit()
-
-
+--[[
 optarg,optind = getopt.get_opts (arg, "hVvo:n:S:", long_opts)
 for k,v in pairs (optarg) do
    io.write ("fin-option `" .. k .. "': " .. v .. "\n")
 end
+--]]
 
 
-
-print(inspect(getopt))
-
-print("* end *")
-os.exit()
+-- END Options --
 
 local texmfvar = kpse.expand_var("$TEXMFSYSVAR")
 local lua_font_dir = ""
@@ -132,22 +126,24 @@ end
 
 
 
-local filein  = arg[1] or 'sample2e.dvi'
-local fileout = 'out.dvi'
-local logfile = file.nameonly(fileout) .. ".otfdvi.log"
+local filein  = options.filein
+local fileout = options.fileout
+local logfile = options.logfile
 local log = assert(io.open(logfile, 'w'))
 local logw = function(...) log:write(...) end
 logw("---", " !", "current time", "\n")
-local psmapfile = 'ttfonts.map'
-local mkfile = '__Makefile'
-local fontprefix = "font"
-local htf = true
-local debug = false
-local verbose = false
+local psmapfile = options.psmapfile
+local mkfile = options.mkfile
+local fontprefix = options.fontprefix
+local htf = options.htf
+local debug = options.debug
+local verbose = options.verbose
+local conf_file = options.config
+logw("options:\n", inspect(options), "\n")
 
 local dirname = file.dirname(arg[0])
-local conf_file = conf_file or "otfdvi.conf.lua"
 local settings = require(file.join(dirname, conf_file))
+logw("settings:\n", inspect(settings), "\n")
 
 local fhi = assert(io.open(filein, 'rb'))
 local fho = assert(io.open(fileout, 'wb'))
@@ -465,6 +461,8 @@ end
 debug_print(inspect(otffonts))
 
 dvi.dump(fho, dvimodified) -- write modified DVI
+logw("Output:\n", fileout, "\n")
+print("Written to " .. fileout)
 
 
 function reverse_table(t)
@@ -603,6 +601,8 @@ local tmpl = lm.read(lm, '*all')
 output = lustache:render(tmpl, view)
 mkf:write(output)
 mkf:close()
+logw("Written to:\n", mkfile, "\n")
+print("Written to " .. mkfile, "\n")
 
 
 
