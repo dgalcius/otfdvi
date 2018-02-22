@@ -11,6 +11,77 @@ local inspect  = require("inspect")
 local dvi      = require("dvi")
 local lustache = require("lustache")
 
+getopt = require("alt_getopt")
+
+local options = {
+   filein  = arg[1],
+   fileout = "out.dvi",
+   psmapfile = "ttfonts.map",
+   mkfile = "__Makefile",
+   fontprefix = "font", 
+   htf = false,
+   debug = false,
+   verbose = false,
+   config = "otfdvi.conf.lua",
+   outputdir = "",
+   dryrun = false,
+   inplace = false,
+   auto = false,
+}
+options.logfile = options.filein .. ".otfdvi.log"
+
+
+
+--print(inspect(options))
+--os.exit()
+   
+local long_opts = {
+   verbose = "V",
+   help    = "h",
+--   fake    = 0,
+--   len     = 1,
+--   output  = "o",
+--   set_value = "S",
+--   ["set-output"] = "o"
+   version = "v"
+}
+
+local optarg
+local optind
+opts,optind,optarg = getopt.get_ordered_opts (arg, "hVvo:n:S:", long_opts)
+print(inspect(opts[v]))
+--print(inspect(optarg))
+print("* end *")
+os.exit()
+
+
+for i,v in ipairs (opts) do
+   if optarg [i] then
+      print("option `" .. v .. "': " .. optarg [i] .. "\n")
+   else
+      print ("option `" .. v .. "'\n")
+   end
+end
+
+print("* end *")
+os.exit()
+
+
+optarg,optind = getopt.get_opts (arg, "hVvo:n:S:", long_opts)
+for k,v in pairs (optarg) do
+   io.write ("fin-option `" .. k .. "': " .. v .. "\n")
+end
+
+for i = optind,#arg do
+   io.write (string.format ("ARGV [%s] = %s\n", i, arg [i]))
+end
+
+
+print(inspect(getopt))
+
+print("* end *")
+os.exit()
+
 local texmfvar = kpse.expand_var("$TEXMFSYSVAR")
 local lua_font_dir = ""
 local luaotfload_lookup_cache = texmfvar .. "/luatex-cache/generic/names/luaotfload-lookup-cache.luc"
