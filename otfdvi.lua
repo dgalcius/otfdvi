@@ -1,8 +1,14 @@
 #!/usr/bin/env texlua
 
+--[[
+otfdvi program. Author Deimantas Galcius deimantas(dot)galcius(at)gmail(dot)com
+--]]
+
+local _name = "otfdvi"
+local version = "0.1"
 local exit = os.exit
 local kpse = kpse
-local version = kpse.version()
+local kpse_version = kpse.version()
 kpse.set_program_name("luatex")
 
 require("l-lpeg")
@@ -12,6 +18,54 @@ local dvi      = require("dvi")
 local lustache = require("lustache")
 
 getopt = require("alt_getopt")
+
+
+
+local function do_print_version()
+   print(_name .. " version " .. version .. " licence GNU GPL v2.0")
+   print("report problems to https://github.com/dgalcius/otfdvi/issues")
+   exit()
+end
+
+local function do_print_help()
+   print("Print help")
+   exit()
+end
+
+local long_opts = {
+   verbose = "V",
+   help    = "h",
+   fake    = 0,
+--   len     = 1,
+--   output  = "o",
+--   set_value = "S",
+--   ["set-output"] = "o"
+   version = "v"
+}
+
+local optarg
+local optind
+opts,optind,optarg = getopt.get_ordered_opts (arg, "hVvo:n:S:", long_opts)
+print(inspect(opts))
+print(inspect(optarg))
+
+for i, option in ipairs (opts) do
+--   if optarg [i] then
+--      print("option `" .. v .. "': " .. optarg [i] .. "\n")
+--   else
+--      print ("option `" .. v .. "'\n")
+--   end
+   if option == 'v' then
+      do_print_version()
+   end
+   if option == 'h' then
+      do_print_help()
+   end
+end
+
+for i = optind,#arg do
+   io.write (string.format ("ARGV [%s] = %s\n", i, arg [i]))
+end
 
 local options = {
    filein  = arg[1],
@@ -30,38 +84,7 @@ local options = {
 }
 options.logfile = options.filein .. ".otfdvi.log"
 
-
-
---print(inspect(options))
---os.exit()
-   
-local long_opts = {
-   verbose = "V",
-   help    = "h",
---   fake    = 0,
---   len     = 1,
---   output  = "o",
---   set_value = "S",
---   ["set-output"] = "o"
-   version = "v"
-}
-
-local optarg
-local optind
-opts,optind,optarg = getopt.get_ordered_opts (arg, "hVvo:n:S:", long_opts)
-print(inspect(opts[v]))
---print(inspect(optarg))
-print("* end *")
-os.exit()
-
-
-for i,v in ipairs (opts) do
-   if optarg [i] then
-      print("option `" .. v .. "': " .. optarg [i] .. "\n")
-   else
-      print ("option `" .. v .. "'\n")
-   end
-end
+print(inspect(options))
 
 print("* end *")
 os.exit()
@@ -72,9 +95,6 @@ for k,v in pairs (optarg) do
    io.write ("fin-option `" .. k .. "': " .. v .. "\n")
 end
 
-for i = optind,#arg do
-   io.write (string.format ("ARGV [%s] = %s\n", i, arg [i]))
-end
 
 
 print(inspect(getopt))
@@ -99,12 +119,12 @@ end
 
 
 -- TeX Live 2017
-if version == "kpathsea version 6.2.3" then
+if kpse_version == "kpathsea version 6.2.3" then
    lua_font_dir = texmfvar  ..  "/luatex-cache/generic/fonts/otl/"
 end
 
 -- TeX Live 2015
-if version == "kpathsea version 6.2.1" then
+if kpse_version == "kpathsea version 6.2.1" then
    lua_font_dir = texmfvar  ..  "/luatex-cache/generic/fonts/otf/"
 end
 
