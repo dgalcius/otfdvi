@@ -57,6 +57,11 @@ local long_opts = {
    auto    = "a",
    config  = "c",
    debug   = "d",
+   fontprefix = "f",
+   htf     = "H",
+   log     = "l",
+   mkfile  = "m",
+   psmap   = "p",
 --   len     = 1,
 --   output  = "o",
 --   set_value = "S",
@@ -66,9 +71,7 @@ local long_opts = {
 
 local optarg
 local optind
-opts,optind,optarg = getopt.get_ordered_opts (arg, "hVvado:n:S::c:", long_opts)
-print(inspect(opts))
-print(inspect(optarg))
+opts,optind,optarg = getopt.get_ordered_opts (arg, "hVvadHo:n:S:c:f:l:m:p:", long_opts)
       
 
 for i, option in ipairs (opts) do
@@ -92,9 +95,30 @@ for i, option in ipairs (opts) do
       options.debug = true
    end
 
+   if option == 'H' then
+      options.htf = true
+   end
+
    if option == 'c' then
       options.config = optarg[i]
    end
+
+   if option == 'f' then
+      options.fontprefix = optarg[i]
+   end
+
+   if option == 'l' then
+      options.logfile = optarg[i]
+   end
+
+   if option == 'm' then
+      options.mkfile = optarg[i]
+   end
+
+   if option == 'p' then
+      options.psmapfile = optarg[i]
+   end
+
 end
 
 local j = 1
@@ -107,7 +131,7 @@ end
 
 options.filein = arg_left[1]
 options.fileout = arg_left[2] or options.fileout
-options.logfile = file.nameonly(options.filein) .. ".otfdvi.log"
+options.logfile = options.logfile or file.nameonly(options.filein) .. ".otfdvi.log"
 
 --[[
 optarg,optind = getopt.get_opts (arg, "hVvo:n:S:", long_opts)
@@ -116,8 +140,6 @@ for k,v in pairs (optarg) do
 end
 --]]
 
-print(inspect(options))
-exit()
 -- END Options --
 
 local texmfvar = kpse.expand_var("$TEXMFSYSVAR")
@@ -149,7 +171,6 @@ end
 
 
 
-
 local filein  = options.filein
 local fileout = options.fileout
 local logfile = options.logfile
@@ -169,6 +190,10 @@ local dirname = file.dirname(arg[0])
 local settings = require(file.join(dirname, conf_file))
 logw("settings:\n", inspect(settings), "\n")
 
+
+logw("kpse_version: ", kpse_version, "\n")
+logw("lua_font_dir: ", lua_font_dir, "\n")
+
 local fhi = assert(io.open(filein, 'rb'))
 local fho = assert(io.open(fileout, 'wb'))
 local psf = assert(io.open(psmapfile, 'w'))
@@ -178,7 +203,7 @@ local mkf = assert(io.open(mkfile, 'w'))
 local content = dvi.parse(fhi) -- get table
 local dvimodified = {}         
 
-local function X_is_otf(fontname)
+local function REMOVE_X_is_otf(fontname)
    print(fontname)
    local s = false
    local filename, script, features, mode, language, shape = nil, nil, nil, nil, nil, nil
@@ -230,7 +255,7 @@ end
 
 
 
-function Xget_real_font_file(v_s)
+function REMOVE_Xget_real_font_file(v_s)
    local fontfile = lua_font_dir .. v_s.basename .. ".lua"
    local s = file.is_readable(fontfile)
 --   print(fontfile, inspect(s))
@@ -269,12 +294,14 @@ fontdata:
  --]]
 
 function lua_font_name(filename)
-   log:write("  luafontname:\n")
+   log:write("  function_lua_font_name: " .. filename .. "\n")
+--   log:write("  filename: " .. filename .. "\n")
    local otf = false
    local shortname, basename
    local t_f, t_meta, t_format, t_filename, l_f
    otf_filename = filename .. ".otf"
-   local full_path  = kpse.lookup(otf_filename)
+   local full_path  = kpse.lookup(otf_filename, "opentype fonts")
+   print(full_path)
    if full_path then
       shortname = file.basename(full_path)
    else
@@ -282,26 +309,27 @@ function lua_font_name(filename)
       if shortname then
          local index = lookup_names.files.base.system[shortname]
          l_f = lookup_names.mappings[index]
---         print(inspect(ll, {depth = 1}))
---         print(inspect(l_f, {depth = 1}))
---         exit()
       end
       
       if l_f then
-         fullpath = l_f.fullpath
+         full_path = l_f.fullpath
       end
       
    end
 
+
    log:write("    shortname: ", tostring(shortname), "\n")
-   log:write("    fullname: ", tostring(fullpath), "\n")
+   log:write("    fullname: ", tostring(full_path), "\n")
+
+--         print(inspect(ll, {depth = 1}))
+--         print(inspect(l_f, {depth = 1}))
+--         exit()
 
    if shortname == nil then
       print("Font name: " .. filename .. " not found in font cache " .. luaotfload_lookup_cache)
       print(inspect(lookup_names.files.bare, {depth = 2} ))
       shortname = lookup_names[filename]
    end
-   log:write("    lua_font_dir: ", tostring(lua_font_dir), "\n")
 
    basename = file.nameonly(shortname)
    if l_f then
@@ -340,9 +368,11 @@ function getfontdata(fontname)
    local tmp = nil
    if not tfm then
       -- [lmroman10-regular]:trep;+tlig;
+      -- [latinmodern-math.otf]:mode=base;script=math;language=DFLT;
       dvi_filename, features = string.match(fontname, '%[(.*)%]:(.*)')
       if dvi_filename then
-         _otf, fullpath, tmeta, shortname, basename  = lua_font_name(dvi_filename)
+         local temp = file.nameonly(dvi_filename)
+         _otf, fullpath, tmeta, shortname, basename  = lua_font_name(temp)
       end
 
       -- "file:lmroman10-regular:script=latn;+trep;+tlig;"
