@@ -5,7 +5,7 @@ otffonts:={{#targets}} {{otffontname}} {{/targets}}
 encfiles:=$(fonts:=.enc)
 tfmfiles:=$(fonts:=.tfm)
 htffiles:=$(fonts:=.htf)
-glyphlistfiles:=$(otffonts:.otf=.glyphs)
+glyphlistfiles:=$(fonts:=.glyphs)
 
 
 output={{output}}
