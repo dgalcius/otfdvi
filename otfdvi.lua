@@ -17,6 +17,25 @@ local inspect  = require("inspect")
 local dvi      = require("dvi")
 local lustache = require("lustache")
 
+
+local options = {
+--   filein  = arg_left[1],
+   --   fileout = arg_left[2] or "out.dvi",
+   filein = "",
+   fileout = "out.dvi",
+   psmapfile = "ttfonts.map",
+   mkfile = "__Makefile",
+   fontprefix = "font", 
+   htf = false,
+   debug = false,
+   verbose = false,
+   config = "otfdvi.conf.lua",
+   outputdir = "",
+   dryrun = false,
+   inplace = false,
+   auto = false,
+}
+
 getopt = require("alt_getopt")
 
 
@@ -35,7 +54,9 @@ end
 local long_opts = {
    verbose = "V",
    help    = "h",
-   fake    = 0,
+   auto    = "a",
+   config  = "c",
+   debug   = "d",
 --   len     = 1,
 --   output  = "o",
 --   set_value = "S",
@@ -45,10 +66,13 @@ local long_opts = {
 
 local optarg
 local optind
-opts,optind,optarg = getopt.get_ordered_opts (arg, "hVvo:n:S:", long_opts)
+opts,optind,optarg = getopt.get_ordered_opts (arg, "hVvado:n:S::c:", long_opts)
+print(inspect(opts))
+print(inspect(optarg))
+      
 
 for i, option in ipairs (opts) do
---   if optarg [i] then
+---   if optarg [i] then
 --      print("option `" .. v .. "': " .. optarg [i] .. "\n")
 --   else
 --      print ("option `" .. v .. "'\n")
@@ -58,6 +82,18 @@ for i, option in ipairs (opts) do
    end
    if option == 'h' then
       do_print_help()
+   end
+
+   if option == 'a' then
+      options.auto = true
+   end
+
+   if option == 'd' then
+      options.debug = true
+   end
+
+   if option == 'c' then
+      options.config = optarg[i]
    end
 end
 
@@ -69,21 +105,8 @@ for i = optind,#arg do
    j = j + 1
 end
 
-local options = {
-   filein  = arg_left[1],
-   fileout = arg_left[2] or "out.dvi",
-   psmapfile = "ttfonts.map",
-   mkfile = "__Makefile",
-   fontprefix = "font", 
-   htf = false,
-   debug = false,
-   verbose = false,
-   config = "otfdvi.conf.lua",
-   outputdir = "",
-   dryrun = false,
-   inplace = false,
-   auto = false,
-}
+options.filein = arg_left[1]
+options.fileout = arg_left[2] or options.fileout
 options.logfile = file.nameonly(options.filein) .. ".otfdvi.log"
 
 --[[
@@ -93,7 +116,8 @@ for k,v in pairs (optarg) do
 end
 --]]
 
-
+print(inspect(options))
+exit()
 -- END Options --
 
 local texmfvar = kpse.expand_var("$TEXMFSYSVAR")
@@ -302,8 +326,8 @@ function lua_font_name(filename)
 end
 
 function getfontdata(fontname)
-   log:write("- getfontdata:\n")
-   log:write("  dvifnt: '", fontname, "'\n")
+   log:write("getfontdata:\n")
+   log:write("  dvi: '", fontname, "'\n")
    local tfm = kpse.lookup(fontname .. ".tfm")
 
 --   local f = get_real_font_file(opcode)
@@ -461,7 +485,7 @@ end
 debug_print(inspect(otffonts))
 
 dvi.dump(fho, dvimodified) -- write modified DVI
-logw("Output:\n", fileout, "\n")
+logw("Output: ", fileout, "\n")
 print("Written to " .. fileout)
 
 
@@ -601,7 +625,7 @@ local tmpl = lm.read(lm, '*all')
 output = lustache:render(tmpl, view)
 mkf:write(output)
 mkf:close()
-logw("Written to:\n", mkfile, "\n")
+logw("Written to: ", mkfile, "\n")
 print("Written to " .. mkfile, "\n")
 
 
