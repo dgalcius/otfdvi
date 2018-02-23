@@ -24,13 +24,13 @@ define cp_k
 endef
 
 
-default: all
+default: fonts
 
-all: otffonts tfmfiles
+fonts: otffonts tfmfonts
 
 otffonts: $(otffonts)
 
-tfmfiles: $(tfmfiles)
+tfmfonts: $(tfmfiles)
 
 pdf: $(pdffile)
 	@echo  Output $<
@@ -55,12 +55,12 @@ clean:
 .FORCE:
 
 dvipng: $(dvifile)
-	dvipng  $<
+	dvipng  -T tight $<
 
 dvitype: $(dvifile)
 	dvitype $<
 
-svg: $(dvifile)
+dvisvg: $(dvifile)
 	dvisvgm --fontmap=+$(mapfile) $<
 
 options:=--vendor=UKWN $(verbose) --no-updmap --warn-missing --x-height=font
