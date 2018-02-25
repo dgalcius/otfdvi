@@ -4,23 +4,29 @@ otfdvi:=../../otfdvi.lua
 defaults: 01.pdf
 
 %.dvi:  %.tex
-	dvilualatex $*
+	dvilualatex -recorder $*
+
+%.l.pdf:  %.tex
+	lualatex -jobname=$*.l -recorder $*
 
 %.pdf:  %.dvi .FORCE
 	$(otfdvi) $*.dvi
-	make -f __Makefile all pdf clean
-	mv out.pdf $@ 
+#	make -f __Makefile fonts
+#	mv out.pdf $@ 
 
 
 clean:
 	rm -f out*
-	rm -f *.aux *.log *.fls
+	rm -f *.aux *.log *.fls *.enc
 	rm -f __Makefile ttfonts.map
 	rm -f *.glyphs
 
 test:
-#	$(otfdvi) foobar --help --output=123 --fake -n 999 -S lopas - -1 -2 -3
-	$(otfdvi) --version
+#	$(otfdvi) --help --output=123 --fake -n 999 -S lopas - -1 -2 -3
+#	$(otfdvi) --version
+#	$(otfdvi) --help
+	$(otfdvi) -c myconfig.lua -f afont -daH  -p xxx.map -m 00Makefile  01.dvi foo.dvi
+
 
 .PRECIOUS: %.dvi
 
