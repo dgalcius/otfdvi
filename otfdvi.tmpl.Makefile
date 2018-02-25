@@ -67,6 +67,6 @@ options:=--vendor=UKWN $(verbose) --no-updmap --warn-missing --x-height=font
 
 {{#targets}}
 {{fontname}}.tfm: {{otffontname}} .FORCE
-	otftotfm --literal-encoding={{fontname}}.enc  --name={{fontname}} --map-file=$(mapfile) --glyphlist={{glyphsfontname}} --design-size={{design_size}}  $(options) $<
+	otftotfm --literal-encoding={{fontname}}.enc  --name={{fontname}} --map-file=$(mapfile) --glyphlist={{glyphsfontname}} --design-size={{design_size}} {{#script}} --script={{script}}{{/script}} $(options) $<
 
 {{/targets}}
