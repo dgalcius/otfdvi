@@ -1,0 +1,39 @@
+% This is a sample LaTeX input file.  (Version of 12 August 2004.)
+%
+% A '%' character causes TeX to ignore all remaining text on the line,
+% and is used for comments like this one.
+
+\documentclass{article}      % Specifies the document class
+\usepackage{fontspec}
+\usepackage{unicode-math}
+%\setmainfont{Palatino Linotype}
+%\setmainfont{Hoefler Text}
+%\setmainfont{lmroman10-regular.otf}
+                             % The preamble begins here.
+\title{An Example Document}  % Declares the document's title.
+\author{Leslie Lamport}      % Declares the author's name.
+\date{January 21, 1994}      % Deleting this command produces today's date.
+
+\newcommand{\ip}[2]{(#1, #2)}
+                             % Defines \ip{arg1}{arg2} to mean
+                             % (arg1, arg2).
+
+%\newcommand{\ip}[2]{\langle #1 | #2\rangle}
+                             % This is an alternative definition of
+                             % \ip that is commented out.
+
+\begin{document}             % End of preamble and beginning of text.
+like
+\pagestyle{empty}
+\( x - 3y + z = 7 \)
+%\end{document}
+or
+       \( a_{1} > x^{2n} + y^{2n} > x' \)
+or  
+       \( \ip{A}{B} = \sum_{i} a_{i} b_{i} \).
+
+x
+   \[  \ip{\Gamma}{\psi'} = x'' + y^{2} + z_{i}^{n}\]
+
+
+\end{document}               % End of document.
