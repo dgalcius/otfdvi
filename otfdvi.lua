@@ -353,56 +353,71 @@ function lua_font_name(filename)
    return otf, t_filename, t_f, shortname, basename
 end
 
+function parse_fontname(fontname)
+   local s, d
+   local lang_ = "DFLT"
+   print("fontname: ", fontname)
+   s = string.split(fontname, ':')
+   local name_, rest_ = s[1], s[2]
+   s = string.match(name_, '%[(.*)%]')
+   s = string.split(s, ".")
+   local base_, ext_ = s[1], s[2]
+   --- kaka --
+   local x, feat_ = string.match(rest_, '(.*)%+(.*)')
+   if x then
+   else
+      x = rest_
+   end
+
+   s = string.split(x, ";")
+   for _i, _j in ipairs(s) do
+      l = string.split(_j, "=")
+      if l[1] == "mode" then
+         mode_ = l[2]
+      end
+
+      if l[1] == "script" then
+         script_ = l[2]
+      end
+
+      if l[1] == "language" then
+         lang_ = l[2]
+      end
+   end
+
+   d = {
+--      rest = rest_,
+--      name = name_,
+      base = base_,
+      ext = ext_,
+      feat = feat_,
+      mode = mode_,
+      lang = lang_,
+      script = script_,
+   }
+   return d
+end
 function getfontdata(fontname)
    log:write("getfontdata:\n")
    log:write("  dvi: '", fontname, "'\n")
    local tfm = kpse.lookup(fontname .. ".tfm")
-
---   local f = get_real_font_file(opcode)
    local d = {}
    local tmeta
    local _otf = false
-   local s = function() print(fontname, "otf: " .. inspect(_otf)) end
+--   local s = function() print(fontname, "otf: " .. inspect(_otf)) end
 --   s()
    local dvi_filename, fullpath, script, features, mode, language, shape  = nil
    local tmp = nil
    if not tfm then
+      x = parse_fontname(fontname)
       -- [lmroman10-regular]:trep;+tlig;
       -- [latinmodern-math.otf]:mode=base;script=math;language=DFLT;
-      dvi_filename, features = string.match(fontname, '%[(.*)%]:(.*)')
-      if dvi_filename then
-         local temp = file.nameonly(dvi_filename)
-         _otf, fullpath, tmeta, shortname, basename  = lua_font_name(temp)
-      end
-
+      _otf, fullpath, tmeta, shortname, basename  = lua_font_name(x.base)
+ 
       -- "file:lmroman10-regular:script=latn;+trep;+tlig;"
-      if dvi_filename == nil then
-         dvi_filename, script, features  = string.match(fontname, 'file:(.*):script=(.*);(.*)')
-         if dvi_filename then
-            _otf, fullpath, tmeta, shortname, basename  = lua_font_name(dvi_filename)
-         end
-      end
       --  LatinModernRoman:mode=node;script=latn;language=DFLT;+tlig;
-      if dvi_filename == nil then
-         dvi_filename, mode, rest  = string.match(fontname, '(.*):mode=(.*);(.*)$')
-         log:write("  matched: ", dvi_filename, "\n")
-         if dvi_filename then
-            _otf, fullpath, tmeta, shortname, basename  = lua_font_name(dvi_filename)
-            log:write("  lua_font_name: ", tostring(_otf), "\n")
-            --exit()
-         end
-      end
-
-      if dvi_filename == nil then
-      else
-         local fi, fj = string.match(dvi_filename, '(.*)/(.*)$')
-      end
-
-      if fi == nil then
-      else
-         dvi_filename = fi
-         shape = fj 
-      end
+      --      log:write("  lua_font_name: ", tostring(_otf), "\n")
+      --exit()
    
 --   local f = { filename = filename, mode = mode, script = script, language = language, features = features, shape = shape}
 --   return (filename or script) and true, filename, f
@@ -420,16 +435,29 @@ function getfontdata(fontname)
       }
 
    end
-   
+
    return _otf, d
 end
 
---[[
 
-local test_fonts = {
+test_fonts = {
+   '[lmroman10-regular]:+tlig;',
+   '[latinmodern-math.otf]:mode=base;script=math;language=DFLT;',
    'LatinModernRoman/B:mode=node;script=latn;language=DFLT;+tlig;',
    'LatinModernRoman/I:mode=node;script=latn;language=DFLT;+tlig;',
    'LatinModernRoman:mode=node;script=latn;language=DFLT;+tlig;',
+}
+--for i, font in ipairs(test_fonts) do
+--   d, l = getfontdata(font)
+--   print(d, inspect(l))
+--end
+--exit()
+--[[
+
+local test_fonts = {
+   
+
+
 }
 for i, j in ipairs(test_fonts) do
 --   print(i, j, is_otf(j))
@@ -451,9 +479,10 @@ local otffonts = {}
 local ifonts = { }
 local otf = false -- is_otf?
 local fontdata = {}
+local is_body = true --until opcode = post
 
 for _, op  in ipairs(content) do
-   local is_body = true
+
 
    if op._opcode == "post" then
      is_body = false   
@@ -466,23 +495,27 @@ for _, op  in ipairs(content) do
 
    if op._opcode == "fntdef" then
       debug_print(inspect(op))
-      otf, fontdata = getfontdata(op.fontname)
 
-      if otf then
-         debug_print(op.fontname .. " => " .. fontprefix .. tostring(op.num))
-         -- local _, basename, otfdata = is_otf(op.fontname)
-         if otffonts[op.num] == nil then
-            otffonts[op.num] = { fontname = op.fontname,
-                                 basename = fontdata.filename,
-                                 charlist = {},
-                                 design_size = (op.design_size / 65536),
-                                 design_size_dvi = op.design_size,
-                                 otfdata = fontdata,
-                                }
-            ifonts[op.num] = { charlist = {} }
-            ifonts[op.num].index = 0
+      if is_body then
+         otf, fontdata = getfontdata(op.fontname)
+         if otf then
+            debug_print(op.fontname .. " => " .. fontprefix .. tostring(op.num))
+            -- local _, basename, otfdata = is_otf(op.fontname)
+            if otffonts[op.num] == nil then
+               otffonts[op.num] = { fontname = op.fontname,
+                                    basename = fontdata.filename,
+                                    charlist = {},
+                                    design_size = (op.design_size / 65536),
+                                    design_size_dvi = op.design_size,
+                                    otfdata = fontdata,
+               }
+               ifonts[op.num] = { charlist = {} }
+               ifonts[op.num].index = 0
+            end
+            op.fontname = fontprefix .. tostring(op.num)
          end
-         op.fontname = fontprefix .. tostring(op.num)
+      else
+         op.fontname = fontprefix .. tostring(op.num) -- # in postamble
       end
    end
 
@@ -543,10 +576,22 @@ end
 
 for i_s, v_s in pairs(otffonts) do
    local ghfilename = fontprefix .. i_s .. ".glyphs"
+   print(inspect(otffonts[i_s].charlist))
+   local unicodes = {}
+   for _i, _j in ipairs (otffonts[i_s].charlist) do
+      unicodes[_j] = "u".. string.format("%04X",_j)
+   end
+   
 --   local basename = v_s.otfdata.basename
-   local unicodes = v_s.otfdata.cache.resources.unicodes
+   local runi = reverse_table(v_s.otfdata.cache.resources.unicodes)
+   for _i, _j in ipairs (otffonts[i_s].charlist) do
+      unicodes[_j] = runi[_j] or unicodes[_j]
+   end
+
+--   print(inspect(unicodes, { depth = 1 }))
+--   exit()
    local metadata = v_s.otfdata.cache.metadata
-   write_glyphlist(ghfilename, unicodes)
+   write_glyphlist(ghfilename, reverse_table(unicodes))
    otffonts[i_s].glyphlist = reverse_table(unicodes)
    otffonts[i_s].metadata = metadata
    otffonts[i_s].glyphsfile = ghfilename
@@ -555,11 +600,20 @@ for i_s, v_s in pairs(otffonts) do
 
 end
 
-function output_enc(fontname, list, glyphlist)
+function output_enc(fontname, list, glyphs)
+   local glyphlist = reverse_table(glyphs)
    local encfile = fontname .. ".enc"
    local efh = assert(io.open(encfile, 'w'))
    local s_enc = "/" .. fontname .. "[\n"
+--   print(list[1], string.format("%04X",list[1]), glyphlist[list[1]])
+--   print(list[2], string.format("%04X",list[2]), glyphlist[list[2]])
+   --   exit()
+--   glyphlist[list[1]] = "u1D465"
+--   print(inspect(glyphlist))
+--   print(inspect(list))
+
    for i = 1, 256 do
+      --      print(list[i])
       j = glyphlist[list[i]] or ".notdef"
       s_enc = s_enc .. "/" .. j .. "\n"
     end
@@ -637,11 +691,14 @@ view.psmapfile = psmapfile
 view.verbose = verbose
 view.targets = {}
 for i, v in pairs(otffonts) do
+ --  print(inspect(v, {depth = 2} ))
    fontname = fontprefix .. i
    table.insert(view.targets, { fontname = fontname,
                                 otffontname =  v.basename,
                                 glyphsfontname = v.glyphsfile,
-                                design_size = v.design_size }
+                                design_size = v.design_size,
+                                script = 'math',
+                              }
    )
    output_enc(fontname, v.charlist, v.glyphlist)
    htf = htf and output_htf(fontname, v.charlist, v.glyphlist, v.metadata)
