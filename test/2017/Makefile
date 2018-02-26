@@ -9,10 +9,15 @@ defaults: 01.pdf
 %.l.pdf:  %.tex
 	lualatex -jobname=$*.l -recorder $*
 
+%.ps:  %.dvi .FORCE
+	$(otfdvi) $*.dvi
+	make -f __Makefile fonts ps clean
+	mv out.ps $@
+
 %.pdf:  %.dvi .FORCE
 	$(otfdvi) $*.dvi
-#	make -f __Makefile fonts
-#	mv out.pdf $@ 
+	make -f __Makefile fonts pdf clean
+	mv out.pdf $@
 
 
 clean:
@@ -21,11 +26,17 @@ clean:
 	rm -f __Makefile ttfonts.map
 	rm -f *.glyphs
 
-test:
+testx:
 #	$(otfdvi) --help --output=123 --fake -n 999 -S lopas - -1 -2 -3
 #	$(otfdvi) --version
 #	$(otfdvi) --help
 	$(otfdvi) -c myconfig.lua -f afont -daH  -p xxx.map -m 00Makefile  01.dvi foo.dvi
+
+test: 01.test
+
+%.test: %.ps
+	diff -I '^.*Date' -I '^.*DVIPSSource' $*.ps $*.test.ps
+
 
 
 .PRECIOUS: %.dvi
