@@ -11,7 +11,8 @@ defaults: 01.pdf
 
 %.ps:  %.dvi .FORCE
 	$(otfdvi) $*.dvi
-	make -f __Makefile fonts ps clean
+	make -f __Makefile fonts ps
+#clean
 	mv out.ps $@
 
 %.pdf:  %.dvi .FORCE

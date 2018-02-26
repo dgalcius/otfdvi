@@ -301,7 +301,7 @@ function lua_font_name(filename)
    local t_f, t_meta, t_format, t_filename, l_f
    otf_filename = filename .. ".otf"
    local full_path  = kpse.lookup(otf_filename, "opentype fonts")
-   print(full_path)
+--   print(full_path)
    if full_path then
       shortname = file.basename(full_path)
    else
@@ -356,7 +356,7 @@ end
 function parse_fontname(fontname)
    local s, d
    local lang_ = "DFLT"
-   print("fontname: ", fontname)
+--   print("fontname: ", fontname)
    s = string.split(fontname, ':')
    local name_, rest_ = s[1], s[2]
    s = string.match(name_, '%[(.*)%]')
@@ -433,6 +433,8 @@ function getfontdata(fontname)
             shape = shape,
             cache = tmeta,
       }
+      print(inspect(d, { depth = 1}))
+      exit()
 
    end
 
@@ -576,7 +578,7 @@ end
 
 for i_s, v_s in pairs(otffonts) do
    local ghfilename = fontprefix .. i_s .. ".glyphs"
-   print(inspect(otffonts[i_s].charlist))
+   --print(inspect(otffonts[i_s].charlist))
    local unicodes = {}
    for _i, _j in ipairs (otffonts[i_s].charlist) do
       unicodes[_j] = "u".. string.format("%04X",_j)
@@ -691,7 +693,8 @@ view.psmapfile = psmapfile
 view.verbose = verbose
 view.targets = {}
 for i, v in pairs(otffonts) do
- --  print(inspect(v, {depth = 2} ))
+   print(inspect(v, {depth = 2} ))
+   exit()
    fontname = fontprefix .. i
    table.insert(view.targets, { fontname = fontname,
                                 otffontname =  v.basename,
