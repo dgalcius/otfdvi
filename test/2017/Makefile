@@ -33,9 +33,9 @@ testx:
 #	$(otfdvi) --help
 	$(otfdvi) -c myconfig.lua -f afont -daH  -p xxx.map -m 00Makefile  01.dvi foo.dvi
 
-test: 01.test
+check: 01.check
 
-%.test: %.ps
+%.check: %.ps
 	diff -I '^.*Date' -I '^.*DVIPSSource' $*.ps $*.test.ps
 
 
