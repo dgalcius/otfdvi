@@ -13,10 +13,15 @@ kpse.set_program_name("luatex")
 
 require("l-lpeg")
 require("l-file")
+local lualibs = require("lualibs")
 local inspect  = require("inspect")
+print(inspect(package.loaded, {depth = 1}))
+print(inspect(lualibs, {depth = 1}))
+exit()
 local dvi      = require("dvi")
+print("ZZZZZ")
 local lustache = require("lustache")
-
+print("KKKKKK")
 
 local options = {
 --   filein  = arg_left[1],
@@ -301,7 +306,7 @@ function lua_font_name(filename)
    local t_f, t_meta, t_format, t_filename, l_f
    otf_filename = filename .. ".otf"
    local full_path  = kpse.lookup(otf_filename, "opentype fonts")
---   print(full_path)
+   -- print(full_path)
    if full_path then
       shortname = file.basename(full_path)
    else
@@ -327,7 +332,7 @@ function lua_font_name(filename)
 
    if shortname == nil then
       print("Font name: " .. filename .. " not found in font cache " .. luaotfload_lookup_cache)
-      print(inspect(lookup_names.files.bare, {depth = 2} ))
+      -- print(inspect(lookup_names.files.bare, {depth = 2} ))
       shortname = lookup_names[filename]
    end
 
@@ -340,31 +345,36 @@ function lua_font_name(filename)
    
    basename = string.lower(basename)
    local lua_path = lua_font_dir .. basename .. '.luc'
-   log:write("    lua_path(try): ", tostring(lua_path), "\n")
+   log:write("    (try): ", tostring(lua_path), "\n")
    if file.is_readable(lua_path) then
       
-      log:write("    lua_path(real): ", tostring(lua_path), "\n")
+      log:write("    (read): ", tostring(lua_path), "\n")
       t_f = dofile(lua_path)
       otf = true
       
    end
       
    
-   return otf, t_filename, t_f, shortname, basename
+   return otf, full_path, t_f, shortname
 end
 
 function parse_fontname(fontname)
    local s, d
    local lang_ = "DFLT"
+   local base_, ext_, name_, rest_
 --   print("fontname: ", fontname)
    s = string.split(fontname, ':')
-   local name_, rest_ = s[1], s[2]
+   name_, rest_ = s[1], s[2]
    s = string.match(name_, '%[(.*)%]')
-   s = string.split(s, ".")
-   local base_, ext_ = s[1], s[2]
+   if s then
+      s = string.split(s, ".")
+      base_, ext_ = s[1], s[2]
+   else
+      base = name_
+   end
    --- kaka --
    local x, feat_ = string.match(rest_, '(.*)%+(.*)')
-   if x then
+    if x then
    else
       x = rest_
    end
@@ -409,10 +419,21 @@ function getfontdata(fontname)
    local dvi_filename, fullpath, script, features, mode, language, shape  = nil
    local tmp = nil
    if not tfm then
+      print("NOT TFM")
       x = parse_fontname(fontname)
+      print("AFTER")
+      print(inspect(x))
+  --    exit()
+      dvi_filename = fontname
+      basename = x.base
+      language = x.lang
+      features = x.feat
+      mode = x.mode
+      shape = x.shape
       -- [lmroman10-regular]:trep;+tlig;
       -- [latinmodern-math.otf]:mode=base;script=math;language=DFLT;
-      _otf, fullpath, tmeta, shortname, basename  = lua_font_name(x.base)
+      _otf, fullpath, tmeta, shortname  = lua_font_name(x.base)
+      -- print(basename, x.base)
  
       -- "file:lmroman10-regular:script=latn;+trep;+tlig;"
       --  LatinModernRoman:mode=node;script=latn;language=DFLT;+tlig;
@@ -433,8 +454,8 @@ function getfontdata(fontname)
             shape = shape,
             cache = tmeta,
       }
-      print(inspect(d, { depth = 1}))
-      exit()
+--      print(inspect(d, { depth = 1}))
+--      exit()
 
    end
 
@@ -693,14 +714,15 @@ view.psmapfile = psmapfile
 view.verbose = verbose
 view.targets = {}
 for i, v in pairs(otffonts) do
-   print(inspect(v, {depth = 2} ))
-   exit()
+--   print(inspect(v.otfdata, {depth = 2} ))
+--   exit()
    fontname = fontprefix .. i
    table.insert(view.targets, { fontname = fontname,
                                 otffontname =  v.basename,
                                 glyphsfontname = v.glyphsfile,
                                 design_size = v.design_size,
-                                script = 'math',
+                                -- script = 'math',
+                                fullpath = v.otfdata.fullpath
                               }
    )
    output_enc(fontname, v.charlist, v.glyphlist)
@@ -712,7 +734,9 @@ tmpl = file.join(dirname, settings['mkfile_tmpl'])
 local lm = assert(io.open(tmpl, 'r'))
 local tmpl = lm.read(lm, '*all')
 
+print("XXXXX")
 output = lustache:render(tmpl, view)
+print("*****")
 mkf:write(output)
 mkf:close()
 logw("Written to: ", mkfile, "\n")

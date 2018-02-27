@@ -2,6 +2,10 @@ SHELL:=/usr/bin/env bash
 fonts:={{#targets}} {{fontname}} {{/targets}}
 otffonts:={{#targets}} {{otffontname}} {{/targets}}
 
+{{#targets}}
+{{otffontname}}:={{{fullpath}}}
+{{/targets}}
+
 encfiles:=$(fonts:=.enc)
 tfmfiles:=$(fonts:=.tfm)
 htffiles:=$(fonts:=.htf)
@@ -18,11 +22,6 @@ pdffile:=$(baseout:=.pdf)
 {{#verbose}}
 verbose:=--verbose=true
 {{/verbose}}
-
-define cp_k
-	if [[ ! -f $(1) ]]; then x=`kpsewhich $(1)`; cp $$x $(1) ; fi
-endef
-
 
 default: fonts
 
@@ -48,7 +47,7 @@ $(pdffile): $(psfile)
 	ps2pdf $<
 
 clean:
-	rm -f $(otffonts) $(tfmfiles) $(encfiles) $(htffiles) $(glyphlistfiles)
+	rm -f $(tfmfiles) $(encfiles) $(htffiles) $(glyphlistfiles)
 	rm -f $(mapfile) *.pfb *.mdata
 	rm -f __Makefile
 
@@ -66,7 +65,7 @@ dvisvg: $(dvifile)
 options:=--vendor=UKWN $(verbose) --no-updmap --warn-missing --x-height=font
 
 {{#targets}}
-{{fontname}}.tfm: {{otffontname}} .FORCE
+{{fontname}}.tfm: $({{otffontname}}) .FORCE
 	otftotfm --literal-encoding={{fontname}}.enc  --name={{fontname}} --map-file=$(mapfile) --glyphlist={{glyphsfontname}} --design-size={{design_size}} {{#script}} --script={{script}}{{/script}} $(options) $<
 
 {{/targets}}
