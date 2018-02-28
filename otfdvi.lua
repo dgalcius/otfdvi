@@ -13,11 +13,11 @@ kpse.set_program_name("luatex")
 
 require("l-lpeg")
 require("l-file")
-local lualibs = require("lualibs")
+local utils = require(file.dirname(lua.startupfile) .."/otfdvi/utils")
 local inspect  = require("inspect")
-print(inspect(package.loaded, {depth = 1}))
-print(inspect(lualibs, {depth = 1}))
-exit()
+--print(inspect(package.loaded, {depth = 1}))
+--print(inspect(file.dirname(lua.startupfile), {depth = 1}))
+--exit()
 local dvi      = require("dvi")
 print("ZZZZZ")
 local lustache = require("lustache")
@@ -298,7 +298,7 @@ fontdata:
    otf:
  --]]
 
-function lua_font_name(filename)
+function X_lua_font_name(filename)
    log:write("  function_lua_font_name: " .. filename .. "\n")
 --   log:write("  filename: " .. filename .. "\n")
    local otf = false
@@ -358,7 +358,7 @@ function lua_font_name(filename)
    return otf, full_path, t_f, shortname
 end
 
-function parse_fontname(fontname)
+function X_parse_fontname(fontname)
    local s, d
    local lang_ = "DFLT"
    local base_, ext_, name_, rest_
@@ -464,17 +464,18 @@ end
 
 
 test_fonts = {
-   '[lmroman10-regular]:+tlig;',
-   '[latinmodern-math.otf]:mode=base;script=math;language=DFLT;',
+--   '[lmroman10-regular]:+tlig;',
+--   '[latinmodern-math.otf]:mode=base;script=math;language=DFLT;',
    'LatinModernRoman/B:mode=node;script=latn;language=DFLT;+tlig;',
-   'LatinModernRoman/I:mode=node;script=latn;language=DFLT;+tlig;',
-   'LatinModernRoman:mode=node;script=latn;language=DFLT;+tlig;',
+--   'LatinModernRoman/I:mode=node;script=latn;language=DFLT;+tlig;',
+--   'LatinModernRoman:mode=node;script=latn;language=DFLT;+tlig;',
 }
---for i, font in ipairs(test_fonts) do
---   d, l = getfontdata(font)
---   print(d, inspect(l))
---end
---exit()
+for i, font in ipairs(test_fonts) do
+   print(font)
+   d, l = utils.getfontdata(font)
+  print(d, inspect(l))
+end
+exit()
 --[[
 
 local test_fonts = {
