@@ -7,6 +7,11 @@ local lua_font_dir = ""
 local luaotfload_lookup_cache = texmfvar .. "/luatex-cache/generic/names/luaotfload-lookup-cache.luc"
 local luaotfload_lookup_names = texmfvar .. "/luatex-cache/generic/names/luaotfload-names.luc"
 local lookup_cache = dofile(luaotfload_lookup_cache)
+local lc = {}
+for i, j in pairs(lookup_cache) do
+   s = string.split(i, ':')
+   lc[s[1]] = j 
+end
 local lookup_names = dofile(luaotfload_lookup_names)
 local font_cache = {}
 for i, j in pairs(lookup_cache) do
@@ -84,7 +89,13 @@ function lua_font_name(filename)
    end
    otf_filename = filename .. ".otf"
    local full_path  = kpse.lookup(otf_filename, "opentype fonts")
-   --print(full_path)
+--   print(inspect(lc[filename][1]))
+--   os.exit()
+   if full_path == nil then
+      full_path = kpse.lookup(lc[filename][1], "opentype fonts")
+   end
+   print(filename, full_path)
+   os.exit()
    if full_path then
       shortname = file.basename(full_path)
    else
@@ -196,5 +207,5 @@ end
 
    
 _m.getfontdata = getfontdata
-
+_m.parse_fontname = parse_fontname
 return _m

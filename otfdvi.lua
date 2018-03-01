@@ -407,7 +407,7 @@ function X_parse_fontname(fontname)
    }
    return d
 end
-function getfontdata(fontname)
+function X_getfontdata(fontname)
    log:write("getfontdata:\n")
    log:write("  dvi: '", fontname, "'\n")
    local tfm = kpse.lookup(fontname .. ".tfm")
@@ -472,8 +472,8 @@ test_fonts = {
 }
 for i, font in ipairs(test_fonts) do
    print(font)
-   d, l = utils.getfontdata(font)
-  print(d, inspect(l))
+   d  = utils.parse_fontname(font)
+  print(inspect(d))
 end
 exit()
 --[[
@@ -519,7 +519,8 @@ for _, op  in ipairs(content) do
 
    if op._opcode == "fntdef" then
       debug_print(inspect(op))
-
+      print(inspect(op))
+      os.exit()
       if is_body then
          otf, fontdata = getfontdata(op.fontname)
          if otf then
