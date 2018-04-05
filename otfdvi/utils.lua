@@ -1,28 +1,48 @@
 _m = {} or _m
 
+
+-- local inspect = require("inspect")
+local kpse = kpse
+kpse.set_program_name("luatex")
 local inspect = require("inspect")
+require("l-lpeg")
+require("l-file")
 
 local texmfvar = kpse.expand_var("$TEXMFSYSVAR")
 local lua_font_dir = ""
 local luaotfload_lookup_cache = texmfvar .. "/luatex-cache/generic/names/luaotfload-lookup-cache.luc"
 local luaotfload_lookup_names = texmfvar .. "/luatex-cache/generic/names/luaotfload-names.luc"
+-- TeX Live 2017
+if kpse_version == "kpathsea version 6.2.3" then
+   lua_font_dir = texmfvar  ..  "/luatex-cache/generic/fonts/otl/"
+end
+-- TeX Live 2015
+if kpse_version == "kpathsea version 6.2.1" then
+   lua_font_dir = texmfvar  ..  "/luatex-cache/generic/fonts/otf/"
+end
+
+--print(luaotfload_lookup_names)
 local lookup_cache = dofile(luaotfload_lookup_cache)
-local lc = {}
-for i, j in pairs(lookup_cache) do
-   s = string.split(i, ':')
-   lc[s[1]] = j 
-end
-local lookup_names = dofile(luaotfload_lookup_names)
-local font_cache = {}
-for i, j in pairs(lookup_cache) do
-   local s = string.split(i, '#')
-   font_cache[s[1]] = j[1]
-end
+--print(inspect(lookup_cache))
+
+--
+--local lc = {}
+--for i, j in pairs(lookup_cache) do
+--   print(i, j[1])
+--   s = string.split(i, ':') 
+--   lc[s[1]] = j[1]
+--end
+--print(inspect(lc))
+--os.exit()
+--]]
+
+--local lookup_names = dofile(luaotfload_lookup_names)
+ --print(inspect(lookup_names))
 
 function parse_fontname(fontname)
    local s, d
    local lang_ = "DFLT"
-   local base_, ext_, name_, rest_
+   local base_, ext_, name_, rest_, shape_
 --   print("fontname: ", fontname)
    s = string.split(fontname, ':')
    name_, rest_ = s[1], s[2]
@@ -80,7 +100,6 @@ end
 
 function lua_font_name(filename)
 --   log:write("  function_lua_font_name: " .. filename .. "\n")
-   local otf = false
    local shortname, basename
    local t_f, t_meta, t_format, t_filename, l_f
    if filename == nil then
@@ -94,8 +113,7 @@ function lua_font_name(filename)
    if full_path == nil then
       full_path = kpse.lookup(lc[filename][1], "opentype fonts")
    end
-   print(filename, full_path)
-   os.exit()
+--   print(filename, full_path)
    if full_path then
       shortname = file.basename(full_path)
    else
@@ -138,15 +156,13 @@ function lua_font_name(filename)
    
    basename = string.lower(basename)
    local lua_path = lua_font_dir .. basename .. '.luc'
+   print("ZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZ")
 --   log:write("    (try): ", tostring(lua_path), "\n")
    if file.is_readable(lua_path) then
-      
 --      log:write("    (read): ", tostring(lua_path), "\n")
       t_f = dofile(lua_path)
-      otf = true
-      
    end
-   return otf, full_path, t_f, shortname
+   return full_path, t_f, shortname
 end
 
 
@@ -160,11 +176,8 @@ function getfontdata(fontname)
    local dvi_filename, fullpath, script, features, mode, language, shape  = nil
    local tmp = nil
    if not tfm then
-      print("NOT TFM")
+      _otf = true
       x = parse_fontname(fontname)
-      print("AFTER")
-      print(inspect(x))
-  --    exit()
       dvi_filename = fontname
       basename = x.base
       language = x.lang
@@ -175,17 +188,14 @@ function getfontdata(fontname)
       -- [latinmodern-math.otf]:mode=base;script=math;language=DFLT;
       print("font dvi font: " .. inspect(fontname))
       print("font base: " .. inspect(x.base))
-      _otf, fullpath, tmeta, shortname  = lua_font_name(x.base)
-      -- print(basename, x.base)
- 
-      -- "file:lmroman10-regular:script=latn;+trep;+tlig;"
-      --  LatinModernRoman:mode=node;script=latn;language=DFLT;+tlig;
-      --      log:write("  lua_font_name: ", tostring(_otf), "\n")
-      --exit()
-   
---   local f = { filename = filename, mode = mode, script = script, language = language, features = features, shape = shape}
---   return (filename or script) and true, filename, f
---]]
+      fullpath, tmeta, shortname  = lua_font_name(x.base)
+      print(basename, x.base)
+      print(_otf, fullpath)
+      print("TMETA: start")
+      print(inspect(tmeta))
+      print("TMETA: stop")
+      
+
       d = { dvi_filename = dvi_filename,
             filename = shortname,
             basename = basename,
@@ -197,11 +207,11 @@ function getfontdata(fontname)
             shape = shape,
             cache = tmeta,
       }
---      print(inspect(d, { depth = 1}))
---      exit()
 
+      print(inspect(d, { depth = 1}))
+      print("XXXXXXXXXXXXXXx")
+      os.exit()
    end
-
    return _otf, d
 end
 

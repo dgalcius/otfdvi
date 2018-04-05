@@ -11,14 +11,13 @@ defaults: 01.pdf
 
 %.ps:  %.dvi .FORCE
 	$(otfdvi) $*.dvi
-	make -f __Makefile fonts ps
-#clean
-	mv out.ps $@
+#	make -f __Makefile fonts ps
+#	mv out.ps $@
 
 %.pdf:  %.dvi .FORCE
 	$(otfdvi) $*.dvi
 	make -f __Makefile fonts pdf clean
-	mv out.pdf $@
+#	mv out.pdf $@
 
 
 clean:
@@ -26,6 +25,7 @@ clean:
 	rm -f *.aux *.log *.fls *.enc
 	rm -f __Makefile ttfonts.map
 	rm -f *.glyphs
+	rm -f *.tfm
 
 testx:
 #	$(otfdvi) --help --output=123 --fake -n 999 -S lopas - -1 -2 -3

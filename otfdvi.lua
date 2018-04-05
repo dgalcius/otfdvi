@@ -19,9 +19,7 @@ local inspect  = require("inspect")
 --print(inspect(file.dirname(lua.startupfile), {depth = 1}))
 --exit()
 local dvi      = require("dvi")
-print("ZZZZZ")
 local lustache = require("lustache")
-print("KKKKKK")
 
 local options = {
 --   filein  = arg_left[1],
@@ -163,19 +161,6 @@ end
 --print(inspect(lookup_cache["LatinModernRoman#655360"][1]))
 
 
--- TeX Live 2017
-if kpse_version == "kpathsea version 6.2.3" then
-   lua_font_dir = texmfvar  ..  "/luatex-cache/generic/fonts/otl/"
-end
-
--- TeX Live 2015
-if kpse_version == "kpathsea version 6.2.1" then
-   lua_font_dir = texmfvar  ..  "/luatex-cache/generic/fonts/otf/"
-end
-
-
-
-
 local filein  = options.filein
 local fileout = options.fileout
 local logfile = options.logfile
@@ -221,10 +206,8 @@ local function REMOVE_X_is_otf(fontname)
    --  LatinModernRoman:mode=node;script=latn;language=DFLT;+tlig;
    if filename == nil then
       filename, mode, script, language, features  = string.match(fontname, '(.*):mode=(.*);script=(.*);language=(.*);(.*);')
-
     end
 
-   
    local fi, fj = string.match(filename, '(.*)/(.*)$')
 
    if fi == nil then
@@ -236,262 +219,6 @@ local function REMOVE_X_is_otf(fontname)
    local f = { filename = filename, mode = mode, script = script, language = language, features = features, shape = shape}
    return (filename or script) and true, filename, f
 end
-
---[[
-function read_psfonts()
-   local d = {}
-   local s = ""
-   local f = kpse.lookup("psfonts.map")
-   local fh = assert(io.open(f, 'r'))
-   for line in fh:lines() do
-      --tfm_file, fnt_name, enc_name, enc_file, pfb_file  = string.match(line, '(.*)%s(.*)%s"(.*)"%s<(.*)%s<(.*)')
-      tfm_file, rest = string.match(line, '(.*)%s')
-      print(tfm_file, rest)
-      os.exit()
-      table.insert(d, {tfm_file, fnt_name, enc_name, enc_file, pfb_file})
-   end
-   return d
-end
---]]
-
---- local psmap = read_psfonts()
--- print(inspect(psmap[1]))
--- os.exit()
-
-
-
-function REMOVE_Xget_real_font_file(v_s)
-   local fontfile = lua_font_dir .. v_s.basename .. ".lua"
-   local s = file.is_readable(fontfile)
---   print(fontfile, inspect(s))
-   if s == false then
-
-      local i = ""
-      if v_s.otfdata.shape == nil then
-         i = v_s.fontname .. "#" .. v_s.design_size_dvi
-      else
-         i = v_s.fontname .. "#" .. string.lower(v_s.otfdata.shape) .. "#" .. v_s.design_size_dvi
-      end
---      print(inspect(lookup_cache))
-      local otffile = lookup_cache[i][1]
-      fontfile = lua_font_dir .. file.nameonly(otffile) .. ".lua"
-      s = file.is_readable(fontfile)
-   end
-   if s == false then
-      print("Not found .lua file for font: ", v_s.basename, v_s.fontname)
-      os.exit()
-   end
-   return fontfile
-end
-
-
---[[
-fontdata:
-   filename:
-   fullpath:
-   shape: I, BI, B
-   style: Italic, Bold, BoldItalic
-   mode:
-   script:
-   language:
-   features:
-   otf:
- --]]
-
-function X_lua_font_name(filename)
-   log:write("  function_lua_font_name: " .. filename .. "\n")
---   log:write("  filename: " .. filename .. "\n")
-   local otf = false
-   local shortname, basename
-   local t_f, t_meta, t_format, t_filename, l_f
-   otf_filename = filename .. ".otf"
-   local full_path  = kpse.lookup(otf_filename, "opentype fonts")
-   -- print(full_path)
-   if full_path then
-      shortname = file.basename(full_path)
-   else
-      shortname = font_cache[filename]
-      if shortname then
-         local index = lookup_names.files.base.system[shortname]
-         l_f = lookup_names.mappings[index]
-      end
-      
-      if l_f then
-         full_path = l_f.fullpath
-      end
-      
-   end
-
-
-   log:write("    shortname: ", tostring(shortname), "\n")
-   log:write("    fullname: ", tostring(full_path), "\n")
-
---         print(inspect(ll, {depth = 1}))
---         print(inspect(l_f, {depth = 1}))
---         exit()
-
-   if shortname == nil then
-      print("Font name: " .. filename .. " not found in font cache " .. luaotfload_lookup_cache)
-      -- print(inspect(lookup_names.files.bare, {depth = 2} ))
-      shortname = lookup_names[filename]
-   end
-
-   basename = file.nameonly(shortname)
-   if l_f then
-      if l_f.subfont then
-         basename = file.nameonly(shortname) .. "-" .. l_f.subfont
-      end
-   end
-   
-   basename = string.lower(basename)
-   local lua_path = lua_font_dir .. basename .. '.luc'
-   log:write("    (try): ", tostring(lua_path), "\n")
-   if file.is_readable(lua_path) then
-      
-      log:write("    (read): ", tostring(lua_path), "\n")
-      t_f = dofile(lua_path)
-      otf = true
-      
-   end
-      
-   
-   return otf, full_path, t_f, shortname
-end
-
-function X_parse_fontname(fontname)
-   local s, d
-   local lang_ = "DFLT"
-   local base_, ext_, name_, rest_
---   print("fontname: ", fontname)
-   s = string.split(fontname, ':')
-   name_, rest_ = s[1], s[2]
-   s = string.match(name_, '%[(.*)%]')
-   if s then
-      s = string.split(s, ".")
-      base_, ext_ = s[1], s[2]
-   else
-      base = name_
-   end
-   --- kaka --
-   local x, feat_ = string.match(rest_, '(.*)%+(.*)')
-    if x then
-   else
-      x = rest_
-   end
-
-   s = string.split(x, ";")
-   for _i, _j in ipairs(s) do
-      l = string.split(_j, "=")
-      if l[1] == "mode" then
-         mode_ = l[2]
-      end
-
-      if l[1] == "script" then
-         script_ = l[2]
-      end
-
-      if l[1] == "language" then
-         lang_ = l[2]
-      end
-   end
-
-   d = {
---      rest = rest_,
---      name = name_,
-      base = base_,
-      ext = ext_,
-      feat = feat_,
-      mode = mode_,
-      lang = lang_,
-      script = script_,
-   }
-   return d
-end
-function X_getfontdata(fontname)
-   log:write("getfontdata:\n")
-   log:write("  dvi: '", fontname, "'\n")
-   local tfm = kpse.lookup(fontname .. ".tfm")
-   local d = {}
-   local tmeta
-   local _otf = false
---   local s = function() print(fontname, "otf: " .. inspect(_otf)) end
---   s()
-   local dvi_filename, fullpath, script, features, mode, language, shape  = nil
-   local tmp = nil
-   if not tfm then
-      print("NOT TFM")
-      x = parse_fontname(fontname)
-      print("AFTER")
-      print(inspect(x))
-  --    exit()
-      dvi_filename = fontname
-      basename = x.base
-      language = x.lang
-      features = x.feat
-      mode = x.mode
-      shape = x.shape
-      -- [lmroman10-regular]:trep;+tlig;
-      -- [latinmodern-math.otf]:mode=base;script=math;language=DFLT;
-      _otf, fullpath, tmeta, shortname  = lua_font_name(x.base)
-      -- print(basename, x.base)
- 
-      -- "file:lmroman10-regular:script=latn;+trep;+tlig;"
-      --  LatinModernRoman:mode=node;script=latn;language=DFLT;+tlig;
-      --      log:write("  lua_font_name: ", tostring(_otf), "\n")
-      --exit()
-   
---   local f = { filename = filename, mode = mode, script = script, language = language, features = features, shape = shape}
---   return (filename or script) and true, filename, f
---]]
-      d = { dvi_filename = dvi_filename,
-            filename = shortname,
-            basename = basename,
-            fullpath = fullpath,
-            script = script,
-            features = features,
-            mode = mode,
-            language = language,
-            shape = shape,
-            cache = tmeta,
-      }
---      print(inspect(d, { depth = 1}))
---      exit()
-
-   end
-
-   return _otf, d
-end
-
-
-test_fonts = {
---   '[lmroman10-regular]:+tlig;',
---   '[latinmodern-math.otf]:mode=base;script=math;language=DFLT;',
-   'LatinModernRoman/B:mode=node;script=latn;language=DFLT;+tlig;',
---   'LatinModernRoman/I:mode=node;script=latn;language=DFLT;+tlig;',
---   'LatinModernRoman:mode=node;script=latn;language=DFLT;+tlig;',
-}
-for i, font in ipairs(test_fonts) do
-   print(font)
-   d  = utils.parse_fontname(font)
-  print(inspect(d))
-end
-exit()
---[[
-
-local test_fonts = {
-   
-
-
-}
-for i, j in ipairs(test_fonts) do
---   print(i, j, is_otf(j))
-   _, _, k = is_otf(j)
-   print(inspect(k))
-end
-os.exit()
-
---]]
-
 
 function debug_print(s)
    if debug then
@@ -507,9 +234,8 @@ local is_body = true --until opcode = post
 
 for _, op  in ipairs(content) do
 
-
    if op._opcode == "post" then
-     is_body = false   
+     is_body = false
    end
    
    if op._opcode == "pre" then
@@ -519,10 +245,13 @@ for _, op  in ipairs(content) do
 
    if op._opcode == "fntdef" then
       debug_print(inspect(op))
-      print(inspect(op))
-      os.exit()
+--      print(inspect(op))
+--      os.exit()
       if is_body then
+--         print(inspect(op.fontname))
          otf, fontdata = getfontdata(op.fontname)
+--         print(otf, inspect(fontdata))
+--         os.exit(2)
          if otf then
             debug_print(op.fontname .. " => " .. fontprefix .. tostring(op.num))
             -- local _, basename, otfdata = is_otf(op.fontname)
@@ -571,6 +300,8 @@ for _, op  in ipairs(content) do
 end
 
 debug_print(inspect(otffonts))
+--print(inspect(otffonts))
+--os.exit(2)
 
 dvi.dump(fho, dvimodified) -- write modified DVI
 logw("Output: ", fileout, "\n")
@@ -606,9 +337,18 @@ for i_s, v_s in pairs(otffonts) do
    for _i, _j in ipairs (otffonts[i_s].charlist) do
       unicodes[_j] = "u".. string.format("%04X",_j)
    end
+   --[[
+   unicodes = {
+     [48] = "u0030",
+     [49] = "u0031",
+   }
+   --]]
    
---   local basename = v_s.otfdata.basename
+   --   local basename = v_s.otfdata.basename
+   print(inspect(v_s.otfdata.cache))
+   os.exit()
    local runi = reverse_table(v_s.otfdata.cache.resources.unicodes)
+
    for _i, _j in ipairs (otffonts[i_s].charlist) do
       unicodes[_j] = runi[_j] or unicodes[_j]
    end
@@ -736,7 +476,7 @@ tmpl = file.join(dirname, settings['mkfile_tmpl'])
 local lm = assert(io.open(tmpl, 'r'))
 local tmpl = lm.read(lm, '*all')
 
-print("XXXXX")
+--print("XXXXX")
 output = lustache:render(tmpl, view)
 print("*****")
 mkf:write(output)
