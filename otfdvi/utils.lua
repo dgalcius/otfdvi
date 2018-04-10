@@ -1,44 +1,10 @@
 _m = {} or _m
 
-
--- local inspect = require("inspect")
 local kpse = kpse
 kpse.set_program_name("luatex")
 local kpse_version = kpse.version()
 local inspect = require("inspect")
 
---local init = require("luaotfload-init")
---luaotfload = "luaotfload"
---node = {}
---node.subtypes = {}
---init.early()
---init.main()
---
---print(inspect(init))
---os.exit()
---config                          = config or { }
---local config                    = config
---config.luaotfload               = config.luaotfload or { }
---fonts = fonts or { }
---fonts = fonts or { }
---local fontsnames = fonts.names or { }
---fonts.names      = fontsnames
---
---fonts.handlers = {}
---caches = {}
---resolvers = {}
---require "lualibs"
---local log = require("luaotfload-log.lua")
---local parsers = require("luaotfload-parsers.lua")
---local configuration = require("luaotfload-configuration.lua")
---local status = require("luaotfload-status")
---local database = require("luaotfload-database")
---local resolvers = require("luaotfload-resolvers")
-----local luaotfload = require("luaotfload-configuration")
---print(inspect(parsers),configuration, status, database, resolvers)
---print(inspect(resolvers.init))
---
---os.exit()
 require("l-lpeg")
 require("l-file")
 
@@ -47,19 +13,67 @@ local texmfvar = kpse.expand_var("$TEXMFVAR")
 -- global
 lua_font_dir = ""
 local luaotfload_lookup_cache = texmfvar .. "/luatex-cache/generic/names/luaotfload-lookup-cache.luc"
+local luaotfload_lookup_cache_sys = texmfsysvar .. "/luatex-cache/generic/names/luaotfload-lookup-cache.luc"
 local luaotfload_lookup_names = texmfvar .. "/luatex-cache/generic/names/luaotfload-names.luc"
-print(luaotfload_lookup_names)
+local luaotfload_lookup_names_sys = texmfsysvar .. "/luatex-cache/generic/names/luaotfload-names.luc"
+
+if file.is_readable(luaotfload_lookup_cache) then
+else
+   luaotfload_lookup_cache = luaotfload_lookup_cache_sys
+   if file.is_readable(luaotfload_lookup_cache) then
+   else
+      print("Not found luaotfload_lookup_cache: ", luaotfload_lookup_cache)
+      os.exit(9)
+   end
+end
+print("luaotfload_lookup_cache: ", luaotfload_lookup_cache)
+
+if file.is_readable(luaotfload_lookup_names) then
+else
+   luaotfload_lookup_names = luaotfload_lookup_names_sys
+   if file.is_readable(luaotfload_lookup_names) then
+   else
+      print("Not found luaotfload_lookup_names: ", luaotfload_lookup_names)
+      os.exit(9)
+   end
+end
+print("luaotfload_lookup_names: ", luaotfload_lookup_names)
+print("texmfvar: ", texmfvar)
+
+
+local function resolve_path(suffix, vartable)
+   local f = vartable[1] .. suffix
+   if file.is_readable(f) then
+      print("Found: ", f)
+   else
+      f = vartable[2] .. suffix 
+      if file.is_readable(f) then
+         print("Found: ", f)
+      else
+         print("Not found: ", f)
+         os.exit(9)
+      end
+   end
+   return f
+end
+
+local lua_font_dir = "/luatex-cache/generic/fonts/otl/"
+print("++kpse version++:", kpse_version)
 -- TeX Live 2017
 if kpse_version == "kpathsea version 6.2.3" then
-   lua_font_dir = texmfvar  ..  "/luatex-cache/generic/fonts/otl/"
+   lua_font_dir = "/luatex-cache/generic/fonts/otl/"
+end
+-- TeX Live 2016
+if kpse_version == "kpathsea version 6.2.3/dev" then
+   lua_font_dir = "/luatex-cache/generic/fonts/otl/"
 end
 -- TeX Live 2016
 if kpse_version == "kpathsea version 6.2.2" then
-   lua_font_dir = texmfvar  ..  "/luatex-cache/generic/fonts/otl/"
+   lua_font_dir = "/luatex-cache/generic/fonts/otl/"
 end
 -- TeX Live 2015
 if kpse_version == "kpathsea version 6.2.1" then
-   lua_font_dir = texmfvar  ..  "/luatex-cache/generic/fonts/otf/"
+   lua_font_dir = "/luatex-cache/generic/fonts/otf/"
 end
 
 --print(luaotfload_lookup_names)
@@ -194,14 +208,14 @@ function lua_font_name(filename)
    end
    
    basename = string.lower(basename)
-   local lua_path = lua_font_dir .. basename .. '.luc'
+   --   local lua_path = lua_font_dir .. basename .. '.luc'
+   print("lua_font_dir: ** ", lua_font_dir)
+   local lua_path = resolve_path(lua_font_dir .. basename .. '.luc',
+                                {texmfvar, texmfsysvar})
 --   print(lua_font_dir, lua_path)
 --   os.exit()
 --   log:write("    (try): ", tostring(lua_path), "\n")
-   if file.is_readable(lua_path) then
---      log:write("    (read): ", tostring(lua_path), "\n")
       t_f = dofile(lua_path)
-   end
 --   print(inspect(t_f, {depth = 2}))
 --   os.exit(2)
    return full_path, t_f, shortname
@@ -253,9 +267,6 @@ function getfontdata(fontname)
             cache = tmeta,
       }
 
---      print(inspect(d, { depth = 1}))
---      print("XXXXXXXXXXXXXXx")
---      os.exit()
    end
    return _otf, d
 end
