@@ -1,11 +1,16 @@
 #!/usr/bin/env texlua
 
+
 --[[
 otfdvi program. Author Deimantas Galcius deimantas(dot)galcius(at)gmail(dot)com
 --]]
 
-local _name = "otfdvi"
+otfdvi  = otfdvi or { }
 local version = "0.1"
+otfdvi.version = version
+otfdvi.self = "otfdvi"
+
+local _name = "otfdvi"
 local exit = os.exit
 local kpse = kpse
 local kpse_version = kpse.version()
@@ -145,17 +150,21 @@ end
 
 -- END Options --
 
+--[[
 local texmfvar = kpse.expand_var("$TEXMFSYSVAR")
 local lua_font_dir = ""
 local luaotfload_lookup_cache = texmfvar .. "/luatex-cache/generic/names/luaotfload-lookup-cache.luc"
 local luaotfload_lookup_names = texmfvar .. "/luatex-cache/generic/names/luaotfload-names.luc"
 local lookup_cache = dofile(luaotfload_lookup_cache)
 local lookup_names = dofile(luaotfload_lookup_names)
-local font_cache = {}
-for i, j in pairs(lookup_cache) do
-   local s = string.split(i, '#')
-   font_cache[s[1]] = j[1]
-end
+--]]
+
+--local font_cache = {}
+--for i, j in pairs(lookup_cache) do
+--   local s = string.split(i, '#')
+--   font_cache[s[1]] = j[1]
+--end
+
 --print(inspect(font_cache))
 --os.exit()
 --print(inspect(lookup_cache["LatinModernRoman#655360"][1]))
@@ -192,33 +201,6 @@ local mkf = assert(io.open(mkfile, 'w'))
 
 local content = dvi.parse(fhi) -- get table
 local dvimodified = {}         
-
-local function REMOVE_X_is_otf(fontname)
-   print(fontname)
-   local s = false
-   local filename, script, features, mode, language, shape = nil, nil, nil, nil, nil, nil
-   -- [lmroman10-regular]:trep;+tlig;
-   filename, features = string.match(fontname, '%[(.*)%]:(.*)')
-   -- "file:lmroman10-regular:script=latn;+trep;+tlig;"
-   if filename == nil then
-      filename, script, features  = string.match(fontname, 'file:(.*):script=(.*);(.*)')
-   end
-   --  LatinModernRoman:mode=node;script=latn;language=DFLT;+tlig;
-   if filename == nil then
-      filename, mode, script, language, features  = string.match(fontname, '(.*):mode=(.*);script=(.*);language=(.*);(.*);')
-    end
-
-   local fi, fj = string.match(filename, '(.*)/(.*)$')
-
-   if fi == nil then
-   else
-      filename = fi
-      shape = fj 
-   end
-   
-   local f = { filename = filename, mode = mode, script = script, language = language, features = features, shape = shape}
-   return (filename or script) and true, filename, f
-end
 
 function debug_print(s)
    if debug then
@@ -345,8 +327,8 @@ for i_s, v_s in pairs(otffonts) do
    --]]
    
    --   local basename = v_s.otfdata.basename
-   print(inspect(v_s.otfdata.cache))
-   os.exit()
+--   print(inspect(v_s.otfdata.cache))
+--   os.exit()
    local runi = reverse_table(v_s.otfdata.cache.resources.unicodes)
 
    for _i, _j in ipairs (otffonts[i_s].charlist) do

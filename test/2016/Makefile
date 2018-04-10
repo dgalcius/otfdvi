@@ -1,5 +1,6 @@
 otfdvi:=../../otfdvi.lua
 
+default: 01.ps
 
 ps: 01.ps 02.ps
 
@@ -11,8 +12,9 @@ ps: 01.ps 02.ps
 	make -f __Makefile all pdf clean
 
 
-
 clean:
 	rm -f out*
 	rm -f *.aux *.log *.fls
 	rm -f __Makefile ttfonts.map
+
+.PRECIOUS: %.dvi

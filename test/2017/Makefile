@@ -16,7 +16,7 @@ defaults: 01.pdf
 
 %.pdf:  %.dvi .FORCE
 	$(otfdvi) $*.dvi
-	make -f __Makefile fonts pdf clean
+#	make -f __Makefile fonts pdf clean
 #	mv out.pdf $@
 
 
