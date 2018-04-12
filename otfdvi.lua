@@ -19,6 +19,7 @@ kpse.set_program_name("luatex")
 require("l-lpeg")
 require("l-file")
 local utils = require(file.dirname(lua.startupfile) .."/otfdvi/utils")
+local flsparse = utils.parse_fls
 local inspect  = require("inspect")
 --print(inspect(package.loaded, {depth = 1}))
 --print(inspect(file.dirname(lua.startupfile), {depth = 1}))
@@ -141,6 +142,8 @@ options.filein = arg_left[1]
 options.fileout = arg_left[2] or options.fileout
 options.logfile = options.logfile or file.nameonly(options.filein) .. ".otfdvi.log"
 
+
+
 --[[
 optarg,optind = getopt.get_opts (arg, "hVvo:n:S:", long_opts)
 for k,v in pairs (optarg) do
@@ -173,6 +176,7 @@ local lookup_names = dofile(luaotfload_lookup_names)
 local filein  = options.filein
 local fileout = options.fileout
 local logfile = options.logfile
+local flsfile = file.nameonly(options.filein) .. ".fls"
 local log = assert(io.open(logfile, 'w'))
 local logw = function(...) log:write(...) end
 logw("---", " !", "current time", "\n")
@@ -198,8 +202,11 @@ local fho = assert(io.open(fileout, 'wb'))
 local psf = assert(io.open(psmapfile, 'w'))
 local mkf = assert(io.open(mkfile, 'w'))
 
-
-local content = dvi.parse(fhi) -- get table
+local fls = {}
+if file.is_readable(flsfile) then
+   fls = flsparse(flsfile)
+end
+local content = dvi.parse(fhi) -- get dvi file as lua table
 local dvimodified = {}         
 
 function debug_print(s)
@@ -231,7 +238,7 @@ for _, op  in ipairs(content) do
 --      os.exit()
       if is_body then
 --         print(inspect(op.fontname))
-         otf, fontdata = getfontdata(op.fontname)
+         otf, fontdata = getfontdata(op.fontname, fls)
 --         print(otf, inspect(fontdata))
 --         os.exit(2)
          if otf then

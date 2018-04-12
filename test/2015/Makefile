@@ -1,14 +1,14 @@
 otfdvi:=../../otfdvi.lua
 
 
-ps: 01.ps 02.ps
+default: 01.pdf
 
 %.dvi:  %.tex
 	dvilualatex $*
 
-%.ps:  %.dvi
+%.pdf:  %.dvi
 	$(otfdvi) $*.dvi
-	make -f __Makefile all pdf clean
+	make -f __Makefile fonts pdf clean
 
 
 

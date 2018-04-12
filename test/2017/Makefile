@@ -3,7 +3,7 @@ otfdvi:=../../otfdvi.lua
 
 defaults: 01.pdf
 
-%.dvi:  %.tex
+%.dvi:  %.tex .FORCE
 	dvilualatex -recorder $*
 
 %.l.pdf:  %.tex
@@ -16,7 +16,7 @@ defaults: 01.pdf
 
 %.pdf:  %.dvi .FORCE
 	$(otfdvi) $*.dvi
-#	make -f __Makefile fonts pdf clean
+	make -f __Makefile fonts pdf clean
 #	mv out.pdf $@
 
 

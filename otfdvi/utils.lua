@@ -153,7 +153,7 @@ function parse_fontname(fontname)
    return d
 end
 
-function lua_font_name(filename)
+function lua_font_name(filename, fls)
 --   log:write("  function_lua_font_name: " .. filename .. "\n")
    local shortname, basename
    local t_f, t_meta, t_format, t_filename, l_f
@@ -161,8 +161,16 @@ function lua_font_name(filename)
       print("f:lua_font_name: filename == nil. Aborting")
       os.exit(2)
    end
+
+   local font_lua = string.lower(filename) .. ".luc"
+   local font_lua_full = fls[font_lua]
+   print("font lua(   ): " .. font_lua)
+   print("font lua(fls): " .. font_lua_full)
+   os.exit(2)
+
    otf_filename = filename .. ".otf"
    local full_path  = kpse.lookup(otf_filename, "opentype fonts")
+   print("font full path", full_path)
    if full_path == nil then
       full_path = kpse.lookup(lc[filename][1], "opentype fonts")
    end
@@ -222,7 +230,7 @@ function lua_font_name(filename)
 end
 
 
-function getfontdata(fontname)
+function getfontdata(fontname, fls)
    local tfm = kpse.lookup(fontname .. ".tfm")
    local d = {}
    local tmeta
@@ -245,7 +253,7 @@ function getfontdata(fontname)
       print("**")
       print("font dvi: " .. inspect(fontname))
       print("font base: " .. inspect(x.base))
-      fullpath, tmeta, shortname  = lua_font_name(x.base)
+      fullpath, tmeta, shortname  = lua_font_name(x.base,fls)
       print("font full:", fullpath)
       print("/**")
 --      print(basename, x.base)
@@ -271,7 +279,23 @@ function getfontdata(fontname)
    return _otf, d
 end
 
-   
+
+local function flsparse(_file)
+   local m = {}
+   local line, l = ""
+   fh = assert(io.open(_file, 'r'))
+   while true do
+      line =  fh:read()
+      if  line == nil then break end
+      l = string.match(line, "INPUT (.*)")
+      if l then
+         m[file.basename(l)] = l
+      end
+   end
+   return m
+end
+
 _m.getfontdata = getfontdata
 _m.parse_fontname = parse_fontname
+_m.parse_fls = flsparse
 return _m
