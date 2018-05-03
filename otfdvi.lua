@@ -5,6 +5,7 @@
 otfdvi program. Author Deimantas Galcius deimantas(dot)galcius(at)gmail(dot)com
 --]]
 
+
 otfdvi  = otfdvi or { }
 local version = "0.1"
 otfdvi.version = version
@@ -16,14 +17,17 @@ local kpse = kpse
 local kpse_version = kpse.version()
 kpse.set_program_name("luatex")
 
+local inspect  = require("inspect")
+--print(inspect(package.loaded, {depth = 3}))
+--print(inspect(file.dirname(lua.startupfile), {depth = 1}))
+
 require("l-lpeg")
 require("l-file")
 local utils = require(file.dirname(lua.startupfile) .."/otfdvi/utils")
-local flsparse = utils.parse_fls
-local inspect  = require("inspect")
---print(inspect(package.loaded, {depth = 1}))
---print(inspect(file.dirname(lua.startupfile), {depth = 1}))
---exit()
+local flsparse      = utils.parse_fls
+local reverse_table = utils.reverse_table
+local output_enc    = utils.output_enc
+--
 local dvi      = require("dvi")
 local lustache = require("lustache")
 
@@ -143,7 +147,6 @@ options.fileout = arg_left[2] or options.fileout
 options.logfile = options.logfile or file.nameonly(options.filein) .. ".otfdvi.log"
 
 
-
 --[[
 optarg,optind = getopt.get_opts (arg, "hVvo:n:S:", long_opts)
 for k,v in pairs (optarg) do
@@ -202,25 +205,27 @@ local fho = assert(io.open(fileout, 'wb'))
 local psf = assert(io.open(psmapfile, 'w'))
 local mkf = assert(io.open(mkfile, 'w'))
 
-local fls = {}
+local fls = nil
 if file.is_readable(flsfile) then
    fls = flsparse(flsfile)
 end
 local content = dvi.parse(fhi) -- get dvi file as lua table
-local dvimodified = {}         
+local dvimodified = {}
 
 function debug_print(s)
    if debug then
       print(s)
    end
 end
+
 local currfontnum = 0
 local otffonts = {}
-local ifonts = { }
+local ifonts = {}
 local otf = false -- is_otf?
 local fontdata = {}
 local is_body = true --until opcode = post
 
+logw("********** OPCODES ************** \n")
 for _, op  in ipairs(content) do
 
    if op._opcode == "post" then
@@ -234,15 +239,13 @@ for _, op  in ipairs(content) do
 
    if op._opcode == "fntdef" then
       debug_print(inspect(op))
---      print(inspect(op))
---      os.exit()
+      logw(inspect(op), "\n")
       if is_body then
---         print(inspect(op.fontname))
-         otf, fontdata = getfontdata(op.fontname, fls)
+         otf, fontdata = getfontdata(op.fontname, op.design_size, op.scale, fls, { ["verbose"] = verbose } )
 --         print(otf, inspect(fontdata))
---         os.exit(2)
          if otf then
             debug_print(op.fontname .. " => " .. fontprefix .. tostring(op.num))
+            logw(op.fontname .. " => " .. fontprefix .. tostring(op.num), "\n")
             -- local _, basename, otfdata = is_otf(op.fontname)
             if otffonts[op.num] == nil then
                otffonts[op.num] = { fontname = op.fontname,
@@ -262,7 +265,7 @@ for _, op  in ipairs(content) do
       end
    end
 
-   if op._opcode == "fntnum" then
+   if op._opcode == "fntnum" or op._opcode == "fnt" then
       currfontnum = op.index
    end
 
@@ -287,23 +290,13 @@ for _, op  in ipairs(content) do
 
    table.insert(dvimodified, op)
 end
+logw(" ****** STOP OPCODES ****** \n")
 
 debug_print(inspect(otffonts))
---print(inspect(otffonts))
---os.exit(2)
-
 dvi.dump(fho, dvimodified) -- write modified DVI
+
 logw("Output: ", fileout, "\n")
 print("Written to " .. fileout)
-
-
-function reverse_table(t)
-   local s = {}
-   for x, y in pairs(t) do
-      s[y] = x
-   end
-   return s
-end
 
 
 --[[
@@ -319,64 +312,57 @@ function write_glyphlist(filename, unicodes)
    return true
 end
 
+
 for i_s, v_s in pairs(otffonts) do
+   logw(" *** OTFFONT *** \n")   
+   logw(inspect(v_s), "\n")
+   print(inspect(v_s), "\n")
+   os.exit(9)
+   local _resources, _runi, _metadata = {}, {}, {}
+   local _f = nil
    local ghfilename = fontprefix .. i_s .. ".glyphs"
    --print(inspect(otffonts[i_s].charlist))
    local unicodes = {}
    for _i, _j in ipairs (otffonts[i_s].charlist) do
       unicodes[_j] = "u".. string.format("%04X",_j)
    end
-   --[[
-   unicodes = {
-     [48] = "u0030",
-     [49] = "u0031",
-   }
-   --]]
-   
-   --   local basename = v_s.otfdata.basename
---   print(inspect(v_s.otfdata.cache))
---   os.exit()
-   local runi = reverse_table(v_s.otfdata.cache.resources.unicodes)
-
+   --   print(inspect(unicodes))
+   print(inspect(v_s.otfdata.luafont))
+   os.exit(9)
+   _f = assert(dofile(v_s.otfdata.luafont))
+   _resources = _f.resources
+   _runi = reverse_table(_resources.unicodes)
+   _metadata = _f.metadata
+--   print(inspect(_resources, { depth = 1 }))
+--   os.exit(9)
+--   print(inspect(_runi, { depth = 1 }))
    for _i, _j in ipairs (otffonts[i_s].charlist) do
-      unicodes[_j] = runi[_j] or unicodes[_j]
+--      print(inspect(_j))
+--      print(inspect(_runi[_j]))
+--      print(inspect(unicodes[_j]))
+--      os.exit(10)
+--      print(inspect(_j,unicodes[_j], _runi[_j]))
+      unicodes[_j] = _runi[_j] or unicodes[_j]
+--      os.exit(9)
    end
+   logw("unicodes",  inspect(unicodes), "\n")
+--   print(inspect(_runi, { depth = 1 }))
+--   os.exit(9)
 
---   print(inspect(unicodes, { depth = 1 }))
---   exit()
-   local metadata = v_s.otfdata.cache.metadata
    write_glyphlist(ghfilename, reverse_table(unicodes))
    otffonts[i_s].glyphlist = reverse_table(unicodes)
    otffonts[i_s].metadata = metadata
    otffonts[i_s].glyphsfile = ghfilename
+   otffonts[i_s].otffontnamefull = _resources.filename
+   otffonts[i_s].otffontname = file.basename(_resources.filename)
 --   print(inspect(otffonts[i_s], {depth = 2}))
 --   exit()
 
+   logw(" *** END OTFFONT *** \n")   
 end
 
-function output_enc(fontname, list, glyphs)
-   local glyphlist = reverse_table(glyphs)
-   local encfile = fontname .. ".enc"
-   local efh = assert(io.open(encfile, 'w'))
-   local s_enc = "/" .. fontname .. "[\n"
---   print(list[1], string.format("%04X",list[1]), glyphlist[list[1]])
---   print(list[2], string.format("%04X",list[2]), glyphlist[list[2]])
-   --   exit()
---   glyphlist[list[1]] = "u1D465"
---   print(inspect(glyphlist))
---   print(inspect(list))
 
-   for i = 1, 256 do
-      --      print(list[i])
-      j = glyphlist[list[i]] or ".notdef"
-      s_enc = s_enc .. "/" .. j .. "\n"
-    end
-   s_enc = s_enc .. "] def\n"
-   efh:write(s_enc)
-   io.close(efh)
-end
-
-function cssinfo(m)
+function XXXcssinfo(m)
    --[[
       family: sans-serif, serif, monospace, cursive, fantasy
       family: Noto Sans, sans-serif
@@ -416,7 +402,7 @@ function cssinfo(m)
    return { ["font-weight"] = weight, ["font-style"] = style, family }   
 end
 
-function output_htf(fontname, list, glyphlist, metadata)
+function XXoutput_htf(fontname, list, glyphlist, metadata)
    local file = fontname .. ".htf"
    local fh = assert(io.open(file, 'w'))
    local ss = fontname .. " 0 " .. (#list-1) .. '\n'
@@ -445,18 +431,25 @@ view.psmapfile = psmapfile
 view.verbose = verbose
 view.targets = {}
 for i, v in pairs(otffonts) do
---   print(inspect(v.otfdata, {depth = 2} ))
---   exit()
+--   print(inspect(v, {depth = 2} ))
+ 
+   otffontname = v.otffontname
+   fullpath = v.otffontnamefull
+   glyphsfontname = v.glyphsfile
+   design_size = v.design_size
    fontname = fontprefix .. i
-   table.insert(view.targets, { fontname = fontname,
-                                otffontname =  v.basename,
-                                glyphsfontname = v.glyphsfile,
-                                design_size = v.design_size,
-                                -- script = 'math',
-                                fullpath = v.otfdata.fullpath
-                              }
+   table.insert(view.targets,
+                { fontname = fontname,
+                  otffontname = otffontname,
+                  fullpath = fullpath,
+                  glyphsfontname = glyphsfontname,
+                  design_size = design_size,
+                }
    )
+--   print(inspect(fontname))
+--   os.exit(9)
    output_enc(fontname, v.charlist, v.glyphlist)
+--   os.exit(9)
    htf = htf and output_htf(fontname, v.charlist, v.glyphlist, v.metadata)
 end
 

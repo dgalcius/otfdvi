@@ -3,7 +3,7 @@ fonts:={{#targets}} {{fontname}} {{/targets}}
 otffonts:={{#targets}} {{otffontname}} {{/targets}}
 
 {{#targets}}
-{{otffontname}}:={{{fullpath}}}
+{{{ otffontname }}}:={{{ fullpath }}}
 {{/targets}}
 
 encfiles:=$(fonts:=.enc)
@@ -25,9 +25,7 @@ verbose:=--verbose=true
 
 default: fonts
 
-fonts: otffonts tfmfonts
-
-otffonts: $(otffonts)
+fonts: tfmfonts
 
 tfmfonts: $(tfmfiles)
 
@@ -36,9 +34,6 @@ pdf: $(pdffile)
 
 ps: $(psfile)
 	@echo Output $<
-
-$(otffonts):
-	 $(call cp_k,$@)
 
 $(psfile): $(dvifile)
 	dvips -M1 -j1 -u +$(mapfile) -o $@ $<

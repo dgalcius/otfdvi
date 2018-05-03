@@ -26,7 +26,7 @@ else
       os.exit(9)
    end
 end
-print("luaotfload_lookup_cache: ", luaotfload_lookup_cache)
+print("luaotfload_lookup_cache:\n", luaotfload_lookup_cache)
 
 if file.is_readable(luaotfload_lookup_names) then
 else
@@ -37,9 +37,8 @@ else
       os.exit(9)
    end
 end
-print("luaotfload_lookup_names: ", luaotfload_lookup_names)
-print("texmfvar: ", texmfvar)
-
+print("luaotfload_lookup_names:\n", luaotfload_lookup_names)
+print("texmfvar:\n ", texmfvar)
 
 local function resolve_path(suffix, vartable)
    local f = vartable[1] .. suffix
@@ -58,7 +57,7 @@ local function resolve_path(suffix, vartable)
 end
 
 local lua_font_dir = "/luatex-cache/generic/fonts/otl/"
-print("++kpse version++:", kpse_version)
+print("++kpse version++: " ..  kpse_version)
 -- TeX Live 2017
 if kpse_version == "kpathsea version 6.2.3" then
    lua_font_dir = "/luatex-cache/generic/fonts/otl/"
@@ -77,10 +76,8 @@ if kpse_version == "kpathsea version 6.2.1" then
 end
 
 --print(luaotfload_lookup_names)
-local lookup_cache = dofile(luaotfload_lookup_cache)
---print(inspect(lookup_cache))
---os.exit()
---
+local otf_lookup = dofile(luaotfload_lookup_cache)
+local otf_names  = dofile(luaotfload_lookup_names)
 --local lc = {}
 --for i, j in pairs(lookup_cache) do
 --   print(i, j[1])
@@ -98,7 +95,7 @@ function parse_fontname(fontname)
    local s, d
    local lang_ = "DFLT"
    local base_, ext_, name_, rest_, shape_
---   print("fontname: ", fontname)
+   print("fontname: ", fontname)
    s = string.split(fontname, ':')
    name_, rest_ = s[1], s[2]
    s = string.match(name_, '%[(.*)%]')
@@ -153,34 +150,58 @@ function parse_fontname(fontname)
    return d
 end
 
-function lua_font_name(filename, fls)
---   log:write("  function_lua_font_name: " .. filename .. "\n")
-   local shortname, basename
-   local t_f, t_meta, t_format, t_filename, l_f
-   if filename == nil then
-      print("f:lua_font_name: filename == nil. Aborting")
-      os.exit(2)
-   end
-
+function lua_font_name_fls(filename, desing_size, scale, fls, options)
+--   print(inspect(options))
+--   print(inspect(options))
+--   os.exit(2)
    local font_lua = string.lower(filename) .. ".luc"
    local font_lua_full = fls[font_lua]
-   print("font lua(   ): " .. font_lua)
-   print("font lua(fls): " .. font_lua_full)
-   os.exit(2)
+   print("AA")
+   if not font_lua_full then
+      font_lua_l = otf_lookup[filename .. "#" .. scale ][1]
+      if font_lua_l then
+--         _basename = file.nameonly(font_lua_l)
+--         _ext = file.suffixonly(font_lua_l)
+         --         _id = otf_names.files.bare.texmf[_ext][_basename]
+         _id = otf_names.files.base.texmf[font_lua_l]
+         --         print(inspect(otf_names.files.base.texmf, {depth = 1}))
+         print(_id)
+      end
+   end
+   print(font_lua_full)
+   os.exit(8)
+   
 
+   if options.verbose  then
+      print("font lua(   ): " .. font_lua)
+      print("font lua(fls): " .. font_lua_full)
+   end
+
+   return font_lua_full
+end
+
+function lua_font_name_nofls(filename, dsize, scale, fls)
+   local otf_full_path, t_f, otf_shortname
+   local font_lua, font_lua_full
    otf_filename = filename .. ".otf"
+   font_lua = filename .. ".luc"
+   font_lua_full = resolve_path(lua_font_dir .. basename .. '.luc',
+                                {texmfvar, texmfsysvar})
+   print("font_lua: " .. font_lua)
+   print("font_lua_full: " .. font_lua_full)
+   t_f = dofile(font_lua_full)
+   otf_full_path = t_f.resources.filename
+   otf_shortname = file.basename(otf_full_path)
+
+--[[
+   os.exit(2)
    local full_path  = kpse.lookup(otf_filename, "opentype fonts")
    print("font full path", full_path)
-   if full_path == nil then
-      full_path = kpse.lookup(lc[filename][1], "opentype fonts")
-   end
 --   print(filename, full_path)
    if full_path then
       shortname = file.basename(full_path)
    else
---      print(shortname, filename)
       shortname = font_cache[string.lower(filename)]
---      print(shortname, filename)
       if shortname then
          local index = lookup_names.files.base.system[shortname]
 --         print(index)
@@ -190,8 +211,6 @@ function lua_font_name(filename, fls)
       if l_f then
          full_path = l_f.fullpath
       end
-
---      print("full: " .. full_path)
    end
 
 
@@ -224,61 +243,69 @@ function lua_font_name(filename, fls)
 --   os.exit()
 --   log:write("    (try): ", tostring(lua_path), "\n")
       t_f = dofile(lua_path)
---   print(inspect(t_f, {depth = 2}))
---   os.exit(2)
-   return full_path, t_f, shortname
+      --   print(inspect(t_f, {depth = 2}))
+      print(full_path, shortname)
+
+
+   print("font lua(   ): " .. font_lua)
+   print("font lua(fls): " .. font_lua_full)
+--]]
+
+   return otf_full_path, t_f, otf_shortname
 end
 
 
-function getfontdata(fontname, fls)
+function lua_font_name(filename, design_size, scale, fls, options)
+--   log:write("  function_lua_font_name: " .. filename .. "\n")
+   if filename == nil then
+      print("f:lua_font_name: filename == nil. Aborting")
+      os.exit(2)
+   end
+   
+   local func_lua_name = lua_font_name_nofls
+   if fls then
+      func_lua_name = lua_font_name_fls 
+   end
+   
+   return func_lua_name(filename, design_size, scale, fls, options)
+end
+
+function getfontdata(fontname, design_size, scale, fls, options)
    local tfm = kpse.lookup(fontname .. ".tfm")
    local d = {}
-   local tmeta
+--   local tmeta
    local _otf = false
 --   local s = function() print(fontname, "otf: " .. inspect(_otf)) end
 --   s()
-   local dvi_filename, fullpath, script, features, mode, language, shape  = nil
-   local tmp = nil
+   local lua_font = nil
    if not tfm then
       _otf = true
       x = parse_fontname(fontname)
-      dvi_filename = fontname
-      basename = x.base
-      language = x.lang
-      features = x.feat
-      mode = x.mode
-      shape = x.shape
-      -- [lmroman10-regular]:trep;+tlig;
-      -- [latinmodern-math.otf]:mode=base;script=math;language=DFLT;
-      print("**")
-      print("font dvi: " .. inspect(fontname))
-      print("font base: " .. inspect(x.base))
-      fullpath, tmeta, shortname  = lua_font_name(x.base,fls)
-      print("font full:", fullpath)
-      print("/**")
---      print(basename, x.base)
---      print(_otf, fullpath)
---      print("TMETA: start")
---      print(inspect(tmeta))
---      print("TMETA: stop")
-      
+      if options.verbose then
+--         print("**")
+--         print("font dvi: " .. inspect(fontname))
+--         print("font base: " .. inspect(x.base))
+--         print("/**")
+      end
+      lua_font = lua_font_name(x.base, design_size, scale, fls, options)
+      print(inspect(lua_font))
+      os.exit(8)
 
-      d = { dvi_filename = dvi_filename,
-            filename = shortname,
-            basename = basename,
-            fullpath = fullpath,
-            script = script,
-            features = features,
-            mode = mode,
-            language = language,
-            shape = shape,
-            cache = tmeta,
+
+      d = { 
+                filename = shortname,
+                basename = x.base,
+                  script = x.script,
+                features = x.feat,
+                    mode = x.mode,
+                language = x.lang,
+                   shape = x.shape,
+                 luafont = lua_font,
       }
-
    end
+   
    return _otf, d
 end
-
 
 local function flsparse(_file)
    local m = {}
@@ -295,7 +322,40 @@ local function flsparse(_file)
    return m
 end
 
+local function reverse_table(t)
+   local s = {}
+   for x, y in pairs(t) do
+      s[y] = x
+   end
+   return s
+end
+
+local function output_enc(fontname, list, glyphs)
+   local glyphlist = reverse_table(glyphs)
+   local encfile = fontname .. ".enc"
+   local efh = assert(io.open(encfile, 'w'))
+   local s_enc = "/" .. fontname .. "[\n"
+--   print(list[1], string.format("%04X",list[1]), glyphlist[list[1]])
+--   print(list[2], string.format("%04X",list[2]), glyphlist[list[2]])
+   --   exit()
+--   glyphlist[list[1]] = "u1D465"
+--   print(inspect(glyphlist))
+--   print(inspect(list))
+
+   for i = 1, 256 do
+      --      print(list[i])
+      j = glyphlist[list[i]] or ".notdef"
+      s_enc = s_enc .. "/" .. j .. "\n"
+    end
+   s_enc = s_enc .. "] def\n"
+   efh:write(s_enc)
+   io.close(efh)
+end
+
+
 _m.getfontdata = getfontdata
 _m.parse_fontname = parse_fontname
 _m.parse_fls = flsparse
+_m.reverse_table = reverse_table
+_m.output_enc = output_enc
 return _m
