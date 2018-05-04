@@ -96,12 +96,13 @@ local otf_names  = dofile(luaotfload_lookup_names)
 function parse_fontname(fontname)
    local s, d
    local lang_ = "DFLT"
-   local base_, ext_, name_, rest_, shape_
+   local base_, ext_, name_, rest_, shape_, filename_
    print("fontname: ", fontname)
    s = string.split(fontname, ':')
    name_, rest_ = s[1], s[2]
    s = string.match(name_, '%[(.*)%]')
    if s then
+      filename_ = s
       s = string.split(s, ".")
       base_, ext_ = s[1], s[2]
    else
@@ -148,8 +149,27 @@ function parse_fontname(fontname)
       lang = lang_,
       script = script_,
       shape = shape_,
+      filename = filename_,
    }
    return d
+end
+
+function lua_font_lookup_cache(filename, scale, shape, options)
+   local _l, _font_lua, _font_lua_full = nil, nil, nil
+   local _s = ""
+   if shape then
+      _s = filename .. '#' .. string.lower(shape) .. "#" .. scale
+   else
+      _s = filename .. "#" .. scale
+   end
+    
+   _l = nil or otf_lookup[_s][1]
+   print(_l)
+   if _l then
+      _font_lua = file.nameonly(_l) .. ".luc"
+      _font_lua_full = lua_font_dir .. _font_lua
+   end
+   return _font_lua_full
 end
 
 function lua_font_name_fls(filename, desing_size, scale, fls, options)
@@ -283,8 +303,17 @@ function getfontdata(fontname, design_size, scale, fls, options)
 --         print("font base: " .. inspect(x.base))
 --         print("/**")
       end
-      lua_font = lua_font_name(x.base, design_size, scale, fls, options)
---      print(inspect(lua_font))
+      local _shape = x.shape
+      local _filename = x.filename
+
+      if not _filename then
+         lua_font = lua_font_lookup_cache(fontname, scale, _shape, options)
+      else
+         lua_font = lua_font_name(x.base, design_size, scale, fls, options)
+      end
+      
+      --lua_fontX = lua_font_name(x.base, design_size, scale, fls, options)
+      -- print(inspect(lua_font))
 --      os.exit(8)
 
 
