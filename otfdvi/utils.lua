@@ -75,6 +75,8 @@ if kpse_version == "kpathsea version 6.2.1" then
    lua_font_dir = "/luatex-cache/generic/fonts/otf/"
 end
 
+lua_font_dir = texmfsysvar .. lua_font_dir
+
 --print(luaotfload_lookup_names)
 local otf_lookup = dofile(luaotfload_lookup_cache)
 local otf_names  = dofile(luaotfload_lookup_names)
@@ -155,29 +157,23 @@ function lua_font_name_fls(filename, desing_size, scale, fls, options)
 --   print(inspect(options))
 --   os.exit(2)
    local font_lua = string.lower(filename) .. ".luc"
-   local font_lua_full = fls[font_lua]
-   print("AA")
-   if not font_lua_full then
+   local _font_lua_full = fls[font_lua]
+   local font_lua_l = nil
+   if not _font_lua_full then
       font_lua_l = otf_lookup[filename .. "#" .. scale ][1]
       if font_lua_l then
---         _basename = file.nameonly(font_lua_l)
---         _ext = file.suffixonly(font_lua_l)
-         --         _id = otf_names.files.bare.texmf[_ext][_basename]
-         _id = otf_names.files.base.texmf[font_lua_l]
-         --         print(inspect(otf_names.files.base.texmf, {depth = 1}))
-         print(_id)
+         font_lua = file.nameonly(font_lua_l) .. ".luc"
+         _font_lua_full = lua_font_dir .. font_lua
+-- OK         _id = otf_names.files.base.texmf[font_lua_l]
       end
    end
-   print(font_lua_full)
-   os.exit(8)
-   
 
    if options.verbose  then
       print("font lua(   ): " .. font_lua)
-      print("font lua(fls): " .. font_lua_full)
+      print("font lua(fls): " .. _font_lua_full)
    end
 
-   return font_lua_full
+   return _font_lua_full
 end
 
 function lua_font_name_nofls(filename, dsize, scale, fls)
@@ -288,8 +284,8 @@ function getfontdata(fontname, design_size, scale, fls, options)
 --         print("/**")
       end
       lua_font = lua_font_name(x.base, design_size, scale, fls, options)
-      print(inspect(lua_font))
-      os.exit(8)
+--      print(inspect(lua_font))
+--      os.exit(8)
 
 
       d = { 

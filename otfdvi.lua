@@ -316,8 +316,8 @@ end
 for i_s, v_s in pairs(otffonts) do
    logw(" *** OTFFONT *** \n")   
    logw(inspect(v_s), "\n")
-   print(inspect(v_s), "\n")
-   os.exit(9)
+--   print(inspect(v_s), "\n")
+--   os.exit(9)
    local _resources, _runi, _metadata = {}, {}, {}
    local _f = nil
    local ghfilename = fontprefix .. i_s .. ".glyphs"
@@ -327,8 +327,8 @@ for i_s, v_s in pairs(otffonts) do
       unicodes[_j] = "u".. string.format("%04X",_j)
    end
    --   print(inspect(unicodes))
-   print(inspect(v_s.otfdata.luafont))
-   os.exit(9)
+--   print(inspect(v_s.otfdata.luafont))
+--   os.exit(9)
    _f = assert(dofile(v_s.otfdata.luafont))
    _resources = _f.resources
    _runi = reverse_table(_resources.unicodes)
