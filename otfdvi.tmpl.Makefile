@@ -60,7 +60,16 @@ dvisvg: $(dvifile)
 options:=--vendor=UKWN $(verbose) --no-updmap --warn-missing --x-height=font
 
 {{#targets}}
+## {{fontname}}:
+##   otffontname: {{otffontname}}
+##   glyphlist: {{glyphsfontname}}
+##   design_size: {{design_size}}
+##   scale: {{scale}}
+##   script: {{script}}
+##   language: {{language}}
+##   feature: {{feature}}
+##   fullpath: {{{fullpath}}}
 {{fontname}}.tfm: $({{otffontname}}) .FORCE
-	otftotfm --literal-encoding={{fontname}}.enc  --name={{fontname}} --map-file=$(mapfile) --glyphlist={{glyphsfontname}} --design-size={{design_size}} {{#script}} --script={{script}}{{/script}} $(options) $<
+	otftotfm --literal-encoding={{fontname}}.enc  --name={{fontname}} --map-file=$(mapfile) --glyphlist={{glyphsfontname}} --design-size={{design_size}} {{#script}} --script={{script}}{{/script}}  $(options) $<
 
 {{/targets}}

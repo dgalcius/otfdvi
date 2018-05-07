@@ -253,6 +253,7 @@ for _, op  in ipairs(content) do
                                     charlist = {},
                                     design_size = (op.design_size / 65536),
                                     design_size_dvi = op.design_size,
+                                    scale = (op.scale / 65536),
                                     otfdata = fontdata,
                }
                ifonts[op.num] = { charlist = {} }
@@ -298,7 +299,6 @@ dvi.dump(fho, dvimodified) -- write modified DVI
 logw("Output: ", fileout, "\n")
 print("Written to " .. fileout)
 
-
 --[[
 - read '<otf-font-file>.lua'
 --]]
@@ -322,15 +322,39 @@ for i_s, v_s in pairs(otffonts) do
    local _f = nil
    local ghfilename = fontprefix .. i_s .. ".glyphs"
    --print(inspect(otffonts[i_s].charlist))
-   local unicodes = {}
-   for _i, _j in ipairs (otffonts[i_s].charlist) do
-      unicodes[_j] = "u".. string.format("%04X",_j)
-   end
-   --   print(inspect(unicodes))
---   print(inspect(v_s.otfdata.luafont))
---   os.exit(9)
    _f = assert(dofile(v_s.otfdata.luafont))
    _resources = _f.resources
+--   print(v_s.otfdata.luafont)
+   _coverage = {}
+   for _, _feat in ipairs(_f.resources.sequences) do
+      if _feat.features["ssty"] then
+--         print(inspect(_feat.steps[1].coverage, {depth = 2}))
+         _coverage = _feat.steps[1].coverage
+      end
+   end
+   print(inspect(_coverage, {depth = 1}))
+
+ --  print(inspect(v_s.charlist))
+--   os.exit(9)
+   local unicodes = {}
+   for _i, _j in ipairs (v_s.charlist) do
+      if _coverage[_j] then
+         print(_j, _coverage[_j][1])
+         --         print(inspect(_coverage[_j]))
+         _j = _coverage[_j][1]
+         print("FOOOOO")
+      end
+      v_s.charlist[_i] = _j
+   end
+   for _i, _j in ipairs (v_s.charlist) do
+      unicodes[_j] = "u".. string.format("%04X",_j)
+   end
+     print(inspect(unicodes))
+--   print(inspect(v_s.otfdata.luafont))
+--   os.exit(9)
+   
+--   print("index", inspect(_f.resources.features.gsub))
+--   os.exit(9)
    _runi = reverse_table(_resources.unicodes)
    _metadata = _f.metadata
 --   print(inspect(_resources, { depth = 1 }))
@@ -339,6 +363,7 @@ for i_s, v_s in pairs(otffonts) do
    for _i, _j in ipairs (otffonts[i_s].charlist) do
 --      print(inspect(_j))
 --      print(inspect(_runi[_j]))
+--      os.exit(9)
 --      print(inspect(unicodes[_j]))
 --      os.exit(10)
 --      print(inspect(_j,unicodes[_j], _runi[_j]))
@@ -361,6 +386,7 @@ for i_s, v_s in pairs(otffonts) do
    logw(" *** END OTFFONT *** \n")   
 end
 
+-- os.exit(9)
 
 function XXXcssinfo(m)
    --[[
@@ -432,18 +458,28 @@ view.verbose = verbose
 view.targets = {}
 for i, v in pairs(otffonts) do
 --   print(inspect(v, {depth = 2} ))
- 
+--   os.exit(9)
    otffontname = v.otffontname
    fullpath = v.otffontnamefull
    glyphsfontname = v.glyphsfile
    design_size = v.design_size
+   scale = v.scale
+   script = v.otfdata.script
+   mode = v.otfdata.mode
+   language = v.otfdata.language
+   feature = v.otfdata.features
    fontname = fontprefix .. i
    table.insert(view.targets,
-                { fontname = fontname,
-                  otffontname = otffontname,
-                  fullpath = fullpath,
+                {       fontname = fontname,
+                     otffontname = otffontname,
+                        fullpath = fullpath,
                   glyphsfontname = glyphsfontname,
                   design_size = design_size,
+                          scale = scale,
+                          script = script,
+                          mode = mode,
+                          language = language,
+                          feature = feature,
                 }
    )
 --   print(inspect(fontname))
