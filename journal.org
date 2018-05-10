@@ -1,0 +1,70 @@
+#+TITLE: DVI with OTF fonts
+
+*  Introduction
+
+  LuaTeX makes it easy to use OTF fonts with tex documents. 
+  This does work with a PDF backend.
+  If DVI backend is used there are no dvi driver that support OTF fonts.
+  DVI drivers I am interested in are ~dvips~, ~dvipng~, ~dvisvg~, ~xdvi~, ~tex4ht~ or so to say, 
+  I would like to produce Postscript, png, svg, html files from DVI with OTF files.
+
+  Well there is one dvips driver called xdvipsk [1], that can produce PS from dvi file. 
+
+  The idea is pretty simple: write a tool ~otfdvi~ that takes a DVI file with otf fonts 
+  and produces another DVI (without otf fonts) + Makefile 
+  (not neceserily Makefile) with recipes for missing driver parts: tfm, enc, pfb, map, etc.
+
+  otfdvi:
+    INPUT: file-with-otf.dvi
+    OUTPUT: file-without-otf.dvi + Makefile
+
+  LuaTeX produces a standard/conventional DVI file. 
+  The difference only in font definition entry 
+  (opcodes 243-246:  fnt1_def1, fnt1_def2, fnt1_def3, fnt1_def4) See [3]. 
+  
+#+BEGIN_SRC 
+ 
+
+#+END_SRC  
+  
+  
+    
+
+
+* Drivers
+  
+** dvips
+
+** dvipng
+
+** dvisvg
+
+** xdvi 
+
+* DVI parsers:
+
+  - ruby 
+  - python
+  - haskel
+  - perl
+  - lua
+
+* DVI tools
+
+  - dvips
+  - dvitype
+  - dv2dt, dt2dv
+  - dviasm
+  - dvii
+  
+* SE 
+ - https://tex.stackexchange.com/questions/395028
+ - https://tex.stackexchange.com/questions/386072
+
+
+* References 
+
+  [1] Xdvipsk,  https://github.com/vtex-soft/texlive.xdvipsk
+  [2] A standard for DVI drivers
+  [3] DVI file format https://www.mn.uio.no/ifi/tjenester/it/hjelp/latex/dvi.pdf
+  
