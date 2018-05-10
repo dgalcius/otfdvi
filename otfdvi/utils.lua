@@ -92,11 +92,36 @@ local otf_names  = dofile(luaotfload_lookup_names)
 
 --local lookup_names = dofile(luaotfload_lookup_names)
  --print(inspect(lookup_names))
+local function parse_features(s)
+   local _s = {}
+   local _l = s
+   if s == '' then
+      _s = nil
+   end
 
-function parse_fontname(fontname)
+   _lx = string.split(_l, ';')
+   for _, _ly in ipairs(_lx) do
+      if _ly == "" then
+         break
+      end
+      _ly = string.gsub(_ly, '^+', '', 1)
+      _li, _lj = string.match(_ly, '(.*)=(.*)')
+
+      if _li == nil then
+         _s[_ly] = true
+      else
+         _s[_li] = tonumber(_lj)
+      end
+   end
+
+    return _s
+end
+
+local function parse_fontname(fontname)
    local s, d
    local lang_ = "DFLT"
    local base_, ext_, name_, rest_, shape_, filename_
+   local _feat = {}
    print("fontname: ", fontname)
    s = string.split(fontname, ':')
    name_, rest_ = s[1], s[2]
@@ -116,9 +141,9 @@ function parse_fontname(fontname)
    if s2 then
       shape_ = s2
    end
-   --- kaka --
    local x, feat_ = string.match(rest_, '(.*)%+(.*)')
-    if x then
+-- feat_ = parse_features(feat_)
+   if x then
    else
       x = rest_
    end
@@ -167,7 +192,7 @@ function lua_font_lookup_cache(filename, scale, shape, options)
    print(_l)
    if _l then
       _font_lua = file.nameonly(_l) .. ".luc"
-      _font_lua_full = lua_font_dir .. _font_lua
+      _font_lua_full = lua_font_dir .. string.lower(_font_lua)
    end
    return _font_lua_full
 end
@@ -377,10 +402,21 @@ local function output_enc(fontname, list, glyphs)
    io.close(efh)
 end
 
+local function write_glyphlist(filename, unicodes)
+   local gh = assert(io.open(filename, 'w'))
+   for glyph, ucode in pairs(unicodes) do
+      gh:write("/" .. glyph .. ";" .. ucode .. "\n")
+   end
+   io.close(gh)
+   return true
+end
+
 
 _m.getfontdata = getfontdata
 _m.parse_fontname = parse_fontname
+_m.parse_features = parse_features
 _m.parse_fls = flsparse
 _m.reverse_table = reverse_table
 _m.output_enc = output_enc
+_m.write_glyphlist = write_glyphlist
 return _m

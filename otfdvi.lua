@@ -24,16 +24,15 @@ local inspect  = require("inspect")
 require("l-lpeg")
 require("l-file")
 local utils = require(file.dirname(lua.startupfile) .."/otfdvi/utils")
-local flsparse      = utils.parse_fls
-local reverse_table = utils.reverse_table
-local output_enc    = utils.output_enc
+local flsparse        = utils.parse_fls
+local reverse_table   = utils.reverse_table
+local output_enc      = utils.output_enc
+local write_glyphlist = utils.write_glyphlist
 --
 local dvi      = require("dvi")
 local lustache = require("lustache")
 
 local options = {
---   filein  = arg_left[1],
-   --   fileout = arg_left[2] or "out.dvi",
    filein = "",
    fileout = "out.dvi",
    psmapfile = "ttfonts.map",
@@ -43,6 +42,7 @@ local options = {
    debug = false,
    verbose = false,
    config = "otfdvi.conf.lua",
+   --   outputdir = "./.otfdvi/",
    outputdir = "",
    dryrun = false,
    inplace = false,
@@ -50,8 +50,6 @@ local options = {
 }
 
 getopt = require("alt_getopt")
-
-
 
 local function do_print_version()
    print(_name .. " version " .. version .. " licence GNU GPL v2.0")
@@ -76,7 +74,7 @@ local long_opts = {
    mkfile  = "m",
    psmap   = "p",
 --   len     = 1,
---   output  = "o",
+   output  = "o",
 --   set_value = "S",
 --   ["set-output"] = "o"
    version = "v"
@@ -88,11 +86,7 @@ opts,optind,optarg = getopt.get_ordered_opts (arg, "hVvadHo:n:S:c:f:l:m:p:", lon
       
 
 for i, option in ipairs (opts) do
----   if optarg [i] then
---      print("option `" .. v .. "': " .. optarg [i] .. "\n")
---   else
---      print ("option `" .. v .. "'\n")
---   end
+
    if option == 'v' then
       do_print_version()
    end
@@ -132,12 +126,15 @@ for i, option in ipairs (opts) do
       options.psmapfile = optarg[i]
    end
 
+   if option == 'o' then
+      options.fileout = optarg[i]
+   end
+
 end
 
 local j = 1
 local arg_left = {}
 for i = optind,#arg do
-   --io.write (string.format ("ARGV [%s] = %s\n", i, arg [i]))
    arg_left[j] = arg[i]
    j = j + 1
 end
@@ -146,36 +143,6 @@ options.filein = arg_left[1]
 options.fileout = arg_left[2] or options.fileout
 options.logfile = options.logfile or file.nameonly(options.filein) .. ".otfdvi.log"
 
-
---[[
-optarg,optind = getopt.get_opts (arg, "hVvo:n:S:", long_opts)
-for k,v in pairs (optarg) do
-   io.write ("fin-option `" .. k .. "': " .. v .. "\n")
-end
---]]
-
--- END Options --
-
---[[
-local texmfvar = kpse.expand_var("$TEXMFSYSVAR")
-local lua_font_dir = ""
-local luaotfload_lookup_cache = texmfvar .. "/luatex-cache/generic/names/luaotfload-lookup-cache.luc"
-local luaotfload_lookup_names = texmfvar .. "/luatex-cache/generic/names/luaotfload-names.luc"
-local lookup_cache = dofile(luaotfload_lookup_cache)
-local lookup_names = dofile(luaotfload_lookup_names)
---]]
-
---local font_cache = {}
---for i, j in pairs(lookup_cache) do
---   local s = string.split(i, '#')
---   font_cache[s[1]] = j[1]
---end
-
---print(inspect(font_cache))
---os.exit()
---print(inspect(lookup_cache["LatinModernRoman#655360"][1]))
-
-
 local filein  = options.filein
 local fileout = options.fileout
 local logfile = options.logfile
@@ -183,6 +150,7 @@ local flsfile = file.nameonly(options.filein) .. ".fls"
 local log = assert(io.open(logfile, 'w'))
 local logw = function(...) log:write(...) end
 logw("---", " !", "current time", "\n")
+local outputdir = options.outputdir
 local psmapfile = options.psmapfile
 local mkfile = options.mkfile
 local fontprefix = options.fontprefix
@@ -195,7 +163,6 @@ logw("options:\n", inspect(options), "\n")
 local dirname = file.dirname(arg[0])
 local settings = require(file.join(dirname, conf_file))
 logw("settings:\n", inspect(settings), "\n")
-
 
 logw("kpse_version: ", kpse_version, "\n")
 logw("lua_font_dir: ", lua_font_dir, "\n")
@@ -243,10 +210,10 @@ for _, op  in ipairs(content) do
       if is_body then
          otf, fontdata = getfontdata(op.fontname, op.design_size, op.scale, fls, { ["verbose"] = verbose } )
 --         print(otf, inspect(fontdata))
+--         os.exit(9)
          if otf then
             debug_print(op.fontname .. " => " .. fontprefix .. tostring(op.num))
             logw(op.fontname .. " => " .. fontprefix .. tostring(op.num), "\n")
-            -- local _, basename, otfdata = is_otf(op.fontname)
             if otffonts[op.num] == nil then
                otffonts[op.num] = { fontname = op.fontname,
                                     basename = fontdata.filename,
@@ -302,77 +269,42 @@ print("Written to " .. fileout)
 --[[
 - read '<otf-font-file>.lua'
 --]]
-function write_glyphlist(filename, unicodes)
-   -- * -- * --
-   local gh = assert(io.open(filename, 'w'))
-   for glyph, ucode in pairs(unicodes) do
-      gh:write("/" .. glyph .. ";" .. ucode .. "\n")
-   end
-   io.close(gh)
-   return true
-end
-
 
 for i_s, v_s in pairs(otffonts) do
    logw(" *** OTFFONT *** \n")   
    logw(inspect(v_s), "\n")
---   print(inspect(v_s), "\n")
---   os.exit(9)
    local _resources, _runi, _metadata = {}, {}, {}
    local _f = nil
    local ghfilename = fontprefix .. i_s .. ".glyphs"
-   --print(inspect(otffonts[i_s].charlist))
    _f = assert(dofile(v_s.otfdata.luafont))
    _resources = _f.resources
---   print(v_s.otfdata.luafont)
    _coverage = {}
    for _, _feat in ipairs(_f.resources.sequences) do
-      if _feat.features["ssty"] then
---         print(inspect(_feat.steps[1].coverage, {depth = 2}))
-         _coverage = _feat.steps[1].coverage
+      if type(_feat.features) == "table" then
+         if _feat.features["ssty"] or nil then
+            _coverage = _feat.steps[1].coverage
+         end
       end
    end
-   print(inspect(_coverage, {depth = 1}))
 
- --  print(inspect(v_s.charlist))
---   os.exit(9)
    local unicodes = {}
    for _i, _j in ipairs (v_s.charlist) do
       if _coverage[_j] then
-         print(_j, _coverage[_j][1])
-         --         print(inspect(_coverage[_j]))
          _j = _coverage[_j][1]
-         print("FOOOOO")
       end
       v_s.charlist[_i] = _j
    end
    for _i, _j in ipairs (v_s.charlist) do
-      unicodes[_j] = "u".. string.format("%04X",_j)
+      unicodes[_j] = "uni" .. string.format("%04X",_j)
    end
-     print(inspect(unicodes))
---   print(inspect(v_s.otfdata.luafont))
---   os.exit(9)
-   
---   print("index", inspect(_f.resources.features.gsub))
---   os.exit(9)
+
    _runi = reverse_table(_resources.unicodes)
    _metadata = _f.metadata
---   print(inspect(_resources, { depth = 1 }))
---   os.exit(9)
---   print(inspect(_runi, { depth = 1 }))
+
    for _i, _j in ipairs (otffonts[i_s].charlist) do
---      print(inspect(_j))
---      print(inspect(_runi[_j]))
---      os.exit(9)
---      print(inspect(unicodes[_j]))
---      os.exit(10)
---      print(inspect(_j,unicodes[_j], _runi[_j]))
       unicodes[_j] = _runi[_j] or unicodes[_j]
---      os.exit(9)
    end
    logw("unicodes",  inspect(unicodes), "\n")
---   print(inspect(_runi, { depth = 1 }))
---   os.exit(9)
 
    write_glyphlist(ghfilename, reverse_table(unicodes))
    otffonts[i_s].glyphlist = reverse_table(unicodes)
@@ -380,52 +312,9 @@ for i_s, v_s in pairs(otffonts) do
    otffonts[i_s].glyphsfile = ghfilename
    otffonts[i_s].otffontnamefull = _resources.filename
    otffonts[i_s].otffontname = file.basename(_resources.filename)
---   print(inspect(otffonts[i_s], {depth = 2}))
---   exit()
+   otffonts[i_s].otffonttype = file.suffixonly(_resources.filename)
 
    logw(" *** END OTFFONT *** \n")   
-end
-
--- os.exit(9)
-
-function XXXcssinfo(m)
-   --[[
-      family: sans-serif, serif, monospace, cursive, fantasy
-      family: Noto Sans, sans-serif
-      font-family: <fontname>, monospace (if monospaced)
-      font-style: normal, italic, oblique
-      font-weight: 100, 200, normal, 500, 600, bold, 900, etc.
-      font-variant: normal, small-caps, etc.
-      font-stretch: condensed, normal, expanded
-      font-feature-settings: 
-      /* enable small caps and use second swash alternate */
-      font-feature-settings: "smcp", "swsh" 2;
-      font-language-override: "SRB"; /* Serbian OpenType language tag */ 
-      @font-face {
-      font-family: main;
-      src: url(fonts/ffmeta.woff) format("woff");
-      font-variant: discretionary-ligatures;
-      }
-   --]]
-
-   local file = m.fontname .. ".mdata"
-   local fh = assert(io.open(file, 'w'))
-   fh:write(inspect(m))
-   fh:close()
-   local weight = m.weight
-   local width  = m.width
-   local style  = "normal"
-   local family = nil
-
-   if m.italicangle < 0 then
-      style = "italic"
-   end
-   
-   if m.monospaced == 'true' then
-      family = {["font-family"] = "monospace" }
-   end
-   
-   return { ["font-weight"] = weight, ["font-style"] = style, family }   
 end
 
 function XXoutput_htf(fontname, list, glyphlist, metadata)
@@ -457,8 +346,7 @@ view.psmapfile = psmapfile
 view.verbose = verbose
 view.targets = {}
 for i, v in pairs(otffonts) do
---   print(inspect(v, {depth = 2} ))
---   os.exit(9)
+   otffonttype = v.otffonttype
    otffontname = v.otffontname
    fullpath = v.otffontnamefull
    glyphsfontname = v.glyphsfile
@@ -480,12 +368,11 @@ for i, v in pairs(otffonts) do
                           mode = mode,
                           language = language,
                           feature = feature,
+                          otffonttype = otffonttype,
                 }
    )
---   print(inspect(fontname))
---   os.exit(9)
+
    output_enc(fontname, v.charlist, v.glyphlist)
---   os.exit(9)
    htf = htf and output_htf(fontname, v.charlist, v.glyphlist, v.metadata)
 end
 
@@ -494,13 +381,10 @@ tmpl = file.join(dirname, settings['mkfile_tmpl'])
 local lm = assert(io.open(tmpl, 'r'))
 local tmpl = lm.read(lm, '*all')
 
---print("XXXXX")
 output = lustache:render(tmpl, view)
 print("*****")
 mkf:write(output)
 mkf:close()
 logw("Written to: ", mkfile, "\n")
 print("Written to " .. mkfile, "\n")
-
-
 

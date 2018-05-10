@@ -2,6 +2,10 @@ SHELL:=/usr/bin/env bash
 fonts:={{#targets}} {{fontname}} {{/targets}}
 otffonts:={{#targets}} {{otffontname}} {{/targets}}
 
+#export T1FONTS=./
+#export TTFFONTS=./ 
+
+
 {{#targets}}
 {{{ otffontname }}}:={{{ fullpath }}}
 {{/targets}}
@@ -57,7 +61,8 @@ dvitype: $(dvifile)
 dvisvg: $(dvifile)
 	dvisvgm --fontmap=+$(mapfile) $<
 
-options:=--vendor=UKWN $(verbose) --no-updmap --warn-missing --x-height=font
+options:=--vendor=UKWN $(verbose) --no-updmap --warn-missing --x-height=font -V --force
+options_ttf = --no-type1 --type42
 
 {{#targets}}
 ## {{fontname}}:
@@ -69,7 +74,10 @@ options:=--vendor=UKWN $(verbose) --no-updmap --warn-missing --x-height=font
 ##   language: {{language}}
 ##   feature: {{feature}}
 ##   fullpath: {{{fullpath}}}
+##   type: {{{otffonttype}}}
+{{fontname}}.tfm: export T1FONTS=./
+{{fontname}}.tfm: xoptions=$(options) $(options_{{otffonttype}}) 
 {{fontname}}.tfm: $({{otffontname}}) .FORCE
-	otftotfm --literal-encoding={{fontname}}.enc  --name={{fontname}} --map-file=$(mapfile) --glyphlist={{glyphsfontname}} --design-size={{design_size}} {{#script}} --script={{script}}{{/script}}  $(options) $<
+	otftotfm --literal-encoding={{fontname}}.enc  --name={{fontname}} --map-file=$(mapfile) --glyphlist={{glyphsfontname}} --design-size={{design_size}} {{#script}} --script={{script}}{{/script}}  $(xoptions) $<
 
 {{/targets}}
