@@ -1,6 +1,5 @@
 #!/usr/bin/env texlua
 
-
 --[[
 otfdvi program. Author Deimantas Galcius deimantas(dot)galcius(at)gmail(dot)com
 --]]
