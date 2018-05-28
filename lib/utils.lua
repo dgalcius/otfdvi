@@ -312,7 +312,9 @@ function lua_font_name(filename, design_size, scale, fls, options)
 end
 
 function getfontdata(fontname, design_size, scale, fls, options)
-   local tfm = kpse.lookup(fontname .. ".tfm")
+--   print("TFM FLS", fls[fontname..".tfm"])
+   local tfm = fls[fontname..".tfm"] or kpse.lookup(fontname .. ".tfm")
+   print("TFM", inspect(tfm), fontname)
    local d = {}
 --   local tmeta
    local _otf = false
