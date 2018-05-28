@@ -48,6 +48,7 @@ $(pdffile): $(psfile)
 clean:
 	rm -f $(tfmfiles) $(encfiles) $(htffiles) $(glyphlistfiles)
 	rm -f $(mapfile) *.pfb *.mdata
+	rm -f $(mapfile) *.t42 *.ttf
 	rm -f __Makefile
 
 .FORCE:
