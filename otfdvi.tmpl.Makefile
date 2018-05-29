@@ -24,7 +24,10 @@ psfile:=$(baseout:=.ps)
 pdffile:=$(baseout:=.pdf)
 
 {{#verbose}}
-verbose:=--verbose=true
+verbose=-V
+{{/verbose}}
+{{^verbose}}
+at=@
 {{/verbose}}
 
 default: fonts
@@ -40,16 +43,16 @@ ps: $(psfile)
 	@echo Output $<
 
 $(psfile): $(dvifile)
-	dvips -M1 -j1 -u +$(mapfile) -o $@ $<
+	$(at)xdvipsk -M1 -j1 -u +$(mapfile) -o $@ $<
 
 $(pdffile): $(psfile)
-	ps2pdf $<
+	$(at)ps2pdf $<
 
 clean:
-	rm -f $(tfmfiles) $(encfiles) $(htffiles) $(glyphlistfiles)
-	rm -f $(mapfile) *.pfb *.mdata
-	rm -f $(mapfile) *.t42 *.ttf
-	rm -f __Makefile
+	$(at)rm -f $(tfmfiles) $(encfiles) $(htffiles) $(glyphlistfiles)
+	$(at)rm -f $(mapfile) *.pfb *.mdata
+	$(at)rm -f $(mapfile) *.t42 *.ttf
+	$(at)rm -f __Makefile
 
 .FORCE:
 
@@ -62,7 +65,7 @@ dvitype: $(dvifile)
 dvisvg: $(dvifile)
 	dvisvgm --fontmap=+$(mapfile) $<
 
-options:=--vendor=UKWN $(verbose) --no-updmap --warn-missing --x-height=font -V --force
+options:=--vendor=UKWN $(verbose) --no-updmap --warn-missing --x-height=font --force 
 options_ttf = --no-type1 --type42
 
 {{#targets}}
@@ -79,6 +82,6 @@ options_ttf = --no-type1 --type42
 {{fontname}}.tfm: export T1FONTS=./
 {{fontname}}.tfm: xoptions=$(options) $(options_{{otffonttype}}) 
 {{fontname}}.tfm: $({{otffontname}}) .FORCE
-	otftotfm --literal-encoding={{fontname}}.enc  --name={{fontname}} --map-file=$(mapfile) --glyphlist={{glyphsfontname}} --design-size={{design_size}} {{#script}} --script={{script}}{{/script}}  $(xoptions) $<
+	$(at)otftotfm --literal-encoding={{fontname}}.enc  --name={{fontname}} --map-file=$(mapfile) --glyphlist={{glyphsfontname}} --design-size={{design_size}} {{#script}} --script={{script}}{{/script}}  $(xoptions) $<
 
 {{/targets}}
