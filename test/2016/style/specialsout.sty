@@ -1,0 +1,50 @@
+%% Copyright (C) 2017 by Linas StonysVTEX UAB
+%% Mokslininku 2a, LT-08412 Vilnius, Lithuania
+%% --------------------------------------------------------------------------
+%% (generated from dtx)
+%%
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{specialsout}[2017/12/15, v1.03 specials write to file]
+\RequirePackage{ifpdf}
+\RequirePackage{iftex}
+
+\ifpdf
+  \expandafter\ifXeTeX
+    \expandafter\expandafter\expandafter
+      \endinput
+      \expandafter
+  \fi
+\else
+  \expandafter\endinput
+\fi
+
+\newwrite\@specials@log
+\def\specials@log@open{\immediate\openout\@specials@log\jobname.specials}
+\def\specials@log@close{\immediate\closeout\@specials@log}
+
+\let\original@special\special
+\def\rm@colon #1:\end@rm@colon{\def\second@param{#1}}%
+
+\def\check@pdf@spec #1:#2\encheck@pdf@spec{%
+  \bgroup
+    \lowercase{\edef\first@param{#1}}%
+    \def\second@param{#2}%
+    \def\str@pdf{pdf}%
+    \ifx\second@param\empty
+      \immediate\write\@specials@log{#1}%
+    \else
+      \rm@colon #2\end@rm@colon
+      \ifx\str@pdf\first@param
+        \original@special{#1:\second@param}%
+      \else
+        \immediate\write\@specials@log{#1:\second@param}%
+      \fi
+    \fi
+  \egroup}
+
+\def\special #1{\@bsphack\check@pdf@spec #1:\encheck@pdf@spec\@esphack}
+
+\specials@log@open
+\let\copyenddocument\enddocument
+\def\enddocument{\copyenddocument\specials@log@close}
+\endinput

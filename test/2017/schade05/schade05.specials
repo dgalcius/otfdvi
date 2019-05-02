@@ -1,0 +1,12 @@
+mt:proof
+vtex:info.runtime.maker={pdfwf_luatex}
+vtex:info.runtime.distribution={vtex}
+vtex:info.runtime.format={2016}
+vtex:info.runtime.cmdline={vtex 2016 pdfwf_luatex print schade05.tex print -interaction=batchmode}
+vtex:info.runtime.publisher={DGBOOK}
+vtex:info.runtime.project={SCHADE}
+vtex:info.runtime.manuscript={SCHADE05}
+vtex:info.runtime.historyone={2018.05.31 09:38}
+vtex:info.runtime.docstage={PROOF}
+vtex:info.runtime.pdftype={print}
+vtex:info.runtime.outputdir={print}

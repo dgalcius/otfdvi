@@ -1,0 +1,272 @@
+%%
+%% This is file `degruyter-minion-ps-fonts.sty'
+%% Author: Eimantas Gumbakis, VTeX
+%% Start-date: 2017-11-24
+%%
+
+\def\dg@fonts@fmt@name{degruyter-minion-ps-fonts}
+\def\dg@fonts@fmt@date{2018/01/29}
+\def\dg@fonts@fmt@version{0.06}
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage\dg@fonts@fmt@name
+              [\dg@fonts@fmt@date\space v\dg@fonts@fmt@version\space De Gruyter fonts]
+
+\def\eutw@encoding{EU2}
+\def\tu@encoding{TU}
+
+\RequirePackage[no-math,quiet]{fontspec}
+\setmainfont[ItalicFont    =DGMetaSerifScience-Italic.otf,
+             BoldFont      =DGMetaSerifScience-Bold.otf,
+             BoldItalicFont=DGMetaSerifScience-BoldItalic.otf]
+            {DGMetaSerifScience-Regular.otf}
+\setsansfont[ItalicFont    =DGMetaScience-Italic.otf,
+             BoldFont      =DGMetaScience-Bold.otf,
+             BoldItalicFont=DGMetaScience-BoldItalic.otf]
+            {DGMetaScience-Regular.otf}
+\setmonofont[AutoFakeSlant,
+             BoldItalicFeatures={FakeSlant}]
+            {Inconsolatazi4}
+
+\DeclareMathVersion{ss}
+\DeclareMathVersion{ssbold}
+
+\ifnum\jobstart@date@info>20180101\relax
+  \PassOptionsToPackage{intlimits}{minionmath}
+\fi
+\RequirePackage[amssymb,textcomp]{minionmath}
+\RequirePackage{minionamsmath}
+
+\DeclareSymbolFont{operators}   {\cf@encoding}{\rmdefault}{m}{n}
+\SetSymbolFont{operators}{bold} {\cf@encoding}{\rmdefault}{bx}{n} 
+
+\DeclareSymbolFont{dgitalic}    {\cf@encoding}{\rmdefault}{\mddefault}{\itdefault}
+\SetSymbolFont{dgitalic}{bold}  {\cf@encoding}{\rmdefault}{\bfdefault}{\itdefault}
+\SetSymbolFont{dgitalic}{ss}    {\cf@encoding}{\sfdefault}{\mddefault}{\itdefault}
+\SetSymbolFont{dgitalic}{ssbold}{\cf@encoding}{\sfdefault}{\bfdefault}{\itdefault}
+
+\DeclareSymbolFont{dgroman}    {\cf@encoding}{\rmdefault}{\mddefault}{\updefault}
+\SetSymbolFont{dgroman}{bold}  {\cf@encoding}{\rmdefault}{\bfdefault}{\updefault}
+\SetSymbolFont{dgroman}{ss}    {\cf@encoding}{\sfdefault}{\mddefault}{\updefault}
+\SetSymbolFont{dgroman}{ssbold}{\cf@encoding}{\sfdefault}{\bfdefault}{\updefault}
+\DeclareSymbolFont{dgmetaroman}    {\cf@encoding}{\sfdefault}{\mddefault}{\updefault}
+\SetSymbolFont{dgmetaroman}{ssbold}{\cf@encoding}{\sfdefault}{\bfdefault}{\updefault}
+
+\def\init@dg@letters#1{%
+  \gdef\math@dgmetaletters{1}
+  \DeclareMathSymbol{a}{\mathalpha}{#1}{`a}
+  \DeclareMathSymbol{b}{\mathalpha}{#1}{`b}
+  \DeclareMathSymbol{c}{\mathalpha}{#1}{`c}
+  \DeclareMathSymbol{d}{\mathalpha}{#1}{`d}
+  \DeclareMathSymbol{e}{\mathalpha}{#1}{`e}
+  \DeclareMathSymbol{f}{\mathalpha}{#1}{`f}
+  \DeclareMathSymbol{g}{\mathalpha}{#1}{`g}
+  \DeclareMathSymbol{h}{\mathalpha}{#1}{`h}
+  \DeclareMathSymbol{i}{\mathalpha}{#1}{`i}
+  \DeclareMathSymbol{j}{\mathalpha}{#1}{`j}
+  \DeclareMathSymbol{k}{\mathalpha}{#1}{`k}
+  \DeclareMathSymbol{l}{\mathalpha}{#1}{`l}
+  \DeclareMathSymbol{m}{\mathalpha}{#1}{`m}
+  \DeclareMathSymbol{n}{\mathalpha}{#1}{`n}
+  \DeclareMathSymbol{o}{\mathalpha}{#1}{`o}
+  \DeclareMathSymbol{p}{\mathalpha}{#1}{`p}
+  \DeclareMathSymbol{q}{\mathalpha}{#1}{`q}
+  \DeclareMathSymbol{r}{\mathalpha}{#1}{`r}
+  \DeclareMathSymbol{s}{\mathalpha}{#1}{`s}
+  \DeclareMathSymbol{t}{\mathalpha}{#1}{`t}
+  \DeclareMathSymbol{u}{\mathalpha}{#1}{`u}
+  \DeclareMathSymbol{v}{\mathalpha}{#1}{`v}
+  \DeclareMathSymbol{w}{\mathalpha}{#1}{`w}
+  \DeclareMathSymbol{x}{\mathalpha}{#1}{`x}
+  \DeclareMathSymbol{y}{\mathalpha}{#1}{`y}
+  \DeclareMathSymbol{z}{\mathalpha}{#1}{`z}
+  \DeclareMathSymbol{A}{\mathalpha}{#1}{`A}
+  \DeclareMathSymbol{B}{\mathalpha}{#1}{`B}
+  \DeclareMathSymbol{C}{\mathalpha}{#1}{`C}
+  \DeclareMathSymbol{D}{\mathalpha}{#1}{`D}
+  \DeclareMathSymbol{E}{\mathalpha}{#1}{`E}
+  \DeclareMathSymbol{F}{\mathalpha}{#1}{`F}
+  \DeclareMathSymbol{G}{\mathalpha}{#1}{`G}
+  \DeclareMathSymbol{H}{\mathalpha}{#1}{`H}
+  \DeclareMathSymbol{I}{\mathalpha}{#1}{`I}
+  \DeclareMathSymbol{J}{\mathalpha}{#1}{`J}
+  \DeclareMathSymbol{K}{\mathalpha}{#1}{`K}
+  \DeclareMathSymbol{L}{\mathalpha}{#1}{`L}
+  \DeclareMathSymbol{M}{\mathalpha}{#1}{`M}
+  \DeclareMathSymbol{N}{\mathalpha}{#1}{`N}
+  \DeclareMathSymbol{O}{\mathalpha}{#1}{`O}
+  \DeclareMathSymbol{P}{\mathalpha}{#1}{`P}
+  \DeclareMathSymbol{Q}{\mathalpha}{#1}{`Q}
+  \DeclareMathSymbol{R}{\mathalpha}{#1}{`R}
+  \DeclareMathSymbol{S}{\mathalpha}{#1}{`S}
+  \DeclareMathSymbol{T}{\mathalpha}{#1}{`T}
+  \DeclareMathSymbol{U}{\mathalpha}{#1}{`U}
+  \DeclareMathSymbol{V}{\mathalpha}{#1}{`V}
+  \DeclareMathSymbol{W}{\mathalpha}{#1}{`W}
+  \DeclareMathSymbol{X}{\mathalpha}{#1}{`X}
+  \DeclareMathSymbol{Y}{\mathalpha}{#1}{`Y}
+  \DeclareMathSymbol{Z}{\mathalpha}{#1}{`Z}
+  }
+\init@dg@letters{dgitalic}
+
+\def\init@dgdigits#1{%
+  \DeclareMathSymbol{0}{\mathalpha}{#1}{`0}
+  \DeclareMathSymbol{1}{\mathalpha}{#1}{`1}
+  \DeclareMathSymbol{2}{\mathalpha}{#1}{`2}
+  \DeclareMathSymbol{3}{\mathalpha}{#1}{`3}
+  \DeclareMathSymbol{4}{\mathalpha}{#1}{`4}
+  \DeclareMathSymbol{5}{\mathalpha}{#1}{`5}
+  \DeclareMathSymbol{6}{\mathalpha}{#1}{`6}
+  \DeclareMathSymbol{7}{\mathalpha}{#1}{`7}
+  \DeclareMathSymbol{8}{\mathalpha}{#1}{`8}
+  \DeclareMathSymbol{9}{\mathalpha}{#1}{`9}
+  }
+\init@dgdigits{dgroman}
+
+\def\setDGmathMonospasedNumbers{%
+  \Umathcode`0="7 \symdgmetaroman "F130
+  \Umathcode`1="7 \symdgmetaroman "F131
+  \Umathcode`2="7 \symdgmetaroman "F132
+  \Umathcode`3="7 \symdgmetaroman "F133
+  \Umathcode`4="7 \symdgmetaroman "F134
+  \Umathcode`5="7 \symdgmetaroman "F135
+  \Umathcode`6="7 \symdgmetaroman "F136
+  \Umathcode`7="7 \symdgmetaroman "F137
+  \Umathcode`8="7 \symdgmetaroman "F138
+  \Umathcode`9="7 \symdgmetaroman "F139
+  }
+  
+%% \Umathchardef\macro "<math_class> "<math_family_number> "<unicode_position>
+%% <math_class> - 0-7 value, based on the (1-8) list on p. 185 in 'TeX by Topic'.
+%%   e.g. for \mathbin type operator (class 3 in 'TeX by Topic') we set "2 mathclass (subtract 1 from 'TeX by Topic' list)
+%% "<math_family_number" might be replaced with \symletters, \symoperators, new declared math family, etc.      
+\def\init@dg@greek#1{%
+  \Umathchardef\alpha       "0 \csname sym#1\endcsname "03B1
+  \Umathchardef\beta        "7 \csname sym#1\endcsname "03B2
+  \Umathchardef\gamma       "7 \csname sym#1\endcsname "03B3
+  \Umathchardef\delta       "7 \csname sym#1\endcsname "03B4
+  \Umathchardef\varepsilon  "7 \csname sym#1\endcsname "03B5
+  \Umathchardef\zeta        "7 \csname sym#1\endcsname "03B6
+  \Umathchardef\eta         "7 \csname sym#1\endcsname "03B7
+  \Umathchardef\theta       "7 \csname sym#1\endcsname "03B8
+  \Umathchardef\iota        "7 \csname sym#1\endcsname "03B9
+  \Umathchardef\kappa       "7 \csname sym#1\endcsname "03BA
+  \Umathchardef\lambda      "7 \csname sym#1\endcsname "03BB
+  \Umathchardef\mu          "7 \csname sym#1\endcsname "03BC
+  \Umathchardef\nu          "7 \csname sym#1\endcsname "03BD
+  \Umathchardef\xi          "7 \csname sym#1\endcsname "03BE
+  \Umathchardef\omicron     "7 \csname sym#1\endcsname "03BF
+  \Umathchardef\pi          "7 \csname sym#1\endcsname "03C0
+  \Umathchardef\rho         "7 \csname sym#1\endcsname "03C1
+  \Umathchardef\varsigma    "7 \csname sym#1\endcsname "03C2
+  \Umathchardef\sigma       "7 \csname sym#1\endcsname "03C3
+  \Umathchardef\tau         "7 \csname sym#1\endcsname "03C4
+  \Umathchardef\upsilon     "7 \csname sym#1\endcsname "03C5
+  \Umathchardef\varphi      "7 \csname sym#1\endcsname "03C6
+  \Umathchardef\chi         "7 \csname sym#1\endcsname "03C7
+  \Umathchardef\psi         "7 \csname sym#1\endcsname "03C8
+  \Umathchardef\omega       "7 \csname sym#1\endcsname "03C9
+  \Umathchardef\varbeta     "7 \csname sym#1\endcsname "03D0
+  \Umathchardef\vartheta    "7 \csname sym#1\endcsname "03D1
+  \Umathchardef\phi         "7 \csname sym#1\endcsname "03D5
+  \Umathchardef\varpi       "7 \csname sym#1\endcsname "03D6
+  \Umathchardef\oldKoppa    "7 \csname sym#1\endcsname "03D8
+  \Umathchardef\oldkoppa    "7 \csname sym#1\endcsname "03D9
+  \Umathchardef\Stigma      "7 \csname sym#1\endcsname "03DA
+  \Umathchardef\stigma      "7 \csname sym#1\endcsname "03DB
+  \Umathchardef\Digamma     "7 \csname sym#1\endcsname "03DC
+  \Umathchardef\digamma     "7 \csname sym#1\endcsname "03DD
+  \Umathchardef\Koppa       "7 \csname sym#1\endcsname "03DE
+  \Umathchardef\koppa       "7 \csname sym#1\endcsname "03DF
+  \Umathchardef\Sampi       "7 \csname sym#1\endcsname "03E0
+  \Umathchardef\sampi       "7 \csname sym#1\endcsname "03E1
+  \Umathchardef\varkappa    "7 \csname sym#1\endcsname "03F0
+  \Umathchardef\varrho      "7 \csname sym#1\endcsname "03F1
+  \Umathchardef\varTheta    "7 \csname sym#1\endcsname "03F4
+  \Umathchardef\epsilon     "7 \csname sym#1\endcsname "03F5
+  \Umathchardef\backepsilon "7 \csname sym#1\endcsname "03F6
+  }   
+\init@dg@greek{dgitalic}
+\def\init@dg@Greek{%
+  \Umathchardef\Gamma  "7 \symdgroman "0393
+  \Umathchardef\Delta  "7 \symdgroman "0394
+  \Umathchardef\Theta  "7 \symdgroman "0398
+  \Umathchardef\Lambda "7 \symdgroman "039B
+  \Umathchardef\Xi     "7 \symdgroman "039E
+  \Umathchardef\Pi     "7 \symdgroman "03A0
+  \Umathchardef\Sigma  "7 \symdgroman "03A3
+  \Umathchardef\Upsilon"7 \symdgroman "03D2
+  \Umathchardef\Phi    "7 \symdgroman "03A6
+  \Umathchardef\Psi    "7 \symdgroman "03A8
+  \Umathchardef\Omega  "7 \symdgroman "03A9
+  \Umathchardef\varGamma  "7 \symdgitalic "0393
+  \Umathchardef\varDelta  "7 \symdgitalic "0394
+  \Umathchardef\varTheta  "7 \symdgitalic "0398
+  \Umathchardef\varLambda "7 \symdgitalic "039B
+  \Umathchardef\varXi     "7 \symdgitalic "039E
+  \Umathchardef\varPi     "7 \symdgitalic "03A0
+  \Umathchardef\varSigma  "7 \symdgitalic "03A3
+  \Umathchardef\varUpsilon"7 \symdgitalic "03D2
+  \Umathchardef\varPhi    "7 \symdgitalic "03A6
+  \Umathchardef\varPsi    "7 \symdgitalic "03A8
+  \Umathchardef\varOmega  "7 \symdgitalic "03A9
+  }
+  
+\ifdefined\bookstart@date@info
+  \ifnum\bookstart@date@info>20180119\relax
+    \init@dg@Greek
+  \fi
+\else
+  \ifnum\jobstart@date@info>20180119\relax
+    \init@dg@Greek
+  \fi
+\fi
+
+\DeclareMathAlphabet{\mathrm}    {\cf@encoding}{\rmdefault}{\mddefault}{\updefault}
+\SetMathAlphabet{\mathrm}{bold}  {\cf@encoding}{\rmdefault}{\bfdefault}{\updefault}
+\SetMathAlphabet{\mathrm}{ss}    {\cf@encoding}{\sfdefault}{\mddefault}{\updefault}
+\SetMathAlphabet{\mathrm}{ssbold}{\cf@encoding}{\sfdefault}{\bfdefault}{\updefault}
+
+\DeclareMathAlphabet{\mathit}    {\cf@encoding}{\rmdefault}{\mddefault}{\itdefault}
+\SetMathAlphabet{\mathit}{bold}  {\cf@encoding}{\rmdefault}{\bfdefault}{\itdefault}
+\SetMathAlphabet{\mathit}{ss}    {\cf@encoding}{\sfdefault}{\mddefault}{\itdefault}
+\SetMathAlphabet{\mathit}{ssbold}{\cf@encoding}{\sfdefault}{\bfdefault}{\itdefault}
+
+\DeclareMathAlphabet{\mathbf}    {\cf@encoding}{\rmdefault}{\bfdefault}{\updefault}
+\SetMathAlphabet{\mathbf}{bold}  {\cf@encoding}{\rmdefault}{\bfdefault}{\updefault}
+\SetMathAlphabet{\mathbf}{ss}    {\cf@encoding}{\sfdefault}{\bfdefault}{\updefault}
+\SetMathAlphabet{\mathbf}{ssbold}{\cf@encoding}{\sfdefault}{\bfdefault}{\updefault}
+
+\DeclareMathAlphabet{\mathsf}    {\cf@encoding}{\sfdefault}{\mddefault}{\updefault}
+\SetMathAlphabet{\mathsf}{bold}  {\cf@encoding}{\sfdefault}{\bfdefault}{\updefault}
+\SetMathAlphabet{\mathsf}{ss}    {\cf@encoding}{\sfdefault}{\mddefault}{\updefault}
+\SetMathAlphabet{\mathsf}{ssbold}{\cf@encoding}{\sfdefault}{\bfdefault}{\updefault}
+
+\DeclareMathAlphabet{\mathtt}    {\cf@encoding}{\ttdefault}{\mddefault}{\updefault}
+\SetMathAlphabet{\mathtt}{bold}  {\cf@encoding}{\ttdefault}{\bfdefault}{\updefault}
+\SetMathAlphabet{\mathtt}{ss}    {\cf@encoding}{\ttdefault}{\mddefault}{\updefault}
+\SetMathAlphabet{\mathtt}{ssbold}{\cf@encoding}{\ttdefault}{\bfdefault}{\updefault}
+
+\DeclareMathAlphabet{\mathcal}    {OMS}{cmsy}{m}{n}
+\SetMathAlphabet{\mathcal}{bold}  {OMS}{cmsy}{b}{n}
+\SetMathAlphabet{\mathcal}{ss}    {OMS}{cmsy}{m}{n}
+\SetMathAlphabet{\mathcal}{ssbold}{OMS}{cmsy}{b}{n}
+
+%% minionmath.sty appended with ss, ssbold versions (symbolsb - mathcal, symbolsc - mathfrak)
+\SetSymbolFont{symbolsb}{ss}    {MS1}{minionmath}{m}{n}
+\SetSymbolFont{symbolsb}{ssbold}{MS1}{minionmath}{b}{n}
+\SetSymbolFont{symbolsc}{ss}    {MS2}{minionmath-eufr}{m}{n}
+\SetSymbolFont{symbolsc}{ssbold}{MS2}{minionmath-eufr}{b}{n}
+
+\SetSymbolFont{operators}{ss}     {\cf@encoding}{\sfdefault}{m}{n}
+\SetSymbolFont{operators}{ssbold} {\cf@encoding}{\sfdefault}{bx}{n}
+
+\SetSymbolFont{letters}{ss}    {MSP}{minionmath-rsfs}{m}{n}
+\SetSymbolFont{letters}{ssbold}{MSP}{minionmath-rsfs}{b}{n}
+\SetSymbolFont{symbols}{ss}    {MC}{minionmath}{m}{n}
+\SetSymbolFont{symbols}{ssbold}{MC}{minionmath}{b}{n}
+\SetSymbolFont{largesymbols}{ss}    {MXP}{minionmath}{m}{\@extshape}
+\SetSymbolFont{largesymbols}{ssbold}{MXP}{minionmath}{b}{\@extshape}
+
+% mazinami siektiek visi delimiteriai (default yra disdesni uz tiesiogiai kraunamo otf)
+\delimiterfactor=800
+\endinput

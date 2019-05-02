@@ -1,0 +1,20 @@
+variety sequences-6
+pre 2 25400000 473628672 1000 30 ' LuaTeX output 2018.05.10:1221'
+bop 1 0 0 0 0 0 0 0 0 0 -1
+[
+[
+[
+r3 5046272
+d3 4128768
+fd1 29 0 655360 655360 0 52 '' 'NotoSerif:mode=node;script=latn;language=DFLT;+tlig;'
+fn29
+(a)
+r3 170240
+(g)
+]
+]
+]
+eop
+post 45 25400000 473628672 1000 41484288 26673152 3 1
+fd1 29 0 655360 655360 0 52 '' 'NotoSerif:mode=node;script=latn;language=DFLT;+tlig;'
+post_post 180 2 223 223 223 223 223

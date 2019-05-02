@@ -1,0 +1,22 @@
+%% VTeX,  2013
+%% Linas Stonys, lstonys@vtex.lt
+%% generated from dtx
+\def\filedate{2017/08/02}
+\def\fileversion{v1.2}
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{pdfwf-graphics}[\filedate\space\fileversion,\space PDFWF graphics package]
+\RequirePackage{vtexgraphicx}
+
+\ifdefined\jobstart@date@info\else
+    \RequirePackage{fileinfo}\getFileInfo
+\fi
+\ifnum\jobstart@date@info>20170802\relax
+  \PassOptionsToPackage{readpi,addpicture}{vtexgraphicx}
+\fi
+
+\ifdefined\vtexinfo
+\else
+  \let\vtexinfo\@gobble
+\fi
+
+\endinput

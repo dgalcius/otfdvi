@@ -1,0 +1,50 @@
+%%
+%% This is file `ms2minionmath-eufr.fd',
+%% generated with the docstrip utility.
+%%
+%% The original source files were:
+%%
+%% minionmathfont.fdd  (with options: `ms2,minionmath-prelim,newmath')
+%% 
+%% This file belongs to the `typoma Minion Math' fonts
+%% and is part of their accompanying bundle of LaTeX files.
+%% 
+%% Copyright (C) 2008-2012 typoma GmbH, Germany. http://www.typoma.com
+%% All rights reserved.
+%% 
+%% This is a generated file -- do not modify its content.
+%% 
+ \ProvidesFile{ms2minionmath-eufr.fd}
+ [2006/30/01 NewMath v0.59a,\space
+  Math Symbol 2,\space
+ ]
+\DeclareFontFamily{MS2}{minionmath-eufr}{\skewchar\font127 }
+\DeclareFontShape{MS2}{minionmath-eufr}{m}{n}{
+   <-6>        MinionMath-Tiny-MSB-eufr
+   <6-8.5>     MinionMath-Capt-MSB-eufr
+   <8.5-13.5>  MinionMath-Regular-MSB-eufr
+   <13.5-24.5> MinionMath-Subh-MSB-eufr
+   <24.5->     MinionMath-Disp-MSB-eufr}{}
+\DeclareFontShape{MS2}{minionmath-eufr}{d}{n}{
+   <-6>        MinionMath-MediumTiny-MSB-eufr
+   <6-8.5>     MinionMath-MediumCapt-MSB-eufr
+   <8.5-13.5>  MinionMath-Medium-MSB-eufr
+   <13.5-24.5> MinionMath-MediumSubh-MSB-eufr
+   <24.5->     MinionMath-MediumDisp-MSB-eufr}{}
+\DeclareFontShape{MS2}{minionmath-eufr}{sb}{n}{
+   <-6>        MinionMath-SemiboldTiny-MSB-eufr
+   <6-8.5>     MinionMath-SemiboldCapt-MSB-eufr
+   <8.5-13.5>  MinionMath-Semibold-MSB-eufr
+   <13.5-24.5> MinionMath-SemiboldSubh-MSB-eufr
+   <24.5->     MinionMath-SemiboldDisp-MSB-eufr}{}
+\DeclareFontShape{MS2}{minionmath-eufr}{b}{n}{
+   <-6>        MinionMath-BoldTiny-MSB-eufr
+   <6-8.5>     MinionMath-BoldCapt-MSB-eufr
+   <8.5-13.5>  MinionMath-Bold-MSB-eufr
+   <13.5-24.5> MinionMath-BoldSubh-MSB-eufr
+   <24.5->     MinionMath-BoldDisp-MSB-eufr}{}
+\DeclareFontShape{MS2}{minionmath-eufr}{bx}{n}{<->ssub * minionmath/b/n}{}
+
+%% 
+%%
+%% End of file `ms2minionmath-eufr.fd'.

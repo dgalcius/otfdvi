@@ -1,0 +1,109 @@
+<secfile name="Manuscript info">
+  <operation>Submit</operation>
+  <sec name="STEFAN107">
+    <key name="Main file type">PDF</key>
+    <key name="Main file name">print/STEFAN107.pdf</key>
+    <key name="Stage">200</key>
+    <key name="LaTeX stage">\PROOF</key>
+    <key name="Publication year">2019</key>
+    <key name="First logical page" type="integer">161</key>
+    <key name="Last logical page" type="integer">177</key>
+    <key name="Page numbering">arabic</key>
+    <key name="Page count" type="integer">17</key>
+    <sec name="DB info">
+      <sec name="PTS Read">
+        <key name="Host">db.vtex.vmt</key>
+        <key name="Port">3306</key>
+        <key name="User">maket</key>
+        <key name="Password">D53B58</key>
+        <key name="Database">ptsIII</key>
+        <key name="Timeout" type="integer">30</key>
+      </sec>
+      <sec name="PTS Client">
+        <key name="Host">www.vtex.vmt</key>
+        <key name="Port" type="integer">80</key>
+        <key name="End point">/db/xmlrpc/s1.php</key>
+        <key name="Post method">ptspost</key>
+        <key name="Test method">help</key>
+        <key name="Backup directory">y:\db_backup</key>
+        <key name="SSL enabled" type="boolean">No</key>
+      </sec>
+      <sec name="PTS Info">
+        <key name="PTS Info Address">http://pts.vtex.vmt/db/vtexpts/item/check/oper</key>
+        <key name="VTEXPTS MS info URL">http://pts.vtex.vmt/db/vtexpts/api/item/%s/info</key>
+        <key name="Elsevier journal stylesheets address"></key>
+        <key name="PTSIII info URL"></key>
+        <key name="Project info URL"></key>
+        <key name="VTEXPTS worker info URL">https://pts.vtex.vmt/db/vtexpts/worker/info?uid=%s</key>
+      </sec>
+    </sec>
+    <sec name="File info">
+      <key name="Publisher">DGBOOK</key>
+      <key name="Project">STEFAN1</key>
+      <key name="Manuscript">STEFAN107</key>
+      <key name="Stage">203</key>
+      <key name="MS position"></key>
+      <key name="Computer name">1GSRED478</key>
+      <key name="User name">juraten</key>
+      <key name="TID">juraten</key>
+      <key name="Pages"></key>
+      <key name="Format">2016</key>
+      <key name="Distribution">vtex</key>
+      <key name="PDF type">print</key>
+      <key name="LaTeX file name">stefan107.tex</key>
+      <key name="Destination">PDF</key>
+      <key name="ISSN/ISBN">978-3-11-049088-6</key>
+      <key name="Opened from">server</key>
+      <key name="PDF.Maker">pdfwf_luatex</key>
+      <key name="Spelled">Dictionary: American, Computer: 1GSRED478, 2018.04.09 14:58</key>
+      <key name="Graphics directory"></key>
+      <key name="Copy to DB" type="boolean">Yes</key>
+      <key name="Compiler cmd line"></key>
+      <key name="VTEXPTS stage">E100</key>
+      <sec name="History" type="text">
+        2018.04.09 14:38
+      </sec>
+    </sec>
+    <sec name="LaTeX info">
+      <key name="Publisher">DGBook</key>
+      <key name="Project">STEFAN1</key>
+      <key name="Version"></key>
+      <key name="DocType"></key>
+      <key name="Format">2016</key>
+      <key name="Distribution">vtex</key>
+      <key name="Destination">PDF</key>
+      <key name="DVI.Maker">luadvi</key>
+      <key name="DVI.Viewer">xdviwindo</key>
+      <key name="PS.Maker">xdvipsk</key>
+      <key name="PS.Viewer">GSView</key>
+      <key name="PDF.Maker">pdfwf_luatex</key>
+      <key name="PDF.Viewer">Acrobat</key>
+      <key name="Run before Open">fhgextract,pdfwf_images (full),VTEXPTS2LaTeX,book_aux_toc,Open Source PDF allways</key>
+      <key name="Run before Make"></key>
+      <key name="Run after Make">FlsUpdated</key>
+      <key name="Run before Send">pdfwf_images (full),pdfwf_compile_before_send,pdfwf_mszip,kt-ltx-chk-auto</key>
+      <key name="Run after Send"></key>
+      <key name="Do not copy from server"></key>
+      <key name="Send to server">tex,pdf,log,aux,data,out,pgrefs,*.specials,*.pdf_print_me,*.opentype.map,*.encodings.map</key>
+      <key name="Template">stefan1.for</key>
+      <key name="Type page width" type="float">170</key>
+      <key name="Type page height" type="float">240</key>
+      <key name="Text area width" type="float">122</key>
+      <key name="Text area height" type="float">193</key>
+      <key name="Column width" type="float">122</key>
+      <key name="Run after confirm send">pdfwf_fhg,pdfwf_printpdf</key>
+      <key name="Main file type">PDF</key>
+      <key name="Track changes" type="boolean">Yes</key>
+      <key name="Update pubonline date" type="boolean">No</key>
+      <key name="UTF-8" type="boolean">Yes</key>
+      <key name="PDF type">print</key>
+      <key name="Main file name">print/&amp;ms;.pdf</key>
+      <key name="MS subdirs">www,print</key>
+      <key name="Do not Send subdirs">images</key>
+      <key name="Update doctopic" type="boolean">No</key>
+      <key name="GCNS" type="boolean">No</key>
+      <key name="GCNS start date"></key>
+      <key name="Prelim templates"></key>
+    </sec>
+  </sec>
+</secfile>

@@ -1,0 +1,266 @@
+% TeX programming:
+%   Sigitas Tolusis, VTeX, Lithuania, 2011
+% E-mail: sigitas@vtex.lt
+%
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{string}[2015/07/13 v1.5 String compression package]
+
+\@ifundefined{t@mp@r@a}{\newcount\t@mp@r@a}{}
+\newcount\numberize@string@var
+\newcount\numberized@string@diff@count
+\newif\if@char@is@numeric@
+\newif\if@token@is@macro@
+\def\check@if@macro#1{%
+  % f-ja, kuri tikrina ar #1 yra tex komanda
+  \@token@is@macro@false
+  \if\noexpand#1\relax
+    \@token@is@macro@true
+  \fi
+  \eat@to@string@end
+  }
+\def\eat@to@string@end#1\string@end@marker{%
+  % suvalgo likusia string'o dali
+  }
+\def\make@numberize@string#1#2{%
+  % f-ja, kuri tokenizuoja kodais string'a
+  \ifx\@empty#1\@empty
+  \else
+    \@char@is@numeric@false
+    \check@if@macro#1\string@end@marker
+    \if@token@is@macro@
+    \else
+      \afterassignment\eat@to@string@end\chardef\numberize@string@char@code`#1\string@end@marker
+      \ifnum\numberize@string@char@code>47\relax
+        \ifnum\numberize@string@char@code<58\relax
+          \@char@is@numeric@true
+        \fi
+      \fi
+    \fi
+    \if@char@is@numeric@
+      \def\do@next@iteration{\afterassignment\check@numberize@string@end\numberize@string@var\number#1\string@end@marker#2}%
+    \else
+      \if@token@is@macro@
+        \def\do@next@iteration{\numberize@string@var\m@ne\relax
+          \afterassignment\check@numberize@string@end\let\p@p@next#1\string@end@marker#2}%
+      \else
+        \def\do@next@iteration{\numberize@string@var\number\numberize@string@char@code
+          \afterassignment\check@numberize@string@end\let\p@p@next#1\string@end@marker#2}%
+      \fi
+    \fi
+    \expandafter\do@next@iteration
+  \fi
+  }
+\def\check@numberize@string@end#1\string@end@marker#2{%
+  % vidine rekursine f-ja, kuri ideda sekanti token'o koda
+  \@cons#2{{\number\numberize@string@var}}%
+  \if@token@is@macro@
+    \@cons#2{{\meaning\p@p@next}}%
+  \else
+    \@cons#2{{}}%
+  \fi
+  \make@numberize@string{#1}#2%
+  }
+\def\numberize@string#1#2{%
+  % f-ja, kuri tokenizuoja stringa kodais
+  % #1 - string, #2 - results in form \@elt{<code>}{|<macro>},
+  % kur <code> : <simbolio kodas> | <skaicius> | <-1> , jei tex komanda
+  % <macro> - tex komanda
+  \bgroup
+    \let\string@end@marker\relax
+    \let\str@num@list\@empty
+    \let#2\@empty
+    \make@numberize@string{#1}#2%
+  \egroup
+  }
+\def\check@next@val#1#2#3{%
+  % rekursine dvieju elementu lyginimo f-ja tarp dvieju sarasu
+  \@next\next@val@@ne#1{}{\let\next@val@@ne\@empty}%
+  \@next\next@val@@ne@adds#1{}{\let\next@val@@ne@adds\@empty}%
+  \@next\next@val@tw@#2{}{\let\next@val@tw@\@empty}%
+  \@next\next@val@tw@@adds#2{}{\let\next@val@tw@@adds\@empty}%
+  \let\next@cmp@iteration\relax
+  \ifx\next@val@@ne\@empty
+    \ifx\next@val@tw@\@empty
+    \else
+      \def\next@cmp@iteration{\@cons#3{{{1}{\number\next@val@tw@}{}}}\advance\numberized@string@diff@count\@ne\check@next@val#1#2#3}%
+    \fi
+  \else
+    \ifx\next@val@tw@\@empty
+      \def\next@cmp@iteration{\@cons#3{{{-1}{\number\next@val@@ne}{}}}\advance\numberized@string@diff@count\@ne\check@next@val#1#2#3}%
+    \else
+      \numberize@string@var\numexpr\number\next@val@tw@-\number\next@val@@ne\relax
+      \ifnum\numberize@string@var=\z@
+        \ifnum\number\next@val@@ne=\m@ne\relax
+          \ifnum\number\next@val@tw@=\m@ne\relax
+            \ifx\next@val@@ne@adds\next@val@tw@@adds
+              \def\next@cmp@iteration{\check@next@val#1#2#3}%       
+            \else
+              \def\next@cmp@iteration{\@cons#3{{{-2}{-1}{}}}\advance\numberized@string@diff@count\@ne\check@next@val#1#2#3}%
+            \fi
+          \else
+            \def\next@cmp@iteration{\@cons#3{{{-2}{-1}{}}}\advance\numberized@string@diff@count\@ne\check@next@val#1#2#3}%
+          \fi
+        \else
+          \ifnum\numberized@string@diff@count>\z@
+            \def\next@cmp@iteration{\@cons#3{{{0}{\number\next@val@@ne}{\number\numberize@string@var}}}\check@next@val#1#2#3}%
+          \else
+            \def\next@cmp@iteration{\check@next@val#1#2#3}%       
+          \fi
+       \fi
+      \else
+        \def\next@cmp@iteration{\@cons#3{{{0}{\number\next@val@@ne}{\number\numberize@string@var}}}%
+          \advance\numberized@string@diff@count\@ne\check@next@val#1#2#3}%
+      \fi
+    \fi
+  \fi
+  \next@cmp@iteration
+  }
+\def\cmp@str@diff#1#2#3{%
+  % dvieju elementu palyginimo f-jos interfeisas
+  % #3 grazina visus skirtingus elementus
+  \numberize@string{#1}\str@num@list@@ne
+  \numberize@string{#2}\str@num@list@tw@
+  \let#3\@empty\numberized@string@diff@count\z@
+  \check@next@val\str@num@list@@ne\str@num@list@tw@#3%
+  }
+\def\recheck@diff@value#1#2#3{%
+  \ifnum#2<\z@\relax
+    \def\cur@diff{{-1}{#2}{#3}}%
+  \else
+    \def\cur@diff{{1}{#2}{#3}}%
+  \fi
+  }
+\def\check@if@numeric#1#2#3{%
+  % ar skaicius?
+  \@char@is@numeric@false
+  \ifnum\number#2>\m@ne\relax
+    \ifnum\number#2<10\relax
+      \@char@is@numeric@true
+    \else
+      \ifx#3\@empty
+      \else
+        \ifnum#3=\z@\else\@char@is@numeric@true\fi
+      \fi
+    \fi
+  \fi
+  }
+\def\recheck@rest@diff@value#1#2#3{%
+  \def\cur@diff{{#1}{#2}{}}%
+  }
+\def\check@rest@for@changes#1{%
+  \let\next@diff\@empty
+  \@next\next@diff#1{}{}%
+  \ifx\next@diff\@empty
+  \else
+    \expandafter\check@if@numeric\next@diff
+    \if@char@is@numeric@
+      \expandafter\recheck@rest@diff@value\cur@diff
+    \else
+      \check@rest@for@changes#1%
+    \fi
+  \fi
+  }
+\def\cmpstr#1#2#3{%
+  % dvieju elementu palyginimo interfeisas
+  \let#3\@empty
+  \cmp@str@diff{#1}{#2}\str@num@list@diff
+  \ifx\str@num@list@diff\@empty
+    \def\cur@diff{{0}{0}{0}}%
+  \else
+    \@next\cur@diff\str@num@list@diff{}{}%
+    \ifx\str@num@list@diff\@empty
+      \expandafter\recheck@diff@value\cur@diff
+    \else
+      \check@rest@for@changes\str@num@list@diff
+      \expandafter\recheck@diff@value\cur@diff
+    \fi
+  \fi
+  \@cons#3{\cur@diff}%
+  }
+\def\get@cmp@res#1{%
+ \bgroup
+    \def\@elt##1##2##3{%
+      \ifnum##1<\z@
+        \gdef\cmp@@code{##1}\relax
+        \gdef\cmp@@char@@base{##2}\relax
+	\ifnum##30<\z@
+          \gdef\cmp@@base@@diff{##3}\relax
+	\else
+          \global\chardef\cmp@@base@@diff0##3\relax
+	\fi
+      \else
+        \global\chardef\cmp@@code##1\relax
+        \global\chardef\cmp@@char@@base##2\relax
+	\ifnum##30<\z@
+          \gdef\cmp@@base@@diff{##3}\relax
+	\else
+          \global\chardef\cmp@@base@@diff0##3\relax
+	\fi
+      \fi
+      }#1%
+  \egroup
+  }
+\def\compress@string@list#1\to#2\sep#3#4{%
+  % saraso #1 kompresija i #2
+  % tarp atskiru elementu ideda skirtuka #3
+  % tarp is eiles einanciu sutraukia iki pirmo or paskutinio ir ideda
+  % skirtuka #4
+  % Naudojamos f-jos:
+  %   - cmp#1#2#3      :-> dvieju elementu sulyginimui
+  %   - get@cmp@res#1  :-> sulyginimo rezultatu apdorojimui
+  \bgroup
+    \expandafter\def\csname#2\endcsname{}%
+    \expandafter\def\expandafter\compressed@list@ptr\expandafter{\csname#2\endcsname}%
+    \t@mp@r@a=-1\relax
+    \expandafter\expandafter\expandafter\@for\expandafter\expandafter\expandafter\@@refb\expandafter\expandafter\string:\expandafter=#1\do{%
+      \let\cur@@refb\@@refb
+      \ifnum\t@mp@r@a=-1\relax
+        \expandafter\expandafter\expandafter\g@addto@macro\expandafter\compressed@list@ptr\expandafter{\@@refb}%
+        \let\prev@@refb\@@refb
+        \let\saved@@refb\@@refb
+        \t@mp@r@a\z@
+      \else
+        \expandafter\expandafter\expandafter\cmpstr\expandafter\expandafter\expandafter
+          {\expandafter\prev@@refb\expandafter}\expandafter{\@@refb}\str@num@list@diff@val
+        \get@cmp@res\str@num@list@diff@val
+        \ifcase\cmp@@code
+          %%\expandafter\expandafter\expandafter\g@addto@macro\expandafter\compressed@list@ptr\expandafter{#3}%
+          %%\expandafter\expandafter\expandafter\g@addto@macro\expandafter\compressed@list@ptr\expandafter{\@@refb}%
+        \or
+          \ifnum\cmp@@base@@diff=\@ne
+            \let\prev@@refb\@@refb
+            \advance\t@mp@r@a\@ne\relax
+          \else
+            \ifnum\t@mp@r@a>\@ne
+              \expandafter\expandafter\expandafter\g@addto@macro\expandafter\compressed@list@ptr\expandafter{#4}%
+              \expandafter\expandafter\expandafter\g@addto@macro\expandafter\compressed@list@ptr\expandafter{\prev@@refb}%
+              \expandafter\expandafter\expandafter\g@addto@macro\expandafter\compressed@list@ptr\expandafter{#3}%
+              \expandafter\expandafter\expandafter\g@addto@macro\expandafter\compressed@list@ptr\expandafter{\@@refb}%
+            \else
+              \ifx\saved@@refb\prev@@refb
+              \else
+                \expandafter\expandafter\expandafter\g@addto@macro\expandafter\compressed@list@ptr\expandafter{#3}%
+                \expandafter\expandafter\expandafter\g@addto@macro\expandafter\compressed@list@ptr\expandafter{\prev@@refb}%
+              \fi
+              \expandafter\expandafter\expandafter\g@addto@macro\expandafter\compressed@list@ptr\expandafter{#3}%
+              \expandafter\expandafter\expandafter\g@addto@macro\expandafter\compressed@list@ptr\expandafter{\@@refb}%
+            \fi
+            \let\prev@@refb\@@refb
+            \let\saved@@refb\@@refb
+            \t@mp@r@a=\z@\relax
+          \fi
+        \fi
+      \fi
+      }%
+    \ifx\saved@@refb\cur@@refb
+    \else
+      \ifnum\t@mp@r@a>\@ne
+        \expandafter\expandafter\expandafter\g@addto@macro\expandafter\compressed@list@ptr\expandafter{#4}%
+      \else
+        \expandafter\expandafter\expandafter\g@addto@macro\expandafter\compressed@list@ptr\expandafter{#3}%
+      \fi
+      \expandafter\expandafter\expandafter\g@addto@macro\expandafter\compressed@list@ptr\expandafter{\cur@@refb}%
+    \fi
+  \egroup
+  }
+\endinput

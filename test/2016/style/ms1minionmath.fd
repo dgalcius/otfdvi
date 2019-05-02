@@ -1,0 +1,51 @@
+%%
+%% This is file `ms1minionmath.fd',
+%% generated with the docstrip utility.
+%%
+%% The original source files were:
+%%
+%% minionmathfont.fdd  (with options: `ms1,minionmath,newmath')
+%% 
+%% This file belongs to the `typoma Minion Math' fonts
+%% and is part of their accompanying bundle of LaTeX files.
+%% 
+%% Copyright (C) 2008-2012 typoma GmbH, Germany. http://www.typoma.com
+%% All rights reserved.
+%% 
+%% This is a generated file -- do not modify its content.
+%% 
+ \ProvidesFile{ms1minionmath.fd}
+ [2006/30/01 NewMath v0.59a,\space
+  Math Symbol 1,\space
+  Minion Math
+ ]
+\DeclareFontFamily{MS1}{minionmath}{\skewchar\font127 }
+\DeclareFontShape{MS1}{minionmath}{m}{n}{
+   <-6>        MinionMath-Tiny-MSA
+   <6-8.5>     MinionMath-Capt-MSA
+   <8.5-13.5>  MinionMath-Regular-MSA
+   <13.5-24.5> MinionMath-Subh-MSA
+   <24.5->     MinionMath-Disp-MSA}{}
+\DeclareFontShape{MS1}{minionmath}{d}{n}{
+   <-6>        MinionMath-MediumTiny-MSA
+   <6-8.5>     MinionMath-MediumCapt-MSA
+   <8.5-13.5>  MinionMath-Medium-MSA
+   <13.5-24.5> MinionMath-MediumSubh-MSA
+   <24.5->     MinionMath-MediumDisp-MSA}{}
+\DeclareFontShape{MS1}{minionmath}{sb}{n}{
+   <-6>        MinionMath-SemiboldTiny-MSA
+   <6-8.5>     MinionMath-SemiboldCapt-MSA
+   <8.5-13.5>  MinionMath-Semibold-MSA
+   <13.5-24.5> MinionMath-SemiboldSubh-MSA
+   <24.5->     MinionMath-SemiboldDisp-MSA}{}
+\DeclareFontShape{MS1}{minionmath}{b}{n}{
+   <-6>        MinionMath-BoldTiny-MSA
+   <6-8.5>     MinionMath-BoldCapt-MSA
+   <8.5-13.5>  MinionMath-Bold-MSA
+   <13.5-24.5> MinionMath-BoldSubh-MSA
+   <24.5->     MinionMath-BoldDisp-MSA}{}
+\DeclareFontShape{MS1}{minionmath}{bx}{n}{<->ssub * minionmath/b/n}{}
+
+%% 
+%%
+%% End of file `ms1minionmath.fd'.

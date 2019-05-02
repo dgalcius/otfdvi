@@ -1,0 +1,188 @@
+%%
+%% This is file `printead.sty',
+%% generated with the docstrip utility.
+%%
+%% The original source files were:
+%%
+%% printead.dtx  (with options: `package')
+%% 
+%% Copyright (C) 2014 by L. Stonys, VTEX UAB
+%% Mokslininkų 2a, LT-08412 Vilnius, Lithuania
+%% --------------------------------------------------------------------------
+%%
+%% PURPOSE: Write table notes.
+%%
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{printead}
+    [2017/04/06, v1.06, print contacts]
+\RequirePackage{keyval}
+
+\def\ead@sep{;\ }
+\def\ead@list@sep{,\ }
+\def\ead@m@sep{,\ }
+\let\ead@font\relax
+\def\ead@prefixsep{:\ }
+
+\def\ead@prefix@fax{Fax}
+\def\ead@prefix@url{URL}
+\def\ead@prefix@email{E-mail}
+\def\ead@prefix@phone{Tel.}
+\def\ead@prefix@orcid{ORCID}
+\def\ead@prefix@m@fax{Faxes}
+\def\ead@prefix@m@url{URLs}
+\def\ead@prefix@m@email{E-mails}
+\def\ead@prefix@m@phone{Tels.}
+\def\ead@prefix@m@orcid{ORCIDs}
+\def\ead@hrefprefix@email{mailto:}
+\def\ead@hrefprefix@url{http://}
+\def\ead@hrefprefix@orcid{http://orcid.org/}
+
+\def\@ead@prefix@fmt#1{#1}
+\def\ead@sep@fmt#1{#1}
+\def\pead@sep@fmt#1{#1}
+\def\ead@presep@fmt#1{#1}
+
+\define@key{ead}{phone}[true]{\def\ead@type{phone}}
+\define@key{ead}{email}[true]{\def\ead@type{email}}
+\define@key{ead}{url}[true]{\def\ead@type{url}}
+\define@key{ead}{fax}[true]{\def\ead@type{fax}}
+\define@key{ead}{orcid}[true]{\def\ead@type{orcid}}
+\define@key{ead}{label}{\def\ead@id{#1}}
+\define@key{ead}{sep}{\def\ead@sep{#1}}
+\define@key{ead}{listsep}{\def\ead@list@sep{#1}}
+\define@key{ead}{prefix}{\def\ead@prefix{#1}}
+\define@key{ead}{prefixsep}{\def\ead@prefixsep{#1}}
+\define@key{ead}{presep}{\def\ead@presep{#1}}
+\define@key{ead}{font}{\def\ead@font{#1}}
+\define@key{ead}{text}{\def\ead@text{#1}}
+
+\def\@setead#1#2#3{%
+  \bgroup
+    \csname @setead@hook\endcsname
+    \expandafter\xdef\csname ead@#1@#2\endcsname{#3}%
+  \egroup
+  }
+
+\def\@getead#1#2{%
+  \csname ead@#1@#2\endcsname
+  }
+
+\DeclareRobustCommand\ead[2][]{{%
+  \csname before@ead@hook\endcsname
+  \setkeys{ead}{label={},email,#1}%
+  \@setead{\ead@id}{options}{#1}%
+  \@setead{\ead@id}{type}{\ead@type}%
+  \@setead{\ead@id}{value}{#2}%
+  \csname after@ead@hook\endcsname
+  }\ignorespaces}
+
+\DeclareRobustCommand\pead[2][]{{%
+  \let\ead@prefix\relax
+  \let\ead@text\relax
+  \let\ead@multi\@empty
+  \let\@pead@sep\@empty
+  \csname before@pead@hook\endcsname
+  \bgroup
+    \setkeys{ead}{email,#1}%
+    \in@{,}{#2}%
+    \ifin@
+      \def\ead@multi{m@}%
+    \fi
+    \ifx\ead@prefix\relax
+      \expandafter\let\expandafter\@ead@prefix\csname ead@prefix@\ead@multi\ead@type\endcsname
+    \else
+      \def\@ead@prefix{\ead@prefix}%
+    \fi
+    \ifx\ead@text\relax
+      \expandafter\def\expandafter\@ead@text\expandafter{\@getead{\ead@id}{value}}%
+    \else
+      \let\@ead@text\ead@text
+    \fi
+    \expandafter\in@\expandafter{\ead@type}{email,url,orcid}%
+    \ifin@
+    \else
+      \let\ead@href\@secondoftwo
+    \fi
+    \ead@font\selectfont
+    \if|\@ead@prefix|%
+    \else
+      \ifx\@ead@prefix\relax
+      \else
+        \@ead@prefix@fmt{\@ead@prefix\ead@prefixsep}%
+      \fi
+    \fi
+    \expandafter\@for\expandafter\ead@id\expandafter:\expandafter=#2\do{%
+      \pead@sep@fmt{\@pead@sep}%
+      \let\@pead@sep\ead@list@sep
+      \expandafter\pead@value@fmt\expandafter{\@getead{\ead@id}{value}}{\@ead@text}%
+      }%
+  \egroup
+  \csname after@pead@hook\endcsname
+  }\ignorespaces}
+
+\def\checkead@prefix#1://#2\end{\ifx.#2.\else\expandafter\let\csname ead@hrefprefix@\ead@type\endcsname\empty\fi}
+\def\@@checkead@prefix#1{\expandafter\expandafter\expandafter\checkead@prefix #1://\end}%
+\def\pead@value@fmt#1#2{%
+  \@@checkead@prefix{#1}%
+  \csname \ead@type @output@fmt\endcsname{%
+    \expandafter\ead@href\expandafter{\csname ead@hrefprefix@\ead@type\endcsname #1}{\csname \ead@type @value@output\endcsname{#2}}%
+    }%
+  }
+
+\DeclareRobustCommand\printead[2][]{{%
+  \csname before@printead@hook\endcsname
+  \setkeys{ead}{presep={},#1}%
+  \ead@presep@fmt{\ead@presep}%
+  \let\@ead@sep\relax%
+  \let\@prev@e@id\relax
+  \let\e@ids\@empty
+  \let\eads@list\@empty
+  \let\ids@sep\@empty
+  \let\list@sep\@empty
+  \def\@comma{,}%
+  %% queue eads ids by type.
+  %% Examp.: \eads@list -> {{email}{e1,e2}},{{url}{u1}},....
+  \@for\e@id:=#2\do{%
+    \@ifundefined{ead@\e@id @value}%
+      {\@latex@error{Nezinomas \string\printead\space raktas '\e@id'.
+        Reikia komandos \string\ead[id=\e@id]{...}!}{}}%
+      {%
+        \edef\@cur@type{\@getead{\e@id}{type}}%
+        \ifx\@prev@e@id\relax
+        \else
+          \ifx\@cur@type\@prev@type
+          \else
+            \expandafter\xdef\expandafter\eads@list
+              \expandafter{\eads@list\list@sep{{\@prev@type}{\e@ids}}}%
+            \global\let\list@sep\@comma
+            \let\e@ids\@empty
+            \let\ids@sep\@empty
+          \fi
+        \fi
+        \expandafter\xdef\expandafter\e@ids\expandafter{\e@ids\ids@sep\e@id}%
+        \let\ids@sep\@comma
+      }%
+    \let\@prev@type\@cur@type
+    \let\@prev@e@id\e@id
+    }%
+    \expandafter\edef\expandafter\eads@list\expandafter{\eads@list\list@sep{{\@cur@type}{\e@ids}}}%
+  %% output queued eads
+  \@for\@ids:=\eads@list\do{%
+    \ead@sep@fmt{\@ead@sep}%
+    \let\@ead@sep\ead@sep
+    \@expandtwoargs\prepare@pead{\expandafter\@firstoftwo\@ids}{\expandafter\@secondoftwo\@ids}{#1}%
+    }%
+  \csname after@printead@hook\endcsname
+  }\ignorespaces}
+
+\def\prepare@pead#1#2#3{%
+  \pead[#3,#1]{#2}%
+  }
+
+\let\ead@href\@secondoftwo
+
+%%
+
+\endinput
+%%
+%% End of file `printead.sty'.

@@ -1,0 +1,142 @@
+SHELL:=/usr/bin/env bash
+fonts:= font44  font137  font92  font138  font40 
+otffonts:= DGMetaScience-Bold.otf  DGMetaScience-Bold.otf  DGMetaScience-Regular.otf  DGMetaSerifScience-Regular.otf  DGMetaSerifScience-Regular.otf 
+
+#export T1FONTS=./
+#export TTFFONTS=./ 
+
+
+DGMetaScience-Bold.otf:=/usr/local/texlive/vtex-dist/fonts/opentype/fontfont/DGMetaScience/DGMetaScience-Bold.otf
+DGMetaScience-Bold.otf:=/usr/local/texlive/vtex-dist/fonts/opentype/fontfont/DGMetaScience/DGMetaScience-Bold.otf
+DGMetaScience-Regular.otf:=/usr/local/texlive/vtex-dist/fonts/opentype/fontfont/DGMetaScience/DGMetaScience-Regular.otf
+DGMetaSerifScience-Regular.otf:=/usr/local/texlive/vtex-dist/fonts/opentype/fontfont/DGMetaSerifScience/DGMetaSerifScience-Regular.otf
+DGMetaSerifScience-Regular.otf:=/usr/local/texlive/vtex-dist/fonts/opentype/fontfont/DGMetaSerifScience/DGMetaSerifScience-Regular.otf
+
+encfiles:=$(fonts:=.enc)
+tfmfiles:=$(fonts:=.tfm)
+htffiles:=$(fonts:=.htf)
+glyphlistfiles:=$(fonts:=.glyphs)
+
+
+output=out.dvi
+baseout:=$(output:.dvi=)
+mapfile:=ttfonts.map
+dvifile:=$(baseout:=.dvi)
+psfile:=$(baseout:=.ps)
+pdffile:=$(baseout:=.pdf)
+
+at=@
+
+default: fonts
+
+fonts: tfmfonts
+
+tfmfonts: $(tfmfiles)
+
+pdf: $(pdffile)
+	@echo  Output $<
+
+ps: $(psfile)
+	@echo Output $<
+
+$(psfile): $(dvifile)
+	$(at)dvips -M1 -j1 -u +$(mapfile) -o $@ $<
+
+$(pdffile): $(psfile)
+	$(at)ps2pdf $<
+
+clean:
+	$(at)rm -f $(tfmfiles) $(encfiles) $(htffiles) $(glyphlistfiles)
+	$(at)rm -f $(mapfile) *.pfb *.mdata
+	$(at)rm -f $(mapfile) *.t42 *.ttf
+	$(at)rm -f __Makefile
+
+.FORCE:
+
+dvipng: $(dvifile)
+	dvipng  -T tight $<
+
+dvitype: $(dvifile)
+	dvitype $<
+
+dvisvg: $(dvifile)
+	dvisvgm --fontmap=+$(mapfile) $<
+
+options:=--vendor=UKWN $(verbose) --no-updmap --warn-missing --x-height=font --force 
+options_ttf = --no-type1 --type42
+
+## font44:
+##   otffontname: DGMetaScience-Bold.otf
+##   glyphlist: font44.glyphs
+##   design_size: 10
+##   scale: 15.056076049805
+##   script: latn
+##   language: DFLT
+##   feature: tlig;
+##   fullpath: /usr/local/texlive/vtex-dist/fonts/opentype/fontfont/DGMetaScience/DGMetaScience-Bold.otf
+##   type: otf
+font44.tfm: export T1FONTS=./
+font44.tfm: xoptions=$(options) $(options_otf) 
+font44.tfm: $(DGMetaScience-Bold.otf) .FORCE
+	$(at)otftotfm --literal-encoding=font44.enc  --name=font44 --map-file=$(mapfile) --glyphlist=font44.glyphs --design-size=10  --script=latn  $(xoptions) $<
+
+## font137:
+##   otffontname: DGMetaScience-Bold.otf
+##   glyphlist: font137.glyphs
+##   design_size: 10
+##   scale: 8.0299072265625
+##   script: latn
+##   language: DFLT
+##   feature: tnum;
+##   fullpath: /usr/local/texlive/vtex-dist/fonts/opentype/fontfont/DGMetaScience/DGMetaScience-Bold.otf
+##   type: otf
+font137.tfm: export T1FONTS=./
+font137.tfm: xoptions=$(options) $(options_otf) 
+font137.tfm: $(DGMetaScience-Bold.otf) .FORCE
+	$(at)otftotfm --literal-encoding=font137.enc  --name=font137 --map-file=$(mapfile) --glyphlist=font137.glyphs --design-size=10  --script=latn  $(xoptions) $<
+
+## font92:
+##   otffontname: DGMetaScience-Regular.otf
+##   glyphlist: font92.glyphs
+##   design_size: 10
+##   scale: 7.0261688232422
+##   script: latn
+##   language: DFLT
+##   feature: tlig;
+##   fullpath: /usr/local/texlive/vtex-dist/fonts/opentype/fontfont/DGMetaScience/DGMetaScience-Regular.otf
+##   type: otf
+font92.tfm: export T1FONTS=./
+font92.tfm: xoptions=$(options) $(options_otf) 
+font92.tfm: $(DGMetaScience-Regular.otf) .FORCE
+	$(at)otftotfm --literal-encoding=font92.enc  --name=font92 --map-file=$(mapfile) --glyphlist=font92.glyphs --design-size=10  --script=latn  $(xoptions) $<
+
+## font138:
+##   otffontname: DGMetaSerifScience-Regular.otf
+##   glyphlist: font138.glyphs
+##   design_size: 10
+##   scale: 8.0299072265625
+##   script: latn
+##   language: DFLT
+##   feature: tlig;
+##   fullpath: /usr/local/texlive/vtex-dist/fonts/opentype/fontfont/DGMetaSerifScience/DGMetaSerifScience-Regular.otf
+##   type: otf
+font138.tfm: export T1FONTS=./
+font138.tfm: xoptions=$(options) $(options_otf) 
+font138.tfm: $(DGMetaSerifScience-Regular.otf) .FORCE
+	$(at)otftotfm --literal-encoding=font138.enc  --name=font138 --map-file=$(mapfile) --glyphlist=font138.glyphs --design-size=10  --script=latn  $(xoptions) $<
+
+## font40:
+##   otffontname: DGMetaSerifScience-Regular.otf
+##   glyphlist: font40.glyphs
+##   design_size: 10
+##   scale: 9.5355072021484
+##   script: latn
+##   language: DFLT
+##   feature: tlig;
+##   fullpath: /usr/local/texlive/vtex-dist/fonts/opentype/fontfont/DGMetaSerifScience/DGMetaSerifScience-Regular.otf
+##   type: otf
+font40.tfm: export T1FONTS=./
+font40.tfm: xoptions=$(options) $(options_otf) 
+font40.tfm: $(DGMetaSerifScience-Regular.otf) .FORCE
+	$(at)otftotfm --literal-encoding=font40.enc  --name=font40 --map-file=$(mapfile) --glyphlist=font40.glyphs --design-size=10  --script=latn  $(xoptions) $<
+

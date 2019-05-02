@@ -1,0 +1,388 @@
+% TeX programming:
+%   Sigitas Tolusis, VTeX, Lithuania, 2004
+% E-mail: sigitas@vtex.lt
+% Changes:
+%   20040506 - iskeltas ir pataisytas is bendro stiliaus elsgmltm
+%
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesClass{aidstuff}[2015/04/02 v1.27 common internal macros]
+\@ifpackageloaded{fileinfo}{}{\RequirePackage{fileinfo}\getFileInfo}
+
+\@ifundefined{special@mt}{\def\special@mt#1#2#3#4{\special{#1:#2=#3 #4}}}{}
+\def\special@draft{%
+  \global\let\current@special@mt\special@mt
+  \gdef\special@mt##1##2##3##4{%
+    \@ifundefined{special@##3}%
+      {\current@special@mt{##1}{##2}{##3}{##4}}%
+      {\csname special@##3\endcsname{##4}}%
+    }%
+  \global\let\special@draft\relax
+  \special{mt:error special draft mode is ON!}%
+  }
+\def\specdraft#1{%
+  \expandafter\global\expandafter\let\csname special@#1\endcsname\special
+  \special@draft
+  }
+
+\DeclareOption{wwwdraft}{\specdraft{www}\specdraft{special}}
+\DeclareOption{printdraft}{\specdraft{print}}
+\ProcessOptions*
+
+\def\dbl@error#1{\@latex@error{#1}\@ehc\special{mt:error #1}}
+\def\err@gobble#1{\dbl@error{Command is forbidden due to spec!}}
+
+\let\@currentcounter\relax
+\def\refstepcounter#1{\stepcounter{#1}%
+  \protected@xdef\@currentcounter{#1}%
+  \protected@xdef\@currentlabel{\csname p@#1\endcsname\csname the#1\endcsname}%
+  \csname refstepcounter@@hook\endcsname
+  }
+
+\def\add@tok#1#2{\global#1\expandafter{\the#1#2}}
+\def\add@xtok#1#2{\begingroup\xdef\@act{\global\noexpand#1{\the#1#2}}\@act\endgroup}
+\def\add@ltok#1#2{#1\expandafter{\the#1#2}}
+\def\add@xltok#1#2{\begingroup\edef\@act{\noexpand#1{\the#1#2}}\@act\endgroup}
+\def\@xnamedef#1{\expandafter\xdef\csname #1\endcsname}
+
+\def\@ifnextmacro#1#2#3{\expandafter\let\expandafter\reserved@d\csname#1\endcsname
+  \def\reserved@a{#2}\def\reserved@b{#3}%
+  \futurelet\@let@token\eat@ifnch}
+
+\def\eat@ifnch{%
+  \ifx\@let@token\@sptoken
+    \let\reserved@c\x@eat@ifnch
+  \else
+    \ifx\@let@token\reserved@d
+      \let\reserved@c\reserved@a
+    \else
+      \let\reserved@c\reserved@b
+    \fi
+  \fi
+  \reserved@c}
+
+\let\dvi@taskis\:
+\def\:{\let\@sptoken= } \:  % this makes \@sptoken a space token
+\def\:{\x@eat@ifnch} \expandafter\def\: {\futurelet\@let@token\eat@ifnch}
+\let\:\dvi@taskis
+
+\def\@ifnextsymb#1#2#3{%
+  \let\reserved@d=#1%
+  \def\reserved@a{#2}\def\reserved@b{#3}%
+  \futurelet\@let@token\@ifnsymb}
+\def\@ifnsymb{%
+  \ifx\@let@token\@sptoken
+    \let\reserved@c\reserved@b
+  \else
+    \ifx\@let@token\reserved@d
+      \let\reserved@c\reserved@a
+    \else
+      \let\reserved@c\reserved@b
+    \fi
+  \fi
+  \reserved@c}
+
+\long\def\setvaluelist#1#2{\@tempcnta=0\relax
+  \@for\@curr@val:=#2\do{%
+    \advance\@tempcnta by1\relax
+    \expandafter\protected@xdef\csname #1@item@\the\@tempcnta\endcsname{\@curr@val}%
+    }%
+    \expandafter\protected@xdef\csname #1@item@0\endcsname{\the\@tempcnta}%
+  }
+\xdef\getitemvalue#1#2{\noexpand\csname #1@item@#2\endcsname}
+
+
+\ifnum\jobstart@date@info<20170501\relax
+  \def\setattribute{\@ifnextchar[\@setattribute{\@setattribute[]}}
+  \long\def\@setattribute[#1]#2#3#4{\long\expandafter\gdef\csname #2@#3\endcsname{#4}}
+  \let\vtexsetattr\setattribute
+\fi
+
+\def\getattribute#1#2{\csname #1@#2\endcsname}
+\let\vtexgetattr\getattribute
+
+\def\sep@key@value#1=#2/?/#3{\long\expandafter\gdef\csname #3@#1\endcsname{#2}}
+
+\def\do@option@list#1#2{%
+  \@for\curr@option:={#2}\do{\expandafter\sep@key@value\curr@option/?/{#1}\relax}%
+  }
+\def\get@lang@ver#1#2{%
+  \ifcsname#2@language\endcsname
+    \ifcsname #1@\csname#2@language\endcsname\endcsname
+      \csname#1@\csname#2@language\endcsname\endcsname
+    \else
+      \csname#1@en\endcsname
+    \fi
+  \else
+    \csname#1@en\endcsname
+  \fi
+  }%
+\DeclareRobustCommand\starttag[2][]{\bgroup\ifx|#1|\else\do@option@list{#2}{#1}\fi\csname start@#2\endcsname}
+\DeclareRobustCommand\endtag[1]{\csname end@#1\endcsname\egroup}
+\DeclareRobustCommand\dtdtag[3][]{\bgroup\ifx|#1|\else\do@option@list{#2}{#1}\fi\csname dtdtag@#2\endcsname\egroup}
+\DeclareRobustCommand\xmltag[3][]{%
+  \bgroup\ifx|#1|\else\do@option@list{#2}{#1}\fi
+    \expandafter\expandafter\csname xmltag@#2@\@currenvir\endcsname\csname xmltag@#2\endcsname{#3}%
+  \egroup}
+\def\split@@eq#1=#2\split@@end{\def\split@@eq@one{#1}\def\split@@eq@two{#2}}
+\DeclareRobustCommand\setData[4][]{%
+  \expandafter\gdef\csname#2:#3\endcsname{#4}%
+  \@for\curr@option:={#1}\do{%
+    \expandafter\split@@eq\curr@option\split@@end
+    \expandafter\xdef\csname#2:#3.\split@@eq@one\endcsname{\split@@eq@two}%
+    }%
+  }
+\@ifundefined{styledata}{\def\styledata[#1]{}}{}%
+\protected\def\write@@xmlmacro#1{%
+  \immediate\write\@mainaux{\detokenize{\styledata[type={macro}, cmd={#1}]}}%    
+  }%
+\protected\def\xml@@macro#1{%
+  #1\write@@xmlmacro{#1}%
+  }
+\def\ignore@in{\startlocaldefs }%
+\def\ignore@out{\endlocaldefs }%
+
+\let\orig@begin\begin
+\let\orig@end\end
+\def\begin#1{%
+  \@ifundefined{#1}%
+    {\def\reserved@a{\@latex@error{Environment #1 undefined}\@eha}}%
+    {\def\reserved@a{\def\@currenvir{#1}\edef\@currenvline{\on@line}\csname #1\endcsname}}%
+  \@ignorefalse
+  \begingroup\@endpefalse\csname begin@@hook\endcsname\csname begin@#1@hook\endcsname\reserved@a
+  }
+\def\end#1{%
+  \csname end#1\endcsname\@checkend{#1}%
+  \csname end@#1@hook\endcsname\csname end@@hook\endcsname
+  \expandafter\endgroup\if@endpe\@doendpe\fi
+  \if@ignore\@ignorefalse\expandafter\ignorespaces\fi
+  }
+\let\org@begin\begin
+\let\org@end\end
+\def\begin#1{%
+  \@ifundefined{pseudo@#1}%
+    {\org@begin{#1}}{\csname pseudo@#1\endcsname[0]\relax}%
+  }
+\def\end#1{%
+  \@ifundefined{pseudo@#1}%
+    {\org@end{#1}}{\csname pseudo@#1\endcsname[1]\relax}%
+  }
+\newcount\pseudo@@env@@cnt
+\def\newpseudoenvironment#1#2#3{%
+  \expandafter\gdef\csname pseudo@#1\endcsname[##1]{\relax
+     \ifcase##1\relax
+       \global\advance\pseudo@@env@@cnt\@ne
+       \def\@@next@@{#2}%
+     \or
+       \global\advance\pseudo@@env@@cnt\m@ne
+       \def\@@next@@{#3}%
+     \else
+       \let\@@next@@\relax
+     \fi
+     \@@next@@
+     }%
+  }
+\AtEndDocument{%
+  \ifnum\pseudo@@env@@cnt=\z@
+  \else
+    \dbl@error{Unbalanced pseudo environments}%
+  \fi
+  }
+\let\start@tex@env\relax
+\let\end@tex@env\relax
+\long\def\add@env@toks#1#2#3\end#4{%
+  \def\check@param@a{#1}\def\check@param@b{#4}%
+  \ifx\check@param@a\check@param@b
+    \def\@next@{\let\end@tex@env\relax
+      \global#2\expandafter{\the#2#3\end@tex@env}%
+      \csname end@add@env@#1@hook\endcsname
+      }%
+  \else
+    \def\@next@{\global#2\expandafter{\the#2#3\end{#4}}\add@env@toks{#1}{#2}}%
+  \fi
+  \@next@
+  }
+\def\read@opt@args#1#2[#3]{\let\start@tex@env\relax\global#2\expandafter{\the#2\start@tex@env{#1}[#3]}\add@env@toks{#1}{#2}}
+\def\get@opt@args#1#2{\@ifnextchar[{\read@opt@args{#1}{#2}}{\let\start@tex@env\relax\global#2\expandafter{\the#2\start@tex@env{#1}[]}\add@env@toks{#1}{#2}}}
+\def\get@env@toks#1#2{%
+  \expandafter\def\csname pseudo@#1\endcsname[##1]\relax{%
+    \ifcase##1\relax
+      \def\@next@{\get@opt@args{#1}{#2}}%
+    \else
+      \def\@next@{}%
+    \fi
+    \@next@
+    }%
+  }
+\newtoks\saved@@env@@toks
+\newtoks\extracted@@env@@toks
+\def\extract@stop@mark{begin}
+\long\def\extract@@env@@toks#1\begin#2#3]{%
+  \global\saved@@env@@toks\expandafter{\the\saved@@env@@toks#1}%
+  \def\check@param@@a{#2}\def\check@param@@b{#3}%
+  \ifx\check@param@@a\check@param@@env
+    \ifx\check@param@@b\check@param@@opt
+      \def\@next@{\global\extracted@@env@@toks\expandafter{\the\extracted@@env@@toks\begin{#2}#3]}%
+                  \add@@extracted@@toks
+                 }%
+    \else
+      \def\@next@{\global\saved@@env@@toks\expandafter{\the\saved@@env@@toks\begin{#2}}\extract@@env@@toks#3]}% 
+    \fi
+  \else
+    \ifx\check@param@@a\extract@stop@mark
+      \def\@next@{}%
+    \else
+      \def\@next@{\global\saved@@env@@toks\expandafter{\the\saved@@env@@toks\begin{#2}}\extract@@env@@toks#3]}%
+    \fi
+  \fi
+  \@next@
+  }
+\long\long\def\add@@extracted@@toks#1\end#2{%
+  \global\extracted@@env@@toks\expandafter{\the\extracted@@env@@toks#1\end{#2}}%
+  \def\check@param@a{#2}%
+  \ifx\check@param@a\check@param@@env
+    \expandafter\extract@@env@@toks
+  \else
+    \expandafter\add@@extracted@@toks
+  \fi
+  }
+\def\extract@env@toks#1#2#3{%
+  \saved@@env@@toks={}\extracted@@env@@toks={}\def\check@param@@env{#1}\def\check@param@@opt{#2}%
+  \expandafter\extract@@env@@toks#3\begin{begin}[extended]%
+  }
+\def\extract@xmlview@extended{%
+  \extract@env@toks{xmlview}{[extended}{\the\document@abstracts}%
+  \edef\temp@toks@var{\the\extracted@@env@@toks}%
+  \ifx\temp@toks@var\@empty
+  \else
+    \expandafter\global\expandafter\document@abstracts\expandafter{\the\saved@@env@@toks}%
+    \the\extracted@@env@@toks
+  \fi
+  }
+\newpseudoenvironment{nonSGML}{\edef\savedATcacode{\the\catcode`\@}\makeatletter}{\catcode`\@=\savedATcacode}
+\@onlypreamble\pseudo@nonSGML
+%
+% \g@addto@macro redefined to long
+%
+\long\def\g@addto@macro#1#2{%
+  \begingroup
+    \toks@\expandafter{#1#2}%
+    \xdef#1{\the\toks@}%
+  \endgroup\relax}
+
+\long\def\addto@macro#1#2{\toks@\expandafter{#1#2}\def#1{\the\toks@}\relax}
+
+\def\empty@data{\@nil}
+
+\def\reset#1#2{\@addtoreset{#1}{#2}}
+\def\unreset#1#2{%
+  \begingroup
+    \def\@tempa@arg@a{\csname #1\endcsname}%
+    \def\@elt##1{\def\@tempa@arg@b{\csname ##1\endcsname}%
+      \ifx\@tempa@arg@a\@tempa@arg@b\else
+        \toks@\expandafter{\the\toks@\@elt{##1}}%
+      \fi
+      }%
+    \toks@={}\csname cl@#2\endcsname\let\@elt\relax
+    \expandafter\expandafter\expandafter\xdef\expandafter\expandafter
+      \csname cl@#2\endcsname\expandafter{\the\toks@}%
+  \endgroup
+  }
+
+\def\resetlabel#1{\protected@xdef\@currentlabel{#1}}
+
+\def\unDeclareTextComposite#1#2#3{\expandafter\let\csname\expandafter\string\csname
+      #2\endcsname\string#1-\string#3\endcsname\relax}
+\@onlypreamble\unDeclareTextComposite
+%\unDeclareTextComposite{\v}{T1}{t}
+%\unDeclareTextComposite{\v}{T1}{l}
+%\unDeclareTextComposite{\v}{T1}{L}
+
+\@ifundefined{t@mp@r@a}{\newcount\t@mp@r@a}{}
+\@ifundefined{t@mp@r@b}{\newcount\t@mp@r@b}{}
+\@ifundefined{t@mp@r@c}{\newcount\t@mp@r@c}{}
+
+\def\compresslist#1\to#2\sep#3#4{%
+  \bgroup
+    \expandafter\def\csname#2\endcsname{}%
+    \expandafter\def\expandafter\@a@\expandafter{\csname#2\endcsname}%
+    \t@mp@r@a=-1\relax
+    \@tempcnta=-2\relax
+    \expandafter\@for\expandafter\@@refb\expandafter:\expandafter=#1\do{%
+       \ifnum\t@mp@r@a=-1\relax
+         \t@mp@r@a=\@@refb\relax
+         \t@mp@r@b=\@@refb\relax
+         \t@mp@r@c=\@@refb\relax
+         \expandafter\expandafter\expandafter\g@addto@macro\expandafter\@a@\expandafter{\the\t@mp@r@a}%
+       \else
+         \t@mp@r@c=\@@refb\relax
+         \ifnum\t@mp@r@c=\t@mp@r@a\relax
+           \expandafter\expandafter\expandafter\g@addto@macro\expandafter\@a@\expandafter{#3}%
+           \expandafter\expandafter\expandafter\g@addto@macro\expandafter\@a@\expandafter{\the\t@mp@r@c}%
+           \t@mp@r@b=\t@mp@r@c\relax
+         \else
+           \@tempcnta=\t@mp@r@b\relax
+           \advance\@tempcnta by1\relax
+           \ifnum\@tempcnta=\t@mp@r@c\relax
+             \t@mp@r@b=\t@mp@r@c\relax
+           \else
+             \@tempcnta=\t@mp@r@a\relax
+             \advance\@tempcnta by-\t@mp@r@b\relax
+             \ifnum\@tempcnta<-1\relax
+               \expandafter\expandafter\expandafter\g@addto@macro\expandafter\@a@\expandafter{#4}%
+               \expandafter\expandafter\expandafter\g@addto@macro\expandafter\@a@\expandafter{\the\t@mp@r@b}%
+               \expandafter\expandafter\expandafter\g@addto@macro\expandafter\@a@\expandafter{#3}%
+               \expandafter\expandafter\expandafter\g@addto@macro\expandafter\@a@\expandafter{\the\t@mp@r@c}%
+             \else
+               \ifnum\t@mp@r@a<\t@mp@r@b
+                 \expandafter\expandafter\expandafter\g@addto@macro\expandafter\@a@\expandafter{#3}%
+                 \expandafter\expandafter\expandafter\g@addto@macro\expandafter\@a@\expandafter{\the\t@mp@r@b}%
+               \fi
+               \expandafter\expandafter\expandafter\g@addto@macro\expandafter\@a@\expandafter{#3}%
+               \expandafter\expandafter\expandafter\g@addto@macro\expandafter\@a@\expandafter{\the\t@mp@r@c}%
+             \fi
+             \t@mp@r@a=\t@mp@r@c\relax
+             \t@mp@r@b=\t@mp@r@c\relax
+           \fi
+         \fi
+       \fi
+    }%
+    \ifnum\t@mp@r@a<\t@mp@r@c\relax
+      \advance\t@mp@r@a by-\t@mp@r@c\relax
+      \ifnum\t@mp@r@a<-1\relax
+        \expandafter\expandafter\expandafter\g@addto@macro\expandafter\@a@\expandafter{#4}%
+      \else
+        \expandafter\expandafter\expandafter\g@addto@macro\expandafter\@a@\expandafter{#3}%
+      \fi
+      \expandafter\expandafter\expandafter\g@addto@macro\expandafter\@a@\expandafter{\the\t@mp@r@c}%
+    \fi
+  \egroup
+}
+
+\def\@alph#1{\csname alph@item@\number#1\endcsname}
+\setvaluelist{alph}{a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,v,w,x,y,z,%
+  aa,ab,ac,ad,ae,af,ag,ah,ai,aj,ak,al,am,an,ao,ap,aq,ar,as,at,au,av,aw,ax,ay,az,%
+  ba,bb,bc,bd,be,bf,bg,bh,bi,bj,bk,bl,bm,bn,bo,bp,bq,br,bs,bt,bu,bv,bw,bx,by,bz,%
+  ca,cb,cc,cd,ce,cf,cg,ch,ci,cj,ck,cl,cm,cn,co,cp,cq,cr,cs,ct,cu,cv,cw,cx,cy,cz%
+  }
+
+\def\get@fnt@info{%
+  \bgroup
+    \setbox\z@\hbox{\vtop to\f@baselineskip{A\vss}}%
+    \expandafter\gdef\expandafter\fnt@height\expandafter{\the\ht\z@}%
+    \expandafter\gdef\expandafter\fnt@depth\expandafter{\the\dp\z@}%
+  \egroup
+  }
+\DeclareRobustCommand\enlargefont[2]{%
+  \@defaultunits\@tempdimb\f@size pt\relax\@nnil
+  \advance\@tempdimb by#1\@tempdimb\relax
+  \edef\f@size{\strip@pt\@tempdimb}%
+  \@defaultunits\@tempskipa\f@baselineskip pt\relax\@nnil
+  \advance\@tempskipa by#2\@tempskipa\relax
+  \edef\f@baselineskip{\the\@tempskipa}%
+  \set@fontsize\baselinestretch\f@size\f@baselineskip
+  }
+\def\pagebreakinfo#1{\@bsphack\kern\z@\hskip\z@\rlap{\vline width10pt height2pt}\kern\z@\hskip\z@\@esphack}
+\def\floatinfo#1{}
+
+\def\usefontchar#1#2#3#4#5{\usefont{#1}{#2}{#3}{#4}\selectfont\char #5\relax}
+\endinput

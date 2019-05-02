@@ -1,0 +1,91 @@
+% TeX programming:
+%   Minadaugas Piešina, VTeX, Lithuania, 2018
+% E-mail: mindaugas.piesina@vtex.lt
+
+% fixes positioning problems of the forced end of proof sign \qedpos defined in amsthm.sty
+% uses vtexsavepos.sty, so the right positioning is set after the second compilation 
+
+\RequirePackage{vtexsavepos}
+
+\newlength\qedpos
+\newlength\qedendpos
+\newlength\qedskipamount
+\newcounter{qed@cnt}%
+\global\setcounter{qed@cnt}{0}%
+\newlength\eq@parskip
+\global\setlength\eq@parskip{\dimexpr -\baselineskip \relax}%
+
+\newif\ifqedhere\qedherefalse
+\let\@qedhere\qedhere
+\ifnum\jobstart@date@info>20180220\relax
+  \gdef\qedhere{%
+    \global\qedheretrue
+    %
+    \refstepcounter{qed@cnt}%
+    \edef\qed@ref@id{qedpos:\number\value{qed@cnt}}%
+    \vtexsavepos{\qed@ref@id}%
+    \@@vtexpos{\qed@ref@id}%
+    \setlength\qedpos{\ypos\relax}%
+    \global\qedpos=\qedpos
+    }
+\fi
+
+\def\unkn@pos{9999pt}
+\def\zero@skip{0.0pt}
+\def\@star{*}
+\def\qed@redir#1#2{%
+  \global\expandafter\expandafter\expandafter\let\expandafter\csname end@#1#2\expandafter\endcsname\csname end#1#2\endcsname
+  \expandafter\gdef\csname @par@two@#1#2\endcsname{#2}
+  \expandafter\gdef\csname end#1#2\endcsname{%
+    \ifqedhere
+      \global\qedherefalse
+      \csname end@#1#2\endcsname
+      %
+      \edef\qedend@ref@id{qedendpos:\number\value{qed@cnt}}%
+      \vtexsavepos{\qedend@ref@id}%
+      \@@vtexpos{\qedend@ref@id}%
+      \ifx\ypos\unkn@pos
+        \@qedhere
+        \vskip \eq@parskip
+        \vskip 0pt
+      \else
+        \setlength\qedendpos{\ypos\relax}%
+        \setlength\qedskipamount{\dimexpr \qedendpos - \qedpos\relax}%
+        \def\@skip{\the\qedskipamount}
+        \ifx\@skip\zero@skip
+          \@qedhere
+          \vskip \eq@parskip
+          \vskip 0pt
+        \else
+          \vskip -\qedskipamount
+          \vskip 0pt
+          \expandafter\ifx\csname @par@two@#1#2\endcsname\@star\relax
+            \vskip \eq@parskip
+            \vskip 0pt
+          \fi
+          \@qedhere
+          \vskip \qedskipamount
+          \vskip \eq@parskip
+          \vskip 0pt
+          \expandafter\ifx\csname @par@two@#1#2\endcsname\@star\relax
+          \else
+            \vskip \eq@parskip
+            \vskip 0pt
+          \fi
+        \fi
+      \fi
+    \else
+      \csname end@#1#2\endcsname
+    \fi
+    }%
+  }
+\ifnum\jobstart@date@info>20180220\relax
+  \qed@redir{equation}{}
+  \qed@redir{equation}*
+  \qed@redir{eqnarray}{}
+  \qed@redir{eqnarray}*
+  \qed@redir{align}{}
+  \qed@redir{align}*
+  %\qed@redir{split}{}
+  %\qed@redir{split}*
+\fi

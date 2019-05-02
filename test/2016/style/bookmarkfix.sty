@@ -1,0 +1,73 @@
+% Programming: Vytas Statulevicius, VTEX, Lithuania, 2002
+% e-mail: vytas@vtex.lt
+% bookmarks.sty papildymai kad veiktu su book tipo komandomis (chapter,part)
+%
+% 2008.02.25 - idetos 2 eil.
+% 2008.03.07 - pataisytas \PREHOOK@starchapter@fmt
+%              jei chapter* raso i TOC schapter naudojam PREHOOK@starchapter@fmt
+%              jei chapter* raso i TOC chapter naudojam PREHOOK@chapter@fmt
+% 2010.07.26 - back raso i TOC  naudojam PREHOOK@back@fmt
+% 2010.11.05 - ismestas PREHOOK@back@fmt
+
+
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{bookmarkfix}[2008/03/05
+                                  additional macros for the bokmarks.sty (VS)]
+
+% mums reikia kad butu \numberline 
+\def\thesectionstar{}
+\def\thesubsectionstar{}
+\def\thesubsubsectionstar{}
+
+% is hyperref.sty
+\def\Hy@chapterstring{chapter}
+\def\Hy@appendixstring{appendix}
+\def\Hy@chapapp{\Hy@chapterstring}
+
+% is pdfmark.def
+% siaip yra apibreztas \let\phantomsection\relax
+% bet section* atveju jis *suvalgo* sriftu keitimo komandas
+\def\phantomsection#1{#1}
+
+\def\@schapter[#1]#2{\H@old@schapter[#1]{#2}}%
+
+% papildymai bookmark
+\def\toclevel@part{0}
+\def\fmt@bookmark@part#1{#1}
+\def\toclevel@chapter{1}
+\def\fmt@bookmark@chapter#1{#1}
+\def\toclevel@schapter{1}
+\def\fmt@bookmark@schapter#1{#1}
+
+\@ifundefined{c@schapter}{\newcounter{schapter}}{}
+
+
+\if@outlines
+  \gdef\PREHOOK@part@fmt#1{%
+%    \global\advance\Hy@linkcounter by\@ne
+    \edef\@currentHref{\jobname.part.\@arabic\csname c@part\endcsname:\number\Hy@linkcounter}%
+    \hyper@anchorstart{\@currentHref}\hyper@anchorend
+    \edef\Hy@toclevel{\csname toclevel@part\endcsname}%
+    }
+
+  \gdef\PREHOOK@chapter@fmt#1{%
+%   \global\advance\Hy@linkcounter by\@ne
+    \edef\@currentHref{\jobname.chapter.\@arabic\csname c@chapter\endcsname:\number\Hy@linkcounter}%
+    \hyper@anchorstart{\@currentHref}\hyper@anchorend
+    \edef\Hy@toclevel{\csname toclevel@chapter\endcsname}%
+    }
+
+  \gdef\PREHOOK@starchapter@fmt#1{%
+%   \global\advance\Hy@linkcounter by\@ne% 2008.03.05
+    \edef\@currentHref{\jobname.schapter.\@arabic\csname c@schapter\endcsname:\number\Hy@linkcounter}%
+    \hyper@anchorstart{\@currentHref}\hyper@anchorend
+    \edef\Hy@toclevel{\csname toclevel@schapter\endcsname}%
+    }
+\fi
+%
+
+\def\literalps@out#1{\special@mt{mt}{destination}{www}{ps:SDict begin #1 end}}%
+\def\headerps@out#1{\special@mt{mt}{destination}{www}{! #1}}%
+
+
+\endinput

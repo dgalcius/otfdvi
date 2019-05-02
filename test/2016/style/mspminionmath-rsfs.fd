@@ -1,0 +1,50 @@
+%%
+%% This is file `mspminionmath-rsfs.fd',
+%% generated with the docstrip utility.
+%%
+%% The original source files were:
+%%
+%% minionmathfont.fdd  (with options: `msp,minionmath-prelim,newmath')
+%% 
+%% This file belongs to the `typoma Minion Math' fonts
+%% and is part of their accompanying bundle of LaTeX files.
+%% 
+%% Copyright (C) 2008-2012 typoma GmbH, Germany. http://www.typoma.com
+%% All rights reserved.
+%% 
+%% This is a generated file -- do not modify its content.
+%% 
+ \ProvidesFile{mspminionmath-rsfs.fd}
+ [2006/30/01 NewMath v0.59a,\space
+  Math Symbol Principal,\space
+ ]
+\DeclareFontFamily{MSP}{minionmath-rsfs}{\skewchar\font127 }
+\DeclareFontShape{MSP}{minionmath-rsfs}{m}{n}{
+   <-6>        MinionMath-Tiny-MSP-rsfs
+   <6-8.5>     MinionMath-Capt-MSP-rsfs
+   <8.5-13.5>  MinionMath-Regular-MSP-rsfs
+   <13.5-24.5> MinionMath-Subh-MSP-rsfs
+   <24.5->     MinionMath-Disp-MSP-rsfs}{}
+\DeclareFontShape{MSP}{minionmath-rsfs}{d}{n}{
+   <-6>        MinionMath-MediumTiny-MSP-rsfs
+   <6-8.5>     MinionMath-MediumCapt-MSP-rsfs
+   <8.5-13.5>  MinionMath-Medium-MSP-rsfs
+   <13.5-24.5> MinionMath-MediumSubh-MSP-rsfs
+   <24.5->     MinionMath-MediumDisp-MSP-rsfs}{}
+\DeclareFontShape{MSP}{minionmath-rsfs}{sb}{n}{
+   <-6>        MinionMath-SemiboldTiny-MSP-rsfs
+   <6-8.5>     MinionMath-SemiboldCapt-MSP-rsfs
+   <8.5-13.5>  MinionMath-Semibold-MSP-rsfs
+   <13.5-24.5> MinionMath-SemiboldSubh-MSP-rsfs
+   <24.5->     MinionMath-SemiboldDisp-MSP-rsfs}{}
+\DeclareFontShape{MSP}{minionmath-rsfs}{b}{n}{
+   <-6>        MinionMath-BoldTiny-MSP-rsfs
+   <6-8.5>     MinionMath-BoldCapt-MSP-rsfs
+   <8.5-13.5>  MinionMath-Bold-MSP-rsfs
+   <13.5-24.5> MinionMath-BoldSubh-MSP-rsfs
+   <24.5->     MinionMath-BoldDisp-MSP-rsfs}{}
+\DeclareFontShape{MSP}{minionmath-rsfs}{bx}{n}{<->ssub * minionmath/b/n}{}
+
+%% 
+%%
+%% End of file `mspminionmath-rsfs.fd'.

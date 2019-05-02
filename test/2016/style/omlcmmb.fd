@@ -1,0 +1,11 @@
+% Vytas Statulevicius, VTeX, LT
+% e-mail: vytas@vtex.lt
+% cmmib only at 5, 7, 10pt
+
+\ProvidesFile{omlcmmb.fd}[2000/12/04]
+\DeclareFontShape{OML}{cmm}{b}{it}{%
+      <-6> cmmib5 <6-8> cmmib7 <8-> cmmib10%
+      }{}
+\endinput
+%%
+%% End of file `omlcmm.fd'.

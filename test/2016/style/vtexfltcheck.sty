@@ -1,0 +1,187 @@
+%% vtexfltcheck.sty
+%% Deimantas Galcius, deimi@vtex.lt 2009 
+%%
+\NeedsTeXFormat{LaTeX2e}
+\def\get@CVSdate#1Id: #2,v #3 #4 #5 #6 #7${#4}%$
+\def\@version{\get@CVSdate$Id: vtexfltcheck.sty,v 1.22 2013/11/19 09:20:26 deimi Exp $}
+\ProvidesPackage{vtexfltcheck}[\@version\space Checking for uncited floats (DG)]
+
+\newif\if@checkfloats
+%%%%%%%%%%%%%% Options
+\DeclareOption{checkfloats}{\global\@checkfloatstrue}
+\DeclareOption{nocheckfloats}{\global\@checkfloatstrue}
+%
+\ProcessOptions*
+%%%%%%%%%%%%%% Options end
+
+
+\def\nocheckfloats{\global\@checkfloatsfalse}\@onlypreamble\nocheckfloats
+\def\checkfloats{\global\@checkfloatstrue}\@onlypreamble\checkfloats
+
+
+\def\vtexfltcheck@fix@i{\let\CHK@checkuncited\CHK@checkuncited@i}
+\def\vtexfltcheck@fix@ii{\let\CHK@tag\CHK@tag@ii}
+\def\checkfloats@noprint{\def\CHK@tag@fmt##1{}}
+
+
+%% 
+\def\chk@color{red}
+\def\z@hrule{\hrule \@height\z@}
+\def\CHK@log{\wlog{chkflt: Uncited.}
+             \wlog{chkflt: Environment \csname @captype\endcsname. Counter \csname the\@captype\endcsname.}
+             \wlog{chkflt: Page \thepage}}
+\def\CHK@uncited@{\CHK@log\bgroup\color{\chk@color}\csname fnum@\@captype\endcsname:<uncited>\egroup}
+\def\CHK@uncited{% Isvedame uncited zyme, jei yra caption
+                  \if@chk@caption\CHK@uncited@\fi}
+\def\CHK@cited{\bgroup\color{\chk@color}\csname fnum@\@captype\endcsname:<cited>\egroup}%% nenaudojamas
+\def\CHK@shape{\tiny}
+\def\CHK@tag{\if@twocolumn
+              \z@hrule\vtop to0pt{\vtop to 0pt{\vskip1pt\rlap{\hskip-1em\CHK@shape\CHK@uncited}}}\ifvmode\nointerlineskip\fi
+	      \hrule width\z@ height\z@ depth-.5pt
+              \else   
+              \z@hrule\vtop to0pt{\vtop to0pt{\vskip1pt\llap{\CHK@shape\CHK@uncited\,}}}\ifvmode\nointerlineskip\fi
+              \hrule width\z@ height\z@ depth-.5pt
+              \fi}
+
+\def\CHK@tag@ii{\if@twocolumn
+              \z@hrule\vtop to0pt{\vtop to 0pt{\vskip1pt\rlap{\hskip-1em\strut\CHK@tag@fmt{\CHK@shape\CHK@uncited}}}}\ifvmode\nointerlineskip\fi
+	      \hrule width\z@ height\z@ depth-.5pt
+              \else   
+              \z@hrule\vtop to0pt{\vtop to0pt{\vskip1pt\llap{\strut\CHK@tag@fmt{\CHK@shape\CHK@uncited\,}}}}\ifvmode\nointerlineskip\fi
+              \hrule width\z@ height\z@ depth-.5pt
+              \fi}
+
+\let\CHK@tag@fmt\@firstofone
+\def\CHK@tag@i#1{%
+ \setbox\@tempboxa=\hbox{\ifnum#1=0\CHK@tag@fmt{\fboxrule.1pt\fcolorbox{black}{white}{\CHK@shape\CHK@uncited}}\fi}%
+  \ht\@tempboxa0pt%
+  \dp\@tempboxa0pt%
+  %\wd\@tempboxa0pt%
+  \par
+   \CHKmarginaltag 
+   \vskip-\baselineskip\vskip-1.74pt
+}
+
+%% TeXBook 
+\def\strutdepth{\dp\strutbox}
+\def\CHKmarginaltag{\strut\vadjust{\kern-\strutdepth\CHKspecialtag}}
+\def\CHKspecialtag{\vtop to \strutdepth{\baselineskip\strutdepth\vss\llap{\box\@tempboxa}\null}}
+
+
+%% if marginpar, then captype == undefined
+\def\CHK@checkuncited{%%
+                      %% @tempx == label1,label2 (gali buti sarasas)
+                      \@ifundefined{@captype}{}%% @captype undefined if float is marginar
+		      {%
+			\@ifundefined{chkflt.\@captype.\number\c@CHK@fltcnt}{\let\@tempx\relax}%
+			{\xdef\@tempx{\@nameuse{chkflt.\@captype.\number\c@CHK@fltcnt}}}%
+                       \ifx\@tempx\relax\CHK@tag%% jei nera \label, @chk@label@text is undefined
+                       \else%
+                        \@tempcnta=0 %% if 0 - uncited
+                        %% tikriname ar is saraso bent viena zyme pacituota
+                        \@for\@@i:=\@tempx\do{\@ifundefined{chkflt@\@@i}{}{\@tempcnta=1}}%
+                        \ifnum\@tempcnta=0\CHK@tag\fi % jei nepacituotas, chkflt@<zyme> is undefined
+                        \fi}\chk@resetdefaults}%
+
+
+%% if marginpar, then captype == undefined
+\def\CHK@checkuncited@i{%\leavevmode%%
+                      %% @tempx == label1,label2 (gali buti sarasas)
+                      \@ifundefined{@captype}{}%% @captype undefined if float is marginar
+		      {%
+			\@ifundefined{chkflt.\@captype.\number\c@CHK@fltcnt}{\let\@tempx\relax}%
+			{\xdef\@tempx{\@nameuse{chkflt.\@captype.\number\c@CHK@fltcnt}}}%
+                       \ifx\@tempx\relax\CHK@tag%% jei nera \label, @chk@label@text is undefined
+                       \else%
+                        \@tempcnta=0 %% if 0 - uncited
+                        %% tikriname ar is saraso bent viena zyme pacituota
+                        \@for\@@i:=\@tempx\do{\@ifundefined{chkflt@\@@i}{}{\@tempcnta=1}}%
+%                        \ifnum\@tempcnta=0\CHK@tag\fi % jei nepacituotas, chkflt@<zyme> is undefined
+                        \CHK@tag@i{\number\@tempcnta}%
+                        \fi}\chk@resetdefaults}%
+
+
+
+\def\refout@write#1{\immediate\write\@mainaux{\string\refout{#1}}}
+\def\refout#1{\global\@namedef{chkflt@#1}{1}}
+\def\make@refsout{%
+ \if@checkfloats
+  \global\let\CH@setref\@setref%
+  \gdef\@setref##1##2##3{\CH@setref{##1}{##2}{##3}\refout@write{##3}}%
+ \fi
+}
+\def\CHKlabelout@write#1#2{\immediate\write\@mainaux{\string\CHKlabelout{#1}{#2}}}
+
+\def\CHKlabelout#1#2{\@ifundefined{#1}{\global\@namedef{#1}{#2}}{\expandafter\g@addto@macro\expandafter{\csname #1\endcsname}{,#2}}}
+\edef\@temp@undef{undef}
+\def\CHK@labelout#1#2#3{%
+ \if@checkfloats%
+  \edef\@tempx{#2}%
+  \ifx\@tempx\@temp@undef\else%
+   \CHKlabelout@write{chkflt.#2}{#1}%
+  \fi%
+%   \CHKlabelout@write{#1.#2}%
+ \fi%
+}
+
+
+\AtBeginDocument{\if@checkfloats\make@refsout\CHK@define\CHK@makelabels\fi}
+
+\def\CHK@define{%
+% if styledata.sty not loaded
+\@ifundefined{@currentctrname}%
+ {\def\@currentctrname{undef}%
+ % code from styledata.sty
+ \AtBeginDvi%
+  {\global\let\kernel@@refstepcounter\refstepcounter}%
+   \gdef\refstepcounter##1{\kernel@@refstepcounter{##1}\xdef\@currentctrname{##1}}%
+  }%
+ {}%
+\let\CHK@label\label
+\let\CHK@caption\caption
+\let\CHK@@endfloatbox\@endfloatbox
+\newcounter{CHK@fltcnt}%
+\g@addto@macro\@floatboxreset {\addtocounter{CHK@fltcnt}{\@ne}}%
+\g@addto@macro\figure@boxreset{\addtocounter{CHK@fltcnt}{\@ne}}%
+\g@addto@macro\table@boxreset {\addtocounter{CHK@fltcnt}{\@ne}}%
+}
+
+
+
+
+
+\def\CHK@makelabels{%
+\newif\if@chk@caption
+%% \label perapibreziam dokumento pradzioje.
+\make@chklabel%
+\def\caption{\global\@chk@captiontrue\CHK@caption}%
+
+%% Netikrinam jei yra contcaption
+\@ifundefined{if@contcaption}%
+  {\def\@endfloatbox{\CHK@checkuncited\CHK@@endfloatbox}}%
+  {\def\@endfloatbox{\if@contcaption\else\CHK@checkuncited\fi\CHK@@endfloatbox}}%
+%
+}
+
+
+\def\make@chklabel%
+{\def\label##1{%
+ \@ifundefined{fnum@\@currentctrname}{\xdef\@xx{undef}}{\@ifundefined{@captype}{}{\xdef\@xx{\@captype}}}%
+ \CHK@labelout{##1}{\@xx.\number\c@CHK@fltcnt}{\@currentctrname}%
+ \CHK@label{##1}}%
+}
+
+\def\chk@resetdefaults{%
+%% Default chk@caption false
+%% Defaulr @chk@label@text undefined
+\global\@chk@captionfalse
+\global\let\@chk@label@text\undefined}
+
+% eqnarray apibreziam \currentctrname, kitaip nekorektiskai veikia uncited mechanizmas (LS)
+\AtBeginDocument{%
+	\let\copy@eqnarray\eqnarray
+	\def\eqnarray{\def\@currentctrname{equation}\copy@eqnarray}%
+}
+
+\endinput
+

@@ -22,7 +22,11 @@ local inspect  = require("inspect")
 
 require("l-lpeg")
 require("l-file")
-local utils = require(file.dirname(lua.startupfile) .."/otfdvi/utils")
+--local real_prg_path = lfs.readlink(lua.startupfile) or lua.startupfile
+--local real_prg_dir = file.dirname(lua.startupfile) .. "/" .. file.dirname(real_prg_path)
+--local utils = require(real_prg_dir .. "/lib/utils")
+local utils = require(file.dirname(lua.startupfile) .."/lib/utils")
+--local utils = require("/home/deimi/local/github/otfdvi/lib/utils")
 local flsparse        = utils.parse_fls
 local reverse_table   = utils.reverse_table
 local output_enc      = utils.output_enc
@@ -30,6 +34,7 @@ local write_glyphlist = utils.write_glyphlist
 --
 local dvi      = require("dvi")
 local lustache = require("lustache")
+
 
 local options = {
    filein = "",
@@ -160,6 +165,7 @@ local conf_file = options.config
 logw("options:\n", inspect(options), "\n")
 
 local dirname = file.dirname(arg[0])
+--local settings = require(file.join(real_prg_dir, conf_file))
 local settings = require(file.join(dirname, conf_file))
 logw("settings:\n", inspect(settings), "\n")
 
@@ -171,7 +177,8 @@ local fho = assert(io.open(fileout, 'wb'))
 local psf = assert(io.open(psmapfile, 'w'))
 local mkf = assert(io.open(mkfile, 'w'))
 
-local fls = nil
+
+local fls = {}
 if file.is_readable(flsfile) then
    fls = flsparse(flsfile)
 end
@@ -183,6 +190,7 @@ function debug_print(s)
       print(s)
    end
 end
+
 
 local currfontnum = 0
 local otffonts = {}
@@ -374,8 +382,8 @@ for i, v in pairs(otffonts) do
    output_enc(fontname, v.charlist, v.glyphlist)
    htf = htf and output_htf(fontname, v.charlist, v.glyphlist, v.metadata)
 end
-
 -- template for lustache
+--tmpl = file.join(real_prg_dir, settings['mkfile_tmpl'])
 tmpl = file.join(dirname, settings['mkfile_tmpl'])
 local lm = assert(io.open(tmpl, 'r'))
 local tmpl = lm.read(lm, '*all')

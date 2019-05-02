@@ -1,0 +1,21 @@
+Inconsolatazi4		Inconsolatazi4-Regular	Inconsolata zi4r Regular	>$SELFAUTOPARENT/texmf-dist/fonts/opentype/public/inconsolata/Inconsolatazi4-Regular.otf
+Inconsolatazi4/B		Inconsolatazi4-Bold	Inconsolata zi4 Bold	>$SELFAUTOPARENT/texmf-dist/fonts/opentype/public/inconsolata/Inconsolatazi4-Bold.otf
+[DGMetaScience-Bold.otf]		DGMetaScience-Bold	DG Meta Science Bold	>$SELFAUTOGRANDPARENT/vtex-dist/fonts/opentype/fontfont/DGMetaScience/DGMetaScience-Bold.otf
+[DGMetaScience-Bold.otf]:mode=node;script=latn;language=DFLT;+tlig;		DGMetaScience-Bold	DG Meta Science Bold	>$SELFAUTOGRANDPARENT/vtex-dist/fonts/opentype/fontfont/DGMetaScience/DGMetaScience-Bold.otf
+[DGMetaScience-Bold.otf]:mode=node;script=latn;language=DFLT;+tlig;+tnum;		DGMetaScience-Bold	DG Meta Science Bold	>$SELFAUTOGRANDPARENT/vtex-dist/fonts/opentype/fontfont/DGMetaScience/DGMetaScience-Bold.otf
+[DGMetaScience-BoldItalic.otf]		DGMetaScience-BoldItalic	DG Meta Science Bold Italic	>$SELFAUTOGRANDPARENT/vtex-dist/fonts/opentype/fontfont/DGMetaScience/DGMetaScience-BoldItalic.otf
+[DGMetaScience-BoldItalic.otf]:mode=node;script=latn;language=DFLT;+tlig;		DGMetaScience-BoldItalic	DG Meta Science Bold Italic	>$SELFAUTOGRANDPARENT/vtex-dist/fonts/opentype/fontfont/DGMetaScience/DGMetaScience-BoldItalic.otf
+[DGMetaScience-Italic.otf]		DGMetaScience-Italic	DG Meta Science Italic	>$SELFAUTOGRANDPARENT/vtex-dist/fonts/opentype/fontfont/DGMetaScience/DGMetaScience-Italic.otf
+[DGMetaScience-Regular.otf]		DGMetaScience-Regular	DGMetaScience-Regular	>$SELFAUTOGRANDPARENT/vtex-dist/fonts/opentype/fontfont/DGMetaScience/DGMetaScience-Regular.otf
+[DGMetaScience-Regular.otf]:mode=node;script=latn;language=DFLT;+tlig;		DGMetaScience-Regular	DGMetaScience-Regular	>$SELFAUTOGRANDPARENT/vtex-dist/fonts/opentype/fontfont/DGMetaScience/DGMetaScience-Regular.otf
+[DGMetaSerifScience-Bold.otf]		DGMetaSerifScience-Bold	DG Meta Serif Science Bold	>$SELFAUTOGRANDPARENT/vtex-dist/fonts/opentype/fontfont/DGMetaSerifScience/DGMetaSerifScience-Bold.otf
+[DGMetaSerifScience-Bold.otf]:mode=node;script=latn;language=DFLT;+tlig;		DGMetaSerifScience-Bold	DG Meta Serif Science Bold	>$SELFAUTOGRANDPARENT/vtex-dist/fonts/opentype/fontfont/DGMetaSerifScience/DGMetaSerifScience-Bold.otf
+[DGMetaSerifScience-BoldItalic.otf]		DGMetaSerifScience-BoldItalic	DG Meta Serif Science Bold Italic	>$SELFAUTOGRANDPARENT/vtex-dist/fonts/opentype/fontfont/DGMetaSerifScience/DGMetaSerifScience-BoldItalic.otf
+[DGMetaSerifScience-BoldItalic.otf]:mode=node;script=latn;language=DFLT;+tlig;		DGMetaSerifScience-BoldItalic	DG Meta Serif Science Bold Italic	>$SELFAUTOGRANDPARENT/vtex-dist/fonts/opentype/fontfont/DGMetaSerifScience/DGMetaSerifScience-BoldItalic.otf
+[DGMetaSerifScience-Italic.otf]		DGMetaSerifScience-Italic	DG Meta Serif Science Italic	>$SELFAUTOGRANDPARENT/vtex-dist/fonts/opentype/fontfont/DGMetaSerifScience/DGMetaSerifScience-Italic.otf
+[DGMetaSerifScience-Italic.otf]:mode=node;script=latn;language=DFLT;+tlig;		DGMetaSerifScience-Italic	DG Meta Serif Science Italic	>$SELFAUTOGRANDPARENT/vtex-dist/fonts/opentype/fontfont/DGMetaSerifScience/DGMetaSerifScience-Italic.otf
+[DGMetaSerifScience-Regular.otf]		DGMetaSerifScience-Regular	DGMetaSerifScience-Regular	>$SELFAUTOGRANDPARENT/vtex-dist/fonts/opentype/fontfont/DGMetaSerifScience/DGMetaSerifScience-Regular.otf
+[DGMetaSerifScience-Regular.otf]:mode=node;script=latn;language=DFLT;+tlig;		DGMetaSerifScience-Regular	DGMetaSerifScience-Regular	>$SELFAUTOGRANDPARENT/vtex-dist/fonts/opentype/fontfont/DGMetaSerifScience/DGMetaSerifScience-Regular.otf
+[lmroman10-bold]:+tlig;		LMRoman10-Bold	LMRoman10-Bold	>$SELFAUTOPARENT/texmf-dist/fonts/opentype/public/lm/lmroman10-bold.otf
+[lmroman10-italic]:+tlig;		LMRoman10-Italic	LMRoman10-Italic	>$SELFAUTOPARENT/texmf-dist/fonts/opentype/public/lm/lmroman10-italic.otf
+[lmroman10-regular]:+tlig;		LMRoman10-Regular	LMRoman10-Regular	>$SELFAUTOPARENT/texmf-dist/fonts/opentype/public/lm/lmroman10-regular.otf

@@ -1,0 +1,11 @@
+%Publisher ID=DGBOOK
+%Project ID=STEFAN1
+%MS=STEFAN101
+%Total count=7
+\newpi{01f01}{{65.96mm}{35.56mm}{tif}} %DPI=600, depth=8
+\newpi[136 354 458 492]{01f02}{{113.59mm}{48.68mm}{eps}}
+\newpi{01f03}{{73.79mm}{35.98mm}{tif}} %DPI=600, depth=8
+\newpi{01f04}{{45.00mm}{32.13mm}{tif}} %DPI=600, depth=8
+\newpi{01f05}{{74.95mm}{24.74mm}{tif}} %DPI=1200, depth=1
+\newpi{01f06}{{51.56mm}{51.86mm}{tif}} %DPI=600, depth=8
+\newpi{01f07}{{47.12mm}{35.48mm}{tif}} %DPI=600, depth=8

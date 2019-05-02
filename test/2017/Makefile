@@ -1,10 +1,13 @@
-otfdvi:=../../otfdvi.lua
+otfdvi:=../../otfdvi
 
 
 defaults: 01.pdf
 
 %.dvi:  %.tex .FORCE
 	dvilualatex -recorder $*
+
+06.dvi: 06.tex .FORCE
+	vtex 2016 luatex_dvi 06
 
 %.l.pdf:  %.tex
 	lualatex -jobname=$*.l -recorder $*
@@ -17,7 +20,14 @@ defaults: 01.pdf
 %.pdf:  %.dvi .FORCE
 	$(otfdvi) $*.dvi
 	make -f __Makefile fonts pdf clean
+#	make -f __Makefile fonts pdf
+  #clean
 #	mv out.pdf $@
+#	pdflatex diff
+%.png:  %.dvi .FORCE
+	$(otfdvi) $*.dvi
+	make -f __Makefile fonts dvipng 
+
 
 
 clean:

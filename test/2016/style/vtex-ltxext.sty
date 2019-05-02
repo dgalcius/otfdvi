@@ -1,0 +1,244 @@
+%%
+%% This is file `vtex-ltxext.sty',
+%% generated with the docstrip utility.
+%%
+%% The original source files were:
+%%
+%% vtex-ltxext.dtx  (with options: `package')
+%% 
+%% Copyright (C) 2016 by Sigitas Tolu\v{s}is, VTEX UAB
+%% Mokslininku 2a, LT-08412 Vilnius, Lithuania
+%% --------------------------------------------------------------------------
+%%
+%% PURPOSE: extended latex.ltx.
+%%
+\NeedsTeXFormat{LaTeX2e}[1999/12/01]
+\ProvidesPackage{vtex-ltxext}
+    [2017/03/23 v1.14 VTEX LaTeX format extension macros]
+\let\vtx@saved@ProcessOptions\ProcessOptions
+\def\ProcessOptions{%
+  \ifx\@declaredoptions\@empty
+      \expandafter\xdef\csname vtx@decl@opt@\@currname.\@currext\endcsname{}%
+  \else
+      \expandafter\xdef\csname vtx@decl@opt@\@currname.\@currext\endcsname{%
+          \expandafter\@gobble\@declaredoptions
+          }%
+  \fi
+  \vtx@saved@ProcessOptions
+  }
+\DeclareOption{listfiles}{\def\vtx@listfiles@opt{\listfiles@@with@@options}}
+\DeclareOption{nolistfiles}{\let\vtx@listfiles@opt\relax}
+\DeclareOption{silent}{\let\vtx@typeout\wlog}
+\DeclareOption{verbose}{\let\vtx@typeout\typeout}
+\DeclareOption{vtxcaption}{%
+    \AtBeginDocument{%
+        \expandafter\let\expandafter\caption\csname vtex-caption\endcsname
+        \expandafter\let\expandafter\contcaption\csname vtex-contcaption\endcsname
+        }%
+    }%
+\ExecuteOptions{listfiles}
+\ProcessOptions*
+\AtBeginDocument{\vtx@listfiles@opt}
+\ifdefined\vtx@typeout
+\else
+    \let\vtx@typeout\wlog
+\fi
+\long\def\ltx@xdblarg#1#2{#1[{{#2}}]{#2}}
+\def\vtex@@ifstar#1{\kernel@ifnextchar *{\@firstoftwo{#1}}}
+\def\get@@opt@@args#1{\def\opt@@args@@prefix{#1}\check@@for@@default@@options}
+\def\get@@list@@items[#1]\relax{{#1}}
+\def\check@@for@@default@@options#1#{%
+    \ifx \@empty#1\@empty
+    \else
+        \expandafter\get@@opt@@args@@list\get@@list@@items#1\relax
+    \fi
+    \get@@opt@@args@@list
+    }
+\def\get@@opt@@args@@list#1{\get@@next@@arg#1,=,}
+\def\get@@default@@arg#1,\relax{\get@@key@@arg{default},=#1\relax}
+\def\get@@key@@arg#1,=#2\relax{%
+    \csname opt@@def@@prefix\endcsname\@namedef{\opt@@args@@prefix @#1}{#2}%
+    }
+\def\check@@for@@default@@arg#1,#2=#3\relax{%
+    \ifx \@empty#2\@empty
+        \get@@key@@arg#1,=#3\relax
+    \else
+        \get@@default@@arg#1,\relax
+        \get@@key@@arg#2=#3\relax
+    \fi
+    }
+\def\get@@next@@arg#1=#2,{%
+    \ifx \@empty#1\@empty
+    \else
+        \ifx \@empty#2\@empty
+            \get@@default@@arg#1\relax
+        \else
+            \check@@for@@default@@arg#1,=#2\relax
+            \expandafter\expandafter\expandafter\get@@next@@arg
+        \fi
+    \fi
+    }
+\newif\if@star@caption
+\@namedef{vtex-caption}{%
+    \vtex@@ifstar
+        {\global\@star@captiontrue
+         \expandafter\vtex@@caption\expandafter{\caption@@default@@options}%
+        }{%
+         \global\@star@captionfalse
+         \expandafter\vtex@@caption\expandafter{\caption@@default@@options}%
+        }%
+    }
+\let\caption@@default@@options\@empty
+\long\def\@@lang@dblarg#1{%
+    \ifcsname document@language\endcsname
+        \csname\document@language @language\endcsname
+    \fi
+    \kernel@ifnextchar[{\@@opt@dblarg{#1}}{\ltx@xdblarg{#1}}%
+    }
+\def\@@opt@dblarg#1#2#{%
+    \def\opt@@args@@prefix{opt@@arg@}%
+    \expandafter\get@@opt@@args@@list\get@@list@@items#2\relax
+    \ifcsname opt@@arg@@language\endcsname
+        \csname\opt@@arg@@language @language\endcsname
+    \fi
+    #1#2%
+    }
+\def\vtex@@caption#1{%
+    \ifx \@captype\@undefined
+        \@latex@error{\noexpand\caption outside float}\@ehd
+        \expandafter\@gobble
+    \else
+        \expandafter\@firstofone
+    \fi
+    {\@@lang@dblarg{\vtex@@caption@@opt@@predef{caption}[#1]\@caption\@captype}}%
+    }
+\def\vtex@@caption@@opt@@predef#1[#2]#3[#4]#5{%
+    \get@@opt@@args{#1}[#2]{#4}%
+    \if@star@caption
+    \else
+        \refstepcounter\@captype
+    \fi
+    \csname begin@@caption@@hook\endcsname
+    \expandafter\ifx\csname @float@c@\@captype\endcsname\relax
+        \def\@temp@param@iii{#3}%
+        \expandafter\expandafter\expandafter\@temp@param@iii
+            \expandafter\expandafter\expandafter
+                [\expandafter\expandafter\expandafter
+                    {\csname #1@default\endcsname}]{#5}%
+    \else
+        \csname @float@c@\@captype\endcsname\@captype[\csname #1@default\endcsname]{#5}%
+    \fi
+    }
+\@namedef{vtex-contcaption}{%
+    \vtex@@ifstar
+        {\global\@star@captiontrue
+         \expandafter\vtex@@contcaption\expandafter{\caption@@default@@options}%
+        }{%
+         \global\@star@captionfalse
+         \expandafter\vtex@@contcaption\expandafter{\caption@@default@@options}%
+        }%
+    }
+\def\vtex@@contcaption#1{%
+    \@@lang@dblarg{\vtex@@contcaption@@opt@@predef{caption}[#1]\@contcaption\@captype}%
+    }%
+\def\vtex@@contcaption@@opt@@predef#1[#2]#3[#4]#5{%
+    \get@@opt@@args{#1}[#2]{#4}%
+    \csname begin@@contcaption@@hook\endcsname
+    #3[\csname #1@default\endcsname]{#5}%
+    }
+\def\listfiles@@with@@options{%
+    \let\listfiles@@with@@options\relax
+    \let\listfiles\relax
+    \def\@listfiles##1\@@{\edef\filename@area{\filename@area}}%
+    \let\vtx@global@classoptionslist\@classoptionslist
+    \let\vtx@global@unusedoptionlist\@unusedoptionlist
+    \def\@dofilelist{%
+       \vtx@typeout{^^J---<<< Options List >>>---}%
+       \vtx@typeout{%
+           global={\ifx\vtx@global@classoptionslist\relax\else\vtx@global@classoptionslist\fi}%
+           \ifx\vtx@global@unusedoptionlist\@empty\else,\space\space\space unused={\vtx@global@unusedoptionlist}\fi
+          }%
+       \vtx@typeout{---<<< /Options List >>>---}%
+       \vtx@typeout{^^J---<<< File List >>>---}%
+       \@for\@currname:=\@filelist\do{%
+           \filename@parse\@currname
+           \edef\reserved@a{%
+                \filename@base.%
+                \ifx \filename@ext\relax tex\else \filename@ext \fi
+                }%
+           \expandafter\let\expandafter\reserved@b
+               \csname ver@\reserved@a\endcsname
+           \expandafter\let\expandafter\reserved@temp@var@a
+               \csname opt@\reserved@a\endcsname
+           \expandafter\let\expandafter\reserved@temp@var@b
+               \csname vtx@decl@opt@\reserved@a\endcsname
+           \vtx@typeout{%
+               name={\filename@area\reserved@a}%
+               ^^J\space\space\space\space\space
+               ver={\ifx\reserved@b\relax\else\reserved@b\fi}%
+               ^^J\space\space\space\space\space
+               opt={\ifx\reserved@temp@var@a\relax\else\reserved@temp@var@a\fi}%
+               ^^J\space\space\space\space\space
+               decl={\ifx\reserved@temp@var@b\relax\else\reserved@temp@var@b\fi}%
+               }
+           }%
+       \vtx@typeout{---<<</ File List >>>---^^J}%
+       }%
+    }
+\@onlypreamble\listfiles@@with@@options
+\let\pkgattr@setkeys\@gobble
+\def\pkgattr@namedef{\long\gdef}
+\def\pkgattr@namedef@def#1{\expandafter\pkgattr@namedef\csname #1\endcsname}
+\protected\def\setpkgattr{\@ifnextchar[{\@setpkgattr}{\@@setpkgattr}}
+\long\def\@setpkgattr[#1]#2#3#4{%
+    \pkgattr@setkeys{#1}%
+    \pkgattr@namedef@def{#2@#3}{#4}%
+    }
+\long\def\@@setpkgattr#1#2#3{%
+    \pkgattr@namedef@def{#1@#2}{#3}%
+    }
+\def\load@fontshape@fd#1#2{%
+    \begingroup
+        \def\f@encoding{#1}\def\f@family{#2}%
+        \try@load@fontshape
+    \endgroup
+    }
+\def\vtx@special@prefix@default{mt}
+\let\vtx@special@prefix\vtx@special@prefix@default
+\let\vtx@special\special
+\protected\def\vtx@special@mt#1#2{\vtx@special{\vtx@special@prefix:#1 #2}}
+\protected\def\vtxClassError#1#2#3{%
+  \vtx@special@mt{error}{Class #1 Error: #2}%
+  \ClassError{#1}{#2}{#3^^J\@ehc}%
+  }
+\protected\def\vtxPackageError#1#2#3{%
+  \vtx@special@mt{error}{Package #1 Error: #2}%
+  \PackageError{#1}{#2}{#3^^J\@ehc}%
+  }
+\protected\def\vtxClassFatalError#1#2#3{%
+  \vtx@special@mt{fatal}{Class #1 Fatal Error: #2}%
+  \ClassError{#1}{#2}{#3^^J\@ehc}%
+  }
+\protected\def\vtxPackageFatalError#1#2#3{%
+  \vtx@special@mt{fatal}{Package #1 Fatal Error: #2}%
+  \PackageError{#1}{#2}{#3^^J\@ehc}%
+  }
+\protected\def\vtx@ClassError#1#2{%% TODO:trinti
+  \special{mt:error Class #1 Error: #2}%
+  \ClassError{#1}{#2}{Read documentation: <texdoc #1>^^J\@ehc}%
+  }
+\protected\def\vtx@PackageError#1#2{%% TODO:trinti
+  \special{mt:error Package #1 Error: #2}%
+  \PackageError{#1}{#2}{Read documentation: <texdoc #1>^^J\@ehc}%
+  }
+\protected\def\vtx@latex@error#1{\special{mt:error #1}}
+\protected\def\vtx@special@error#1{\vtx@special@mt{error}{#1}}
+\protected\def\vtx@special@fatal#1{\vtx@special@mt{fatal}{#1}}
+\ifdefined\pdfpageheight
+\else
+    \RequirePackage{luatex85}
+\fi
+\RequirePackage{etoolbox}
+\endinput
+%%
+%% End of file `vtex-ltxext.sty'.

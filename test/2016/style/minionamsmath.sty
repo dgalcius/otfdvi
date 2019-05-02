@@ -1,0 +1,87 @@
+%%
+%% This is file `minionamsmath.sty',
+%% generated with the docstrip utility.
+%%
+%% The original source files were:
+%%
+%% minionmath.dtx  (with options: `amspack')
+%% 
+%% This file belongs to the `typoma Minion Math' fonts
+%% and is part of their accompanying bundle of LaTeX files.
+%% 
+%% Copyright (C) 2008-2012 typoma GmbH, Germany. http://www.typoma.com
+%% All rights reserved.
+%% 
+%% This is a generated file -- do not modify its content.
+%% 
+%% \CharacterTable
+%%  {Upper-case    \A\B\C\D\E\F\G\H\I\J\K\L\M\N\O\P\Q\R\S\T\U\V\W\X\Y\Z
+%%   Lower-case    \a\b\c\d\e\f\g\h\i\j\k\l\m\n\o\p\q\r\s\t\u\v\w\x\y\z
+%%   Digits        \0\1\2\3\4\5\6\7\8\9
+%%   Exclamation   \!     Double quote  \"     Hash (number) \#
+%%   Dollar        \$     Percent       \%     Ampersand     \&
+%%   Acute accent  \'     Left paren    \(     Right paren   \)
+%%   Asterisk      \*     Plus          \+     Comma         \,
+%%   Minus         \-     Point         \.     Solidus       \/
+%%   Colon         \:     Semicolon     \;     Less than     \<
+%%   Equals        \=     Greater than  \>     Question mark \?
+%%   Commercial at \@     Left bracket  \[     Backslash     \\
+%%   Right bracket \]     Circumflex    \^     Underscore    \_
+%%   Grave accent  \`     Left brace    \{     Vertical bar  \|
+%%   Right brace   \}     Tilde         \~}
+\NeedsTeXFormat{LaTeX2e}[1997/12/01]
+\ProvidesPackage{minionamsmath}  [2012/06/25 v1.024 Minion Math AmsMath Compatiblity]
+\def\re@DeclareMathAccent#1#2#3#4{%
+    \let#1=\undefined
+    \DeclareMathAccent{#1}{#2}{#3}{#4}}
+\def\re@DeclareCompoundMathSymbol#1#2#3{%
+   \let#1=\undefined
+   \DeclareCompoundMathSymbol{#1}{#2}{#3}}
+\def\re@DeclareMathSymbol#1#2#3#4{%
+    \let#1=\undefined
+    \DeclareMathSymbol{#1}{#2}{#3}{#4}}
+\re@DeclareMathAccent{\dddot}        {\mathord} {letters}{11}
+\re@DeclareMathAccent{\ddddot}       {\mathord} {letters}{12}
+\renewcommand{\int}   {\DOTSI\intop\ilimits@}
+\renewcommand{\iint}  {\DOTSI\iintop\ilimits@}
+\renewcommand{\iiint} {\DOTSI\iiintop\ilimits@}
+\renewcommand{\oint}  {\DOTSI\ointop\ilimits@}
+\renewcommand{\oiint} {\DOTSI\oiintop\ilimits@}
+\re@DeclareCompoundMathSymbol{\hookleftarrow}     {\mathrel}{\mathord\leftarrow\rhook}
+\re@DeclareCompoundMathSymbol{\hookrightarrow}    {\mathrel}{\lhook\mathord\rightarrow}
+\re@DeclareMathSymbol{\doteq}            {\mathrel}  {letters} {41}
+\re@DeclareMathSymbol{\relbar}           {\mathord}  {letters}{218}
+\re@DeclareMathSymbol{\Relbar}           {\mathord}  {letters}{226}
+\re@DeclareCompoundMathSymbol{\longleftarrow}     {\mathrel}{\mathord\leftarrow\relbar}
+\re@DeclareCompoundMathSymbol{\longrightarrow}    {\mathrel}{\relbar\mathord\rightarrow}
+\re@DeclareCompoundMathSymbol{\Longleftarrow}     {\mathrel}{\mathord\Leftarrow\Relbar}
+\re@DeclareCompoundMathSymbol{\Longrightarrow}    {\mathrel}{\Relbar\mathord\Rightarrow}
+\re@DeclareCompoundMathSymbol{\mapsto}            {\mathrel}{%
+                                          \mapstochar\mathord\rightarrow}
+\re@DeclareCompoundMathSymbol{\Mapsto}            {\mathrel}{%
+                                          \Mapstochar\mathord\Rightarrow}
+\re@DeclareCompoundMathSymbol{\mapsfrom}          {\mathrel}{%
+                                          \mathord\leftarrow\mapsfromchar}
+\re@DeclareCompoundMathSymbol{\Mapsfrom}          {\mathrel}{%
+                                          \mathord\Leftarrow\Mapsfromchar}
+\re@DeclareCompoundMathSymbol{\longmapsto}        {\mathrel}{%
+                                          \mapstochar\relbar\mathord\rightarrow}
+\re@DeclareCompoundMathSymbol{\Longmapsto}        {\mathrel}{%
+                                          \Mapstochar\Relbar\mathord\Rightarrow}
+\re@DeclareCompoundMathSymbol{\longmapsfrom}      {\mathrel}{%
+                                          \mathord\leftarrow\relbar\mapsfromchar}
+\re@DeclareCompoundMathSymbol{\Longmapsfrom}      {\mathrel}{%
+                                          \mathord\Leftarrow\Relbar\Mapsfromchar}
+
+
+
+
+
+
+
+
+
+
+%% 
+%%
+%% End of file `minionamsmath.sty'.

@@ -1,0 +1,23 @@
+%% htmisc.sty
+%% Deimantas Galcius, deimi@vtex.lt 2014.11.27
+%%
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{htmisc}[2014/11/27\space misc macros for convertion to xml (DG)]
+
+%% empty base: {}^2  or {}_2
+%% 4ht should be: {\HCode{}}^2 or {\HCode{}}_2
+\newcommand\emptybase{{}}
+\newcommand\msub{\emptybase\sb}
+\newcommand\msup{\emptybase\sp}
+
+
+%% htpicture
+\AtBeginDocument{%
+\@ifundefined{htpicture}%
+  {\newenvironment{htpicture}{\special{}}{\special{}}}%
+  {}%
+}
+
+
+\endinput
+

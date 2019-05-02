@@ -1,0 +1,40 @@
+% Programming: L. Stonys, lstonys@vtex.lt
+% Stilius issaugo \pageref puslapiu reiksmes \jobname.pgrefs faile.
+% Sios reiksmes reikalingos tex4ht, nes ten puslapiai neatitinka.
+% Jei naudojamas hyperref, tai stiliu reikia krauti po jo.
+% Changes
+%   2015.05.06 - alfa
+
+\NeedsTeXFormat{LaTeX2e}[2000/01/26]
+\ProvidesClass{pagerefsout}[2015/05/08 v1.00, \string\pageref\space output to \string\jobname.pgrefs]
+
+\ifdefined\HCode
+  \expandafter\endinput
+\fi
+
+\newwrite\pageref@outfile
+\if@filesw\immediate\openout\pageref@outfile=\jobname.pgrefs\fi
+
+\def\@secondofmeny#1#2#3\end@secondofmeny{#2}
+
+\global\let\pagerefinfo\@gobletwo
+
+\def\write@pagerefinfo#1{%
+  \def\pageref@page{??}%
+  \ifcsname r@#1\endcsname
+    \expandafter\def\expandafter\pageref@page\expandafter{\expandafter\expandafter\expandafter\@secondofmeny\csname r@#1\endcsname\relax\end@secondofmeny}%
+  \fi
+  \@bsphack
+    \immediate\write\pageref@outfile{\string\pagerefinfo{#1}{\pageref@page}}%
+  \@esphack
+  }
+
+\protected\def\@pagerefinfo#1{\protect\write@pagerefinfo{#1}\orig@pageref{#1}}
+
+\def\enable@pagerefinfo{%
+  \let\orig@pageref\pageref
+  \let\pageref\@pagerefinfo
+  }
+\AtBeginDocument{\enable@pagerefinfo}
+\AtEndDocument{\closeout\pageref@outfile}
+\endinput

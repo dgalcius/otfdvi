@@ -1,0 +1,449 @@
+2018-04-10 11:58:52,625 INFO     mszip.py v.2.26 (2017-10-17), skiped extensions (default)=[.pdf,.png,.jpg,.luc], args=[./www/STEFAN107.fls ./print/STEFAN107.fls]
+2018-04-10 11:58:52,654 INFO     Adding files:
+2018-04-10 11:58:52,654 INFO     C:/Users/juraten/.texlive2016/texmf-vtex:
+2018-04-10 11:58:52,654 INFO       - [not found]   m_t_x_t_e_s_t.tmp   
+2018-04-10 11:58:52,654 INFO     print:
+2018-04-10 11:58:52,655 INFO       - [ignored output]   stefan107.aux       
+2018-04-10 11:58:52,655 INFO       - [ignored output]   stefan107.idx       
+2018-04-10 11:58:52,655 INFO       - [ignored output]   stefan107.log       
+2018-04-10 11:58:52,655 INFO       - [ignored output]   stefan107.out       
+2018-04-10 11:58:52,655 INFO       - [ignored output]   stefan107.pdf       
+2018-04-10 11:58:52,655 INFO       - [ignored output]   stefan107.pgrefs    
+2018-04-10 11:58:52,655 INFO       - [ignored output]   stefan107.pos       
+2018-04-10 11:58:52,655 INFO       - [ignored output]   stefan107.specials  
+2018-04-10 11:58:52,655 INFO       - [ignored output]   stefan107.upa       
+2018-04-10 11:58:52,657 INFO     C:/Users/juraten/.texlive2016/texmf-vtex/luatex-cache/generic/fonts/otl:
+2018-04-10 11:58:52,657 INFO       - [ignored ext]   dgmetascience-bold.luc
+2018-04-10 11:58:52,657 INFO       - [ignored ext]   dgmetascience-bolditalic.luc
+2018-04-10 11:58:52,657 INFO       - [ignored ext]   dgmetascience-italic.luc
+2018-04-10 11:58:52,657 INFO       - [ignored ext]   dgmetascience-regular.luc
+2018-04-10 11:58:52,657 INFO       - [ignored ext]   dgmetaserifscience-bold.luc
+2018-04-10 11:58:52,657 INFO       - [ignored ext]   dgmetaserifscience-bolditalic.luc
+2018-04-10 11:58:52,657 INFO       - [ignored ext]   dgmetaserifscience-italic.luc
+2018-04-10 11:58:52,657 INFO       - [ignored ext]   dgmetaserifscience-regular.luc
+2018-04-10 11:58:52,657 INFO       - [ignored ext]   inconsolatazi4-bold.luc
+2018-04-10 11:58:52,657 INFO       - [ignored ext]   inconsolatazi4-regular.luc
+2018-04-10 11:58:52,657 INFO       - [ignored ext]   lmroman10-bold.luc  
+2018-04-10 11:58:52,657 INFO       - [ignored ext]   lmroman10-italic.luc
+2018-04-10 11:58:52,657 INFO       - [ignored ext]   lmroman10-regular.luc
+2018-04-10 11:58:52,657 INFO     C:/Users/juraten/.texlive2016/texmf-vtex/luatex-cache/generic/names:
+2018-04-10 11:58:52,657 INFO       - [ignored ext]   luaotfload-lookup-cache.luc
+2018-04-10 11:58:52,658 INFO       - [ignored ext]   luaotfload-names.luc
+2018-04-10 11:58:52,658 INFO     d:/texroot/2016/texmf-dist/fonts/tfm/jknappen/ec:
+2018-04-10 11:58:52,658 INFO       +               ecrm1000.tfm        
+2018-04-10 11:58:52,658 INFO       +               ectt1000.tfm        
+2018-04-10 11:58:52,660 INFO     d:/texroot/2016/texmf-dist/fonts/tfm/public/amsfonts/euler:
+2018-04-10 11:58:52,660 INFO       +               eufb10.tfm          
+2018-04-10 11:58:52,660 INFO       +               eufb5.tfm           
+2018-04-10 11:58:52,661 INFO       +               eufb7.tfm           
+2018-04-10 11:58:52,661 INFO       +               eufm10.tfm          
+2018-04-10 11:58:52,661 INFO       +               eufm5.tfm           
+2018-04-10 11:58:52,661 INFO       +               eufm7.tfm           
+2018-04-10 11:58:52,663 INFO     d:/texroot/2016/texmf-dist/fonts/tfm/public/amsfonts/symbols:
+2018-04-10 11:58:52,663 INFO       +               msam10.tfm          
+2018-04-10 11:58:52,663 INFO       +               msam5.tfm           
+2018-04-10 11:58:52,663 INFO       +               msam7.tfm           
+2018-04-10 11:58:52,664 INFO       +               msbm10.tfm          
+2018-04-10 11:58:52,664 INFO       +               msbm5.tfm           
+2018-04-10 11:58:52,664 INFO       +               msbm7.tfm           
+2018-04-10 11:58:52,664 INFO     d:/texroot/2016/texmf-dist/fonts/tfm/public/cm:
+2018-04-10 11:58:52,664 INFO       +               cmr10.tfm           
+2018-04-10 11:58:52,664 INFO       +               cmtt8.tfm           
+2018-04-10 11:58:52,665 INFO     d:/texroot/2016/texmf-dist/fonts/tfm/public/rsfs:
+2018-04-10 11:58:52,665 INFO       +               rsfs10.tfm          
+2018-04-10 11:58:52,665 INFO       +               rsfs5.tfm           
+2018-04-10 11:58:52,667 INFO       +               rsfs7.tfm           
+2018-04-10 11:58:52,667 INFO     d:/texroot/2016/texmf-dist/fonts/type1/public/amsfonts/euler:
+2018-04-10 11:58:52,667 INFO       +               eufm10.pfb          
+2018-04-10 11:58:52,667 INFO       +               eufm7.pfb           
+2018-04-10 11:58:52,668 INFO     d:/texroot/2016/texmf-dist/fonts/type1/public/rsfs:
+2018-04-10 11:58:52,668 INFO       +               rsfs10.pfb          
+2018-04-10 11:58:52,670 INFO     d:/texroot/2016/texmf-dist/scripts/oberdiek:
+2018-04-10 11:58:52,670 INFO       +               oberdiek.luatex.lua 
+2018-04-10 11:58:52,670 INFO     d:/texroot/2016/texmf-dist/tex/context/base/mkii:
+2018-04-10 11:58:52,671 INFO       +               supp-pdf.mkii       
+2018-04-10 11:58:52,674 INFO     d:/texroot/2016/texmf-dist/tex/generic/babel-english:
+2018-04-10 11:58:52,674 INFO       +               english.ldf         
+2018-04-10 11:58:52,674 INFO     d:/texroot/2016/texmf-dist/tex/generic/babel-german:
+2018-04-10 11:58:52,674 INFO       +               ngerman.ldf         
+2018-04-10 11:58:52,676 INFO       +               ngermanb.ldf        
+2018-04-10 11:58:52,676 INFO     d:/texroot/2016/texmf-dist/tex/generic/babel:
+2018-04-10 11:58:52,676 INFO       +               babel.def           
+2018-04-10 11:58:52,678 INFO       +               babel.sty           
+2018-04-10 11:58:52,680 INFO       +               luababel.def        
+2018-04-10 11:58:52,680 INFO     d:/texroot/2016/texmf-dist/tex/generic/config:
+2018-04-10 11:58:52,680 INFO       +               language.dat        
+2018-04-10 11:58:52,680 INFO     d:/texroot/2016/texmf-dist/tex/generic/hyph-utf8/loadhyph:
+2018-04-10 11:58:52,680 INFO       +               loadhyph-de-1996.tex
+2018-04-10 11:58:52,681 INFO     d:/texroot/2016/texmf-dist/tex/generic/hyph-utf8/patterns/tex:
+2018-04-10 11:58:52,681 INFO       +               hyph-de-1996.tex    
+2018-04-10 11:58:52,690 INFO     d:/texroot/2016/texmf-dist/tex/generic/iftex:
+2018-04-10 11:58:52,690 INFO       +               iftex.sty           
+2018-04-10 11:58:52,690 INFO     d:/texroot/2016/texmf-dist/tex/generic/ifxetex:
+2018-04-10 11:58:52,690 INFO       +               ifxetex.sty         
+2018-04-10 11:58:52,690 INFO     d:/texroot/2016/texmf-dist/tex/generic/luatex85:
+2018-04-10 11:58:52,690 INFO       +               luatex85.sty        
+2018-04-10 11:58:52,691 INFO     d:/texroot/2016/texmf-dist/tex/generic/oberdiek:
+2018-04-10 11:58:52,691 INFO       +               gettitlestring.sty  
+2018-04-10 11:58:52,693 INFO       +               hobsub-generic.sty  
+2018-04-10 11:58:52,700 INFO       +               hobsub-hyperref.sty 
+2018-04-10 11:58:52,703 INFO       +               ifpdf.sty           
+2018-04-10 11:58:52,703 INFO       +               infwarerr.sty       
+2018-04-10 11:58:52,703 INFO       +               ltxcmds.sty         
+2018-04-10 11:58:52,704 INFO       +               soulutf8.sty        
+2018-04-10 11:58:52,704 INFO     d:/texroot/2016/texmf-dist/tex/generic/pdftex:
+2018-04-10 11:58:52,706 INFO       +               glyphtounicode.tex  
+2018-04-10 11:58:52,713 INFO     d:/texroot/2016/texmf-dist/tex/generic/tracklang:
+2018-04-10 11:58:52,713 INFO       +               tracklang.tex       
+2018-04-10 11:58:52,716 INFO     d:/texroot/2016/texmf-dist/tex/generic/unicode-data:
+2018-04-10 11:58:52,717 INFO       +               CaseFolding.txt     
+2018-04-10 11:58:52,720 INFO       +               SpecialCasing.txt   
+2018-04-10 11:58:52,720 INFO       +               UnicodeData.txt     
+2018-04-10 11:58:52,770 INFO     d:/texroot/2016/texmf-dist/tex/generic/xkeyval:
+2018-04-10 11:58:52,770 INFO       +               xkeyval.tex         
+2018-04-10 11:58:52,772 INFO       +               xkvutils.tex        
+2018-04-10 11:58:52,773 INFO     d:/texroot/2016/texmf-dist/tex/latex/amscls:
+2018-04-10 11:58:52,773 INFO       +               amsthm.sty          
+2018-04-10 11:58:52,773 INFO     d:/texroot/2016/texmf-dist/tex/latex/amsfonts:
+2018-04-10 11:58:52,773 INFO       +               amsfonts.sty        
+2018-04-10 11:58:52,773 INFO       +               umsa.fd             
+2018-04-10 11:58:52,775 INFO       +               umsb.fd             
+2018-04-10 11:58:52,775 INFO     d:/texroot/2016/texmf-dist/tex/latex/amsmath:
+2018-04-10 11:58:52,775 INFO       +               amsbsy.sty          
+2018-04-10 11:58:52,776 INFO       +               amsgen.sty          
+2018-04-10 11:58:52,776 INFO       +               amsmath.sty         
+2018-04-10 11:58:52,779 INFO       +               amsopn.sty          
+2018-04-10 11:58:52,780 INFO       +               amstext.sty         
+2018-04-10 11:58:52,780 INFO     d:/texroot/2016/texmf-dist/tex/latex/base:
+2018-04-10 11:58:52,780 INFO       +               bk10.clo            
+2018-04-10 11:58:52,782 INFO       +               book.cls            
+2018-04-10 11:58:52,782 INFO       +               fontenc.sty         
+2018-04-10 11:58:52,783 INFO       +               ifthen.sty          
+2018-04-10 11:58:52,783 INFO       +               textcomp.sty        
+2018-04-10 11:58:52,785 INFO       +               ts1cmr.fd           
+2018-04-10 11:58:52,785 INFO       +               ts1enc.def          
+2018-04-10 11:58:52,786 INFO       +               tuenc.def           
+2018-04-10 11:58:52,786 INFO       +               tulmr.fd            
+2018-04-10 11:58:52,786 INFO     d:/texroot/2016/texmf-dist/tex/latex/bbm-macros:
+2018-04-10 11:58:52,786 INFO       +               bbm.sty             
+2018-04-10 11:58:52,788 INFO     d:/texroot/2016/texmf-dist/tex/latex/bezos:
+2018-04-10 11:58:52,788 INFO       +               soulpos.sty         
+2018-04-10 11:58:52,788 INFO     d:/texroot/2016/texmf-dist/tex/latex/booktabs:
+2018-04-10 11:58:52,789 INFO       +               booktabs.sty        
+2018-04-10 11:58:52,789 INFO     d:/texroot/2016/texmf-dist/tex/latex/caption:
+2018-04-10 11:58:52,789 INFO       +               caption.sty         
+2018-04-10 11:58:52,792 INFO       +               caption3.sty        
+2018-04-10 11:58:52,795 INFO     d:/texroot/2016/texmf-dist/tex/latex/cmap:
+2018-04-10 11:58:52,795 INFO       +               cmap.sty            
+2018-04-10 11:58:52,796 INFO     d:/texroot/2016/texmf-dist/tex/latex/datetime2-english:
+2018-04-10 11:58:52,796 INFO       +               datetime2-english-base.ldf
+2018-04-10 11:58:52,796 INFO       +               datetime2-english.ldf
+2018-04-10 11:58:52,796 INFO     d:/texroot/2016/texmf-dist/tex/latex/datetime2-german:
+2018-04-10 11:58:52,796 INFO       +               datetime2-german-utf8.ldf
+2018-04-10 11:58:52,798 INFO       +               datetime2-german.ldf
+2018-04-10 11:58:52,798 INFO     d:/texroot/2016/texmf-dist/tex/latex/datetime2:
+2018-04-10 11:58:52,798 INFO       +               datetime2.sty       
+2018-04-10 11:58:52,799 INFO     d:/texroot/2016/texmf-dist/tex/latex/environ:
+2018-04-10 11:58:52,799 INFO       +               environ.sty         
+2018-04-10 11:58:52,801 INFO     d:/texroot/2016/texmf-dist/tex/latex/etex-pkg:
+2018-04-10 11:58:52,801 INFO       +               etex.sty            
+2018-04-10 11:58:52,802 INFO     d:/texroot/2016/texmf-dist/tex/latex/etextools:
+2018-04-10 11:58:52,802 INFO       +               etextools.sty       
+2018-04-10 11:58:52,803 INFO     d:/texroot/2016/texmf-dist/tex/latex/etoolbox:
+2018-04-10 11:58:52,805 INFO       +               etoolbox.sty        
+2018-04-10 11:58:52,805 INFO     d:/texroot/2016/texmf-dist/tex/latex/fontspec:
+2018-04-10 11:58:52,805 INFO       +               fontspec-luatex.sty 
+2018-04-10 11:58:52,812 INFO       +               fontspec.cfg        
+2018-04-10 11:58:52,812 INFO       +               fontspec.sty        
+2018-04-10 11:58:52,812 INFO     d:/texroot/2016/texmf-dist/tex/latex/graphics-cfg:
+2018-04-10 11:58:52,812 INFO       +               color.cfg           
+2018-04-10 11:58:52,812 INFO       +               graphics.cfg        
+2018-04-10 11:58:52,812 INFO     d:/texroot/2016/texmf-dist/tex/latex/graphics-def:
+2018-04-10 11:58:52,812 INFO       +               luatex.def          
+2018-04-10 11:58:52,815 INFO     d:/texroot/2016/texmf-dist/tex/latex/graphics:
+2018-04-10 11:58:52,815 INFO       +               color.sty           
+2018-04-10 11:58:52,815 INFO       +               graphics.sty        
+2018-04-10 11:58:52,816 INFO       +               graphicx.sty        
+2018-04-10 11:58:52,816 INFO       +               keyval.sty          
+2018-04-10 11:58:52,818 INFO       +               rotating.sty        
+2018-04-10 11:58:52,819 INFO       +               trig.sty            
+2018-04-10 11:58:52,819 INFO     d:/texroot/2016/texmf-dist/tex/latex/hyperref:
+2018-04-10 11:58:52,819 INFO       +               hluatex.def         
+2018-04-10 11:58:52,822 INFO       +               hyperref.sty        
+2018-04-10 11:58:52,832 INFO       +               nameref.sty         
+2018-04-10 11:58:52,834 INFO       +               pd1enc.def          
+2018-04-10 11:58:52,835 INFO       +               puenc.def           
+2018-04-10 11:58:52,839 INFO     d:/texroot/2016/texmf-dist/tex/latex/index:
+2018-04-10 11:58:52,839 INFO       +               index.sty           
+2018-04-10 11:58:52,841 INFO     d:/texroot/2016/texmf-dist/tex/latex/jknapltx:
+2018-04-10 11:58:52,841 INFO       +               mathrsfs.sty        
+2018-04-10 11:58:52,841 INFO       +               ursfs.fd            
+2018-04-10 11:58:52,841 INFO     d:/texroot/2016/texmf-dist/tex/latex/l3kernel:
+2018-04-10 11:58:52,842 INFO       +               expl3-code.tex      
+2018-04-10 11:58:52,871 INFO       +               expl3.sty           
+2018-04-10 11:58:52,871 INFO       +               l3pdfmode.def       
+2018-04-10 11:58:52,872 INFO     d:/texroot/2016/texmf-dist/tex/latex/l3packages/xparse:
+2018-04-10 11:58:52,872 INFO       +               xparse.sty          
+2018-04-10 11:58:52,875 INFO     d:/texroot/2016/texmf-dist/tex/latex/lastpage:
+2018-04-10 11:58:52,875 INFO       +               lastpage.sty        
+2018-04-10 11:58:52,875 INFO     d:/texroot/2016/texmf-dist/tex/latex/latexconfig:
+2018-04-10 11:58:52,877 INFO       +               epstopdf-sys.cfg    
+2018-04-10 11:58:52,877 INFO       +               hyperref.cfg        
+2018-04-10 11:58:52,877 INFO     d:/texroot/2016/texmf-dist/tex/latex/marginnote:
+2018-04-10 11:58:52,877 INFO       +               marginnote.sty      
+2018-04-10 11:58:52,878 INFO     d:/texroot/2016/texmf-dist/tex/latex/ms:
+2018-04-10 11:58:52,878 INFO       +               everysel.sty        
+2018-04-10 11:58:52,878 INFO       +               ragged2e.sty        
+2018-04-10 11:58:52,878 INFO     d:/texroot/2016/texmf-dist/tex/latex/multirow:
+2018-04-10 11:58:52,878 INFO       +               bigstrut.sty        
+2018-04-10 11:58:52,880 INFO       +               multirow.sty        
+2018-04-10 11:58:52,880 INFO     d:/texroot/2016/texmf-dist/tex/latex/ncctools:
+2018-04-10 11:58:52,880 INFO       +               afterpackage.sty    
+2018-04-10 11:58:52,881 INFO     d:/texroot/2016/texmf-dist/tex/latex/oberdiek:
+2018-04-10 11:58:52,881 INFO       +               auxhook.sty         
+2018-04-10 11:58:52,881 INFO       +               epstopdf-base.sty   
+2018-04-10 11:58:52,881 INFO       +               grfext.sty          
+2018-04-10 11:58:52,882 INFO       +               kvoptions.sty       
+2018-04-10 11:58:52,884 INFO       +               rerunfilecheck.sty  
+2018-04-10 11:58:52,884 INFO       +               zref-base.sty       
+2018-04-10 11:58:52,884 INFO       +               zref-savepos.sty    
+2018-04-10 11:58:52,885 INFO     d:/texroot/2016/texmf-dist/tex/latex/pdfcomment:
+2018-04-10 11:58:52,885 INFO       +               pdfcomment.sty      
+2018-04-10 11:58:52,888 INFO     d:/texroot/2016/texmf-dist/tex/latex/sidecap:
+2018-04-10 11:58:52,888 INFO       +               sidecap.sty         
+2018-04-10 11:58:52,890 INFO     d:/texroot/2016/texmf-dist/tex/latex/soul:
+2018-04-10 11:58:52,890 INFO       +               soul.sty            
+2018-04-10 11:58:52,891 INFO     d:/texroot/2016/texmf-dist/tex/latex/sttools:
+2018-04-10 11:58:52,891 INFO       +               texsort.sty         
+2018-04-10 11:58:52,891 INFO     d:/texroot/2016/texmf-dist/tex/latex/supertabular:
+2018-04-10 11:58:52,891 INFO       +               supertabular.sty    
+2018-04-10 11:58:52,892 INFO     d:/texroot/2016/texmf-dist/tex/latex/tools:
+2018-04-10 11:58:52,892 INFO       +               array.sty           
+2018-04-10 11:58:52,894 INFO       +               calc.sty            
+2018-04-10 11:58:52,894 INFO       +               multicol.sty        
+2018-04-10 11:58:52,895 INFO       +               tabularx.sty        
+2018-04-10 11:58:52,895 INFO     d:/texroot/2016/texmf-dist/tex/latex/tracklang:
+2018-04-10 11:58:52,897 INFO       +               tracklang.sty       
+2018-04-10 11:58:52,897 INFO     d:/texroot/2016/texmf-dist/tex/latex/trimspaces:
+2018-04-10 11:58:52,897 INFO       +               trimspaces.sty      
+2018-04-10 11:58:52,898 INFO     d:/texroot/2016/texmf-dist/tex/latex/url:
+2018-04-10 11:58:52,898 INFO       +               url.sty             
+2018-04-10 11:58:52,898 INFO     d:/texroot/2016/texmf-dist/tex/latex/xkeyval:
+2018-04-10 11:58:52,898 INFO       +               xkeyval.sty         
+2018-04-10 11:58:52,898 INFO     d:/texroot/2016/texmf-dist/tex/luatex/lualibs:
+2018-04-10 11:58:52,898 INFO       +               lualibs-basic.lua   
+2018-04-10 11:58:52,900 INFO       +               lualibs-boolean.lua 
+2018-04-10 11:58:52,900 INFO       +               lualibs-compat.lua  
+2018-04-10 11:58:52,900 INFO       +               lualibs-dir.lua     
+2018-04-10 11:58:52,901 INFO       +               lualibs-extended.lua
+2018-04-10 11:58:52,901 INFO       +               lualibs-file.lua    
+2018-04-10 11:58:52,903 INFO       +               lualibs-function.lua
+2018-04-10 11:58:52,903 INFO       +               lualibs-gzip.lua    
+2018-04-10 11:58:52,904 INFO       +               lualibs-io.lua      
+2018-04-10 11:58:52,904 INFO       +               lualibs-lpeg.lua    
+2018-04-10 11:58:52,905 INFO       +               lualibs-lua.lua     
+2018-04-10 11:58:52,907 INFO       +               lualibs-math.lua    
+2018-04-10 11:58:52,907 INFO       +               lualibs-md5.lua     
+2018-04-10 11:58:52,907 INFO       +               lualibs-number.lua  
+2018-04-10 11:58:52,907 INFO       +               lualibs-os.lua      
+2018-04-10 11:58:52,908 INFO       +               lualibs-package.lua 
+2018-04-10 11:58:52,910 INFO       +               lualibs-set.lua     
+2018-04-10 11:58:52,910 INFO       +               lualibs-string.lua  
+2018-04-10 11:58:52,911 INFO       +               lualibs-table.lua   
+2018-04-10 11:58:52,913 INFO       +               lualibs-trac-inf.lua
+2018-04-10 11:58:52,913 INFO       +               lualibs-unicode.lua 
+2018-04-10 11:58:52,914 INFO       +               lualibs-url.lua     
+2018-04-10 11:58:52,915 INFO       +               lualibs-util-deb.lua
+2018-04-10 11:58:52,915 INFO       +               lualibs-util-dim.lua
+2018-04-10 11:58:52,917 INFO       +               lualibs-util-fil.lua
+2018-04-10 11:58:52,917 INFO       +               lualibs-util-jsn.lua
+2018-04-10 11:58:52,917 INFO       +               lualibs-util-lua.lua
+2018-04-10 11:58:52,918 INFO       +               lualibs-util-prs.lua
+2018-04-10 11:58:52,920 INFO       +               lualibs-util-sta.lua
+2018-04-10 11:58:52,921 INFO       +               lualibs-util-sto.lua
+2018-04-10 11:58:52,921 INFO       +               lualibs-util-str.lua
+2018-04-10 11:58:52,923 INFO       +               lualibs-util-tab.lua
+2018-04-10 11:58:52,924 INFO       +               lualibs-util-tpl.lua
+2018-04-10 11:58:52,924 INFO     d:/texroot/2016/texmf-dist/tex/luatex/luaotfload:
+2018-04-10 11:58:52,924 INFO       +               luaotfload-characters.lua
+2018-04-10 11:58:52,948 INFO       +               luaotfload.sty      
+2018-04-10 11:58:52,950 INFO     d:/texroot/2016/texmf-vtex/tex/latex/sttools:
+2018-04-10 11:58:52,950 INFO       +               stfloats.sty        
+2018-04-10 11:58:52,950 INFO     d:/texroot/2016/texmf-vtex/web2c/luatex:
+2018-04-10 11:58:52,950 INFO       +               lualatex.fmt        
+2018-04-10 11:58:53,006 INFO     d:/texroot/vtex-dist/fonts/tfm/typoma/minionmath:
+2018-04-10 11:58:53,006 INFO       +               MinionMath-Bold-MC--base.tfm
+2018-04-10 11:58:53,009 INFO       +               MinionMath-Bold-MC.tfm
+2018-04-10 11:58:53,009 INFO       +               MinionMath-Bold-MSA--base.tfm
+2018-04-10 11:58:53,010 INFO       +               MinionMath-Bold-MSA.tfm
+2018-04-10 11:58:53,010 INFO       +               MinionMath-Bold-MSB--base.tfm
+2018-04-10 11:58:53,012 INFO       +               MinionMath-Bold-MSB-eufr.tfm
+2018-04-10 11:58:53,012 INFO       +               MinionMath-Bold-MSP--base.tfm
+2018-04-10 11:58:53,013 INFO       +               MinionMath-Bold-MSP-rsfs.tfm
+2018-04-10 11:58:53,013 INFO       +               MinionMath-Bold-MXP--base.tfm
+2018-04-10 11:58:53,013 INFO       +               MinionMath-Bold-MXP.tfm
+2018-04-10 11:58:53,013 INFO       +               MinionMath-BoldCapt-MC--base.tfm
+2018-04-10 11:58:53,015 INFO       +               MinionMath-BoldCapt-MC.tfm
+2018-04-10 11:58:53,016 INFO       +               MinionMath-BoldCapt-MSA--base.tfm
+2018-04-10 11:58:53,017 INFO       +               MinionMath-BoldCapt-MSA.tfm
+2018-04-10 11:58:53,017 INFO       +               MinionMath-BoldCapt-MSB--base.tfm
+2018-04-10 11:58:53,019 INFO       +               MinionMath-BoldCapt-MSB-eufr.tfm
+2018-04-10 11:58:53,019 INFO       +               MinionMath-BoldCapt-MSP--base.tfm
+2018-04-10 11:58:53,019 INFO       +               MinionMath-BoldCapt-MSP-rsfs.tfm
+2018-04-10 11:58:53,019 INFO       +               MinionMath-BoldCapt-MXP--base.tfm
+2018-04-10 11:58:53,019 INFO       +               MinionMath-BoldCapt-MXP.tfm
+2018-04-10 11:58:53,020 INFO       +               MinionMath-BoldTiny-MC--base.tfm
+2018-04-10 11:58:53,022 INFO       +               MinionMath-BoldTiny-MC.tfm
+2018-04-10 11:58:53,023 INFO       +               MinionMath-BoldTiny-MSA--base.tfm
+2018-04-10 11:58:53,023 INFO       +               MinionMath-BoldTiny-MSA.tfm
+2018-04-10 11:58:53,025 INFO       +               MinionMath-BoldTiny-MSB--base.tfm
+2018-04-10 11:58:53,025 INFO       +               MinionMath-BoldTiny-MSB-eufr.tfm
+2018-04-10 11:58:53,026 INFO       +               MinionMath-BoldTiny-MSP--base.tfm
+2018-04-10 11:58:53,026 INFO       +               MinionMath-BoldTiny-MSP-rsfs.tfm
+2018-04-10 11:58:53,026 INFO       +               MinionMath-BoldTiny-MXP--base.tfm
+2018-04-10 11:58:53,026 INFO       +               MinionMath-BoldTiny-MXP.tfm
+2018-04-10 11:58:53,028 INFO       +               MinionMath-Capt-MC--base.tfm
+2018-04-10 11:58:53,029 INFO       +               MinionMath-Capt-MC.tfm
+2018-04-10 11:58:53,030 INFO       +               MinionMath-Capt-MSA--base.tfm
+2018-04-10 11:58:53,030 INFO       +               MinionMath-Capt-MSA.tfm
+2018-04-10 11:58:53,032 INFO       +               MinionMath-Capt-MSB--base.tfm
+2018-04-10 11:58:53,032 INFO       +               MinionMath-Capt-MSB-eufr.tfm
+2018-04-10 11:58:53,032 INFO       +               MinionMath-Capt-MSP--base.tfm
+2018-04-10 11:58:53,032 INFO       +               MinionMath-Capt-MSP-rsfs.tfm
+2018-04-10 11:58:53,033 INFO       +               MinionMath-Capt-MXP--base.tfm
+2018-04-10 11:58:53,033 INFO       +               MinionMath-Capt-MXP.tfm
+2018-04-10 11:58:53,033 INFO       +               MinionMath-Regular-MC--base.tfm
+2018-04-10 11:58:53,036 INFO       +               MinionMath-Regular-MC.tfm
+2018-04-10 11:58:53,038 INFO       +               MinionMath-Regular-MSA--base.tfm
+2018-04-10 11:58:53,038 INFO       +               MinionMath-Regular-MSA.tfm
+2018-04-10 11:58:53,038 INFO       +               MinionMath-Regular-MSB--base.tfm
+2018-04-10 11:58:53,039 INFO       +               MinionMath-Regular-MSB-eufr.tfm
+2018-04-10 11:58:53,039 INFO       +               MinionMath-Regular-MSP--base.tfm
+2018-04-10 11:58:53,039 INFO       +               MinionMath-Regular-MSP-rsfs.tfm
+2018-04-10 11:58:53,039 INFO       +               MinionMath-Regular-MXP--base.tfm
+2018-04-10 11:58:53,040 INFO       +               MinionMath-Regular-MXP.tfm
+2018-04-10 11:58:53,040 INFO       +               MinionMath-Tiny-MC--base.tfm
+2018-04-10 11:58:53,042 INFO       +               MinionMath-Tiny-MC.tfm
+2018-04-10 11:58:53,043 INFO       +               MinionMath-Tiny-MSA--base.tfm
+2018-04-10 11:58:53,045 INFO       +               MinionMath-Tiny-MSA.tfm
+2018-04-10 11:58:53,045 INFO       +               MinionMath-Tiny-MSB--base.tfm
+2018-04-10 11:58:53,046 INFO       +               MinionMath-Tiny-MSB-eufr.tfm
+2018-04-10 11:58:53,046 INFO       +               MinionMath-Tiny-MSP--base.tfm
+2018-04-10 11:58:53,046 INFO       +               MinionMath-Tiny-MSP-rsfs.tfm
+2018-04-10 11:58:53,046 INFO       +               MinionMath-Tiny-MXP--base.tfm
+2018-04-10 11:58:53,046 INFO       +               MinionMath-Tiny-MXP.tfm
+2018-04-10 11:58:53,048 INFO     d:/texroot/vtex-dist/fonts/type1/typoma/minionmath:
+2018-04-10 11:58:53,048 INFO       +               MinionMath-Capt.pfb 
+2018-04-10 11:58:53,069 INFO       +               MinionMath-Regular.pfb
+2018-04-10 11:58:53,089 INFO       +               MinionMath-Tiny.pfb 
+2018-04-10 11:58:53,111 INFO     d:/texroot/vtex-dist/fonts/vf/typoma/minionmath:
+2018-04-10 11:58:53,111 INFO       +               MinionMath-Bold-MC.vf
+2018-04-10 11:58:53,112 INFO       +               MinionMath-Bold-MSA.vf
+2018-04-10 11:58:53,112 INFO       +               MinionMath-Bold-MSB-eufr.vf
+2018-04-10 11:58:53,112 INFO       +               MinionMath-Bold-MSP-rsfs.vf
+2018-04-10 11:58:53,114 INFO       +               MinionMath-Bold-MXP.vf
+2018-04-10 11:58:53,114 INFO       +               MinionMath-BoldCapt-MC.vf
+2018-04-10 11:58:53,115 INFO       +               MinionMath-BoldCapt-MSA.vf
+2018-04-10 11:58:53,115 INFO       +               MinionMath-BoldCapt-MSB-eufr.vf
+2018-04-10 11:58:53,115 INFO       +               MinionMath-BoldCapt-MSP-rsfs.vf
+2018-04-10 11:58:53,115 INFO       +               MinionMath-BoldCapt-MXP.vf
+2018-04-10 11:58:53,117 INFO       +               MinionMath-BoldTiny-MC.vf
+2018-04-10 11:58:53,117 INFO       +               MinionMath-BoldTiny-MSA.vf
+2018-04-10 11:58:53,118 INFO       +               MinionMath-BoldTiny-MSB-eufr.vf
+2018-04-10 11:58:53,118 INFO       +               MinionMath-BoldTiny-MSP-rsfs.vf
+2018-04-10 11:58:53,118 INFO       +               MinionMath-BoldTiny-MXP.vf
+2018-04-10 11:58:53,118 INFO       +               MinionMath-Capt-MC.vf
+2018-04-10 11:58:53,119 INFO       +               MinionMath-Capt-MSA.vf
+2018-04-10 11:58:53,119 INFO       +               MinionMath-Capt-MSB-eufr.vf
+2018-04-10 11:58:53,121 INFO       +               MinionMath-Capt-MSP-rsfs.vf
+2018-04-10 11:58:53,121 INFO       +               MinionMath-Capt-MXP.vf
+2018-04-10 11:58:53,121 INFO       +               MinionMath-Regular-MC.vf
+2018-04-10 11:58:53,121 INFO       +               MinionMath-Regular-MSA.vf
+2018-04-10 11:58:53,121 INFO       +               MinionMath-Regular-MSB-eufr.vf
+2018-04-10 11:58:53,122 INFO       +               MinionMath-Regular-MSP-rsfs.vf
+2018-04-10 11:58:53,122 INFO       +               MinionMath-Regular-MXP.vf
+2018-04-10 11:58:53,124 INFO       +               MinionMath-Tiny-MC.vf
+2018-04-10 11:58:53,124 INFO       +               MinionMath-Tiny-MSA.vf
+2018-04-10 11:58:53,125 INFO       +               MinionMath-Tiny-MSB-eufr.vf
+2018-04-10 11:58:53,125 INFO       +               MinionMath-Tiny-MSP-rsfs.vf
+2018-04-10 11:58:53,125 INFO       +               MinionMath-Tiny-MXP.vf
+2018-04-10 11:58:53,125 INFO     d:/texroot/vtex-dist/tex/generic/tex4ht:
+2018-04-10 11:58:53,125 INFO       +               htmisc.sty          
+2018-04-10 11:58:53,125 INFO     d:/texroot/vtex-dist/tex/latex/auxiliary/book-aux-toc:
+2018-04-10 11:58:53,125 INFO       +               book-aux-toc.sty    
+2018-04-10 11:58:53,127 INFO     d:/texroot/vtex-dist/tex/latex/data:
+2018-04-10 11:58:53,127 INFO       +               pagerefsout.sty     
+2018-04-10 11:58:53,127 INFO       +               specialsout.sty     
+2018-04-10 11:58:53,128 INFO     d:/texroot/vtex-dist/tex/latex/fnotes:
+2018-04-10 11:58:53,128 INFO       +               fnotes.sty          
+2018-04-10 11:58:53,128 INFO     d:/texroot/vtex-dist/tex/latex/fontdefs:
+2018-04-10 11:58:53,128 INFO       +               omlcmmb.fd          
+2018-04-10 11:58:53,128 INFO       +               omscmbsy.fd         
+2018-04-10 11:58:53,128 INFO     d:/texroot/vtex-dist/tex/latex/fontrel:
+2018-04-10 11:58:53,128 INFO       +               vtexfix.sty         
+2018-04-10 11:58:53,128 INFO     d:/texroot/vtex-dist/tex/latex/graphics:
+2018-04-10 11:58:53,130 INFO       +               htpicture.sty       
+2018-04-10 11:58:53,130 INFO       +               vtexgraphicx.sty    
+2018-04-10 11:58:53,130 INFO     d:/texroot/vtex-dist/tex/latex/info:
+2018-04-10 11:58:53,130 INFO       +               fileinfo.sty        
+2018-04-10 11:58:53,131 INFO     d:/texroot/vtex-dist/tex/latex/latexconfig:
+2018-04-10 11:58:53,131 INFO       +               vtexnatbib.cfg      
+2018-04-10 11:58:53,131 INFO     d:/texroot/vtex-dist/tex/latex/macro:
+2018-04-10 11:58:53,131 INFO       +               printead.sty        
+2018-04-10 11:58:53,131 INFO       +               string.sty          
+2018-04-10 11:58:53,132 INFO       +               tabnotes.sty        
+2018-04-10 11:58:53,132 INFO       +               xchpdfcomment.sty   
+2018-04-10 11:58:53,134 INFO     d:/texroot/vtex-dist/tex/latex/math:
+2018-04-10 11:58:53,134 INFO       +               eqfix.sty           
+2018-04-10 11:58:53,134 INFO     d:/texroot/vtex-dist/tex/latex/minionmath:
+2018-04-10 11:58:53,134 INFO       +               fontmath.minion     
+2018-04-10 11:58:53,135 INFO       +               mcminionmath.fd     
+2018-04-10 11:58:53,135 INFO       +               minionamsmath.sty   
+2018-04-10 11:58:53,137 INFO       +               minionmath.sty      
+2018-04-10 11:58:53,138 INFO       +               ms1minionmath.fd    
+2018-04-10 11:58:53,138 INFO       +               ms2minionmath-eufr.fd
+2018-04-10 11:58:53,138 INFO       +               mspminionmath-rsfs.fd
+2018-04-10 11:58:53,138 INFO       +               mxpminionmath.fd    
+2018-04-10 11:58:53,140 INFO     d:/texroot/vtex-dist/tex/latex/natbib:
+2018-04-10 11:58:53,140 INFO       +               vtexnatbib.sty      
+2018-04-10 11:58:53,141 INFO       +               vtexqtags.sty       
+2018-04-10 11:58:53,142 INFO     d:/texroot/vtex-dist/tex/latex/pdfwf:
+2018-04-10 11:58:53,142 INFO       +               pdfwf-graphics.sty  
+2018-04-10 11:58:53,142 INFO       +               pdfwf-outputpage.sty
+2018-04-10 11:58:53,144 INFO       +               pdfwf-settings.sty  
+2018-04-10 11:58:53,144 INFO     d:/texroot/vtex-dist/tex/latex/publisher/degruyter:
+2018-04-10 11:58:53,144 INFO       +               degruyter-hyperref-addons.sty
+2018-04-10 11:58:53,144 INFO       +               degruyter-minion-ps-fonts.sty
+2018-04-10 11:58:53,145 INFO     d:/texroot/vtex-dist/tex/latex/publisher/dgbook/common:
+2018-04-10 11:58:53,145 INFO       +               dgbook-sections.sty 
+2018-04-10 11:58:53,147 INFO       +               dgbook.cls          
+2018-04-10 11:58:53,151 INFO       +               dgruyterx-book.sty  
+2018-04-10 11:58:53,153 INFO     d:/texroot/vtex-dist/tex/latex/publisher/dgbook/projects:
+2018-04-10 11:58:53,153 INFO       +               stefan1.cls         
+2018-04-10 11:58:53,154 INFO     d:/texroot/vtex-dist/tex/latex/publisher/elsevier/mainxml:
+2018-04-10 11:58:53,154 INFO       +               aidstuff.sty        
+2018-04-10 11:58:53,154 INFO     d:/texroot/vtex-dist/tex/latex/vtex:
+2018-04-10 11:58:53,154 INFO       +               bookmarkfix.sty     
+2018-04-10 11:58:53,154 INFO       +               vtex-checklpage.sty 
+2018-04-10 11:58:53,155 INFO       +               vtex-core-tex.sty   
+2018-04-10 11:58:53,155 INFO       +               vtex-ltxext.sty     
+2018-04-10 11:58:53,157 INFO       +               vtexbibtags.sty     
+2018-04-10 11:58:53,157 INFO       +               vtexsec.sty         
+2018-04-10 11:58:53,157 INFO       +               vtexurl.sty         
+2018-04-10 11:58:53,157 INFO     d:/texroot/vtex-dist/tex/latex/vtexpdf:
+2018-04-10 11:58:53,157 INFO       +               vtexfltcheck.sty    
+2018-04-10 11:58:53,158 INFO       +               vtexsavepos.sty     
+2018-04-10 11:58:53,161 INFO     x:/logos/dgbook/_print:
+2018-04-10 11:58:53,161 INFO       - [ignored ext]   dg-degruyter.pdf    
+2018-04-10 11:58:53,161 INFO     ./images/print:
+2018-04-10 11:58:53,161 INFO       - [ignored local]   07f01.pdf           
+2018-04-10 11:58:53,161 INFO     ./print:
+2018-04-10 11:58:53,161 INFO       - [ignored local]   stefan107.out       
+2018-04-10 11:58:53,161 INFO     .:
+2018-04-10 11:58:53,161 INFO       - [ignored local]   stefan1.book.aux    
+2018-04-10 11:58:53,161 INFO       - [ignored local]   stefan107.pi        
+2018-04-10 11:58:53,161 INFO       - [ignored local]   stefan107.runtime.info
+2018-04-10 11:58:53,161 INFO     :
+2018-04-10 11:58:53,161 INFO       - [not found]   07f01.pdf           
+2018-04-10 11:58:53,161 INFO     dgbook/_print:
+2018-04-10 11:58:53,161 INFO       - [not found]   dg-degruyter.pdf    

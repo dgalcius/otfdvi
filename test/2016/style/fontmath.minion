@@ -1,0 +1,997 @@
+%%
+%% This is file `fontmath.minion',
+%% generated with the docstrip utility.
+%%
+%% The original source files were:
+%%
+%% minionmath.dtx  (with options: `cfg,')
+%% 
+%% This file belongs to the `typoma Minion Math' fonts
+%% and is part of their accompanying bundle of LaTeX files.
+%% 
+%% Copyright (C) 2008-2012 typoma GmbH, Germany. http://www.typoma.com
+%% All rights reserved.
+%% 
+%% This is a generated file -- do not modify its content.
+%% 
+%% \CharacterTable
+%%  {Upper-case    \A\B\C\D\E\F\G\H\I\J\K\L\M\N\O\P\Q\R\S\T\U\V\W\X\Y\Z
+%%   Lower-case    \a\b\c\d\e\f\g\h\i\j\k\l\m\n\o\p\q\r\s\t\u\v\w\x\y\z
+%%   Digits        \0\1\2\3\4\5\6\7\8\9
+%%   Exclamation   \!     Double quote  \"     Hash (number) \#
+%%   Dollar        \$     Percent       \%     Ampersand     \&
+%%   Acute accent  \'     Left paren    \(     Right paren   \)
+%%   Asterisk      \*     Plus          \+     Comma         \,
+%%   Minus         \-     Point         \.     Solidus       \/
+%%   Colon         \:     Semicolon     \;     Less than     \<
+%%   Equals        \=     Greater than  \>     Question mark \?
+%%   Commercial at \@     Left bracket  \[     Backslash     \\
+%%   Right bracket \]     Circumflex    \^     Underscore    \_
+%%   Grave accent  \`     Left brace    \{     Vertical bar  \|
+%%   Right brace   \}     Tilde         \~}
+%% 
+%% vtex redaguotas
+\ProvidesFile{fontmath.minion}
+   [1998/04/20 v0.59a
+    New Math Setup
+    for MinionMath fonts ]
+\def\M@layout{none}
+\addto@hook\everyjob{\typeout{New math setup v0.59a loaded.}}
+\def\@ifisencoding#1#2#3{%
+ \@tempswafalse
+ \edef\reserved@b{#1}%
+ \def\cdp@elt##1##2##3##4{\def\reserved@c{##1}%
+      \ifx\reserved@b\reserved@c \@tempswatrue\fi}%
+ \cdp@list
+ \if@tempswa#2\else#3\fi}
+
+\def\ProvideSymbolFont#1#2#3#4#5#6{%
+ \@ifisencoding{#3}{\SetSymbolFont{#1}{#2}{#3}{#4}{#5}{#6}}{}}
+\let\define@compound\edef
+\providecommand{\DeclareCompoundMathSymbol}[3]{\define@compound#1{#2{#3}}}
+\def\accentclass@{7}
+\def\noaccents@{\def\accentclass@{0}}
+\def\@extshape{n}
+\def\@ExtensibleFontShape#1#2#3#4#5#6{%
+ \DeclareFontShape{#1}{#2}{#3}{#4}{%
+   <5><6><7><8><9>genb*#5%
+   <10><10.95><12><14.4><17.28><20.74><24.88>#51000%
+   }{#6}}
+
+\DeclareFontEncoding{T1} {}{}
+\DeclareFontEncoding{MC} {}{\noaccents@}
+\DeclareFontEncoding{MXP}{}{}
+\DeclareFontEncoding{MSP}{}{}
+
+\DeclareFontSubstitution{MC} {minionmath}{m}{n}
+\DeclareFontSubstitution{MXP}{minionmath}{m}{n}
+\DeclareFontSubstitution{MSP}{minionmath-rsfs}{m}{n}
+
+\DeclareSymbolFont{operators}     {T1} {minionmath}{m} {n}
+\DeclareSymbolFont{letters}       {MSP}{minionmath-rsfs}{m} {n}
+\DeclareSymbolFont{symbols}       {MC} {minionmath}{m} {n}
+\DeclareSymbolFont{largesymbols}  {MXP}{minionmath}{m} {\@extshape}
+
+\SetSymbolFont{operators}   {bold}{T1} {minionmath}{b} {n}
+\SetSymbolFont{letters}     {bold}{MSP}{minionmath-rsfs}{b} {n}
+\SetSymbolFont{symbols}     {bold}{MC} {minionmath}{b} {n}
+\SetSymbolFont{largesymbols}{bold}{MXP}{minionmath}{b} {\@extshape}
+
+\DeclareSymbolFontAlphabet{\mathrm}    {operators}
+\DeclareSymbolFontAlphabet{\mathnormal}{symbols}
+\DeclareSymbolFontAlphabet{\mathcal}   {letters}
+
+\DeclareMathAlphabet{\mathbf}     {T1} {minionmath}{b} {n}
+\DeclareMathAlphabet{\mathit}     {T1} {minionmath}{m} {it}
+\DeclareMathAlphabet{\mathsf}     {T1} {cmss} {m} {n}
+\DeclareMathAlphabet{\mathtt}     {T1} {cmtt} {m} {n}
+
+\SetMathAlphabet{\mathit}{bold}   {T1} {minionmath}{b} {it}
+\SetMathAlphabet{\mathsf}{bold}   {T1} {cmss} {bx}{n}
+
+\def\operator@font{\mathgroup\symoperators}
+
+\mathcode`\ ="8000 % \space
+\mathcode`\'="8000 % ^\prime
+\mathcode`\_="8000 % \_
+ \DeclareMathSizes{5}       {5}       {5}      {5}
+ \DeclareMathSizes{6}       {6}       {5}      {5}
+ \DeclareMathSizes{7}       {7}       {5}      {5}
+ \DeclareMathSizes{8}       {8}       {6}      {5}
+ \DeclareMathSizes{9}       {9}       {6}      {5}
+ \DeclareMathSizes{\@xpt}   {\@xpt}   {7}      {5}
+ \DeclareMathSizes{\@xipt}  {\@xipt}  {8}      {6}
+ \DeclareMathSizes{\@xiipt} {\@xiipt} {8}      {6}
+ \DeclareMathSizes{\@xivpt} {\@xivpt} {\@xpt}  {7}
+ \DeclareMathSizes{\@xviipt}{\@xviipt}{\@xiipt}{\@xpt}
+ \DeclareMathSizes{\@xxpt}  {\@xxpt}  {\@xivpt}{\@xiipt}
+ \DeclareMathSizes{\@xxvpt} {\@xxvpt} {\@xxpt} {\@xviipt}
+
+\thinmuskip=3mu
+\medmuskip=4mu plus 2mu minus 4mu
+\thickmuskip=5mu plus 5mu
+\DeclareMathSymbol{\gone@symbol}{\mathord}{symbols}{127}
+\newcommand{\symbol@gone}[1]{\def#1{\symbol@@gone#1}}
+\newcommand{\symbol@@gone}[1]{\gone@symbol
+  \@latex@error{The command \noexpand#1 is no longer provided}
+               {You may try the textcomp option.}}
+
+\symbol@gone\mathparagraph
+\symbol@gone\mathsterling
+\symbol@gone\mathsection
+\symbol@gone\mathdollar
+\symbol@gone\clubsuit
+\symbol@gone\diamondsuit
+\symbol@gone\heartsuit
+\symbol@gone\spadesuit
+\let\mho\@undefined
+\let\Diamond\@undefined
+\let\sqsubset\@undefined
+\let\sqsupset\@undefined
+\let\leadsto\@undefined
+\DeclareMathSymbol{|}            {\mathord}  {symbols}  {8}
+\DeclareMathSymbol{\mid}         {\mathrel}  {symbols}  {8}
+\DeclareMathSymbol{\parallel}    {\mathrel}  {symbols}  {9}
+\DeclareMathSymbol{\interleaving}{\mathrel}  {symbols} {10}
+\DeclareMathSymbol{\flat}        {\mathord}  {symbols} {11}
+\DeclareMathSymbol{\natural}     {\mathord}  {symbols} {12}
+\DeclareMathSymbol{\sharp}       {\mathord}  {symbols} {13}
+\DeclareMathSymbol{\dagger}      {\mathord}  {symbols} {14}
+\DeclareMathSymbol{\ddagger}     {\mathord}  {symbols} {15}
+\DeclareMathSymbol{\aleph}       {\mathord}  {symbols} {16}
+\DeclareMathSymbol{\beth}        {\mathord}  {symbols} {17}
+\DeclareMathSymbol{\gimel}       {\mathord}  {symbols} {18}
+\DeclareMathSymbol{\daleth}      {\mathord}  {symbols} {19}
+\DeclareMathSymbol{\Re}          {\mathord}  {symbols} {20}
+\DeclareMathSymbol{\Im}          {\mathord}  {symbols} {21}
+\DeclareMathSymbol{\thorn}       {\mathord}  {symbols} {22}
+\DeclareMathSymbol{\eth}         {\mathord}  {symbols} {23}
+\DeclareMathSymbol{\emptyset}    {\mathord}  {symbols} {24}
+\DeclareMathSymbol{\imath}       {\mathalpha}{symbols} {25}
+\DeclareMathSymbol{\jmath}       {\mathalpha}{symbols} {26}
+\DeclareMathSymbol{\between}     {\mathrel}  {symbols} {27}
+\DeclareMathSymbol{\propto}      {\mathrel}  {symbols} {28}
+\DeclareMathSymbol{\infty}       {\mathord}  {symbols} {29}
+\DeclareMathSymbol{\prime}       {\mathord}  {symbols} {30}
+\DeclareMathSymbol{\backprime}   {\mathord}  {symbols} {31}
+\DeclareMathSymbol{!}            {\mathclose}{symbols} {33}
+\DeclareMathSymbol{\hash}        {\mathord}  {symbols} {35}
+\DeclareMathSymbol{\percent}     {\mathord}  {symbols} {37}
+\DeclareMathSymbol{\ampersand}   {\mathbin}  {symbols} {38}
+\DeclareMathSymbol{\dnasrepma}   {\mathbin}  {symbols} {39}
+\DeclareMathSymbol{(}            {\mathopen} {symbols} {40}
+\DeclareMathSymbol{)}            {\mathclose}{symbols} {41}
+\DeclareMathSymbol{*}            {\mathbin}  {symbols} {42}
+\DeclareMathSymbol{\ast}         {\mathbin}  {symbols} {42}
+\DeclareMathSymbol{\star}        {\mathbin}  {symbols} {43}
+\DeclareMathSymbol{,}            {\mathpunct}{symbols} {44}
+\DeclareMathSymbol{\cdot}        {\mathbin}  {symbols} {45}
+\DeclareMathSymbol{\cdotp}       {\mathpunct}{symbols} {45}
+\DeclareMathSymbol{.}            {\mathord}  {symbols} {46}
+\DeclareMathSymbol{\ldotp}       {\mathpunct}{symbols} {46}
+\DeclareMathSymbol{/}            {\mathord}  {symbols} {47}
+\DeclareMathSymbol{0}            {\mathalpha}{symbols} {`0}
+\DeclareMathSymbol{1}            {\mathalpha}{symbols} {`1}
+\DeclareMathSymbol{2}            {\mathalpha}{symbols} {`2}
+\DeclareMathSymbol{3}            {\mathalpha}{symbols} {`3}
+\DeclareMathSymbol{4}            {\mathalpha}{symbols} {`4}
+\DeclareMathSymbol{5}            {\mathalpha}{symbols} {`5}
+\DeclareMathSymbol{6}            {\mathalpha}{symbols} {`6}
+\DeclareMathSymbol{7}            {\mathalpha}{symbols} {`7}
+\DeclareMathSymbol{8}            {\mathalpha}{symbols} {`8}
+\DeclareMathSymbol{9}            {\mathalpha}{symbols} {`9}
+\DeclareMathSymbol{:}            {\mathrel}  {symbols} {58}
+\DeclareMathSymbol{\colon}       {\mathpunct}{symbols} {58}
+\DeclareMathSymbol{;}            {\mathpunct}{symbols} {59}
+\DeclareMathSymbol{?}            {\mathclose}{symbols} {63}
+\DeclareMathSymbol{@}            {\mathord}  {symbols} {64}
+\DeclareMathSymbol{A}            {\mathalpha}{symbols} {`A}
+\DeclareMathSymbol{B}            {\mathalpha}{symbols} {`B}
+\DeclareMathSymbol{C}            {\mathalpha}{symbols} {`C}
+\DeclareMathSymbol{D}            {\mathalpha}{symbols} {`D}
+\DeclareMathSymbol{E}            {\mathalpha}{symbols} {`E}
+\DeclareMathSymbol{F}            {\mathalpha}{symbols} {`F}
+\DeclareMathSymbol{G}            {\mathalpha}{symbols} {`G}
+\DeclareMathSymbol{H}            {\mathalpha}{symbols} {`H}
+\DeclareMathSymbol{I}            {\mathalpha}{symbols} {`I}
+\DeclareMathSymbol{J}            {\mathalpha}{symbols} {`J}
+\DeclareMathSymbol{K}            {\mathalpha}{symbols} {`K}
+\DeclareMathSymbol{L}            {\mathalpha}{symbols} {`L}
+\DeclareMathSymbol{M}            {\mathalpha}{symbols} {`M}
+\DeclareMathSymbol{N}            {\mathalpha}{symbols} {`N}
+\DeclareMathSymbol{O}            {\mathalpha}{symbols} {`O}
+\DeclareMathSymbol{P}            {\mathalpha}{symbols} {`P}
+\DeclareMathSymbol{Q}            {\mathalpha}{symbols} {`Q}
+\DeclareMathSymbol{R}            {\mathalpha}{symbols} {`R}
+\DeclareMathSymbol{S}            {\mathalpha}{symbols} {`S}
+\DeclareMathSymbol{T}            {\mathalpha}{symbols} {`T}
+\DeclareMathSymbol{U}            {\mathalpha}{symbols} {`U}
+\DeclareMathSymbol{V}            {\mathalpha}{symbols} {`V}
+\DeclareMathSymbol{W}            {\mathalpha}{symbols} {`W}
+\DeclareMathSymbol{X}            {\mathalpha}{symbols} {`X}
+\DeclareMathSymbol{Y}            {\mathalpha}{symbols} {`Y}
+\DeclareMathSymbol{Z}            {\mathalpha}{symbols} {`Z}
+\DeclareMathSymbol{[}            {\mathopen} {symbols} {91}
+\DeclareMathSymbol{\setminus}    {\mathbin}  {symbols} {92}
+\DeclareMathSymbol{]}            {\mathclose}{symbols} {93}
+\DeclareMathSymbol{\hbar}        {\mathord}  {symbols} {94}
+\DeclareMathSymbol{\hslash}      {\mathord}  {symbols} {95}
+\DeclareMathSymbol{\dup}         {\mathord}  {symbols} {96}
+\DeclareMathSymbol{a}            {\mathalpha}{symbols} {`a}
+\DeclareMathSymbol{b}            {\mathalpha}{symbols} {`b}
+\DeclareMathSymbol{c}            {\mathalpha}{symbols} {`c}
+\DeclareMathSymbol{d}            {\mathalpha}{symbols} {`d}
+\DeclareMathSymbol{e}            {\mathalpha}{symbols} {`e}
+\DeclareMathSymbol{f}            {\mathalpha}{symbols} {`f}
+\DeclareMathSymbol{g}            {\mathalpha}{symbols} {`g}
+\DeclareMathSymbol{h}            {\mathalpha}{symbols} {`h}
+\DeclareMathSymbol{i}            {\mathalpha}{symbols} {`i}
+\DeclareMathSymbol{j}            {\mathalpha}{symbols} {`j}
+\DeclareMathSymbol{k}            {\mathalpha}{symbols} {`k}
+\DeclareMathSymbol{l}            {\mathalpha}{symbols} {`l}
+\DeclareMathSymbol{m}            {\mathalpha}{symbols} {`m}
+\DeclareMathSymbol{n}            {\mathalpha}{symbols} {`n}
+\DeclareMathSymbol{o}            {\mathalpha}{symbols} {`o}
+\DeclareMathSymbol{p}            {\mathalpha}{symbols} {`p}
+\DeclareMathSymbol{q}            {\mathalpha}{symbols} {`q}
+\DeclareMathSymbol{r}            {\mathalpha}{symbols} {`r}
+\DeclareMathSymbol{s}            {\mathalpha}{symbols} {`s}
+\DeclareMathSymbol{t}            {\mathalpha}{symbols} {`t}
+\DeclareMathSymbol{u}            {\mathalpha}{symbols} {`u}
+\DeclareMathSymbol{v}            {\mathalpha}{symbols} {`v}
+\DeclareMathSymbol{w}            {\mathalpha}{symbols} {`w}
+\DeclareMathSymbol{x}            {\mathalpha}{symbols} {`x}
+\DeclareMathSymbol{y}            {\mathalpha}{symbols} {`y}
+\DeclareMathSymbol{z}            {\mathalpha}{symbols} {`z}
+\DeclareMathSymbol{\wp}          {\mathord}  {symbols}{124}
+\DeclareMathSymbol{\ell}         {\mathord}  {symbols}{126}
+\DeclareMathSymbol{\@GREEK}      {\mathord}  {symbols}{128}
+\DeclareMathSymbol{\Alphaup}     {\mathord}  {symbols}{129}
+\DeclareMathSymbol{\Betaup}      {\mathord}  {symbols}{130}
+\DeclareMathSymbol{\Gammaup}     {\mathord}  {symbols}{131}
+\DeclareMathSymbol{\Deltaup}     {\mathord}  {symbols}{132}
+\DeclareMathSymbol{\Epsilonup}   {\mathord}  {symbols}{133}
+\DeclareMathSymbol{\Zetaup}      {\mathord}  {symbols}{134}
+\DeclareMathSymbol{\Etaup}       {\mathord}  {symbols}{135}
+\DeclareMathSymbol{\Thetaup}     {\mathord}  {symbols}{136}
+\DeclareMathSymbol{\Iotaup}      {\mathord}  {symbols}{137}
+\DeclareMathSymbol{\Kappaup}     {\mathord}  {symbols}{138}
+\DeclareMathSymbol{\Lambdaup}    {\mathord}  {symbols}{139}
+\DeclareMathSymbol{\Muup}        {\mathord}  {symbols}{140}
+\DeclareMathSymbol{\Nuup}        {\mathord}  {symbols}{141}
+\DeclareMathSymbol{\Xiup}        {\mathord}  {symbols}{142}
+\DeclareMathSymbol{\Omicronup}   {\mathord}  {symbols}{143}
+\DeclareMathSymbol{\Piup}        {\mathord}  {symbols}{144}
+\DeclareMathSymbol{\Rhoup}       {\mathord}  {symbols}{145}
+\DeclareMathSymbol{\Sigmaup}     {\mathord}  {symbols}{146}
+\DeclareMathSymbol{\Tauup}       {\mathord}  {symbols}{147}
+\DeclareMathSymbol{\Upsilonup}   {\mathord}  {symbols}{148}
+\DeclareMathSymbol{\Phiup}       {\mathord}  {symbols}{149}
+\DeclareMathSymbol{\Chiup}       {\mathord}  {symbols}{150}
+\DeclareMathSymbol{\Psiup}       {\mathord}  {symbols}{151}
+\DeclareMathSymbol{\Omegaup}     {\mathord}  {symbols}{152}
+\DeclareMathSymbol{\varUpsilonup}{\mathord}  {symbols}{153}
+\DeclareMathSymbol{\varChiup}    {\mathord}  {symbols}{154}
+\DeclareMathSymbol{\nabla}       {\mathord}  {symbols}{155}
+\DeclareMathSymbol{\amalg}       {\mathbin}  {symbols}{156}
+\DeclareMathSymbol{\mho}         {\mathord}  {symbols}{157}
+\DeclareMathSymbol{\partialup}   {\mathord}  {symbols}{160}
+\DeclareMathSymbol{\alphaup}     {\mathord}  {symbols}{161}
+\DeclareMathSymbol{\betaup}      {\mathord}  {symbols}{162}
+\DeclareMathSymbol{\gammaup}     {\mathord}  {symbols}{163}
+\DeclareMathSymbol{\deltaup}     {\mathord}  {symbols}{164}
+\DeclareMathSymbol{\epsilonup}   {\mathord}  {symbols}{165}
+\DeclareMathSymbol{\zetaup}      {\mathord}  {symbols}{166}
+\DeclareMathSymbol{\etaup}       {\mathord}  {symbols}{167}
+\DeclareMathSymbol{\thetaup}     {\mathord}  {symbols}{168}
+\DeclareMathSymbol{\iotaup}      {\mathord}  {symbols}{169}
+\DeclareMathSymbol{\kappaup}     {\mathord}  {symbols}{170}
+\DeclareMathSymbol{\lambdaup}    {\mathord}  {symbols}{171}
+\DeclareMathSymbol{\muup}        {\mathord}  {symbols}{172}
+\DeclareMathSymbol{\nuup}        {\mathord}  {symbols}{173}
+\DeclareMathSymbol{\xiup}        {\mathord}  {symbols}{174}
+\DeclareMathSymbol{\omicronup}   {\mathord}  {symbols}{175}
+\DeclareMathSymbol{\piup}        {\mathord}  {symbols}{176}
+\DeclareMathSymbol{\rhoup}       {\mathord}  {symbols}{177}
+\DeclareMathSymbol{\sigmaup}     {\mathord}  {symbols}{178}
+\DeclareMathSymbol{\tauup}       {\mathord}  {symbols}{179}
+\DeclareMathSymbol{\upsilonup}   {\mathord}  {symbols}{180}
+\DeclareMathSymbol{\phiup}       {\mathord}  {symbols}{181}
+\DeclareMathSymbol{\chiup}       {\mathord}  {symbols}{182}
+\DeclareMathSymbol{\psiup}       {\mathord}  {symbols}{183}
+\DeclareMathSymbol{\omegaup}     {\mathord}  {symbols}{184}
+\DeclareMathSymbol{\varepsilonup}{\mathord}  {symbols}{185}
+\DeclareMathSymbol{\varthetaup}  {\mathord}  {symbols}{186}
+\DeclareMathSymbol{\varkappaup}  {\mathord}  {symbols}{187}
+\DeclareMathSymbol{\varpiup}     {\mathord}  {symbols}{188}
+\DeclareMathSymbol{\varrhoup}    {\mathord}  {symbols}{189}
+\DeclareMathSymbol{\varsigmaup}  {\mathord}  {symbols}{190}
+\DeclareMathSymbol{\varphiup}    {\mathord}  {symbols}{191}
+\DeclareMathSymbol{\Alphait}     {\mathord}  {symbols}{193}
+\DeclareMathSymbol{\Betait}      {\mathord}  {symbols}{194}
+\DeclareMathSymbol{\Gammait}     {\mathord}  {symbols}{195}
+\DeclareMathSymbol{\Deltait}     {\mathord}  {symbols}{196}
+\DeclareMathSymbol{\Epsilonit}   {\mathord}  {symbols}{197}
+\DeclareMathSymbol{\Zetait}      {\mathord}  {symbols}{198}
+\DeclareMathSymbol{\Etait}       {\mathord}  {symbols}{199}
+\DeclareMathSymbol{\Thetait}     {\mathord}  {symbols}{200}
+\DeclareMathSymbol{\Iotait}      {\mathord}  {symbols}{201}
+\DeclareMathSymbol{\Kappait}     {\mathord}  {symbols}{202}
+\DeclareMathSymbol{\Lambdait}    {\mathord}  {symbols}{203}
+\DeclareMathSymbol{\Muit}        {\mathord}  {symbols}{204}
+\DeclareMathSymbol{\Nuit}        {\mathord}  {symbols}{205}
+\DeclareMathSymbol{\Xiit}        {\mathord}  {symbols}{206}
+\DeclareMathSymbol{\Omicronit}   {\mathord}  {symbols}{207}
+\DeclareMathSymbol{\Piit}        {\mathord}  {symbols}{208}
+\DeclareMathSymbol{\Rhoit}       {\mathord}  {symbols}{209}
+\DeclareMathSymbol{\Sigmait}     {\mathord}  {symbols}{210}
+\DeclareMathSymbol{\Tauit}       {\mathord}  {symbols}{211}
+\DeclareMathSymbol{\Upsilonit}   {\mathord}  {symbols}{212}
+\DeclareMathSymbol{\Phiit}       {\mathord}  {symbols}{213}
+\DeclareMathSymbol{\Chiit}       {\mathord}  {symbols}{214}
+\DeclareMathSymbol{\Psiit}       {\mathord}  {symbols}{215}
+\DeclareMathSymbol{\Omegait}     {\mathord}  {symbols}{216}
+\DeclareMathSymbol{\varUpsilonit}{\mathord}  {symbols}{217}
+\DeclareMathSymbol{\varChiit}    {\mathord}  {symbols}{218}
+\DeclareMathSymbol{\digamma}     {\mathord}  {symbols}{219}
+\DeclareMathSymbol{\backepsilon} {\mathord}  {symbols}{220}
+\DeclareMathSymbol{\inviota}     {\mathord}  {symbols}{221}
+\DeclareMathSymbol{\lambdabarup} {\mathord}  {symbols}{222}
+\DeclareMathSymbol{\lambdabarit} {\mathord}  {symbols}{223}
+\DeclareMathSymbol{\partialit}   {\mathord}  {symbols}{224}
+\DeclareMathSymbol{\alphait}     {\mathord}  {symbols}{225}
+\DeclareMathSymbol{\betait}      {\mathord}  {symbols}{226}
+\DeclareMathSymbol{\gammait}     {\mathord}  {symbols}{227}
+\DeclareMathSymbol{\deltait}     {\mathord}  {symbols}{228}
+\DeclareMathSymbol{\epsilonit}   {\mathord}  {symbols}{229}
+\DeclareMathSymbol{\zetait}      {\mathord}  {symbols}{230}
+\DeclareMathSymbol{\etait}       {\mathord}  {symbols}{231}
+\DeclareMathSymbol{\thetait}     {\mathord}  {symbols}{232}
+\DeclareMathSymbol{\iotait}      {\mathord}  {symbols}{233}
+\DeclareMathSymbol{\kappait}     {\mathord}  {symbols}{234}
+\DeclareMathSymbol{\lambdait}    {\mathord}  {symbols}{235}
+\DeclareMathSymbol{\muit}        {\mathord}  {symbols}{236}
+\DeclareMathSymbol{\nuit}        {\mathord}  {symbols}{237}
+\DeclareMathSymbol{\xiit}        {\mathord}  {symbols}{238}
+\DeclareMathSymbol{\omicronit}   {\mathord}  {symbols}{239}
+\DeclareMathSymbol{\piit}        {\mathord}  {symbols}{240}
+\DeclareMathSymbol{\rhoit}       {\mathord}  {symbols}{241}
+\DeclareMathSymbol{\sigmait}     {\mathord}  {symbols}{242}
+\DeclareMathSymbol{\tauit}       {\mathord}  {symbols}{243}
+\DeclareMathSymbol{\upsilonit}   {\mathord}  {symbols}{244}
+\DeclareMathSymbol{\phiit}       {\mathord}  {symbols}{245}
+\DeclareMathSymbol{\chiit}       {\mathord}  {symbols}{246}
+\DeclareMathSymbol{\psiit}       {\mathord}  {symbols}{247}
+\DeclareMathSymbol{\omegait}     {\mathord}  {symbols}{248}
+\DeclareMathSymbol{\varepsilonit}{\mathord}  {symbols}{249}
+\DeclareMathSymbol{\varthetait}  {\mathord}  {symbols}{250}
+\DeclareMathSymbol{\varkappait}  {\mathord}  {symbols}{251}
+\DeclareMathSymbol{\varpiit}     {\mathord}  {symbols}{252}
+\DeclareMathSymbol{\varrhoit}    {\mathord}  {symbols}{253}
+\DeclareMathSymbol{\varsigmait}  {\mathord}  {symbols}{254}
+\DeclareMathSymbol{\varphiit}    {\mathord}  {symbols}{255}
+\let\cc@palette\mathpalette
+
+\newdimen\cc@skew
+\newdimen\cc@wd
+
+\newcount\cc@code
+\newcount\cc@group
+\newcount\cc@skewchar
+
+\newif\ifcc@more
+
+\def\cc@accent#1#2{%
+  \begingroup
+    \cc@code=#1\relax
+    \let\math@bgroup\@empty
+    \def\math@egroup##1{\cc@setchar##1}%
+    \cc@palette\cc@@accent{#2}%
+    {\cc@nuc}%
+  \endgroup}
+
+\def\cc@iaccent#1#2{%
+  \cc@fetch{#2}%
+  \mathaccent#1{%
+    \ifcc@more#2\else
+  \cc@phant{#2}%
+      \gdef\cc@nuc{#2}%
+\fi
+\kern\cc@skew}%
+  \kern-\cc@skew}%
+
+\def\cc@@accent#1#2{%
+  \let\cc@style=#1%
+  \cc@fetch{#2}%
+  \mathaccent\cc@code{%
+    \ifcc@more#2\else
+  \cc@phant{#2}%
+      \gdef\cc@nuc{#2}%
+\fi
+\kern\cc@skew}%
+  \kern-\cc@skew
+  \kern\cc@wd}%
+
+\def\cc@phant#1{%
+  \v@true\h@true
+  \finph@nt}% with \box0 from \cc@fetch
+
+\def\cc@setchar{%
+  \cc@skewchar\ifnum\mathgroup=\m@ne
+      \skewchar\textfont\@ne
+    \else\ifnum\skewchar\textfont\mathgroup=\m@ne
+      \skewchar\textfont\@ne
+    \else\skewchar\textfont\mathgroup\fi\fi
+  \advance\cc@skewchar"7100 }
+
+\def\cc@fetch#1{%
+  \cc@group=\the\mathgroup
+  \let\cc@accent\@gobble
+  \let\accentset\@gobble
+  \sbox\z@{$\m@th\mathgroup\cc@group\cc@setchar
+     \cc@style#1{}\mathchar\cc@skewchar$}%
+  \sbox\@ne{$\m@th\mathgroup\cc@group\cc@setchar
+     \cc@style#1\mathchar\cc@skewchar$}%
+  \cc@morefalse
+  \def\cc@accent##1{\global\cc@moretrue}%
+  \def\accentset##1{\global\cc@moretrue}%
+  \global\cc@skew2\wd\@ne
+  \global\advance\cc@skew-2\wd\z@
+  \sbox\z@{$\m@th\mathgroup\cc@group\cc@style#1$}%
+  \global\cc@wd-\wd\z@
+  \let\cc@accent\cc@iaccent
+  \let\accentset\cc@iaccentset}
+\def\set@mathaccent#1#2#3#4{%
+ \ifx#3\mathalpha
+  \xdef#2{\noexpand\protect\noexpand\cc@accent
+              {"\noexpand\accentclass@\hexnumber@#1#4\relax}}
+  \else
+  \xdef#2{\noexpand\protect\noexpand\cc@accent
+              {"\mathchar@type#3\hexnumber@#1#4\relax}}
+  \fi}
+
+\def\set@mathaccent#1#2#3#4{%
+  \ifx#3\mathalpha
+   \xdef#2{\mathaccent"\noexpand\accentclass@\hexnumber@#1#4\relax}
+  \else
+   \xdef#2{\mathaccent"\mathchar@type#3\hexnumber@#1#4\relax}
+ \fi}
+\def\set@mathaccent#1#2#3#4{%
+  \ifx#3\mathalpha
+    \xdef#2{\noexpand\protect\noexpand\mathaccentV
+      {\expandafter\@gobble\string#2}\hexnumber@#1#4}%
+  \else
+    \xdef#2{\noexpand\protect\noexpand\mathaccentV
+      {\expandafter\@gobble\string#2}\hexnumber@#1#4}%
+ \fi}
+
+\newcount\macc@depth
+
+\def\mathaccentV#1#2#3#4#5{%
+  \ifmmode
+    \gdef\macc@tmp{\macc@depth\@ne}%
+    \setbox\z@\hbox{%
+      \let\mathaccentV\macc@test
+      \let\use@mathgroup\@gobbletwo \let\select@group\@gobblethree
+      \frozen@everymath{}$#5$%
+    }%
+    \macc@tmp
+    \ifnum\macc@depth=\@ne
+      \global\let\macc@nucleus\@empty
+      \mathaccent"\accentclass@
+    \else
+      \@xp\macc@nested
+    \fi
+    #2#3#4{#5}%
+    \macc@nucleus
+  \else
+    \@xp\nonmatherr@\csname#1\endcsname
+  \fi
+}
+
+\def\macc@test#1#2#3#4{\xdef\macc@tmp{\macc@tmp\advance\macc@depth\@ne}}
+
+\def\macc@group{-1}
+
+\def\macc@nested#1#2#3#4{%
+  \begingroup
+  \let\math@bgroup\@empty \let\math@egroup\macc@set@skewchar
+  \mathsurround\z@ \frozen@everymath{\mathgroup\macc@group\relax}%
+  \macc@set@skewchar\relax
+  \let\mathaccentV\macc@nested@a
+  \macc@nested@a\relax#1#2#3{#4}%
+  \endgroup
+}
+
+\let\macc@palette\mathpalette
+
+\def\macc@nested@a#1#2#3#4#5{%
+  \ifnum\macc@group=\mathgroup
+  \else \macc@set@skewchar\relax \edef\macc@group{\the\mathgroup}%
+  \fi
+  \mathchardef\macc@code "\accentclass@ #2#3#4\relax
+  \macc@palette\macc@a{#5}%
+}
+
+\def\macc@set@skewchar#1{%
+  \begingroup
+  \ifnum\mathgroup=\m@ne \let\@tempa\@ne
+  \else
+    \ifnum\skewchar\textfont\mathgroup=\m@ne \let\@tempa\@ne
+    \else \let\@tempa\mathgroup
+    \fi
+  \fi
+  \count@=\skewchar\textfont\@tempa
+  \advance\count@"7100
+  \edef\@tempa{\endgroup
+    \mathchardef\noexpand\macc@skewchar=\number\count@\relax}%
+  \@tempa
+  #1%
+}
+
+\def\macc@a#1#2{%
+  \begingroup
+  \let\macc@style#1\relax
+  \def\macc@palette##1{##1\macc@style}%
+  \advance\macc@depth\m@ne
+  \ifnum\macc@depth=\z@
+    \gdef\macc@nucleus{#2}%
+    \setbox\z@\hbox{$#1#2\@empty{}\macc@skewchar$}%
+    \setbox\tw@\hbox{$#1#2\@empty\macc@skewchar$}%
+    \dimen@\tw@\wd\tw@ \advance\dimen@-\tw@\wd\z@
+    \xdef\macc@kerna{\the\dimen@\relax}%
+    \setbox4\hbox{$#1#2\acc@check\@empty$}%
+    \global\setbox\@ne\hbox to\wd4{}%
+    \ht\@ne\ht4 \dp\@ne\dp4
+    \xdef\macc@kernb{\the\wd4\relax}%
+    \mathaccent\macc@code{\box\@ne\kern\macc@kerna}%
+  \else
+    \mathaccent\macc@code{\let\macc@adjust\@empty #1#2\@empty}%
+    \macc@adjust
+  \fi
+  \endgroup
+}
+
+\def\macc@adjust{%
+  \dimen@\macc@kerna\advance\dimen@\macc@kernb
+  \kern-\dimen@
+}
+
+\DeclareMathAccent{\grave}            {\mathalpha}{letters}  {0}
+\DeclareMathAccent{\acute}            {\mathalpha}{letters}  {1}
+\DeclareMathAccent{\hat}              {\mathalpha}{letters}  {2}
+\DeclareMathAccent{\tilde}            {\mathalpha}{letters}  {3}
+\DeclareMathAccent{\ddot}             {\mathalpha}{letters}  {4}
+\DeclareMathAccent{\arc}              {\mathord}  {letters}  {5}
+\DeclareMathAccent{\ring}             {\mathalpha}{letters}  {6}
+\DeclareMathAccent{\check}            {\mathalpha}{letters}  {7}
+\DeclareMathAccent{\breve}            {\mathalpha}{letters}  {8}
+\DeclareMathAccent{\bar}              {\mathalpha}{letters}  {9}
+\DeclareMathAccent{\dot}              {\mathalpha}{letters} {10}
+\DeclareMathAccent{\dddot}            {\mathord}  {letters} {11}
+\DeclareMathAccent{\ddddot}           {\mathord}  {letters} {12}
+\DeclareMathAccent{\vec}              {\mathord}  {letters} {13}
+\DeclareMathAccent{\rvec}             {\mathord}  {letters} {14}
+\DeclareMathAccent{\dvec}             {\mathord}  {letters} {15}
+\DeclareMathAccent{\upbrack}          {\mathord}  {letters} {16}
+\DeclareMathAccent{\downbrack}        {\mathord}  {letters} {17}
+\DeclareMathAccent{\bardot}           {\mathord}  {letters} {18}
+\DeclareMathAccent{\dotbar}           {\mathord}  {letters} {19}
+\DeclareMathAccent{\barddot}          {\mathord}  {letters} {20}
+\DeclareMathAccent{\ddotbar}          {\mathord}  {letters} {21}
+\DeclareMathAccent{\hattilde}         {\mathord}  {letters} {22}
+\DeclareMathAccent{\hatbar}           {\mathord}  {letters} {23}
+\DeclareMathAccent{\doublebar}        {\mathord}  {letters} {24}
+\DeclareMathAccent{\graveinv}         {\mathord}  {letters} {27}
+\DeclareMathAccent{\acuteinv}         {\mathord}  {letters} {28}
+\DeclareMathSymbol{\smile}            {\mathrel}  {letters} {29}
+\DeclareMathSymbol{\frown}            {\mathrel}  {letters} {30}
+\DeclareMathSymbol{\asymp}            {\mathrel}  {letters} {31}
+\DeclareMathSymbol{\negated}          {\mathord}  {letters} {33}
+\DeclareMathSymbol{-}                 {\mathbin}  {letters} {34}
+\DeclareMathSymbol{=}                 {\mathrel}  {letters} {35}
+\DeclareMathSymbol{\equiv}            {\mathrel}  {letters} {36}
+\DeclareMathSymbol{+}                 {\mathbin}  {letters} {37}
+\DeclareMathSymbol{\pm}               {\mathbin}  {letters} {38}
+\DeclareMathSymbol{\mp}               {\mathbin}  {letters} {39}
+\DeclareMathSymbol{\doteq}            {\mathrel}  {letters} {41}
+\DeclareMathSymbol{\div}              {\mathbin}  {letters} {42}
+\DeclareMathSymbol{\divideontimes}    {\mathbin}  {letters} {43}
+\DeclareMathSymbol{\times}            {\mathbin}  {letters} {44}
+\DeclareMathSymbol{\ltimes}           {\mathbin}  {letters} {45}
+\DeclareMathSymbol{\rtimes}           {\mathbin}  {letters} {46}
+\DeclareMathSymbol{\bowtie}           {\mathbin}  {letters} {47}
+\DeclareMathSymbol{\forall}           {\mathord}  {letters} {58}
+\DeclareMathSymbol{\exists}           {\mathord}  {letters} {59}
+\DeclareMathSymbol{\nexists}          {\mathord}  {letters} {60}
+\DeclareMathSymbol{\Finv}             {\mathord}  {letters} {61}
+\DeclareMathSymbol{\Game}             {\mathord}  {letters} {62}
+\DeclareMathSymbol{\Qinv}             {\mathord}  {letters} {63}
+\DeclareMathSymbol{\neg}              {\mathord}  {letters} {64}
+\DeclareMathSymbol{\smallint}         {\mathop}   {letters} {91}
+\DeclareMathSymbol{\smalliint}        {\mathop}   {letters} {92}
+\DeclareMathSymbol{\smalliiint}       {\mathop}   {letters} {93}
+\DeclareMathSymbol{\smalloint}        {\mathop}   {letters} {94}
+\DeclareMathSymbol{\smalloiint}       {\mathop}   {letters} {95}
+\DeclareMathSymbol{\cup}              {\mathbin}  {letters}{128}
+\DeclareMathSymbol{\cap}              {\mathbin}  {letters}{129}
+\DeclareMathSymbol{\sqcup}            {\mathbin}  {letters}{130}
+\DeclareMathSymbol{\sqcap}            {\mathbin}  {letters}{131}
+\DeclareMathSymbol{\wedge}            {\mathbin}  {letters}{132}
+\DeclareMathSymbol{\vee}              {\mathbin}  {letters}{133}
+\DeclareMathSymbol{\bigtriangleup}    {\mathbin}  {letters}{134}
+\DeclareMathSymbol{\bigtriangledown}  {\mathbin}  {letters}{135}
+\let\triangle\bigtriangleup
+\DeclareMathSymbol{\uplus}            {\mathbin}  {letters}{136}
+\DeclareMathSymbol{\oplus}            {\mathbin}  {letters}{137}
+\DeclareMathSymbol{\ominus}           {\mathbin}  {letters}{138}
+\DeclareMathSymbol{\otimes}           {\mathbin}  {letters}{139}
+\DeclareMathSymbol{\oslash}           {\mathbin}  {letters}{140}
+\DeclareMathSymbol{\odot}             {\mathbin}  {letters}{141}
+\DeclareMathSymbol{\circ}             {\mathbin}  {letters}{142}
+\DeclareMathSymbol{\bullet}           {\mathbin}  {letters}{143}
+\DeclareMathSymbol{\subseteq}         {\mathrel}  {letters}{144}
+\DeclareMathSymbol{\supseteq}         {\mathrel}  {letters}{145}
+\DeclareMathSymbol{\subset}           {\mathrel}  {letters}{146}
+\DeclareMathSymbol{\supset}           {\mathrel}  {letters}{147}
+\DeclareMathSymbol{\sqsubseteq}       {\mathrel}  {letters}{148}
+\DeclareMathSymbol{\sqsupseteq}       {\mathrel}  {letters}{149}
+\DeclareMathSymbol{\sqsubset}         {\mathrel}  {letters}{150}
+\DeclareMathSymbol{\sqsupset}         {\mathrel}  {letters}{151}
+\DeclareMathSymbol{\vartriangleleft}  {\mathrel}  {letters}{152}
+\DeclareMathSymbol{\triangleleft}     {\mathbin}  {letters}{152}
+\DeclareMathSymbol{\vartriangleright} {\mathrel}  {letters}{153}
+\DeclareMathSymbol{\triangleright}    {\mathbin}  {letters}{153}
+\DeclareMathSymbol{\trianglelefteq}   {\mathrel}  {letters}{154}
+\DeclareMathSymbol{\trianglerighteq}  {\mathrel}  {letters}{155}
+\DeclareMathSymbol{\ntriangleleft}    {\mathrel}  {letters}{156}
+\DeclareMathSymbol{\ntriangleright}   {\mathrel}  {letters}{157}
+\DeclareMathSymbol{\ntrianglelefteq}  {\mathrel}  {letters}{158}
+\DeclareMathSymbol{\ntrianglerighteq} {\mathrel}  {letters}{159}
+\DeclareMathSymbol{<}                 {\mathrel}  {letters}{160}
+\DeclareMathSymbol{>}                 {\mathrel}  {letters}{161}
+\DeclareMathSymbol{\leq}              {\mathrel}  {letters}{162}
+\DeclareMathSymbol{\geq}              {\mathrel}  {letters}{163}
+\DeclareMathSymbol{\leqslant}         {\mathrel}  {letters}{164}
+\DeclareMathSymbol{\geqslant}         {\mathrel}  {letters}{165}
+\DeclareMathSymbol{\lesssim}          {\mathrel}  {letters}{166}
+\DeclareMathSymbol{\gtrsim}           {\mathrel}  {letters}{167}
+\DeclareMathSymbol{\nless}            {\mathrel}  {letters}{168}
+\DeclareMathSymbol{\ngtr}             {\mathrel}  {letters}{169}
+\DeclareMathSymbol{\nleq}             {\mathrel}  {letters}{170}
+\DeclareMathSymbol{\ngeq}             {\mathrel}  {letters}{171}
+\DeclareMathSymbol{\nleqslant}        {\mathrel}  {letters}{172}
+\DeclareMathSymbol{\ngeqslant}        {\mathrel}  {letters}{173}
+\DeclareMathSymbol{\nlesssim}         {\mathrel}  {letters}{174}
+\DeclareMathSymbol{\ngtrsim}          {\mathrel}  {letters}{175}
+\DeclareMathSymbol{\prec}             {\mathrel}  {letters}{176}
+\DeclareMathSymbol{\succ}             {\mathrel}  {letters}{177}
+\DeclareMathSymbol{\preceq}           {\mathrel}  {letters}{178}
+\DeclareMathSymbol{\succeq}           {\mathrel}  {letters}{179}
+\DeclareMathSymbol{\preccurlyeq}      {\mathrel}  {letters}{180}
+\DeclareMathSymbol{\succcurlyeq}      {\mathrel}  {letters}{181}
+\DeclareMathSymbol{\precsim}          {\mathrel}  {letters}{182}
+\DeclareMathSymbol{\succsim}          {\mathrel}  {letters}{183}
+\DeclareMathSymbol{\nprec}            {\mathrel}  {letters}{184}
+\DeclareMathSymbol{\nsucc}            {\mathrel}  {letters}{185}
+\DeclareMathSymbol{\npreceq}          {\mathrel}  {letters}{186}
+\DeclareMathSymbol{\nsucceq}          {\mathrel}  {letters}{187}
+\DeclareMathSymbol{\npreccurlyeq}     {\mathrel}  {letters}{188}
+\DeclareMathSymbol{\nsucccurlyeq}     {\mathrel}  {letters}{189}
+\DeclareMathSymbol{\nprecsim}         {\mathrel}  {letters}{190}
+\DeclareMathSymbol{\nsuccsim}         {\mathrel}  {letters}{191}
+\DeclareMathSymbol{\ll}               {\mathrel}  {letters}{192}
+\DeclareMathSymbol{\gg}               {\mathrel}  {letters}{193}
+\DeclareMathSymbol{\lll}              {\mathrel}  {letters}{194}
+\DeclareMathSymbol{\ggg}              {\mathrel}  {letters}{195}
+\DeclareMathSymbol{\bigcirc}          {\mathbin}  {letters}{196}
+\DeclareMathSymbol{\square}           {\mathord}  {letters}{197}
+\DeclareMathSymbol{\Diamond}          {\mathbin}  {letters}{198}
+\DeclareMathSymbol{\diamond}          {\mathbin}  {letters}{199}
+\DeclareMathSymbol{\sim}              {\mathrel}  {letters}{200}
+\DeclareMathSymbol{\approx}           {\mathrel}  {letters}{201}
+\DeclareMathSymbol{\cong}             {\mathrel}  {letters}{202}
+\DeclareMathSymbol{\simeq}            {\mathrel}  {letters}{203}
+\DeclareMathSymbol{\backsim}          {\mathrel}  {letters}{204}
+\DeclareMathSymbol{\approxeq}         {\mathrel}  {letters}{205}
+\DeclareMathSymbol{\angle}            {\mathord}  {letters}{206}
+\DeclareMathSymbol{\modelsvert}       {\mathord}  {letters}{207}
+\DeclareMathSymbol{\nsim}             {\mathrel}  {letters}{208}
+\DeclareMathSymbol{\napprox}          {\mathrel}  {letters}{209}
+\DeclareMathSymbol{\ncong}            {\mathrel}  {letters}{210}
+\DeclareMathSymbol{\eqsim}            {\mathrel}  {letters}{211}
+\DeclareMathSymbol{\backsimeq}        {\mathrel}  {letters}{212}
+\DeclareMathSymbol{\wr}               {\mathbin}  {letters}{213}
+\DeclareMathSymbol{\not}              {\mathrel}  {letters}{214}
+\DeclareMathSymbol{\leadsto}          {\mathrel}  {letters}{215}
+\DeclareMathSymbol{\leftarrow}        {\mathrel}  {letters}{216}
+\DeclareMathSymbol{\rightarrow}       {\mathrel}  {letters}{217}
+\DeclareMathSymbol{\relbar}           {\mathord}  {letters}{218}
+\DeclareMathSymbol{\leftrightarrow}   {\mathrel}  {letters}{219}
+\DeclareMathSymbol{\mapstochar}       {\mathord}  {letters}{220}
+\DeclareMathSymbol{\mapsfromchar}     {\mathord}  {letters}{221}
+\DeclareMathSymbol{\Leftarrow}        {\mathrel}  {letters}{224}
+\DeclareMathSymbol{\Rightarrow}       {\mathrel}  {letters}{225}
+\DeclareMathSymbol{\Relbar}           {\mathord}  {letters}{226}
+\DeclareMathSymbol{\Leftrightarrow}   {\mathrel}  {letters}{227}
+\DeclareMathSymbol{\Mapstochar}       {\mathord}  {letters}{228}
+\DeclareMathSymbol{\Mapsfromchar}     {\mathord}  {letters}{229}
+\DeclareMathSymbol{\leftharpoonup}    {\mathrel}  {letters}{232}
+\DeclareMathSymbol{\rightharpoonup}   {\mathrel}  {letters}{233}
+\DeclareMathSymbol{\leftharpoondown}  {\mathrel}  {letters}{234}
+\DeclareMathSymbol{\rightharpoondown} {\mathrel}  {letters}{235}
+\DeclareMathSymbol{\rhook}            {\mathord}  {letters}{236}
+\DeclareMathSymbol{\lhook}            {\mathord}  {letters}{237}
+\DeclareMathSymbol{\vdash}            {\mathrel}  {letters}{240}
+\DeclareMathSymbol{\dashv}            {\mathrel}  {letters}{241}
+\DeclareMathSymbol{\in}               {\mathrel}  {letters}{242}
+\DeclareMathSymbol{\ni}               {\mathrel}  {letters}{243}
+\DeclareMathSymbol{\top}              {\mathord}  {letters}{244}
+\DeclareMathSymbol{\diagup}           {\mathord}  {letters}{245}
+\DeclareMathSymbol{\nwarrow}          {\mathrel}  {letters}{246}
+\DeclareMathSymbol{\nearrow}          {\mathrel}  {letters}{247}
+\DeclareMathSymbol{\nvdash}           {\mathrel}  {letters}{248}
+\DeclareMathSymbol{\ndashv}           {\mathrel}  {letters}{249}
+\DeclareMathSymbol{\notin}            {\mathrel}  {letters}{250}
+\DeclareMathSymbol{\notowner}         {\mathrel}  {letters}{251}
+\DeclareMathSymbol{\bot}              {\mathord}  {letters}{252}
+\DeclareMathSymbol{\perp}             {\mathrel}  {letters}{252}
+\DeclareMathSymbol{\diagdown}         {\mathord}  {letters}{253}
+\DeclareMathSymbol{\swarrow}          {\mathrel}  {letters}{254}
+\DeclareMathSymbol{\searrow}          {\mathrel}  {letters}{255}
+\begingroup
+\let\define@compound\gdef
+\DeclareCompoundMathSymbol{\neq}               {\mathrel}{\not=}
+\DeclareCompoundMathSymbol{\hookleftarrow}     {\mathrel}{\mathord\leftarrow\rhook}
+\DeclareCompoundMathSymbol{\hookrightarrow}    {\mathrel}{\lhook\mathord\rightarrow}
+\DeclareCompoundMathSymbol{\models}            {\mathrel}{\modelsvert\Relbar}
+\DeclareCompoundMathSymbol{\satisfied}         {\mathrel}{\Relbar\modelsvert}
+\DeclareCompoundMathSymbol{\longleftarrow}     {\mathrel}{\mathord\leftarrow\relbar}
+\DeclareCompoundMathSymbol{\longrightarrow}    {\mathrel}{\relbar\mathord\rightarrow}
+\DeclareCompoundMathSymbol{\longleftrightarrow}{\mathrel}{%
+                                          \mathord\leftarrow\mathord\rightarrow}
+\DeclareCompoundMathSymbol{\Longleftarrow}     {\mathrel}{\mathord\Leftarrow\Relbar}
+\DeclareCompoundMathSymbol{\Longrightarrow}    {\mathrel}{\Relbar\mathord\Rightarrow}
+\DeclareCompoundMathSymbol{\Longleftrightarrow}{\mathrel}{%
+                                          \mathord\Leftarrow\mathord\Rightarrow}
+\DeclareCompoundMathSymbol{\iff}               {\mathrel}{%
+                \mskip\thickmuskip\mathord{\Longleftrightarrow}\mskip\thickmuskip}
+\DeclareCompoundMathSymbol{\mapsto}            {\mathrel}{%
+                                          \mapstochar\mathord\rightarrow}
+\DeclareCompoundMathSymbol{\Mapsto}            {\mathrel}{%
+                                          \Mapstochar\mathord\Rightarrow}
+\DeclareCompoundMathSymbol{\mapsfrom}          {\mathrel}{%
+                                          \mathord\leftarrow\mapsfromchar}
+\DeclareCompoundMathSymbol{\Mapsfrom}          {\mathrel}{%
+                                          \mathord\Leftarrow\Mapsfromchar}
+\DeclareCompoundMathSymbol{\longmapsto}        {\mathrel}{%
+                                          \mapstochar\relbar\mathord\rightarrow}
+\DeclareCompoundMathSymbol{\Longmapsto}        {\mathrel}{%
+                                          \Mapstochar\Relbar\mathord\Rightarrow}
+\DeclareCompoundMathSymbol{\longmapsfrom}      {\mathrel}{%
+                                          \mathord\leftarrow\relbar\mapsfromchar}
+\DeclareCompoundMathSymbol{\Longmapsfrom}      {\mathrel}{%
+                                          \mathord\Leftarrow\Relbar\Mapsfromchar}
+\endgroup
+  \def\rlh@#1{\vcenter{\m@th\hbox{\ooalign{\raise2pt
+              \hbox{$#1\rightharpoonup$}\crcr
+              $#1\leftharpoondown$}}}}
+\def\rightleftharpoons{\mathrel{\mathpalette\rlh@{}}}
+\DeclareMathDelimiter{[}                       {symbols}      {91}{largesymbols}  {0}
+\DeclareMathDelimiter{]}                       {symbols}      {93}{largesymbols}  {1}
+\DeclareMathDelimiter{\lsemantic}  {\mathopen} {symbols}      {34}{largesymbols}  {2}
+\DeclareMathDelimiter{\rsemantic}  {\mathclose}{symbols}      {36}{largesymbols}  {3}
+\DeclareMathDelimiter{(}                       {symbols}      {40}{largesymbols}  {4}
+\DeclareMathDelimiter{)}                       {symbols}      {41}{largesymbols}  {5}
+\DeclareMathDelimiter{\lbrace}     {\mathopen} {symbols}     {123}{largesymbols}  {6}
+\DeclareMathDelimiter{\rbrace}     {\mathclose}{symbols}     {125}{largesymbols}  {7}
+\DeclareMathDelimiter{\lfloor}     {\mathopen} {symbols}       {0}{largesymbols}  {8}
+\DeclareMathDelimiter{\rfloor}     {\mathclose}{symbols}       {1}{largesymbols}  {9}
+\DeclareMathDelimiter{\lceil}      {\mathopen} {symbols}       {2}{largesymbols} {10}
+\DeclareMathDelimiter{\rceil}      {\mathclose}{symbols}       {3}{largesymbols} {11}
+\DeclareMathDelimiter{<}                       {symbols}      {60}{largesymbols} {12}
+\DeclareMathDelimiter{\langle}     {\mathopen} {symbols}      {60}{largesymbols} {12}
+\DeclareMathDelimiter{>}                       {symbols}      {62}{largesymbols} {13}
+\DeclareMathDelimiter{\rangle}     {\mathclose}{symbols}      {62}{largesymbols} {13}
+\DeclareMathDelimiter{/}                       {symbols}      {47}{largesymbols} {14}
+\expandafter\DeclareMathDelimiter\@backslashchar
+                                               {symbols}      {92}{largesymbols} {15}
+\DeclareMathDelimiter{\backslash}  {\mathord}  {symbols}      {92}{largesymbols} {15}
+\DeclareMathAccent{\widehat}  {\mathord}{largesymbols} {16}
+\DeclareMathAccent{\widetilde}{\mathord}{largesymbols} {24}
+\DeclareMathSymbol{\braceld}  {\mathord}{largesymbols} {17}
+\DeclareMathSymbol{\bracemd}  {\mathord}{largesymbols} {18}
+\DeclareMathSymbol{\bracerd}  {\mathord}{largesymbols} {19}
+\DeclareMathSymbol{\bracexd}  {\mathord}{largesymbols} {20}
+\DeclareMathSymbol{\bracelu}  {\mathord}{largesymbols} {25}
+\DeclareMathSymbol{\bracemu}  {\mathord}{largesymbols} {26}
+\DeclareMathSymbol{\braceru}  {\mathord}{largesymbols} {27}
+\DeclareMathSymbol{\bracexu}  {\mathord}{largesymbols} {28}
+\DeclareMathDelimiter{|}                       {symbols}       {8}{largesymbols} {33}
+\DeclareMathDelimiter{\vert}       {\mathord}  {symbols}       {8}{largesymbols} {33}
+\DeclareMathDelimiter{\lvert}      {\mathopen} {symbols}       {8}{largesymbols} {33}
+\DeclareMathDelimiter{\rvert}      {\mathclose}{symbols}       {8}{largesymbols} {33}
+\DeclareMathDelimiter{\|}          {\mathord}  {symbols}       {9}{largesymbols} {34}
+\DeclareMathDelimiter{\Vert}       {\mathord}  {symbols}       {9}{largesymbols} {34}
+\DeclareMathDelimiter{\lVert}      {\mathopen} {symbols}       {9}{largesymbols} {34}
+\DeclareMathDelimiter{\rVert}      {\mathclose}{symbols}       {9}{largesymbols} {34}
+\DeclareMathDelimiter{\vvert}      {\mathord}  {symbols}      {10}{largesymbols} {35}
+\DeclareMathDelimiter{\lvvert}     {\mathopen} {symbols}      {10}{largesymbols} {35}
+\DeclareMathDelimiter{\rvvert}     {\mathclose}{symbols}      {10}{largesymbols} {35}
+\DeclareMathSymbol{\s@rd}     {\mathop} {largesymbols} {36}
+\DeclareMathRadical{\sqrtsign}          {largesymbols} {36}       {largesymbols} {36}
+\DeclareMathDelimiter{\uparrow}    {\mathrel}  {letters}     {222}{largesymbols} {22}
+\DeclareMathDelimiter{\Uparrow}    {\mathrel}  {letters}     {223}{largesymbols} {23}
+\DeclareMathDelimiter{\updownarrow}{\mathrel}  {letters}     {238}{largesymbols} {30}
+\DeclareMathDelimiter{\Updownarrow}{\mathrel}  {letters}     {239}{largesymbols} {31}
+\DeclareMathDelimiter{\downarrow}  {\mathrel}  {letters}     {230}{largesymbols} {38}
+\DeclareMathDelimiter{\Downarrow}  {\mathrel}  {letters}     {231}{largesymbols} {39}
+\DeclareMathDelimiter{\arrowvert}  {\mathord}  {symbols}       {8}{largesymbols} {78}
+\DeclareMathDelimiter{\Arrowvert}  {\mathord}  {symbols}       {9}{largesymbols} {79}
+\DeclareMathDelimiter{\bracevert}  {\mathord}  {largesymbols} {54}{largesymbols} {54}
+\DeclareMathDelimiter{\lbracevert} {\mathopen} {largesymbols} {54}{largesymbols} {54}
+\DeclareMathDelimiter{\rbracevert} {\mathclose}{largesymbols} {55}{largesymbols} {55}
+\DeclareMathDelimiter{\lmoustache} {\mathopen} {symbols}       {6}{largesymbols} {62}
+\DeclareMathDelimiter{\rmoustache} {\mathclose}{symbols}       {7}{largesymbols} {63}
+\DeclareMathDelimiter{\lgroup}     {\mathopen} {symbols}       {4}{largesymbols} {70}
+\DeclareMathDelimiter{\rgroup}     {\mathclose}{symbols}       {5}{largesymbols} {71}
+\DeclareMathSymbol{\sum}      {\mathop} {largesymbols} {64}
+\DeclareMathSymbol{\prod}     {\mathop} {largesymbols} {65}
+\DeclareMathSymbol{\coprod}   {\mathop} {largesymbols} {66}
+\DeclareMathSymbol{\bigodot}  {\mathop} {largesymbols} {67}
+\DeclareMathSymbol{\bigoplus} {\mathop} {largesymbols} {68}
+\DeclareMathSymbol{\bigotimes}{\mathop} {largesymbols} {69}
+\DeclareMathSymbol{\intop}    {\mathop} {largesymbols} {80}
+\DeclareMathSymbol{\iintop}   {\mathop} {largesymbols} {81}
+\DeclareMathSymbol{\iiintop}  {\mathop} {largesymbols} {82}
+\DeclareMathSymbol{\ointop}   {\mathop} {largesymbols} {83}
+\DeclareMathSymbol{\oiintop}  {\mathop} {largesymbols} {84}
+\DeclareMathSymbol{\bigcup}   {\mathop} {largesymbols} {85}
+\DeclareMathSymbol{\bigcap}   {\mathop} {largesymbols} {86}
+\DeclareMathSymbol{\biguplus} {\mathop} {largesymbols} {87}
+\DeclareMathSymbol{\bigvee}   {\mathop} {largesymbols} {96}
+\DeclareMathSymbol{\bigwedge} {\mathop} {largesymbols} {97}
+\DeclareMathSymbol{\bigsqcup} {\mathop} {largesymbols} {98}
+\DeclareMathSymbol{\bigsqcap} {\mathop} {largesymbols} {99}
+
+\def\int   {\intop\nolimits}
+\def\iint  {\iintop\nolimits}
+\def\iiint {\iiintop\nolimits}
+\def\oint  {\ointop\nolimits}
+\def\oiint {\oiintop\nolimits}
+
+\DeclareCompoundMathSymbol{\surd} {\mathord}{\s@rd}
+
+\def\braceexwd{2mu}
+
+\def\bracefill#1#2#3#4{$\m@th#1#4\mkern-\braceexwd
+  \cleaders\hbox{$#4$}\hfill\mkern-\braceexwd#4#2#4\mkern-\braceexwd
+  \cleaders\hbox{$#4$}\hfill\mkern-\braceexwd#4#3$}
+
+\def\rightarrowfill{$\m@th\smash\relbar\mkern-7mu%
+  \cleaders\hbox{$\mkern-2mu\smash\relbar\mkern-2mu$}\hfill
+  \mkern-7mu\mathord\rightarrow$}
+
+\def\leftarrowfill{$\m@th\mathord\leftarrow\mkern-7mu%
+  \cleaders\hbox{$\mkern-2mu\smash\relbar\mkern-2mu$}\hfill
+  \mkern-7mu\smash\relbar$}
+\def\overbrace@#1#2{\mathop{\vbox{\m@th\ialign{##\crcr\noalign{\kern0\p@}%
+      #1\crcr\noalign{\kern0\p@\nointerlineskip}%
+      $\hfil\displaystyle{#2}\hfil$\crcr}}}\limits}
+
+\def\underbrace@#1#2{\mathop{\vtop{\m@th\ialign{##\crcr
+   $\hfil\displaystyle{#2}\hfil$\crcr
+   \noalign{\kern0\p@\nointerlineskip}%
+   #1\crcr\noalign{\kern0\p@}}}}\limits}
+
+\def\overarrow@#1#2{\vbox{\m@th\ialign{##\crcr
+      #1\crcr\noalign{\kern-\p@\nointerlineskip}%
+      $\hfil\displaystyle{#2}\hfil$\crcr}}}
+\def\overbrace{\overbrace@{\bracefill\braceld\bracemd\bracerd\bracexd}}
+\def\underbrace{\underbrace@{\bracefill\bracelu\bracemu\braceru\bracexu}}
+\def\overrightarrow{\overarrow@\rightarrowfill}
+\def\overleftarrow{\overarrow@\leftarrowfill}
+\def\overgroup{\overbrace@{\bracefill\braceld{}\bracerd\bracexd}}
+\def\undergroup{\underbrace@{\bracefill\bracelu{}\braceru\bracexu}}
+\def\big#1{{\hbox{$\left#1\vbox to8.5\p@{}\right.\n@space$}}}
+\def\Big#1{{\hbox{$\left#1\vbox to11.5\p@{}\right.\n@space$}}}
+\def\bigg#1{{\hbox{$\left#1\vbox to14.5\p@{}\right.\n@space$}}}
+\def\Bigg#1{{\hbox{$\left#1\vbox to17.5\p@{}\right.\n@space$}}}
+\def\n@space{\nulldelimiterspace\z@ \m@th}
+\def\mathellipsis{\mathinner{\ldotp\ldotp\ldotp}}%
+\def\cdots{\mathinner{\cdotp\cdotp\cdotp}}
+\def\vdots{\vbox{\baselineskip4\p@ \lineskiplimit\z@
+    \kern6\p@\hbox{.}\hbox{.}\hbox{.}}}
+\def\ddots{\mathinner{\mkern1mu\raise7\p@
+    \vbox{\kern7\p@\hbox{.}}\mkern2mu
+    \raise4\p@\hbox{.}\mkern2mu\raise\p@\hbox{.}\mkern1mu}}
+\def\mathunderscore{\kern.06em\vbox{\hrule\@width.3em}}
+\let\Join\bowtie
+\let\lnot\neg
+\let\land\wedge
+\let\lor\vee
+\let\le\leq
+\let\ge\geq
+\let\ne\neq
+\let\llless\lll
+\let\gggtr\ggg
+\let\Box\square
+\let\thicksim\sim
+\let\thickapprox\approx
+\let\gets\leftarrow
+\let\to\rightarrow
+\let\owns\ni
+\newcommand{\othergreek}[1]{\@GREEK#1}
+\let\Alpha\Alphaup
+\let\Beta\Betaup
+\let\Gamma\Gammaup
+\let\Delta\Deltaup
+\let\Epsilon\Epsilonup
+\let\Zeta\Zetaup
+\let\Eta\Etaup
+\let\Theta\Thetaup
+\let\Iota\Iotaup
+\let\Kappa\Kappaup
+\let\Lambda\Lambdaup
+\let\Mu\Muup
+\let\Nu\Nuup
+\let\Xi\Xiup
+\let\Omicron\Omicronup
+\let\Pi\Piup
+\let\Rho\Rhoup
+\let\Sigma\Sigmaup
+\let\Tau\Tauup
+\let\Upsilon\Upsilonup
+\let\Phi\Phiup
+\let\Chi\Chiup
+\let\Psi\Psiup
+\let\Omega\Omegaup
+
+\let\alpha\alphait
+\let\beta\betait
+\let\gamma\gammait
+\let\delta\deltait
+\let\epsilon\epsilonit
+\let\zeta\zetait
+\let\eta\etait
+\let\theta\thetait
+\let\iota\iotait
+\let\kappa\kappait
+\let\lambda\lambdait
+\let\mu\muit
+\let\nu\nuit
+\let\xi\xiit
+\let\omicron\omicronit
+\let\pi\piit
+\let\rho\rhoit
+\let\sigma\sigmait
+\let\tau\tauit
+\let\upsilon\upsilonit
+\let\phi\phiit
+\let\chi\chiit
+\let\psi\psiit
+\let\omega\omegait
+
+\let\varepsilon\varepsilonit
+\let\vartheta\varthetait
+\let\varkappa\varkappait
+\let\varpi\varpiit
+\let\varrho\varrhoit
+\let\varsigma\varsigmait
+\let\varphi\varphiit
+\let\varUpsilon\varUpsilonup
+\let\varChi\varChiup
+\let\partial\partialit
+\let\lambdabar\lambdabarit
+
+
+
+
+
+
+
+
+
+%% 
+%%
+%% End of file `fontmath.minion'.

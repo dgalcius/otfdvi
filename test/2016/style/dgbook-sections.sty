@@ -1,0 +1,382 @@
+%% This is file `dgbook-sections.sty'
+%%
+%% Author: Eimantas Gumbakis, VTeX
+%% Start-date: 2017-06-05
+
+\ProvidesFile{dgbook-sections.sty}
+        [2018/02/23 v0.1.5 section setup for DeGruyter books]
+
+\RequirePackage[normalssect]{vtexsec}
+
+\if@monography
+  \setpkgattr{dgheading}{style}{chaptercontent}%
+\else
+  \setpkgattr{dgheading}{style}{contentonly}%
+\fi
+
+\newif\if@numberedchapters
+\csdef{contentonly@numbering}{%
+  \global\@numberedchaptersfalse
+  \setcounter{secnumdepth}{3}
+  }
+\csdef{chaptercontent@numbering}{%
+  \global\@numberedchapterstrue
+  \def\thesection{\thechapter.\@arabic\c@section}%
+  \setcounter{secnumdepth}{3}
+  }
+
+\csuse{\dgheading@style @numbering}
+
+\def\@startsection#1#2#3#4#5#6{%
+  \if@noskipsec \leavevmode \fi
+  \par
+  \@tempskipa #4\relax
+  \@afterindenttrue
+  \ifdim \@tempskipa <\z@
+    \@tempskipa -\@tempskipa \@afterindentfalse
+  \fi
+  \if@nobreak
+    \everypar{}%
+  \else
+    \addpenalty\@secpenalty\addvspace\@tempskipa
+  \fi
+  \@ifstar
+    {\@dblarg{\x@ssect{#1}{#2}{#3}{#4}{#5}{#6}}}
+    {\@dblarg{\@sect{#1}{#2}{#3}{#4}{#5}{#6}}}%
+  }
+\gdef\PREsecHOOK#1{%
+  \edef\@currentHref{\jobname.#1.\@arabic\csname c@#1\endcsname:\number\Hy@linkcounter}%
+  \hyper@anchorstart{\@currentHref}\hyper@anchorend
+  \nobreak
+  }
+\gdef\PREstarsecHOOK#1#2{%
+  \global\advance\Hy@linkcounter by\@ne
+  \edef\@currentHref{\jobname.#1.\@arabic\csname c@#1\endcsname:\number\Hy@linkcounter}%
+  \hyper@anchorstart{\@currentHref}\hyper@anchorend
+  \ifcsname star#1mark\endcsname
+    \csuse{star#1mark}{#2}%
+  \fi
+  \addcontentsline{toc}{star#1}{%
+     \@ifundefined{the#1star}
+       {}
+       {\protect\numberline{\csname the#1star\endcsname}}%
+     #2}%
+  \nobreak
+  }
+\newif\if@outlines \@outlinestrue
+\RequirePackage{bookmarkfix}
+%% bookmarks setup
+\def\toclevel@part{-1}
+\def\toclevel@chapter{0}
+\def\toclevel@schapter{0}
+\def\toclevel@section{1}
+\def\toclevel@starsection{1}
+\def\toclevel@subsection{2}
+\def\toclevel@starsubsection{2}
+\def\toclevel@subsubsection{3}
+\def\toclevel@starsubsubsection{3}
+\def\toclevel@paragraph{4}
+\def\toclevel@subparagraph{5}
+\def\toclevel@author{0}
+
+\if@monography
+  \setpkgattr{chaptertitle}{font}{\sffamily\mathversion{ssbold}\bfseries}
+  \setpkgattr{chaptertitle}{size}{\Large}
+  \setpkgattr{chaptertitle}{afterskip}{13\p@}
+  \setpkgattr{chaptersubtitle}{font}{\sffamily}
+  \setpkgattr{chaptersubtitle}{size}{\large}
+  \setpkgattr{chaptersubtitle}{afterskip}{15.5\p@}
+\else
+  \setpkgattr{chaptertitle}{font}{\sffamily\mathversion{ssbold}\bfseries}
+  \setpkgattr{chaptertitle}{size}{\LARGE}
+  \setpkgattr{chaptertitle}{afterskip}{11\p@}
+  \setpkgattr{chaptersubtitle}{font}{\sffamily}
+  \setpkgattr{chaptersubtitle}{size}{\large}
+  \setpkgattr{chaptersubtitle}{afterskip}{15.5\p@}
+\fi
+
+\let\@partmotto\@empty
+\def\partmotto#1{%
+  \def\@partmotto{%
+    \vskip\dimexpr\baselineskip+2\p@\relax
+    \quote#1\endquote
+    \global\let\@partmotto\@empty
+    }%
+  }%
+\renewcommand\part{%
+  \cleardoublepage
+  \secdef\@part\@spart
+  }
+\def\@part[#1]#2{%
+  \ifnum\c@secnumdepth>-2\relax
+    \refstepcounter{part}%
+    \PREHOOK@part@fmt{#2}%
+    \addcontentsline{toc}{part}{\protect\partnumberline{\mdseries\partname\ \thepart:\enskip}#1}%
+  \else
+    \addcontentsline{toc}{spart}{#1}%
+  \fi
+  \markboth{\partname\ \thepart\enskip#1}{\partname\ \thepart\enskip#1}%
+  \bgroup
+    \def\dg@barpage@tail{\par}
+    \dg@barpage
+      {}
+      {%
+        \vskip-1.2\p@ % 13\p@ between the middle of DGbar and the top of the following text (v2.4 specs)
+        \parindent\z@\raggedright
+        \interlinepenalty\@M
+        \bgroup
+          \sffamily\Large
+          \ifnum\c@secnumdepth>-2\relax
+            \setbox\z@\hbox{%
+              \partname\nobreakspace\thepart
+              \if!#2!%
+                \@empty
+              \else
+                :\space
+              \fi
+              }%
+            \hangindent\wd\z@
+            \unhbox\z@
+          \fi
+          \if!#2!%
+            \@empty
+          \else
+            \bfseries#2%
+          \fi
+          \par
+        \egroup
+        \@partmotto
+      }%
+  \egroup
+  \vskip\section@afterskip
+  \small
+  \hangindent\parindent
+  \parskip\baselineskip
+  }
+\def\@spart#1{%
+  \addcontentsline{toc}{spart}{#1}%
+  \dg@barpage
+    {}
+    {%
+      \parindent\z@\raggedright
+      \interlinepenalty\@M
+      \bgroup
+        \sffamily\Large
+        \bfseries#1%
+        \par
+      \egroup
+      \@partmotto
+    }%
+  }
+  
+\renewcommand\chapter{%
+  \if@openright
+    \cleardoublepage
+  \else
+    \ifx\firstCh@fPart\@undefined
+      \clearpage
+    \else
+      \global\let\firstCh@fPart\@undefined
+      \cleardoublepage
+    \fi
+  \fi
+  \thispagestyle{plain}%
+  \if@pseudochapter
+    \stepcounter{pseudochapter}%
+    \gdef\@DOI{\book@DOI-\ifnum\c@pseudochapter<100 0\fi\ifnum\c@pseudochapter<10 0\fi\@arabic\c@pseudochapter}%
+  \fi
+  \global\@topnum\z@
+  \@afterindentfalse
+  \secdef\@chapter\@schapter
+  }
+\def\@chapter[#1]#2{%
+  \let\thesection\theinchapsection
+  \refstepcounter{chapter}%
+  \PREHOOK@chapter@fmt{#2}%
+  \typeout{\@chapapp\space\thechapter.}%
+  \if@numberedchapters
+    \addcontentsline{toc}{chapter}{\protect\numberline{\thechapter}#1}%
+  \else
+    \addcontentsline{toc}{schapter}{#1}%
+  \fi
+  \ifx\book@DOI\@undefined
+  \else
+    \if@pseudochapter
+    \else
+      \gdef\@DOI{\book@DOI-\ifnum\c@chapter<100 0\fi\ifnum\c@chapter<10 0\fi\@arabic\c@chapter}%
+    \fi
+  \fi
+  \chaptermark{#1}%
+  \addtocontents{lof}{\protect\addvspace{13\p@}}%
+  \addtocontents{lot}{\protect\addvspace{13\p@}}%
+  \if@twocolumn
+    \@topnewpage[\@makechapterhead{#2}]%
+  \else
+    \if@monography
+      \@makechapterhead{#2}%
+    \else
+      \def\saved@chapterhead{\@makechapterhead{#2}}%
+    \fi
+  \fi
+  \@afterheading
+  }
+\def\chaptersubtitle#1{%
+  \gdef\@chaptersubtitle{#1}%
+  }
+\def\@makechapterhead#1{%
+  \bgroup
+    \parindent\z@
+    \raggedright
+    \leavevmode
+    \if@monography
+      \vrule\@width\z@\@height\dimexpr\topskip+0.5\baselineskip\relax\@depth\z@
+    \fi
+    \chaptertitle@font
+    \chaptertitle@size
+    \interlinepenalty\@M
+    \if@numberedchapters
+      \if@mainmatter
+        \settowidth\hangindent{\thechapter\enskip}%
+        \thechapter\enskip
+      \fi
+    \fi
+    #1\par\nobreak
+    \vskip\chaptertitle@afterskip
+  \egroup
+  \ifdefined\@chaptersubtitle
+    \bgroup  
+      \chaptersubtitle@font  
+      \chaptersubtitle@size
+      \@chaptersubtitle
+      \global\let\@chaptersubtitle\@undefined
+      \par
+      \vskip\chaptersubtitle@afterskip
+    \egroup
+  \fi
+  }
+
+\def\@schapter#1{%
+  \setcounter{section}{\z@}%
+  \ifdefined\HCode
+  \else
+    \refstepcounter{schapter}%
+  \fi
+  %%\let\thesection\theplainsection %remove 'cause as switch does harm
+  \let\theequation\theplainequation
+  \let\thefigure\theplainfigure
+  \let\thetable\theplaintable
+  \PREHOOK@starchapter@fmt{#1}%
+  \addcontentsline{toc}{schapter}{#1}%
+  \starchaptermark{#1}%
+  \if@twocolumn
+    \@topnewpage[\@makeschapterhead{#1}]%
+  \else
+    \@makeschapterhead{#1}%
+  \fi
+  \@afterheading
+  }
+\def\@makeschapterhead#1{%
+  \bgroup
+    \parindent\z@
+    \raggedright
+    \leavevmode
+    \vrule\@width\z@\@height\dimexpr\topskip+0.5\baselineskip\relax\@depth\z@
+    \sffamily\mathversion{ssbold}\bfseries
+    \Large
+    \interlinepenalty\@M
+    #1\par\nobreak
+    \vskip13\p@
+  \egroup
+  }
+
+\def\section@beforeskip{-26\p@\@plus-2\p@\@minus-1\p@}
+\def\section@afterskip{13\p@\@plus1\p@\@minus1\p@}
+\def\subsection@beforeskip{-24\p@\@plus-2\p@\@minus-1\p@}
+\def\subsection@afterskip{9\p@\@plus1\p@}
+\def\subsubsection@beforeskip{-26\p@\@plus-2\p@\@minus-1\p@}
+\def\subsubsection@afterskip{13\p@\@plus1\p@\@minus1\p@}
+\def\paragraph@beforeskip{-19.5\p@\@plus-2\p@\@minus-1\p@}
+\def\paragraph@afterskip{1sp}
+\def\subparagraph@beforeskip{-19.5\p@\@plus-2\p@\@minus-1\p@}
+\def\subparagraph@afterskip{1sp}
+\def\section@indent{\z@}
+\def\subsection@indent{\z@}
+
+\if@monography
+  \renewcommand\section{%
+    \@startsection{section}{1}{\section@indent}%
+      {\subsection@beforeskip}%
+      {\subsection@afterskip}%
+      {\raggedright\sffamily\bfseries\mathversion{ssbold}%
+       \large}%
+    }
+  \renewcommand\subsection{%
+    \@startsection{subsection}{2}{\subsection@indent}%
+      {\subsubsection@beforeskip}%
+      {\subsubsection@afterskip}%
+      {\raggedright\sffamily\bfseries\mathversion{ssbold}%
+       \normalsize}%
+    }
+  \renewcommand\subsubsection{%
+    \@startsection{subsubsection}{3}{\z@}%
+      {\paragraph@beforeskip}%
+      {\paragraph@afterskip}%
+      {\raggedright\sffamily\bfseries\mathversion{ssbold}%
+       \normalsize}%
+    }
+  \renewcommand\paragraph{%
+    \@startsection{paragraph}{4}{\z@}%
+      {\subparagraph@beforeskip}%
+      {\subparagraph@afterskip}%
+      {\raggedright\sffamily
+       \bfseries\mathversion{ssbold}\normalsize}%
+    }
+  \renewcommand\subparagraph{%
+    \@startsection{subparagraph}{5}{\z@}%
+      {\subparagraph@beforeskip}%
+      {\subparagraph@afterskip}%
+      {\raggedright\sffamily
+       \bfseries\mathversion{ssbold}\normalsize}% same as H4 along with specs
+    }
+\else
+  \renewcommand\section{%
+    \@startsection{section}{1}{\section@indent}%
+      {\section@beforeskip}%
+      {\section@afterskip}%
+      {\raggedright\sffamily\bfseries\mathversion{ssbold}%
+       \Large
+       \ifdim\pagetotal=\z@
+         \leavevmode\vrule\@width\z@\@height\dimexpr\topskip+6.5\p@\relax\@depth\z@
+       \fi}%
+    }
+  \renewcommand\subsection{%
+    \@startsection{subsection}{2}{\subsection@indent}%
+      {\subsection@beforeskip}%
+      {\subsection@afterskip}%
+      {\raggedright\sffamily\bfseries\mathversion{ssbold}%
+       \large}%
+    }
+  \renewcommand\subsubsection{%
+    \@startsection{subsubsection}{3}{\z@}%
+      {\subsubsection@beforeskip}%
+      {\subsubsection@afterskip}%
+      {\raggedright\sffamily\bfseries\mathversion{ssbold}%
+       \normalsize}%
+    }
+  \renewcommand\paragraph{%
+    \@startsection{paragraph}{4}{\z@}%
+      {\paragraph@beforeskip}%
+      {\paragraph@afterskip}%
+      {\raggedright\sffamily
+       \bfseries\mathversion{ssbold}\normalsize}%
+    }
+  \renewcommand\subparagraph{%
+    \@startsection{subparagraph}{5}{\z@}%
+      {\subparagraph@beforeskip}%
+      {\subparagraph@afterskip}%
+      {\raggedright\sffamily
+       \bfseries\mathversion{ssbold}\normalsize}% same as H4 along with specs
+    }
+\fi
+
+\endinput

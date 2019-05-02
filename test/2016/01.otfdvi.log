@@ -1,0 +1,27 @@
+--- !current time
+options:
+{
+  auto = false,
+  config = "otfdvi.conf.lua",
+  debug = false,
+  dryrun = false,
+  filein = "01.dvi",
+  fileout = "out.dvi",
+  fontprefix = "font",
+  htf = false,
+  inplace = false,
+  logfile = "01.otfdvi.log",
+  mkfile = "__Makefile",
+  outputdir = "",
+  psmapfile = "ttfonts.map",
+  verbose = false
+}
+settings:
+{
+  lua_font_dir = "/usr/local/texlive/2016/texmf-var/luatex-cache/generic/fonts/otl/",
+  mkfile_tmpl = "otfdvi.tmpl.Makefile"
+}
+kpse_version: kpathsea version 6.2.3/dev
+lua_font_dir: 
+Output: out.dvi
+Written to: __Makefile

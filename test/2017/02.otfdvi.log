@@ -1,0 +1,216 @@
+--- !current time
+options:
+{
+  auto = false,
+  config = "otfdvi.conf.lua",
+  debug = false,
+  dryrun = false,
+  filein = "02.dvi",
+  fileout = "out.dvi",
+  fontprefix = "font",
+  htf = false,
+  inplace = false,
+  logfile = "02.otfdvi.log",
+  mkfile = "__Makefile",
+  outputdir = "",
+  psmapfile = "ttfonts.map",
+  verbose = false
+}
+settings:
+{
+  lua_font_dir = "/usr/local/texlive/2017/texmf-var/luatex-cache/generic/fonts/otl/",
+  mkfile_tmpl = "otfdvi.tmpl.Makefile"
+}
+kpse_version: kpathsea version 6.2.3
+lua_font_dir: 
+********** OPCODES ************** 
+{
+  _opcode = "fntdef",
+  area = "",
+  checksum = 0,
+  design_size = 655360,
+  fontname = "LatinModernRoman:mode=node;script=latn;language=DFLT;+tlig;",
+  num = 22,
+  scale = 655360
+}
+LatinModernRoman:mode=node;script=latn;language=DFLT;+tlig; => font22
+{
+  _opcode = "fntdef",
+  area = "",
+  checksum = 0,
+  design_size = 655360,
+  fontname = "LatinModernRoman/I:mode=node;script=latn;language=DFLT;+tlig;",
+  num = 23,
+  scale = 655360
+}
+LatinModernRoman/I:mode=node;script=latn;language=DFLT;+tlig; => font23
+{
+  _opcode = "fntdef",
+  area = "",
+  checksum = 0,
+  design_size = 655360,
+  fontname = "LatinModernRoman/B:mode=node;script=latn;language=DFLT;+tlig;",
+  num = 24,
+  scale = 655360
+}
+LatinModernRoman/B:mode=node;script=latn;language=DFLT;+tlig; => font24
+{
+  _opcode = "fntdef",
+  area = "",
+  checksum = 0,
+  design_size = 655360,
+  fontname = "LatinModernRoman/B:mode=node;script=latn;language=DFLT;+tlig;",
+  num = 24,
+  scale = 655360
+}
+{
+  _opcode = "fntdef",
+  area = "",
+  checksum = 0,
+  design_size = 655360,
+  fontname = "LatinModernRoman/I:mode=node;script=latn;language=DFLT;+tlig;",
+  num = 23,
+  scale = 655360
+}
+{
+  _opcode = "fntdef",
+  area = "",
+  checksum = 0,
+  design_size = 655360,
+  fontname = "LatinModernRoman:mode=node;script=latn;language=DFLT;+tlig;",
+  num = 22,
+  scale = 655360
+}
+ ****** STOP OPCODES ****** 
+Output: out.dvi
+ *** OTFFONT *** 
+{
+  charlist = { 65, 71, 102, 111, 97, 64256, 64257, 103, 117, 114, 101, 261, 49, 50, 51, 52, 53, 54, 55, 56, 57, 48 },
+  design_size = 10,
+  design_size_dvi = 655360,
+  fontname = "LatinModernRoman/I:mode=node;script=latn;language=DFLT;+tlig;",
+  otfdata = {
+    basename = "LatinModernRoman",
+    features = "tlig;",
+    language = "DFLT",
+    luafont = "/usr/local/texlive/2017/texmf-var/luatex-cache/generic/fonts/otl/lmroman10-italic.luc",
+    mode = "node",
+    script = "latn",
+    shape = "I"
+  },
+  scale = 10
+}
+unicodes{
+  [48] = "zero",
+  [49] = "one",
+  [50] = "two",
+  [51] = "three",
+  [52] = "four",
+  [53] = "five",
+  [54] = "six",
+  [55] = "seven",
+  [56] = "eight",
+  [57] = "nine",
+  [65] = "A",
+  [71] = "G",
+  [97] = "a",
+  [101] = "e",
+  [102] = "f",
+  [103] = "g",
+  [111] = "o",
+  [114] = "r",
+  [117] = "u",
+  [261] = "aogonek",
+  [64256] = "f_f",
+  [64257] = "f_i"
+}
+ *** END OTFFONT *** 
+ *** OTFFONT *** 
+{
+  charlist = { 65, 71, 102, 111, 97, 64256, 64257, 103, 117, 114, 101, 261, 49, 50, 51, 52, 53, 54, 55, 56, 57, 48 },
+  design_size = 10,
+  design_size_dvi = 655360,
+  fontname = "LatinModernRoman/B:mode=node;script=latn;language=DFLT;+tlig;",
+  otfdata = {
+    basename = "LatinModernRoman",
+    features = "tlig;",
+    language = "DFLT",
+    luafont = "/usr/local/texlive/2017/texmf-var/luatex-cache/generic/fonts/otl/lmroman10-bold.luc",
+    mode = "node",
+    script = "latn",
+    shape = "B"
+  },
+  scale = 10
+}
+unicodes{
+  [48] = "zero",
+  [49] = "one",
+  [50] = "two",
+  [51] = "three",
+  [52] = "four",
+  [53] = "five",
+  [54] = "six",
+  [55] = "seven",
+  [56] = "eight",
+  [57] = "nine",
+  [65] = "A",
+  [71] = "G",
+  [97] = "a",
+  [101] = "e",
+  [102] = "f",
+  [103] = "g",
+  [111] = "o",
+  [114] = "r",
+  [117] = "u",
+  [261] = "aogonek",
+  [64256] = "f_f",
+  [64257] = "f_i"
+}
+ *** END OTFFONT *** 
+ *** OTFFONT *** 
+{
+  charlist = { 65, 71, 102, 111, 97, 64256, 64257, 103, 117, 114, 101, 261, 49, 50, 51, 52, 53, 54, 55, 56, 57, 48, 79, 110, 109, 108, 105 },
+  design_size = 10,
+  design_size_dvi = 655360,
+  fontname = "LatinModernRoman:mode=node;script=latn;language=DFLT;+tlig;",
+  otfdata = {
+    basename = "LatinModernRoman",
+    features = "tlig;",
+    language = "DFLT",
+    luafont = "/usr/local/texlive/2017/texmf-var/luatex-cache/generic/fonts/otl/lmroman10-regular.luc",
+    mode = "node",
+    script = "latn"
+  },
+  scale = 10
+}
+unicodes{
+  [48] = "zero",
+  [49] = "one",
+  [50] = "two",
+  [51] = "three",
+  [52] = "four",
+  [53] = "five",
+  [54] = "six",
+  [55] = "seven",
+  [56] = "eight",
+  [57] = "nine",
+  [65] = "A",
+  [71] = "G",
+  [79] = "O",
+  [97] = "a",
+  [101] = "e",
+  [102] = "f",
+  [103] = "g",
+  [105] = "i",
+  [108] = "l",
+  [109] = "m",
+  [110] = "n",
+  [111] = "o",
+  [114] = "r",
+  [117] = "u",
+  [261] = "aogonek",
+  [64256] = "f_f",
+  [64257] = "f_i"
+}
+ *** END OTFFONT *** 
+Written to: __Makefile

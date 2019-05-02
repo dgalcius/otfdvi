@@ -1,0 +1,2217 @@
+%BeginFileInfo
+%%Publisher=DGBOOK
+%%Project=STEFAN1
+%%Manuscript=STEFAN101
+%%MS position=
+%%Stage=307
+%%TID=juraten
+%%Pages=0
+%%Format=2016
+%%Distribution=vtex
+%%Destination=PDF
+%%PDF type=print
+%%PDF.Maker=pdfwf_luatex
+%%PS.Maker=xdvipsk
+%%Spelled=Dictionary: American (with accents), Computer: 1GSMPR490, 2018.03.27 10:23
+%%History1=2018.03.27 09:19
+%EndFileInfo
+\documentclass[nochecklpage]{stefan1}
+%\usepackage{book-aux-toc}
+\usepackage{mathrsfs}
+\usepackage[left]{vmkcol}
+\makeindex
+
+\startlocaldefs
+\newcommand{\rrvert}{\vert}
+\newcommand{\rrVert}{\Vert}
+\newcommand{\llvert}{\vert}
+\newcommand{\llVert}{\Vert}
+%author defs here:
+\allowdisplaybreaks
+
+\newtheorem{theorem}{Theorem}[chapter]
+\newtheorem{assertion}[theorem]{Assertion}
+\newtheorem{statement}[theorem]{Statement}
+\theoremstyle{definition}
+\newtheorem{postulate}[theorem]{Postulate}
+\endlocaldefs
+
+%\HPROOF\SETGRID
+%\PROOF
+\CRC
+
+\pubyear{2019}
+\firstpage{1}
+\lastpage{36}
+%\openaccess
+
+\begin{document}
+
+\thisischapter{1}
+\chapter{Quantum logic}\label{ch:QM}
+
+\begin{epigraph}
+The nature of light is a subject of no material importance to
+the concerns of life or to the practice of the arts, but it is in many
+other respects extremely interesting.
+%
+\author{Thomas Young}
+\end{epigraph}
+%
+%% BODY
+%
+In this chapter, we will continue our discussion of the connections
+between preparation devices, physical systems and measuring instruments,
+started in the Introduction. In particular, we will try to understand
+what is actually measured by the instruments, and how these results
+depend on the state of the observed system.
+
+Until the end of the 19th century such questions could only raise
+eyebrows. In classical mechanics and in all pre-quantum physics, it was
+tacitly assumed that in each state the physical system possesses a set
+of quantities (position, momentum, mass, etc.). These quantities simply
+show up in measurements. They can be measured simultaneously, accurately
+and reproducibly. Yes, of course, every measurement is limited by a
+certain imprecision, but this is only a technical difficulty that can
+and should be neglected in a fundamental theory. All this was considered
+so obvious that it was not even mentioned in textbooks.
+
+However, since the end of the 19th century, these traditional ideas
+began to disintegrate under the onset of new discoveries such as the
+radiation spectrum of heated bodies, the discrete spectrum of atoms and
+the photoelectric effect. Solutions of all these problems have been
+found within the framework of
+\emph{quantum mechanics}\index{quantum mechanics}~--~a~completely new approach to physics that
+emerged in the first third of the 20th century as a result of joint
+efforts and passionate debates of such outstanding scientists as Bohr,
+Born, de Broglie, Dirac, Einstein, Fermi, Fock, Heisenberg, Pauli,
+Planck, Schr\"{o}dinger, Wigner and many
+others.\index{Bohr, N.}\index{Born, M.}\index{de Broglie, L.}\index{Einstein, A.}\index{Fermi, E.}\index{Fock, V.\,A.}\index{Heisenberg, W.}\index{Pauli, W.}\index{Planck, M.}\index{Schr\"{o}dinger, E.}\index{Wigner, E.\,P.}\index{Dirac, P.\,A.\,M.}
+Out of all these
+studies, a completely unexpected and paradoxical picture of the physical
+world has emerged that was completely unlike the orderly and transparent
+classical picture. In spite of their counterintuitive strangeness,
+predictions of quantum mechanics are extraordinarily accurate: they are
+checked daily in countless physical and chemical laboratories around the
+world, and have never been refuted. This makes quantum mechanics the
+most successful physical theory of all time.
+
+There are dozens of good textbooks explaining the laws of quantum
+mechanics and how to use them to analyze systems and predict
+observations in each particular case. We assume that the reader is
+fairly familiar with these laws. We will be more interested in the
+deeper meaning and interpretation of the quantum formalism, which still
+generates bitter controversies. Why does nature behave in a random way?
+Or is this randomness only apparent, but in fact there is a deeper level
+of reality, where quantum uncertainty gives way to some new laws? How
+can different states (alive and dead Schr\"{o}dinger's cats) exist in
+a superposition? Is it possible to change the rules of quantum mechanics
+(for example, by adding some nonlinearity to the Hilbert space)\index{Hilbert, D.} without
+being in contradiction with experiments? People are increasingly asking
+such questions recently, when the search for the quantum theory of
+gravitation has intensified, and one popular trend is to look for
+alternative formulations of quantum mechanics in order to ``harmonize''
+it with the general theory of relativity \cite{Khrennikov}.
+
+In this chapter we will present a rather old, but not well-known point
+of view on the origin of quantum laws. This approach seeks
+explanation of the quantum behavior in the fundamental logical structure
+of physics. In particular, this approach asserts that the true logical
+relationships between results of measurements are different from the
+classical laws of Aristotle and Boole. The usual classical logic needs
+to be replaced by the so-called \emph{quantum logic}.\index{quantum logic}\index{Aristotle}\index{Boole, G.}
+
+Since ancient Greece, logic has been considered the queen of sciences,
+perhaps not even a science as such, but something even more fundamental:
+a metascience, a framework for our perception of the world and for the
+construction of all other sciences. Therefore, it is difficult to
+imagine anything more revolutionary and provocative than an encroachment
+on the laws of logic. Nevertheless, there are enough convincing reasons
+to make just this step.
+%
+\begin{quote}
+In introductory quantum physics classes (especially in the United
+States), students are informed \emph{ex cathedra} that the state of a
+physical system is represented by a complex-valued wave function~$\psi $,
+that observables correspond to self-adjoint operators, that the
+temporal evolution of the system is governed by a Schr\"{o}dinger
+equation and so on. Students are expected to accept all this
+uncritically, as their professors probably did before them. Any question
+of why is dismissed with an appeal to authority and an injunction to
+wait and see how well it all works. Those students whose curiosity
+precludes blind compliance with the gospel according to Dirac and von
+Neumann are told that they have no feeling for physics and that they
+would be better off studying mathematics or philosophy. A happy
+alternative to teaching by dogma is provided by basic quantum logic,
+which furnishes a sound and intellectually satisfying background for the
+introduction of the standard notions of elementary quantum mechanics --
+D.\,J. Foulis \cite{Foulis}.\index{Foulis, D.\,J.}
+\end{quote}
+%
+The idea that the most fundamental difference between classical and
+quantum mechanics lies in their different logical structures belongs to
+Birkhoff and von Neumann. In this chapter, we briefly outline their
+ideas of \emph{quantum logic} \cite{Birkhoff} as well as later
+contributions made especially by Mackey \cite{Mackey} and Piron
+\cite{Piron2, Piron}; see also \cite{Curcuraci}.
+\index{Birkhoff, G.}\index{von Neumann, J.}\index{Mackey, G.\,W.}\index{Piron, C.}
+
+We will argue that the formalism of quantum mechanics (including the
+algebras of state vectors and Hermitian operators in the Hilbert space)
+follows almost inevitably from the simplest properties of measurements
+and logical relationships between them. These properties and
+relationships are so simple and fundamental that it seems impossible to
+modify them, and therefore it would be almost impossible to change
+quantum laws without violating their internal consistency and agreement
+with experiment. The practical conclusion is that the unification of
+quantum mechanics and relativity will not be achieved by changing or
+modifying quantum laws.\footnote{In Volume~3 we will
+explain how one should change the formalism of special relativity to
+make it compatible with quantum mechanics.}
+
+In Section \ref{sc:thought} we will examine limitations of classical
+approaches by analyzing the two-holes (two-slits) interference
+experiment from the points of view of the wave and corpuscular theories
+of light.
+
+The logical structure of classical physics will be presented in Sections
+\ref{sc:1.1} and \ref{sc:measurements-and-probabilities}. In particular,
+we will discuss the close relationship between the classical Boolean
+logic and the phase space formalism. In Section \ref{sc:1.3} we will
+note the remarkable fact that the only difference between classical and
+quantum logics (and, therefore, between classical and quantum physics
+in general) lies in two inconspicuous axioms of \emph{distributivity}. This
+postulate of classical logic should be replaced by the \emph{orthomodular}
+postulate of quantum logic. In Section \ref{ss:quant-obs} this will lead us (via Piron's theorem) to the standard formalism
+of quantum mechanics with its Hilbert spaces, Hermitian operators, wave
+functions, etc. In Section \ref{sc:complete} we will add some thoughts
+to the endless philosophical debate about interpretations of quantum
+mechanics.
+
+%s1 #&#
+\section{Why do we need quantum mechanics?}\label{sc:thought}
+The inadequacy of the classical concepts becomes clear if we analyze the
+dispute between corpuscular and wave theories of light. Let us
+illustrate the essence of this, without exaggeration, centuries-old
+debate by the example of a thought experiment with the \emph{camera}
+\emph{obscura}.\index{camera obscura}
+
+%s1.1 #&#
+\subsection{Corpuscular theory of light}\label{ss:corpuscular}
+You may have seen or heard about a simple optical device called
+\emph{camera obscura} or pinhole camera.\index{pinhole camera} It is easy to make this device
+yourself. Take a lightproof box, make a small hole in one of its walls
+and place a photographic plate at the opposite wall, as shown in
+Figure~\ref{fig:3.1}. The light entering the inside of the box through the hole
+will create a clear inverted image of the outside world on the
+photographic plate.
+
+\begin{SCfigure}[50][b!]
+\includegraphics{01f01}
+\caption{The image in the pinhole camera is created by rectilinear beams (rays)
+of light.}
+\label{fig:3.1}
+\end{SCfigure}
+
+You can achieve even greater clarity by reducing the size of the hole.
+But this, of course, will reduce the brightness of the image. This
+behavior of light has been known for centuries. The first scientific
+explanation for this and many other properties of light (reflection,
+refraction, etc.) was suggested by Newton.\index{Newton, I.} In a slightly modernized
+language, his \emph{corpuscular theory}\index{corpuscular theory}
+explained the formation of the image as follows:
+%
+\begin{quote}
+\textbf{\textit{Corpuscular theory:}} Light is a stream of tiny particles
+(photons) flying along straight classical trajectories (light rays).
+[For example, the ray that lands at the point $ A'$ in Figure~\ref{fig:3.1} was emitted from the point $ A $ and passed right through
+the hole.] Each such particle carries a certain amount of energy. When
+the particle collides with the photographic plate, this energy is
+released within one grain of the emulsion and creates a single image
+point. Bright light contains so many photons that their individual spots
+flood the photographic plate. All these points
+merge into one continuous image, and the density of the image is
+proportional to the number of particles hitting the plate during the
+time of exposure.
+\end{quote}
+%
+Let us continue our experiment with the pinhole camera, making the hole
+size smaller and smaller. Corpuscular theory asserts that shrinking
+holes will produce a clearer, but dimmer image. However, the experiment
+shows something completely different! At some point, as the size of the
+hole is reduced, the image will begin to blur; and in the limit of a
+very small hole all the details will disappear, and the picture will
+turn into one circular diffuse spot, as in Figure~\ref{fig:3.2}\,(a). The
+shape and size of this blur are no longer dependent on the light source
+outside the camera. It would seem that the light rays, passing through
+the small hole, are randomly scattered in all directions. This effect
+was discovered by Grimaldi in the middle of the 17th century and was
+subsequently dubbed \emph{diffraction}.\index{diffraction}\index{Grimaldi, F.\,M.}
+
+%f1 #&#
+\begin{figure}[h]
+\vspace*{-6pt}
+\includegraphics{01f02}
+\caption{(a) The image in the pinhole camera with a very small hole. (b) Image
+density along the line $AB$.}
+\label{fig:3.2}
+\vspace*{-6pt}
+\end{figure}
+
+Diffraction does not fit in the corpuscular theory. Why on earth do
+light corpuscles deviate from straight-line trajectories? Maybe this is
+due to their interaction with the material of the walls surrounding the
+hole? However, this explanation should be rejected, if only because the
+diffraction pattern does not depend on the material -- paper or steel
+-- from which the walls of the box are made.
+
+The most striking evidence of the fallacy of the na\"{\i }ve corpuscular
+theory of light is the \emph{interference} effect,\index{interference}
+discovered by Young in 1802.\index{Young, T.} To see the interference, we can slightly
+modify our pinhole camera: instead of one hole, make two holes that are
+close to each other so that their diffraction blurs on the photographic
+plate overlap. We already know that if we leave open the left hole and
+close the right one, then we get a diffuse blur $ L $ (the left dashed
+line in Figure~\ref{fig:3.3}\,(a)). If, on the contrary, we close the left
+hole and open the right one, we get another diffuse blur $ R $. Let us
+now try to predict what would happen if both holes are opened.
+
+\begin{SCfigure}[50][h]
+\includegraphics{01f03}
+\caption{Image density in a two-hole camera. (a) In the na\"{\i }ve corpuscular
+theory. (b) In reality.}
+\label{fig:3.3}
+\end{SCfigure}
+
+Following the logic of the corpuscular theory, we could conclude that
+the photons reaching the photographic plate are of two kinds: those that
+have passed through the left and the right hole, respectively. If the
+two holes are open simultaneously, then the density of ``left'' photons
+should add with the density of ``right'' photons, and the resulting
+image $ L + R $ must be a superposition of the two images (solid line
+in Figure~\ref{fig:3.3}\,(a)). Right? No, wrong! This seemingly logical
+reasoning is at odds with the experiment. The actual image on the
+photographic plate has an additional structure (brighter and darker
+areas shown by solid line in Figure~\ref{fig:3.3}\,(b)), called the \emph{interference pattern}. There are regions where the image density is higher
+than $ L + R $ (constructive interference) and regions with the density
+lower than $ L + R $ (destructive interference).
+
+How can corpuscular theory explain this strange interference pattern?
+For example, we could assume that there is some interaction between
+light corpuscles, so that the passage of particles through the left and
+right holes are not independent events, and the law of addition of
+probabilities is not applicable to them. However, this idea should be
+rejected, because the interference pattern does not disappear even if
+we release the photons one by one, so that their interaction is excluded.
+
+For example, in a two-hole interference experiment performed by Taylor
+in 1909~\cite{Taylor},\index{Taylor, G.\,I.} the light intensity was so low that no more
+than one photon was present in the camera at any given time. This
+removed any possibility of interaction between photons and any effect
+of this interaction on the interference pattern. Does this mean that a
+single photon can interfere with itself? Maybe the photon somehow splits
+apart, passes through both holes and then reconnects before colliding
+with the photographic plate? This explanation also does not stand up to
+criticism, because one photon can blacken only one grain of the
+emulsion. Nobody has ever seen a ``half-photon''.
+
+Perhaps, a particle passing through the right hole somehow knows whether
+the left hole is open or closed, and adjusts its trajectory,
+accordingly? This just does not make sense, and we have to admit that
+our simple corpuscular theory does not have a logical explanation for all these observations.
+
+\vspace*{-3pt}
+%s1.2 #&#
+\subsection{Wave theory of light}\label{ss:wave}
+\vspace*{-3pt}
+
+The inability to explain such fundamental properties of light as
+diffraction and interference was a heavy blow to the Newtonian
+corpuscular theory. These effects, like other light properties known in
+the pre-quantum era (reflection, refraction, polarization, etc.) were
+brilliantly explained by the \emph{wave theory}\index{wave theory} of
+light developed by Huygens, Young, Fresnel and others.\index{Huygens, C.}\index{Young, T.}\index{Fresnel, A.-J.} During the 19th
+century, the wave theory gradually supplanted the Newtonian corpuscles.
+The idea that light is a wave process received its strongest support
+from the Maxwell theory,\index{Maxwell, J.\,C.} which combined optics with electromagnetic
+phenomena. This theory explained that light is made of oscillating
+electric $ \boldsymbol{E}(t, \boldsymbol{r}) $ and magnetic
+$ \boldsymbol{B}(t, \boldsymbol{r}) $ fields -- sinusoidal waves
+propagating with the speed of light $ c $. According to Maxwell, the
+energy of this wave and, accordingly, the intensity of light $ I $ is
+proportional to the square of the amplitude of the field vectors:
+$ I \propto \boldsymbol{E}^{2} $. Then, from the point of view of the
+wave theory, the formation of the photographic image can be explained
+as follows.
+%
+\begin{quote}
+\textbf{\textit{Wave theory:}} Light is a continuous oscillating wave or
+field propagating through space. When a light wave meets with molecules
+of the photographic emulsion, charged parts of the molecules begin to
+oscillate under the action of the electric and magnetic vectors in the
+light field. In those places where the amplitude of the electromagnetic
+oscillations is maximal, the charges of the molecules are subjected to
+the strongest force, and the density of the photographic image is the
+highest.
+\end{quote}
+%
+This model explains both diffraction and interference in a fairly
+natural way: diffraction simply means that light waves are capable of
+going around obstacles, just like other types of waves (sea waves, sound
+waves, etc.) do.\footnote{The wavelength of the visible light varies
+between 0.4 micron for violet light and 0.7 microns for red light. So,
+for large obstacles or holes, the effect of diffraction is very small,
+and the corpuscular theory of light works quite well.} To explain the
+interference at two holes, it is sufficient to note that when two parts
+of a monochromatic wave pass through different apertures and meet on a photographic
+plate, their electric (and magnetic) vectors add up. However, the wave
+intensities are proportional to the squares of the vectors and,
+therefore, are not additive: $ I \propto (\boldsymbol{E}_{1} +
+\boldsymbol{E}_{2}) ^{2} = \boldsymbol{E}_{1} ^{2} + 2 \boldsymbol{E}
+_{1} \cdot \boldsymbol{E} _{2} + \boldsymbol{E} _{2} ^{2} \neq
+\boldsymbol{E}_{1} ^{2} + \boldsymbol{E}_{2} ^{2} \propto I_{1} + I
+_{2} $. From simple\vadjust{\vspace*{-6pt}\eject} geometric considerations it follows that there are
+places where these two waves always come with the same phase ($
+\boldsymbol{E}_{1} \uparrow \uparrow \boldsymbol{E}_{2} $ and
+$ \boldsymbol{E}_{1} \cdot \boldsymbol{E}_{2}> 0 $), which means
+\emph{constructive interference}, and there are other places where the
+waves come out of phase ($ \boldsymbol{E}_{1} \uparrow \downarrow
+\boldsymbol{E}_{2} $ and $ \boldsymbol{E}_{1} \cdot \boldsymbol{E}
+_{2} <0 $), i.\,e., \emph{destructive interference}.
+
+\vspace*{-3pt}
+%s1.3 #&#
+\subsection{Light of low intensity and other experiments}\label{ss:low-intensity}
+\vspace*{-3pt}
+
+In the 19th century physics, the particle--wave dispute was
+resolved in favor of the wave theory of light. However, further
+experiments showed that the victory was declared prematurely. To
+understand the problems of the wave theory, let us continue our thought
+experiment with the interference pattern. This time, we will gradually
+reduce the intensity of the light source. At first we will not notice
+anything unusual: quite predictably the image density on the
+photographic plate will decrease. However, from a certain point we will
+notice that the image ceases to be uniform and continuous, as before.
+We will see that it consists of separate dots, as if light were incident
+on some grains of the emulsion and did not touch others. This
+observation is difficult to explain from the point of view of the wave
+theory. How can a continuous wave create this dotted image? But the
+corpuscular theory copes easily: obviously, these dots are created by
+separate particles (photons), which bombard the surface of the
+photographic plate.
+
+In the late 19th and early 20th centuries, other experiments appeared
+that challenged the wave theory of light. The most famous of them was
+the photoelectric effect:\index{photoelectric effect} it was found out that when light falls on a
+piece of metal, it can knock electrons out of the metal into the vacuum.
+In itself, this discovery was not surprising. However, it was surprising
+how the number of knocked-out electrons depended on the frequency of
+light and its intensity. It was found out that only light with a
+frequency above a certain threshold $ \omega_{0} $ could knock out
+electrons from the metal. Light of a lower frequency was unable to do
+this, even if its intensity was very high. Why was this observation so
+surprising? From the point of view of the wave theory, it could be
+assumed that the electrons are emitted from the metal by the forces
+originated from the electric $ \boldsymbol{E} $ and magnetic
+$ \boldsymbol{B} $ fields in the light wave. The higher intensity of
+light ($=$~the larger magnitudes of the vectors $ \boldsymbol{E} $ and
+$ \boldsymbol{B} $) naturally means a higher force acting on the
+electrons and a greater probability of the electron emission. So why
+could not intensive low-frequency light cope with this work?
+
+In 1905, Einstein\index{Einstein, A.} explained the photoelectric effect by returning to the
+long-forgotten Newtonian corpuscles in the form of light quanta, later
+called \emph{photons}.\index{photon} Einstein described light as
+``$\ldots$ consisting of finite number of energy quanta which are localized at
+points in space, which move without dividing and which can only be
+produced and absorbed as complete units.'' \cite{Arons}. According
+to Einstein, each photon carries the energy $ \hbar \omega $, where
+$ \omega $ is the light frequency\footnote{$ \omega $ is the so-called
+\emph{cyclic frequency} (measured in radians per second), which is related
+to the ordinary frequency $ \nu $ (measured in cycles per second) by
+formula $ \omega = 2 \pi \nu $.} and $ \hbar $ is the \emph{Planck}
+\emph{constant}.\index{Planck constant}\index{Planck, M.} Each photon has a chance to
+encounter only one electron in the metal and transfer its energy to it.
+Only high-energy photons (i.\,e., photons present in high-frequency light)
+can transmit enough energy to the electron to overcome the energy
+barrier $ E_{b} $ between the volume of the metal and the vacuum.
+Low-frequency light has low-energy photons $ \hbar \omega <E_{b}
+\approx \hbar \omega_{0} $. Hence, regardless of the intensity ($=$~the
+number of photons) of such light, its photons are simply too weak and
+unable to kick the electrons strong enough to overcome the
+barrier.\footnote{In fact, low-frequency light can lead to the
+electron emission when two low-energy photons collide simultaneously
+with the same electron. But such events are unlikely and become
+noticeable only at very high light intensities.}
+
+In the Compton experiments (1923), the\index{Compton scattering}\index{Compton, A.}
+interaction of X-ray radiation with free electrons was studied in much
+detail, and indeed, this interaction was more like a collision of two
+particles than a shaking of the electron by a periodic electromagnetic
+wave.
+
+These observations should confirm our conclusion that light is a stream
+of corpuscles, as Newton said. But how about interference? We have
+already established that corpuscular theory is unable to give a logical
+explanation for this effect!
+
+So, the young quantum theory faced the seemingly impossible task of
+reconciling two classes of experiments with light. Some experiments
+(diffraction, interference) were easily explained within the framework
+of the wave theory of light, but did not agree with the corpuscles --
+photons. Other experiments (photoelectric effect, Compton scattering)
+contradicted the wave properties and clearly indicated that light
+consists of particles. To all this confusion, in 1924 de Broglie added\index{de Broglie, L.}
+the hypothesis that the \emph{particle}--\emph{wave dualism}\index{particle-wave dualism}
+ is characteristic not only of photons.
+He argued that all material particles -- for example, electrons -- have
+wave properties. This ``crazy'' idea was soon confirmed by Davisson and
+Germer, who observed the interference of electron beams in 1927.\index{Davisson, C.}\index{Germer, L.}
+
+Without a doubt, in the first quarter of the 20th century, physics
+approached the greatest crisis in its history. Heisenberg described this
+situation as follows.\index{Heisenberg, W.}
+%
+\begin{quote}
+I remember discussions with Bohr which went through many hours till very
+late at night and ended almost in despair; and when at the end of the
+discussion I went alone for a walk in the neighboring park I repeated
+to myself again and again the question: Can nature possibly be as absurd
+as it seemed to us in those atomic experiments? -- W. Heisenberg
+\cite{Heisenberg}.
+\end{quote}
+
+%s2 #&#
+\section{Classical logic}\label{sc:1.1}
+In order to advance in our understanding of the paradoxes mentioned
+above, we need to go beyond the framework of classical physics.
+Therefore, to begin with, we are going to outline this framework, i.\,e.,
+to look at classical mechanics. For simplicity, we consider the
+classical description of a single particle in a one-dimensional space.
+
+%s2.1 #&#
+\subsection{Phase space of one classical particle}\label{sc:1.1.1}
+The \emph{state} $\phi $
+\label{lb:state}\index{state}
+of a classical particle is completely and uniquely determined by
+specifying the particle's position $x$ and momentum $p$.\footnote{It
+might seem more natural to work with the particle's velocity $v$ instead
+of its momentum. However, we will see later that our choice of primary
+observables has a special meaning, because $x$ and $p$ are ``canonically
+conjugated'' variables.} Such states will be called\index{pure classical state} \emph{pure classical}.
+
+Thus, all possible states of a one-particle system are labeled by a pair
+of numbers $(x,p)$ and can be represented by points on a plane, which
+will be called the \emph{phase space}\index{phase space} of the system and
+denoted $ \mathcal{S} $ (see Figure~\ref{fig:4.1}).
+\label{lb:phase-space}
+Then particle dynamics is represented by lines ($=$~trajectories) in the
+phase space $ \mathcal{S} $.\index{trajectory}
+
+\begin{SCfigure}[50][h]
+\includegraphics{01f04}
+\caption{Phase space of a particle in one spatial dimension.}
+\label{fig:4.1}
+\end{SCfigure}
+
+
+%s2.2 #&#
+\subsection{Propositions in phase space}\label{sc:1.2.1}
+In order to make it easier to switch to the quantum description in the
+future, let us introduce the concept of experimental (or logical)
+\emph{proposition}, sometimes also called
+\emph{yes}--\emph{no question}.\index{proposition}\index{yes-no experiment}\label{lb:proposition}
+The most obvious are propositions about individual observables. For
+example, the proposition $ \mathcal{A} = $ ``the particle position is
+in the interval $a$'' is meaningful. In each pure state of the system,
+this proposition can be either true or false (the question answered
+``yes'' or ``no'').
+
+Experimentally, such a proposition can be realized using a
+one-dimensional ``Geiger counter'',\index{Geiger, H.} which occupies the region $a$ of
+space. The counter clicks ($=$~the proposition is true) if the particle
+passes through the counter's discharge chamber and does not click ($=$~the
+proposition is false) if the particle is outside the region $a$.
+
+Propositions can be represented in the phase space. For example, the
+above proposition $ \mathcal{A} $ is associated with the strip $ A $ in
+Figure~\ref{fig:4.1}. The proposition is true if the point representing
+the state $ \phi $ is inside the strip $ A $. Otherwise, the proposition
+is false.%\label{lb:state}
+
+Similarly, propositions about the momentum are represented by strips
+parallel to the $x$ axis. For example, the strip $ B $ in Figure~\ref{fig:4.1} corresponds to the logical proposition $ \mathcal{B} = $
+``the particle momentum belongs to the interval $ b $.''
+
+We will denote by $\mathcal{L}$ the
+\label{lb:set_of_allp}
+set of all propositions about the physical system.\footnote{$
+\mathcal{L} $ is also called the \emph{propositional system}
+or \emph{logic}.\index{logic}}\index{propositional system} In the rest of this section we will study the
+structure of this set and establish its connection with the classical
+\emph{Boolean logic}.\index{Boolean logic}\index{Boole, G.} The set of all possible states
+of the system will be denoted $\mathfrak{S}$.
+\label{lb:set_of_alls}
+In this chapter, our goal is to study the mathematical relationships
+between the elements $ \mathcal{X} \in \mathcal{L} $ and $ \phi
+\in \mathfrak{S} $ in these two sets.
+
+%s2.3 #&#
+\subsection{Operations with propositions}\label{sc:1.2.2}
+In classical theory, in addition to the above propositions $
+\mathcal{A} $ and $\mathcal{B} $ about single observables, we can also
+associate a proposition with each region of the phase space. For
+example, in Figure~\ref{fig:4.1} we showed a rectangle $C$, which is an
+intersection of the two strips $ C = A \cap B $. Apparently, this
+rectangle also corresponds to an admissible proposition $ \mathcal{C} = \mathcal{A}
+\wedge \mathcal{B} = $ `the particle position is in the interval $a$
+\emph{and} its momentum is in the interval $b$.''
+\label{lb:wedge}
+In other words, this proposition is obtained by applying the logical
+operation ``AND'' to the two elementary propositions $ \mathcal{A}$ and
+$ \mathcal{B}$. We denote this logical operation (\emph{meet}) by the symbol
+\label{lb:vee}\index{meet}
+$\mathcal{A} \wedge \mathcal{B} $.\footnote{This symbol differs from
+the symbol $ A \cap B $ for the intersection of two regions in the phase
+space, thereby emphasizing that we are dealing with the logical
+operation ``AND'', which relates specifically to propositions. In
+classical logic, there is an equivalence between propositions and
+regions in the phase space $ \mathcal{S} $, so having two different
+notations may seem superfluous. However, in the quantum case, such an
+equivalence is lost, the idea of the phase space is not applicable and
+only the logical notation $\mathcal{A} \wedge \mathcal{B} $ makes sense.}
+
+%t1 #&#
+\begin{table}[b!]
+\def\arraystretch{1.05}
+%\vspace*{12pt}
+\tabcolsep=0pt
+\caption{Five operations and two special elements in the theory of subsets of
+the phase space $\mathcal{S}$, in the classical logic and in the lattice
+theory.\index{negation}\index{implication}}
+\label{table:2.2}
+\begin{tabular*}{\textwidth}{@{\extracolsep{4in minus 4in}}lllll}
+\multicolumn{1}{L{1.7cm}}{Symbol for subsets in $\mathcal{S}$}
+& \multicolumn{1}{L{1cm}}{Name in logic}
+& \multicolumn{1}{L{1.8cm}}{Meaning in classical logic}
+& \multicolumn{1}{L{1.7cm}}{Name in lattice theory}
+& \multicolumn{1}{L{1.67cm}@{}}{Symbol in lattice theory} \\
+\midrule\starttabularbody
+\multicolumn{5}{l}{\textit{Operations with subsets/propositions}} \\
+$X \subseteq Y$ & implication & $\mathcal{X}$ IMPLIES $\mathcal{Y}$& less or equal & $\mathcal{X} \leq \mathcal{Y}$ \\
+$X \subseteq Y$, $X \neq Y$ & implication & $\mathcal{X}$ IMPLIES $\mathcal{Y}$& less & $\mathcal{X} < \mathcal{Y}$ \\
+$X \cap Y$ & conjunction & $\mathcal{X} $ AND $\mathcal{Y}$ & meet & $\mathcal{X} \wedge \mathcal{Y}$ \\
+$X \cup Y$ & disjunction & $\mathcal{X} $ OR $\mathcal{Y}$ & join & $\mathcal{X} \vee \mathcal{Y}$ \\
+$\mathcal{S} \setminus X$ & negation & NOT $\mathcal{X}$ & orthocomplement & $\mathcal{X}^{\perp }$ \\
+\hline
+\multicolumn{5}{l}{\textit{Special subsets/propositions}} \\
+$\mathcal{S}$ & tautology & always true & maximal element & $\mathcal{I}$ \\
+$\emptyset _{\mathcal{S}}$ & absurdity & always false & minimal element & $\emptyset $ \\
+\end{tabular*}
+\end{table}
+
+The four other logical operations listed in Table \ref{table:2.2} are
+also naturally defined in the language of propositions--regions. For
+example, the rectangle $ C = A \cap B $ lies entirely inside the strip
+$ A $. From the point of view of logic, we can say that proposition~$ \mathcal{C} $
+ ``IMPLIES'' proposition $ \mathcal{A} $. Indeed, in any
+state where $ \mathcal{C} $ is true, the proposition $ \mathcal{A} $ is
+also true. This logical connection will be denoted by $ \mathcal{C}
+\leq \mathcal{A} $.\footnote{If $ \mathcal{C} $ ``IMPLIES''
+$ \mathcal{A} $ and definitely $ \mathcal{A} \neq \mathcal{C} $, then
+we will use the symbol $ \mathcal{C} < \mathcal{A} $.\label{lb:lessless}}\label{lb:lessthan}
+
+The proposition $ \mathcal{A} $ ``OR'' $ \mathcal{B} $ corresponds to
+the union ($ A \cup B $) of two regions in the phase space. This
+proposition will be written as $ \mathcal{A} \vee \mathcal{B} $. If
+either $ \mathcal{A} $ or $ \mathcal{B} $ is true, then the
+\emph{join} $ \mathcal{A} \vee \mathcal{B} $ is definitely true.\index{join}
+
+The last operation is the complement of a phase-space region $ A
+$.\footnote{That is, the region consisting of phase-space points not
+belonging to $A$.} Obviously its logical equivalent is the negation of
+the proposition $ \mathcal{A} $, which we denote by $ \mathcal{A}^{
+\perp } $ ($=$~``NOT''$ \mathcal{A} $, \emph{orthocomplement}).\label{lb:orthocomplement}\index{orthocomplement}
+
+In addition to these four operations, we will need two special
+propositions, listed in Table \ref{table:2.2}.
+
+\emph{Maximal}\index{maximal proposition}\index{tautology} proposition (or
+\emph{tautology}) $ \mathcal{I} \in \mathcal{L} $ corresponds to the whole
+phase space, i.\,e., the maximal subset of $ \mathcal{S} $. This
+proposition can be expressed in different verbal forms. For example:
+$ \mathcal{I} = $ ``particle position is somewhere on the real axis''
+or $ \mathcal{I} = $ ``particle momentum is somewhere on the real
+axis.'' Both these propositions are always true for any
+state.\footnote{Measurements of observables always yield \emph{some}
+result, because we agreed in the Introduction that an ideal measuring
+device never misfires.}\label{lb:tautology}
+
+Propositions like ``the value of the observable is not on the real
+axis'' or ``the value of the observable lies in the empty subset of the
+real axis'' are always false and equal to the single \emph{minimal} (or
+\emph{absurd}) proposition\index{minimal proposition}\index{absurd proposition}
+$ \emptyset $ in the set $ \mathcal{L} $.\label{lb:absurd}
+
+%t2 #&#
+\begin{table}
+\tabcolsep=0pt
+\caption{Basic axioms of classical and quantum logics.}
+\label{table:2.1}
+\begin{tabular*}{.7\textwidth}{@{\extracolsep{4in minus 4in}}rll}
+& Name & Formula \\
+\midrule\starttabularbody
+ \multicolumn{3}{l}{\textit{Axioms  of  orthocomplemented lattices}} \\
+1 & Reflectivity & $\mathcal{X} \leq \mathcal{X}$ \\
+2 & Symmetry & $(\mathcal{X} \leq \mathcal{Y})  \ \&\   (\mathcal{Y} \leq \mathcal{X}) \Rightarrow  \mathcal{X}= \mathcal{Y} $ \\
+3 & Transitivity & $(\mathcal{X} \leq \mathcal{Y})  \ \&\   (\mathcal{Y} \leq \mathcal{Z})  \Rightarrow  \mathcal{X}\leq \mathcal{Z}$ \\
+4 & Definition of $\mathcal{I}$ & $\mathcal{X} \leq \mathcal{I}$ \\
+5 & Definition of $\emptyset $ & $\emptyset \leq \mathcal{X}$ \\
+6 & Definition of $\wedge $ & $\mathcal{X} \wedge \mathcal{Y} \leq \mathcal{X}$ \\
+7 & Definition of $\wedge $ & $(\mathcal{Z} \leq \mathcal{X})  \ \&\   (\mathcal{Z} \leq \mathcal{Y}) \Rightarrow \mathcal{Z} \leq (\mathcal{X} \wedge \mathcal{Y})$ \\
+8 & Definition of $\vee $ & $ \mathcal{X} \leq \mathcal{X} \vee \mathcal{Y} $ \\
+9 & Definition of $\vee $ & $(\mathcal{X} \leq \mathcal{Z})  \ \&\  (\mathcal{Y} \leq \mathcal{Z}) \Rightarrow (\mathcal{X} \vee \mathcal{Y}) \leq \mathcal{Z} $ \\
+10 & Commutativity & $\mathcal{X} \vee \mathcal{Y} = \mathcal{Y} \vee \mathcal{X}$ \\
+11 & Commutativity & $\mathcal{X} \wedge \mathcal{Y} = \mathcal{Y} \wedge \mathcal{X}$ \\
+12 & Associativity & $(\mathcal{X} \vee \mathcal{Y}) \vee \mathcal{Z} = \mathcal{X} \vee (\mathcal{Y} \vee \mathcal{Z})$ \\
+13 & Associativity &$(\mathcal{X} \wedge \mathcal{Y}) \wedge \mathcal{Z} = \mathcal{X} \wedge (\mathcal{Y} \wedge \mathcal{Z})$ \\
+14 & Noncontradiction & $\mathcal{X} \wedge \mathcal{X}^{\perp } = \emptyset $ \\
+15 & Noncontradiction & $\mathcal{X} \vee \mathcal{X}^{\perp } = \mathcal{I}$ \\
+16 & Double negation & $(\mathcal{X}^{\perp })^{\perp } = \mathcal{X}$ \\
+17 & Contraposition & $\mathcal{X} \leq \mathcal{Y} \Rightarrow \mathcal{Y}^{\perp } \leq \mathcal{X}^{\perp }$ \\
+\hline
+ \multicolumn{3}{l}{\textit{Additional assertions of classical logic}} \\
+18 & Distributivity & $ \mathcal{X} \vee (\mathcal{Y} \wedge \mathcal{Z}) = (\mathcal{X} \vee \mathcal{Y}) \wedge (\mathcal{X} \vee \mathcal{Z})$ \\
+19 & Distributivity & $ \mathcal{X} \wedge (\mathcal{Y} \vee \mathcal{Z}) = (\mathcal{X} \wedge \mathcal{Y}) \vee (\mathcal{X} \wedge \mathcal{Z}) $\\
+\hline
+ \multicolumn{3}{l}{\textit{Additional postulate of quantum logic}}
+\\
+20 & Orthomodularity & $ \mathcal{X} \leq \mathcal{Y} \Rightarrow \mathcal{X}\leftrightarrow \mathcal{Y} $ \\
+\end{tabular*}
+\end{table}
+
+%s2.4 #&#
+\subsection{Axioms of logic}\label{sc:1.2.3}
+
+Five operations and two special propositions, presented above, define
+a rich mathematical structure. To work with these objects, it is
+necessary to establish their mutual relations, i.\,e., laws (or axioms)
+of logic.
+
+The easiest way to establish these laws is to use the equivalence
+between logical propositions and subsets of the phase space. This means
+that the properties of logical operations (``IMPLIES,'' ``AND,'' ``OR,''
+``NOT'') coincide with the properties of operations on subsets
+(``inclusion,'' ``intersection,'' ``union,'' ``complement''). From this
+analogy, it is not difficult to obtain the laws of classical logic
+listed in lines 1 through 19 of Table \ref{table:2.1}.\footnote{Actually,
+the choice of the axioms of logic is rather arbitrary. There are
+different approaches to the axiomatization of logic, and our approach
+is not the most economical. We tried to select our axioms so that they
+had the most transparent meaning.}\vadjust{\vspace*{12pt}\eject}
+
+\nn
+For example, the transitivity property 3 from Table \ref{table:2.1}
+allows us to build syllogisms, such as the one analyzed by Aristotle:\index{Aristotle}
+%
+\begin{quote}
+\emph{If all humans are mortal},
+
+\emph{and all Greeks are humans},
+
+\emph{then all Greeks are mortal}.
+\end{quote}
+%
+Indeed, we have three propositions: $ \mathcal{X} = $ ``this is a
+Greek,'' $ \mathcal{Y} = $ ``this is a human being'' and $
+\mathcal{Z} = $ ``this is mortal.'' We know that $ \mathcal{X}$ implies
+$\mathcal{Y} $ (i.\,e., $ \mathcal{X} \leq \mathcal{Y} $). We also know
+that $ \mathcal{Y} $ implies $ \mathcal{Z}$ ($ \mathcal{Y} \leq
+\mathcal{Z} $). Then the transitivity property tells us that
+$ \mathcal{X}$ implies~$ \mathcal{Z}$ ($ \mathcal{X} \leq \mathcal{Z}$,
+i.\,e., ``every Greek is mortal'').
+
+Property 14 says that a proposition $ \mathcal{X} $ and its negation
+$ \mathcal{X}^{\perp } $ cannot be true at the same time, i.\,e., their
+meet $ \mathcal{X} \wedge \mathcal{X}^{\perp } $ is equal to the absurd
+proposition $\emptyset $. Property 15 is the famous \emph{tertium non}
+\emph{datur} law of logic: either the proposition $ \mathcal{X} $ or its
+negation $ \mathcal{X}^{\perp } $ is true, and \emph{the third} \emph{is}
+\emph{not given}.
+
+A set of objects with operations and special elements from Table
+\ref{table:2.2}, subject to properties 1--17 from Table
+\ref{table:2.1}, is referred to as the \emph{orthocomplemented
+lattice}\index{orthocomplemented lattice} by mathematicians.
+
+Many useful logical relationships can be derived from the axioms of
+orthocomplemented lattices. Some of them are formulated in the form of
+lemmas and theorems in Appendix \ref{ss:theorems}. However, these axioms
+1--17 are still not enough to describe the classical logic of
+propositions unequivocally. Subsets of the phase space and propositions
+of classical logic are subject to additional \emph{distributive}
+\emph{laws}\index{distributive law} 18 and 19 in Table \ref{table:2.1}.
+
+Like other properties in the upper portion of Table \ref{table:2.1}, the
+distributive laws are easily derived from our analogy ``proposition''
+$\leftrightarrow $ ``region of the phase space.'' Nevertheless, we put
+these laws in a separate category. As we shall see in Section
+\ref{sc:1.3}, it is these laws that determine the difference between
+classical and quantum logics. In Table \ref{table:2.1} we call them
+``assertions,'' because we do not consider them to be true in
+fundamental quantum theory.\footnote{In our book we distinguish
+\emph{postulates},\index{postulate} \emph{statements} and \emph{assertions}.\index{assertion}
+Postulates form the basis of our theory. In many
+cases, they undoubtedly follow from experiments, and we do not question
+their validity. Statements follow logically from the Postulates, and we
+consider them to be correct. Assertions refer to
+claims\index{statement} that are made in other theories, but do not have place
+in our approach (RQD).}
+
+%s2.5 #&#
+\subsection{Phase space from axioms of classical logic}\label{sc:1.2.4}
+Thus, we have shown that in the phase space of classical mechanics the
+set of all propositions $\mathcal{L} $ is an orthocomplemented lattice
+with distributive laws 18 and 19. Such lattices will be called
+\emph{Boolean algebras} or \emph{classical logics}.\footnote{Strictly
+speaking, the definition of classical logic involves also a technical
+condition of the lattice \emph{atomicity}.\index{atomic lattice} In our case
+this means the existence of ``minimal nonzero'' propositions --
+\emph{atoms},\index{atomic proposition} which correspond to points in the
+phase space.}\index{classical logic}\index{Boolean algebra}
+
+For us, it is very important that one can prove the converse statement,
+which is the following.
+
+%tchapter.1 #&#
+\begin{theorem}[representation of classical logic]
+\label{Theorem4.13}
+For each classical logic $ \mathcal{L} $ defined by properties $1$--$19$
+from Table \ref{table:2.1}, there exist a set $ \mathcal{S}
+$\footnote{In classical mechanics, the set $ \mathcal{S} $ is called
+the \emph{phase space}.} and an isomorphism $ h(\mathcal{X}) $ between
+logical propositions $\mathcal{X} \in \mathcal{L} $ and subsets of
+$ \mathcal{S} $, such that logical operations in $ \mathcal{L} $ match
+with set-theoretical operations in $ \mathcal{S}$, as follows:
+%
+\begin{align*}
+\mathcal{X} \leq \mathcal{Y} &\Leftrightarrow h(\mathcal{X}) \subseteq h(
+\mathcal{Y}),
+\\
+h(\mathcal{X} \wedge \mathcal{Y}) &= h(\mathcal{X}) \cap h( \mathcal{Y}),
+\\
+h(\mathcal{X} \vee \mathcal{Y}) &= h(\mathcal{X}) \cup h(\mathcal{Y}),
+\\
+h \bigl( \mathcal{X}^{\perp } \bigr) &= \mathcal{S} \setminus h(
+\mathcal{X}),
+\\
+h(\mathcal{I}) &= \mathcal{S,}
+\\
+h(\emptyset ) &= \emptyset_{\mathcal{S}};
+\end{align*}
+%
+see Table \ref{table:2.2}.
+\end{theorem}
+
+The importance of this theorem lies in the possibility to derive
+foundations of classical physics (e.\,g., the structure of the phase
+space) from axioms of logic. Starting with the Boolean logic, we come
+to the idea of the phase space, where states are represented by points.
+From here it is not far to other elements of classical mechanics, such
+as, for example, the description of dynamics by trajectories.
+
+\vspace*{-3pt}
+%s2.6 #&#
+\subsection{Classical observables}\label{ss:observables}
+\vspace*{-3pt}
+
+In classical mechanics, an observable ($=$~physical quantity) $ F $ is
+represented by a real function $ f: \mathcal{S} \to \mathbb{R} $ on the
+phase space. To each point ($=$~state) of the phase space the function
+$f$ associates a single number -- the value of the observable in this
+state. Three examples of such observables/functions are shown in Figure~\ref{fig:4.12}. They are the position $ x $, the momentum $ p $ and the
+energy $ H $ of a one-dimensional oscillator (a pendulum) with a
+quadratic Hamiltonian. The values taken by the corresponding functions
+$f$ are from the spectra of the observables. In the case of $ x $ and
+$ p $, the spectrum is the entire real axis $ \mathbb{R} = (- \infty
+, + \infty ) $, and the spectrum of $ H $ is the set of nonnegative
+numbers $ [0, + \infty ) $.\looseness=-1
+
+\begin{SCfigure}[50][h]
+\includegraphics{01f05}
+\caption{Observables in the language of propositions in the phase space: (a)
+position $x$, (b) momentum $p$, (c) energy of the harmonic oscillator $H(x,p) =
+p^{2}/(2m) + \alpha x^{2}$.}
+\label{fig:4.12}
+\end{SCfigure}
+
+Each such function-observable $f$ defines a set of constant-value lines
+$ x, p, H = \ldots , 1,2,\allowbreak 3,4, \ldots $ in $\mathcal{S}$ (shown in Figure~\ref{fig:4.12}), which in turn
+can be interpreted as subsets $ \mathcal{S}_{f} $ or logical
+propositions in the phase space. The proposition $ \mathcal{S}_{f}
+\in \mathcal{L} $ is pronounced ``the observable $ F $ has the value
+$ f $.'' Thus, each observable can be equivalently described as a map
+$ \mathcal{F} $ from the spectrum of the observable into the set of all
+propositions $ \mathcal{L} $. This
+map\footnote{It is also called the \emph{proposition}-\emph{valued}
+\emph{measure}.} has the following properties:
+%
+%
+%3 items enumerated
+%the first item: 1
+%the last item: 3
+% the (last) widest item: 3
+\begin{enumerate}
+\item[(1)]
+The function $ \mathcal{F} $ associates to each point $ f $ of the
+spectrum of the observable $ F $ one and only one logical proposition
+$ \mathcal{S}_{f} \in \mathcal{L} $.
+\item[(2)]
+Propositions corresponding to different points $  ( f \neq f'
+ ) $ of the spectrum are disjoint.\footnote{Two propositions
+$ \mathcal{X} $ and $ \mathcal{Y} $ are called \emph{disjoint},\index{disjoint propositions}
+ if $ \mathcal{X} \leq \mathcal{Y}^{
+\perp } $ (or, equivalently, $ \mathcal{Y} \leq \mathcal{X}^{\perp }
+$).} On the phase plane, such disjoint propositions correspond to
+nonintersecting regions, otherwise we would have absurd states
+possessing two different values of the same observable simultaneously.
+\item[(3)]
+The join (union) of the propositions $ \mathcal{S}_{f} $ over all
+spectrum points is equal to the maximal (trivial) proposition ($ \vee
+_{f} \mathcal{S}_{f} = \mathcal{I} $), which is equivalent to the entire
+phase space. This condition indicates that in each state it is possible
+to measure some value of the observable. There are no states ($=$~points
+in the phase space) where the observable is not measurable.
+\vspace*{-3pt}
+\end{enumerate}
+%
+\begin{SCfigure}
+\includegraphics{01f06}
+\caption{Observable $H$ as a mapping $\mathcal{F}$ from the spectrum of $H$ into
+the set of propositions in the phase space $S$. The function $\mathcal{F}$ maps
+the spectrum interval $a=[2,4]$ to the subset-proposition $\mathcal{A}$.}
+\label{fig:4.12x}
+\end{SCfigure}
+%
+So, with each observable $ F $ and with each subset $ a $ of the real
+axis $ \mathbb{R} $ we associate an experimental \emph{proposition}
+$ \mathcal{A} = $ ``the value of the observable $ F $ is inside the
+subset \mbox{$ a \subseteq \mathbb{R} $}.'' Obviously, $ \mathcal{A} $ is equal
+to the join of elementary propositions $ \mathcal{S}_{f} $ over all
+points of the spectrum lying inside the interval $ a $.  The mapping subset$ \to $proposition is illustrated in Figure~\ref{fig:4.12x}.
+
+\vspace*{-3pt}
+%s3 #&#
+\section{Measurements and probabilities}\label{sc:measurements-and-probabilities}
+\vspace*{-3pt}
+
+In the previous section, we developed the classical logic of strictly
+deterministic states in which the answer to any yes--no question could
+be either definite ``yes'' or definite ``no.'' However, such states are
+rarely found in real experiments. As a rule, measurements are associated
+with randomness, uncertainties, errors, etc. To describe such
+unpredictable outcomes we need the concepts of an ensemble and a
+probability measure.\looseness=-1
+
+\vspace*{-3pt}
+%s3.1 #&#
+\subsection{Ensembles and measurements}\label{ss:quantum-case}
+\vspace*{-3pt}
+
+We will call \emph{experiment}\index{experiment} a procedure for preparing
+an \emph{ensemble}\footnote{Ensemble is a set of identical copies of the physical
+system, made in -- as much as possible -- the same conditions.}\index{ensemble}
+ and measuring the same observable in each member of the
+ensemble.\footnote{It is important to note that in this book we do not
+consider repeated measurements performed on the same copy of the
+physical system. We will assume that after the measurement has been
+made, the used copy of the system is discarded. A fresh copy is required
+for each new measurement. In particular, this means that we are not
+interested in the state of the system after the measurement. The
+description of successive measurements in one instance of a physical
+system is an interesting task, but it is beyond the scope of our book.\label{foot: repeat}}
+
+So, let us prepare many copies of the system, all in one state
+$\phi $ ($=$~ensemble) and perform measurements of the same proposition
+$ \mathcal{X} $ in all these copies. As we already know, there is no
+guarantee that the outcomes of these measurements will be the same.
+Hence, for some members of the ensemble the proposition $ \mathcal{X}
+$ will be found true, and for other members it will be false. Using
+these data, we can introduce a function $ (\phi | \mathcal{X}) $, which
+we call \emph{probability measure}\index{probability measure} and which
+associates to each state $ \phi $ and each proposition $ \mathcal{X} $
+the probability that $ \mathcal{X} $ is true in the state (ensemble)
+$ \phi $. The value of this function (a real number in the interval
+between 0 and 1) is obtained as a result of the following steps:
+%
+\begin{enumerate}
+\item[(i)] prepare an instance of the system in the state $\phi $;
+\item[(ii)] make a measurement and determine whether the proposition
+$\mathcal{X}$ is true or false;
+\item[(iii)] repeat steps (i) and (ii) $N$ times and calculate the
+probability by the formula
+%
+\begin{align*}
+(\phi |\mathcal{X}) = \lim_{N \to \infty } \frac{M}{N},
+\end{align*}
+%
+where $M$ is the number of times the proposition $\mathcal{X}$ was found
+true.
+\end{enumerate}
+%
+In order to obtain the most complete description of the physical system,
+it is necessary to perform such experiments with all possible
+propositions $ \mathcal{X} \in \mathcal{L} $ for all possible ensembles
+($=$~states) $ \phi \in \mathfrak{S} $.
+
+%s3.2 #&#
+\subsection{States as probability measures}\label{sc:1.2.33}
+If we are not too lazy to complete all such measurements, we will notice
+that the probability measure $ (\phi | \mathcal{X}) $ has the following
+properties:\label{lb:measure}\index{state}
+%
+\begin{itemize}
+\item  The probability corresponding to the maximal (trivial)
+proposition is 1 in all states, so\looseness=-1
+%e1 #&#
+\begin{align}
+(\phi |\mathcal{I}) = 1. \label{eq:prob1}
+\end{align}
+
+\item  The probability corresponding to the minimal (absurd)
+proposition is 0 in all states, so
+%e2 #&#
+\begin{align}
+(\phi |\emptyset ) = 0. \label{eq:prob2}
+\end{align}
+
+\item  The probability corresponding to the join of disjoint
+propositions is the sum of individual probabilities, so
+%e3 #&#
+\begin{align}
+(\phi |\mathcal{X} \vee \mathcal{Y}) = (\phi |\mathcal{X}) + (\phi |
+\mathcal{Y}), \quad \mbox{if } \mathcal{X} \leq \mathcal{Y}^{\perp }.
+\label{eq:prob3}
+\end{align}
+\end{itemize}
+%
+The first two statements follow directly from definitions of special
+logic elements $ \mathcal{I} $ and $ \emptyset $. The third statement
+is known as the \emph{third Kolmogorov} \emph{probability axiom}: the
+probability of observing either one of the two (or several) mutually
+exclusive events is equal to the sum of event probabilities.\index{Kolmogorov axiom}\index{Kolmogorov, A.\,N.}
+
+%s3.3 #&#
+\subsection{Probability distributions and statistical mechanics}\label{sc:1.1.3}
+In classical physics, the description of random events is handled by
+\emph{statistical mechanics}.\index{statistical mechanics} In this
+discipline, states that have an element of randomness are called
+\emph{mixed classical} states.\index{mixed state} Mathematically, they are
+represented by \emph{probability distributions},\index{probability distribution}
+ which are functions $ \rho (x,p) $ on
+the phase space that
+%
+%
+%3 items enumerated
+%the first item: 1
+%the last item: 3
+% the (last) widest item: 3
+\begin{enumerate}
+\item[(1)]
+are nonnegative: $ \rho (x,p) \geq 0$;
+\item[(2)]
+normalized (their integral over the entire phase space is equal to 1),
+%
+\begin{align*}
+\int_{-\infty }^{+\infty } dx \int_{-\infty }^{+\infty
+} dp \rho (x,p) =
+1;
+\end{align*}
+\item[(3)]
+express the probability of the answer \emph{yes} to the question $ \mathcal{X} $
+ by the formula
+%e4 #&#
+\begin{align}
+(\phi | \mathcal{X}) = \int_{X} dx dp \rho (x,p), \label{eq:prob-sum}
+\end{align}
+%
+where $ X $ is the region of the phase space corresponding to the
+question ($=$~proposition) $\mathcal{X}$.
+\end{enumerate}
+%
+By combining the notion of probability distribution with the laws of
+logic 1--19 from Table \ref{table:2.1}, we can arrive at the classical
+theory of probability. But we will not dwell on it here. In the next two
+sections, we will be more interested in quantum logic and quantum
+probability theory. Here, we will finish our discussion of classical
+probabilities with a few remarks about determinism.
+
+The randomness present in mixed classical states is usually associated
+with our inability to provide identical preparation conditions for all
+members in the ensemble. For example, when we throw a die, it falls in
+an accidental, unpredictable manner. However, we believe that this
+unpredictability is simply due to our inability to strictly control the
+movement of our hand. Thus, classical randomness and probabilities are
+technical in nature rather than fundamental.
+
+Therefore, classical physics is based on one tacitly assumed axiom,
+which we formulate here as an assertion.
+
+%achapter.2 #&#
+\begin{assertion}[full determinism]
+\label{assertionJ_c}It is possible to prepare such ensembles (states) of the physical system
+where measurements of all observables produce the same result every time.
+In other words, we assume the existence of pure classical states
+representable by points in the phase space. \end{assertion}
+
+Pure states are also representable in the language of probability
+distributions. They correspond to delta-like functions $ \rho (x, p) =
+\delta (x-x_{0}) \delta (p-p_{0}) $ on the phase space. Then formula
+(\ref{eq:prob-sum}) confirms that in such states all experimental
+results are deterministic. A proposition $\mathcal{X} $ is either true
+($ (\phi | \mathcal{X}) = 1 $), if the point $(x_{0}, p_{0}) $ of the
+phase space belongs to the subset $ X $, or false ($ (\phi |
+\mathcal{X}) = 0 $) otherwise, without any intermediate possibility.
+
+%s4 #&#
+\section{Logic of quantum mechanics}\label{sc:1.3}
+To clarify the basic ideas of quantum mechanics, let us return to the
+experiment with photons passing through one hole (see Subection
+\ref{ss:low-intensity}). We found out that in the low intensity regime, when
+the photons are emitted one by one, the image on the screen (or
+photographic plate) consists of individual dots, which are randomly
+distributed sites of particle (photon) hits. This means that results of
+measuring the photon position are not reproducible, even if the state
+preparation conditions are controlled in the most careful way!
+
+From this we conclude that the behavior of photons involves some
+\emph{random} element. This is the most fundamental statement of quantum
+mechanics.\footnote{In Subection \ref{ss:states}, we will see that this
+statement is, in fact, a consequence of the even more fundamental
+Postulate \ref{postulateK13}.}
+
+%schapter.3 #&#
+\begin{statement}[fundamental randomness]
+\label{postulateJ2}Measurements in the microworld have an element of randomness. This
+randomness is fundamental and cannot be explained or reduced \textup{(}as we did
+in the classical case\textup{)} to some inaccuracies in the preparation of
+initial states or experimental errors.
+\end{statement}
+
+By adopting this Statement, we conclude that classical Assertion
+\ref{assertionJ_c} (complete determinism) is incorrect. In the pinhole
+camera setup, it is impossible to prepare such an ensemble of photons,
+in which all of them hit the same point on the screen. What is the
+reason for this scatter? Honestly, no one knows. This is one of the
+greatest mysteries of nature. Quantum theory does not even attempt to
+explain the physical causes of such a random behavior of microsystems.
+This theory takes randomness as a given and simply tries to find its
+mathematical description. To proceed, we have to move beyond the simple
+declaration of randomness and introduce more precise statements and
+definitions.
+
+%s4.1 #&#
+\subsection{Partial determinism of quantum mechanics}\label{sc:1.3.2}
+We begin our construction of the formalism from the following postulate.
+
+%pchapter.4 #&#
+\begin{postulate}[connection between states and propositions]
+\label{postulateJ}For each yes--no question there is an ensemble in which the answer
+``yes'' is found with certainty (the probability $=$ 1).
+\end{postulate}
+
+
+Indeed, it makes no sense to talk about an experimental proposition, if there is not a single ensemble in which this proposition
+can be unambiguously measured.
+
+In Subsection \ref{ss:observables}, we identified observables with mappings
+from $\mathbb{R}$ into the set of yes--no questions. Thus, each value
+$f$ of the observable $F$ maps to a proposition $S_{f}$. According to
+Postulate \ref{postulateJ}, we can always prepare an ensemble in which
+this proposition is 100\,\% true.
+
+%schapter.5 #&#
+\begin{statement}[partial determinism]
+\label{postulateJ1}For each observable $ F $ and each value $ f $ from its spectrum, an
+ensemble can be prepared in which measurements of this observable are
+reproducible, i.\,e., repeatedly yield the same value $ f $.
+\end{statement}
+
+Postulate \ref{postulateJ} and Statement \ref{postulateJ1} are weakened
+versions of the classical Assertion~\ref{assertionJ_c}. Instead of
+requiring the reproducibility of measurements for all observables and
+propositions at once, we limit this property to single
+observables.\footnote{Notice also that Statement \ref{postulateJ1}
+does not forbid the existence of certain groups of (\emph{compatible})
+observables,\index{compatible observables} whose measurements can be
+reproducible within the same ensemble. For example, in Chapter
+\ref{ch:operators}, we will see that three components $ (p_{x}, p_{y},
+p_{z}) $ of the particle momentum are compatible observables. The same
+is true for three components $ (r_{x}, r_{y}, r_{z}) $ of the particle
+position. However, the pairs $ (p_{x}, x) $, $ (p_{y}, y) $ and
+$ (p_{z}, z) $ are incompatible.} Hence the quantum postulate is a
+softer requirement, and quantum mechanics is a more general theory than
+classical mechanics. Moreover, we expect the quantum theory to include
+classical mechanics as a special case.
+
+So, in quantum mechanics we do not question the existence of
+propositions about one observable. This means that propositions
+represented by the strips $ A $ and $ B $ in Figure~\ref{fig:4.1} continue
+to have well-defined meanings.\footnote{That is, there are ensemble
+states in which these propositions are true.} However, the quantum and
+classical approaches diverge when it comes to propositions involving
+more than one observable. For example, in quantum mechanics we cannot
+guarantee that the proposition corresponding to the rectangle
+$ C = A \cap B $ in Figure~\ref{fig:4.1}\footnote{This is a proposition
+about simultaneous measurement of both the position and the momentum of
+one particle.} exists and can be realized in the form of an instrumental
+setup.
+
+Heisenberg\index{Heisenberg, W.} was the first to question the simultaneous measurability of
+certain pairs of observables. He gave the following heuristic arguments.
+Imagine that we want to accurately measure both the position and the
+momentum of an electron. For this, we have to look through the
+microscope.\index{Heisenberg microscope} To see the electron, we have
+to illuminate it. For a more accurate determination of the position we
+should use light with a short wavelength. However, photons of this light
+have high energy (momentum). Colliding with the electron under study,
+such photons will inevitably give it a kick, making it
+impossible to accurately determine the electron's velocity or momentum.
+
+So, we suspect that for sufficiently narrow strips $A$ and $B$ in Figure~\ref{fig:4.1} their intersection $ C = A \cap B $ may be just ``too small''
+to correspond to any real experimental proposition. Thus, there are no
+experimental propositions about points in the phase space. In other
+words, in nature there is no device that could realize the proposition
+``the particle's position is $ x_{0} $ and the particle's momentum is
+$ p_{0} $.'' This also means that the true lattice of propositions
+cannot coincide with the Boolean lattice of subsets in the phase space.
+What can we do? What lattice should we take to build the logic of
+questions in quantum physics?
+
+Our plan for constructing quantum theory is as follows:
+%
+\begin{itemize}
+\item  First, we will establish the logic of propositions in
+our theory. We will call it \emph{quantum logic}. As we saw above, we
+expect it to differ from the classical Boolean logic ($=$~orthocomplemented distributive lattice).
+\item  Next, we will formulate the representation theorem of
+Piron, which asserts that propositions of quantum logic can be
+represented by subspaces in a Hilbert space.
+\item  From this result it will be easy to derive all basic
+properties of the quantum formalism: the superposition principle, the
+probability interpretation of wave functions, observables as Hermitian
+operators, etc.
+\end{itemize}
+%
+%s4.2 #&#
+\subsection{Axioms of quantum logic from probability measures}\label{ss:compatibility1}
+Note that in our derivation of the axioms of classical logic we used the
+equivalence between logical propositions and subsets of the phase space.
+In the quantum case, this equivalence does not work, and we have to look
+for other ways. To implement the first point of our plan, we will show
+that many axioms from Table \ref{table:2.1} can be derived even without
+reference to the phase space.\footnote{These axioms will be
+transferred without changes from the classical logic to the quantum
+one.} For these derivations we will need only the simplest properties
+of probability measures $ (\phi | \mathcal{X}) $.
+
+Suppose that we have prepared two state ensembles $ \phi $ and
+$ \psi $ of our physical system and measured values of the probability
+measures $ (\phi | \mathcal{X}) $ and $ (\psi | \mathcal{X}) $ by going
+over all possible experimental propositions $ \mathcal{X} $. If, as a
+result of this gigantic work, we find that $ (\phi |\mathcal{X}) = (\psi |\mathcal{X}) $
+for all $ \mathcal{X} $, then the states $ \phi $ and $ \psi $ will be
+regarded as equal ($ \phi = \psi $). Indeed, there is no physical
+difference between these two states, where measurements give the same
+results ($=$~probabilities).
+
+For similar reasons, we will say that two propositions $ \mathcal{X} $
+and $ \mathcal{Y} $ are equal ($ \mathcal{X} = \mathcal{Y} $) if for all
+states $ \phi $\vspace*{-3.5pt}
+%
+%e5 #&#
+\begin{align}
+(\phi |\mathcal{X}) = (\phi |\mathcal{Y}). \label{eq:(4.1)}
+\end{align}
+%
+It then follows that the probability measure $ (\phi | \mathcal{X}) $,
+considered as a function on the set of all states $ \mathfrak{S} $, is
+a unique representative of the proposition $ \mathcal{X}
+$.\footnote{That is, different propositions define different functions
+$ (\phi | \mathcal{X}) $ on the set of states $ \mathfrak{S} $.} Hence,
+we can study properties of propositions by analyzing properties of
+probability measures $ (\phi | \mathcal{X}) $. For this, there is no
+need to deal with regions of the phase space, which is exactly what we
+want.
+
+For example, we will say that $ \mathcal{X} \leq \mathcal{Y} $ if
+measurements for all states $ \phi \in \mathfrak{S} $ show that
+$ (\phi | \mathcal{X}) \leq (\phi | \mathcal{Y}) $. The relation
+$ \mathcal{X} \leq \mathcal{Y} $ defines the \emph{partial ordering}\index{partial ordering}
+ on the propositional system $ \mathcal{L} $.
+
+After the partial ordering $ \leq $ is established on the entire set
+$ \mathcal{L} $, it is not difficult to define the \emph{meet} operation
+$ \mathcal{X} \wedge \mathcal{Y} $ for all pairs $ \mathcal{X} $,
+$ \mathcal{Y} $. For example, if $ \mathcal{X} $ and $\mathcal{Y} $ are
+given, we should be able to find a set of all propositions $ \mathcal{Z}'
+$ that are ``less than or equal to'' both $ \mathcal{X} $ and
+$ \mathcal{Y,} $\footnote{At least one such proposition $ \emptyset
+$ always exists.} $ \mathcal{Z}' \leq \mathcal{X} $ and $ \mathcal{Z}' \leq \mathcal{Y} $.
+It is reasonable to assume that there is a single maximal proposition
+$\mathcal{Z} $ in this set. We shall call it the \emph{meet}\index{meet} of
+$\mathcal{X}$ and $\mathcal{Y}$: $\mathcal{Z} = \mathcal{X} \wedge
+\mathcal{Y}$.
+
+The \emph{join}\index{join} $ \mathcal{X} \vee \mathcal{Y} $ for all pairs
+$ \mathcal{X}$, $ \mathcal{Y} $ is defined in a similar way: it is the
+unique smallest proposition that is greater than or equal to both
+$ \mathcal{X}$ and $ \mathcal{Y} $. These definitions are formalized as
+properties 6--9 in Table \ref{table:2.1}. Properties 10--13 follow
+naturally from these definitions.
+
+Further, suppose that for some pair of propositions $ \mathcal{X} $,
+$ \mathcal{Y} $ we notice that for all states $ (\phi | \mathcal{X}) =
+1 - (\phi | \mathcal{Y}) $. Then we will say that the two propositions
+are orthocomplemented: $ \mathcal{X} = \mathcal{Y}^{\perp } $ or,
+equivalently, $ \mathcal{Y} = \mathcal{X}^{\perp } $.\index{orthocomplement}
+
+Reasoning in this way, it is not difficult to derive (see Appendix
+\ref{ss:meet_join2}) all axioms 1--17 of classical logic from Table
+\ref{table:2.1}, except for the axioms of distributivity 18 and 19. The
+latter two axioms cannot be justified using our approach with
+probability measures $ (\phi | \mathcal{X}) $. For this reason, we
+regard distributive laws as less valid and call them simply assertions.
+
+So, in quantum mechanics, we are not allowed to use the distributive
+laws of logic. However, in order to obtain a nontrivial theory, it is
+necessary to find some kind of substitute for these two laws. On the one
+hand, this new postulate must be sufficiently specific, so that it can
+be used to develop a nontrivial logical and physical theory. On the
+other hand, it must be general enough and include distributive laws as
+a special case, because we want to have the classical theory as a
+limiting case of the quantum one.\looseness=-1
+
+So, how should we formulate this new quantum axiom?
+
+%s4.3 #&#
+\vspace*{-3.5pt}\subsection{Compatibility of propositions}\label{ss:compatibility}
+\vspace*{-3.5pt}
+To answer this question, let us turn to the important concept of
+compatibility. We will say that two propositions $ \mathcal{X} $ and
+$ \mathcal{Y} $ are \emph{compatible}\index{compatible propositions} (denoted
+$ \mathcal{X}\leftrightarrow \mathcal{Y} $)
+\label{lb:compatibility}
+if
+%
+%e6 #&#
+\begin{align}
+\mathcal{X} = (\mathcal{X} \wedge \mathcal{Y}) \vee \bigl( \mathcal{X} \wedge
+\mathcal{Y}^{\perp } \bigr) \label{eq:compat1}
+\end{align}
+%
+and\vspace*{-6pt}
+%
+%e7 #&#
+\begin{align}
+\mathcal{Y} = (\mathcal{X} \wedge \mathcal{Y}) \vee \bigl( \mathcal{X}
+^{\perp } \wedge \mathcal{Y} \bigr) . \label{eq:compat2}
+\end{align}
+%
+In Subection \ref{ss:compatible} we will see that two experimental
+propositions can be measured simultaneously if and only if they are
+compatible. Therefore, we should not be surprised by Theorem
+\ref{Theorem4.17}, which states that the compatibility ($=$~simultaneous
+measurability) of all propositions is a characteristic property of
+classical Boolean lattices.
+
+%s4.4 #&#
+\subsection{Logic of quantum mechanics}\label{ss:qm-logic}
+From the Heisenberg microscope example it should be clear that, unlike
+in the classical case, in quantum mechanics not all propositions are
+measurable simultaneously ($=$~compatible). Then, as the basic statement
+of quantum logic, we postulate that two propositions are definitely
+compatible if one follows from the other, and we leave it to mathematics
+to decide on the compatibility of other pairs.\footnote{The author
+does not know any deeper justification for this postulate. The strongest
+argument is that this postulate really works, i.\,e., it leads to the
+well-known mathematical structure of quantum mechanics, which has been
+tested extensively in experiments.}
+
+%pchapter.6 #&#
+\begin{postulate}[orthomodularity]
+\label{postulateK13}Propositions about physical systems obey the \emph{ortho}-\emph{modular law}:
+If $ \mathcal{B} $ follows from $ \mathcal{A} $, then $ \mathcal{A} $
+and $ \mathcal{B} $ are compatible, i.\,e.,\index{orthomodular law}
+%
+%e8 #&#
+\begin{align}
+\mathcal{A} \leq \mathcal{B} \quad \Rightarrow\quad  \mathcal{A} \leftrightarrow
+\mathcal{B}.
+\label{eq:orthomodularity}
+\end{align}
+ \end{postulate}
+
+\nn
+Orthocomplemented lattices\footnote{That is, described by properties
+1--17 in Table \ref{table:2.1}.} with the additional orthomodular
+Postulate \ref{postulateK13} (property 20 in Table \ref{table:2.1}) are
+called \emph{orthomodular lattices}.\index{orthomodular lattices} With the
+addition of technical conditions of atomicity and irreducibility, these
+lattices become the so-called\index{quantum logic} \emph{quantum}
+\emph{logics}. The relationships between different types of lattices and
+logics are shown in Figure~\ref{fig:4.12y}.
+
+\begin{SCfigure}[50][b!]
+\includegraphics{01f07}
+\caption{Relationships between different types of lattices and logics.}
+\label{fig:4.12y}
+\end{SCfigure}
+
+%s4.5 #&#
+\subsection{Quantum logic and Hilbert space}\label{ss:qm-logic-hilbert}
+We have seen that in classical mechanics we do not have to use the
+exotic lattice theory. Instead, we can apply Theorem
+\ref{Theorem4.13} and go over to the physically transparent language of
+the phase space. Is there a similar equivalence theorem in the quantum
+case? The answer is ``yes.'' It is not difficult to notice close
+analogies between the quantum system of propositions described above and
+the algebra of projections on closed subspaces in a complex Hilbert\index{Hilbert, D.}
+space $ \mathscr{H} $ (see Appendices \ref{sc:hilbert-space} and
+\ref{sc:subspaces}). In particular, if operations between projections
+(or subspaces) in the Hilbert space are translated into the language of
+lattice operations in accordance with Table
+\ref{table:2.5},\footnote{We have denoted by $ \mathscr{X} \uplus
+\mathscr{Y} $ the \emph{linear span}\index{linear span}
+\label{lb:span}
+of two subspaces $ \mathscr{X} $ and $ \mathscr{Y} $ (see Appendix
+\ref{ss:vector-space}). Here $ \mathscr{X} \cap \mathscr{Y} $ denotes
+the intersection of these subspaces and
+\label{lb:cap}
+$ \mathscr{X}'$ is the orthogonal complement of $ \mathscr{X} $. In the
+Hilbert space \emph{atoms}\index{atom} are one-dimensional subspaces. They
+are also referred to as \emph{rays}.\index{ray}} then all axioms of quantum logic are
+easily verified.
+
+%t3 #&#
+\begin{table}[h]
+\tabcolsep=0pt
+\caption{Translations of symbols between equivalent languages: (i) subspaces in
+the Hilbert space~$\mathscr{H}$, (ii) projections on these subspaces and (iii)
+propositions in quantum logic $\mathcal{L}$.}
+\label{table:2.5}
+\begin{tabular*}{.8\textwidth}{@{\extracolsep{4in minus 4in}}lll}
+Subspaces in $\mathscr{H}$ & Projections in $\mathscr{H}$ & Propositions in $\mathcal{L}$ \\
+\midrule\starttabularbody
+$\mathscr{X}\subseteq \mathscr{Y}$ & $P_{\mathscr{X}}P_{\mathscr{Y}} = P_{\mathscr{Y}}P_{\mathscr{X}} = P_{\mathscr{X}}$ & $\mathcal{X} \leq \mathcal{Y}$ \\
+$\mathscr{X}\cap \mathscr{Y}$ & $P_{\mathscr{X} \cap \mathscr{Y}} $& $\mathcal{X} \wedge \mathcal{Y}$ \\
+$\mathscr{X} \uplus \mathscr{Y} $ & $P_{\mathscr{X} \uplus \mathscr{Y}}$ & $ \mathcal{X} \vee \mathcal{Y}$ \\
+$\mathscr{X}'$ & $1 - P_{\mathscr{X}}$ & $\mathcal{X}^{\perp }$ \\
+$\mathscr{X}$ and $\mathscr{Y}$ compatible & $[P_{\mathscr{X}}, P_{\mathscr{Y}}] = 0$ & $ \mathcal{X} \leftrightarrow \mathcal{Y}$ \\
+$\mathscr{X} \perp \mathscr{Y}$ & $P_{\mathscr{X}}P_{\mathscr{Y}} = P_{\mathscr{Y}}P_{\mathscr{X}} =0$ & $\mathcal{X} \leq \mathcal{Y}^{\perp }$ \\
+$\emptyset $ & $ 0$ & $\emptyset $ \\
+$\mathscr{H}$ & $1$ & $\mathcal{I}$ \\
+$\operatorname{ray}  \mathrm{x}$ & $|\mathrm{x}\rangle \langle \mathrm{x}|$ (1D projection) & $x$ is an atom \\
+\end{tabular*}
+\end{table}
+
+For example, the violation of distributive laws follows from the fact
+that in $ \mathscr{H} $ there are pairs of incompatible subspaces (see
+Appendix \ref{sc:subspaces}). The validity of the orthomodular law in
+$ \mathscr{H} $ is proved in Theorem \ref{TheoremG.7}.
+
+%s4.6 #&#
+\subsection{Piron's theorem}
+
+Thus, we have established that the set of subspaces in a complex Hilbert
+space $ \mathscr{H} $ is indeed a representative of some quantum logic.
+Can we claim also the opposite, i.\,e., that for each quantum logic one
+can construct a representation by subspaces in some Hilbert space? The
+(positive) answer to this question is given by the famous \emph{Piron}
+\emph{theorem}\index{Piron's theorem}\index{Piron, C.} \cite{Piron2, Piron}, which
+forms the basis of the mathematical formalism of quantum mechanics and
+is a quantum analog of the classical representation Theorem
+\ref{Theorem4.13}.
+
+%tchapter.7 #&#
+\begin{theorem}[Piron's theorem]
+\label{Theorem.Piron}
+Each quantum logic $ \mathcal{L} $ is isomorphic to the lattice of
+closed subspaces in a Hilbert space $ \mathscr{H} $. The correspondences
+proposition $\leftrightarrow $ subspace are defined by the rules shown in
+Table \ref{table:2.5}.
+\end{theorem}
+
+
+The proof of this theorem is beyond the scope of our
+book.\footnote{Piron's theorem does not specify the nature of scalars
+in the Hilbert space. It leaves the possibility of choosing any
+\emph{division ring} \emph{with involutive antiautomorphism} as the
+collection of scalars in $ \mathscr{H} $. We can substantially reduce
+this unwanted freedom if we recall the important role played by real
+numbers in physics (for example, the values of observables always lie
+in $ \mathbb{R} $). Therefore, it makes sense to consider only those
+rings that include $ \mathbb{R} $ as a subring. In 1877 Frobenius\index{Frobenius, F.\,G.} proved
+that there are only three such rings. These are \emph{real numbers}
+$ \mathbb{R} $, \emph{complex numbers}\label{lb:complex}\label{lb:real}
+$\mathbb{C} $ and \emph{quaternions}\index{quaternions} $ \mathbb{H} $.
+Although there is fairly extensive literature on the real and,
+especially, quaternionic quantum mechanics
+\cite{Stueckelberg,quaternionic,Moretti, Moretti2}, the significance of
+these exotic theories for physics remains unclear. Therefore, in our
+book we will adhere to the standard quantum mechanics in complex Hilbert
+spaces.}
+
+%s4.7 #&#
+\subsection{Should we abandon classical logic?}\label{ss:shouldwe}
+So, we came to the paradoxical conclusion that classical logic and
+classical probability theory are not suitable for describing quantum
+microscopic systems. How could this be? After all, classical logic is
+the foundation of all mathematics and indeed of the whole scientific
+method! All proofs of mathematical theorems use the laws of Boolean
+logic, including the distributive laws that were discarded by
+us.\footnote{Note, however, attempts \cite{Dejonghe} to develop
+the so-called \emph{quantum mathematics}, which is based on the laws of
+quantum logic.} Even theorems of quantum mechanics are being proved in
+the framework of classical logic. Are we not entering into a
+contradiction when we claim that the true logic of experimental
+statements is not classical, but quantum \cite{Putnam}?
+
+In everyday life, as in ordinary mathematics, we have the right to use
+inaccurate classical logic, because we usually deal with fixed objects
+that are not subject to quantum fluctuations. Theorems of Euclidean\index{Euclid}
+geometry speak of well-defined circles and triangles, not of statistical
+ensembles of figures with randomly distributed parameters. Therefore,
+in the proofs of such theorems, it is perfectly acceptable to use the
+laws of classical logic. However, when we go to the microworld, where
+results of measurements are subject to randomness and observables may
+be incompatible with each other, then we have to admit that classical
+distributive laws are no longer valid and that quantum logic should take
+over.
+
+The theory of orthomodular lattices is well known to mathematicians. In
+principle, we could make all constructions and calculations in quantum
+theory, based on this formalism. Such an approach would have certain
+advantages, since all its components would have a clear physical
+meaning: the elements $ \mathcal{X} $ of the lattice are experimental
+propositions implementable in the laboratory and the probabilities
+$ (\phi | \mathcal{X}) $ can be measured directly in experiments.
+However, such a theory would encounter insurmountable difficulties,
+mainly because lattices are rather exotic mathematical objects; we lack
+experience and intuition to work with them. In addition, this approach
+would require us to abandon the familiar distributive laws of logic and
+thus would greatly complicate our reasoning.
+
+Historically, the development of quantum theory took another route.
+Thanks to Piron's theorem,\footnote{Of course, the fathers of quantum
+mechanics did not know about this theorem, which was formulated only in
+the 1960s.} the physically transparent but mathematically cumbersome
+lattices could be replaced by physically obscure but mathematically
+convenient Hilbert spaces, wave functions and Hermitian operators. In
+the next section we will briefly summarize this traditional formalism.
+
+%s5 #&#
+\section{Physics in Hilbert space}\label{ss:quant-obs}
+In the previous section, we established a one-to-one correspondence
+between experimental propositions and subspaces of the Hilbert space.\index{Hilbert, D.}
+In this section, we will use this fact to construct the mathematical
+formalism of quantum mechanics. In particular, we will see that, in
+accordance with textbooks, observables are expressed by Hermitian
+operators in $ \mathscr{H} $, and pure quantum states are unit length
+vectors in the same space.%\vfill
+
+%s5.1 #&#
+\subsection{Quantum observables}\label{ss:quant-obs2}
+In Subsection \ref{ss:observables}, we saw that, in the language of logic,
+an observable $F$ is a mapping $\mathcal{F}$ associating a proposition in $ \mathcal{L} $ ($=$~a subspace
+in~$ \mathscr{H} $) with each point
+of the spectrum of $F$. The points $ f $ in the spectrum of the observable
+$ F $ are called \emph{eigenvalues} of this observable.\index{eigenvalue}
+The subspace $ \mathscr{F}_{f} \subseteq \mathscr{H} $ corresponding to
+the eigenvalue $ f $ is called the \emph{eigensubspace},\index{eigensubspace}
+ and the projection $ P_{f} $ on this subspace is
+called the \emph{spectral projection}.\index{spectral projection} Each
+vector in the eigensubspace $ \mathscr{F}_{f} $ will be called an
+\emph{eigenvector} of the observable.
+
+Let us consider two distinct eigenvalues $f$ and $g$ of one observable
+$F$. According to the definition from Subsection \ref{ss:observables}, the
+corresponding propositions $ \mathcal{F}_{f} $ and $ \mathcal{F}_{g} $
+are disjoint, and their eigensubspaces are orthogonal. The linear span
+of the subspaces $ \mathscr{F}_{f} $, where $ f $ runs through the
+entire spectrum of the observable $ F $, coincides with the entire
+Hilbert space $ \mathscr{H} $. Consequently, spectral projections $ P_f $ of any
+observable form a \emph{resolution of} \emph{the identity} (see Appendix
+\ref{sc:projections}). Thus, according to formula (\ref{eq:A.62}), we
+can associate an Hermitian operator\index{Hermite, C.}
+%
+%e9 #&#
+\begin{align}
+F = \sum_{f} f P_{f} \label{eq:op-obs}
+\end{align}
+%
+with each observable $ F $. In the following, we often use the terms
+``observable'' and ``Hermitian operator'' as synonyms.
+
+%s5.2 #&#
+\subsection{States}\label{ss:states}
+As we know from Subsection \ref{sc:1.2.33}, each state $ \phi $ defines a
+probability measure $ (\phi | \mathcal{X}) $ on propositions in
+$ \mathcal{L} $. In accordance with the quantum isomorphism
+``proposition'' $ \leftrightarrow $ ``subspace,'' the state $ \phi $ also
+defines a \emph{probability measure}\index{probability measure}
+$(\phi | \mathscr{X}) $ on subspaces $ \mathscr{X} $ in the Hilbert
+space $ \mathscr{H} $. This probability measure is a function that maps
+subspaces into the interval $ [0,1] \subseteq \mathbb{R} $ and has the
+following properties:
+%
+\begin{itemize}
+\item  The probability corresponding to the entire space
+$ \mathscr{H} $ is equal to 1 in all states,
+%e10 #&#
+\begin{align}
+(\phi |\mathscr{H}) = 1. \label{eq:prob1x}
+\end{align}
+
+\item  The probability corresponding to the zero (empty)
+subspace is 0 in all states,
+%e11 #&#
+\begin{align}
+(\phi |\emptyset ) = 0. \label{eq:prob2x}
+\end{align}
+
+\item  The probability corresponding to the direct sum of
+orthogonal subspaces is the sum of probabilities for each
+subspace,\footnote{This is equivalent to the third Kolmogorov
+probability axiom (\ref{eq:prob3}). By the symbol $ \oplus $ (direct
+sum) we denote the linear span ($ \uplus $) of two subspaces in the case
+where these subspaces are orthogonal.}
+%e12 #&#
+\begin{align}
+(\phi |\mathscr{X} \oplus \mathscr{Y}) = (\phi |\mathscr{X}) + ( \phi |
+\mathscr{Y}), \quad \mbox{if } \mathscr{X} \perp \mathscr{Y.} \label{eq:prob3x}
+\end{align}
+\end{itemize}
+%
+The following important theorem \cite{Gleason} provides a
+classification of all such probability measures ($=$~all possible states
+of a quantum system).
+
+%tchapter.8 #&#
+\begin{theorem}[Gleason's theorem]
+\label{Theorem.Gleason}\index{Gleason's theorem}\index{state}\index{Gleason, A.}
+If $ (\phi | \mathscr{X}) $ is a probability measure on subspaces in the
+Hilbert space $ \mathscr{H} $ with properties
+(\ref{eq:prob1x})--(\ref{eq:prob3x}), then there is a
+nonnegative\footnote{A Hermitian operator is called \emph{nonnegative} if
+all its eigenvalues are greater than or equal to zero.} Hermitian
+operator $ \hat{\rho } $ in $ \mathscr{H} $ such that
+%
+%e13 #&#
+\begin{align}
+\operatorname{Tr} (\hat{\rho }) = 1 \label{eq:(4.28)}
+\end{align}
+%
+and for any subspace $ \mathscr{X} $ and its projection $ P_{
+\mathscr{X}} $, the value of the probability measure is\footnote{$ \operatorname{Tr}
+$ means the \emph{trace} of the matrix of the operator $ \hat{\rho } $, i.\,e.,
+the sum of its diagonal elements; see Appendix \ref{ss:functions}.}
+%
+%e14 #&#
+\begin{align}
+(\phi |\mathscr{X}) = \operatorname{Tr} (P_{\mathscr{X}} \hat{\rho }). \label{eq:(4.29)}
+\end{align}
+\end{theorem}
+
+
+
+The operator $ \hat{\rho } $ is usually called the \emph{density}
+\emph{operator}\index{density operator} or \emph{density}
+\emph{matrix}.\index{density matrix}
+
+Proving Gleason's theorem is not easy, and we refer the curious reader
+to the original papers \cite{Gleason,
+Richman_Bridges}. Here we will only touch upon the physical
+interpretation of this result. First, in accordance with the spectral
+Theorem \ref{spectral-th}, one can find an orthonormal basis
+$ |e_{i} \rangle $ in $ \mathscr{H} $ where the density operator
+$ \hat{\rho } $ reduces to the diagonal form
+%
+%e15 #&#
+\begin{align}
+\hat{\rho } = \sum_{i} \rho_{i} |
+e_{i} \rangle \langle e_{i} |, \label{eq:rho}
+\end{align}
+%
+where the eigenvalues $ \rho_{i} $ have the properties
+%
+%e16 #&#
+%e17 #&#
+\begin{align}
+0 &\leq \rho_{i} \leq 1, \label{eq:(4.30)}
+\\
+\sum_{i} \rho_{i} & = 1. \label{eq:(4.31)}
+\end{align}
+%
+Among all states with properties (\ref{eq:(4.30)})--(\ref{eq:(4.31)}),
+one can select those in which only one coefficient $ \rho_{i} $ is
+nonzero
+and $ \rho_{j} = 0 $ for all other indices $ j \neq i $. In this case
+the density operator reduces to the projection onto a one-dimensional
+subspace
+%
+%e18 #&#
+\begin{align}
+\hat{\rho }= |e_{i} \rangle \langle e_{i}|. \label{eq:1.17a}
+\end{align}
+%
+Such states will be referred to as \emph{pure quantum}\index{pure quantum state}
+states. For pure states, the formula
+(\ref{eq:(4.29)}) for calculating probabilities is simplified. Formally,
+using Lemma \ref{LemmaA.4} and Theorem~\ref{TheoremA.13}, we find that
+the probability for the proposition $ \mathcal{X} $ to be true in the
+state (\ref{eq:1.17a}) is equal to the square of the modulus of the
+projection of $ | e_{i} \rangle $ onto the subspace $ \mathscr{X} $,
+i.\,e.,
+%
+%e19 #&#
+\begin{align}
+(\phi |\mathcal{X}) = \operatorname{Tr} \bigl(P_{\mathscr{X}} |e_{i} \rangle
+\langle e _{i}|\bigr) = \operatorname{Tr} \bigl(\langle e_{i}|
+P_{\mathscr{X}} |e_{i} \rangle \bigr) = \langle e_{i}|
+P_{\mathscr{X}} P_{\mathscr{X}}|e_{i} \rangle = \Vert
+P_{
+\mathscr{X}}|e_{i}\rangle \Vert^{2}.
+\label{eq:phix}
+\end{align}
+%
+Therefore, it is customary to describe a pure state by a vector
+$ | e_{i} \rangle $ of unit length chosen arbitrarily from the
+corresponding one-dimensional subspace ($=$~ray).\footnote{Obviously,
+the vector $ | e_{i} \rangle $ is defined only up to a \emph{phase}
+\emph{factor} $ e^{i \alpha } $, which has a unit modulus ($ | e^{i \alpha
+} | = 1 $, where $ \alpha \in \mathbb{R} $). Indeed, being substituted
+in (\ref{eq:phix}), the vector $ e^{i \alpha } | e_{i} \rangle $ leads
+to the same probability value,
+%
+\begin{align*}
+\big\Vert P_{\mathscr{X}}\bigl(e^{i \alpha }|e_{i} \rangle \bigr)
+\big\Vert^{2} = |e^{i
+\alpha }|^{2} \Vert P_{\mathscr{X}}|e_{i}
+\rangle \Vert^{2} = \Vert P_{\mathscr{X}}|e_{i} \rangle
+\Vert^{2},
+\end{align*}
+%
+so that both vectors $ | e_{i} \rangle $ and $ e^{i \alpha } | e_{i}
+\rangle $ are legitimate representatives of the state $\phi $.}
+
+In Subsection \ref{ss:quant-obs2} we introduced the notion of an
+eigenvector of the observable $F$. Pure states corresponding to such
+eigenvectors will be called \emph{eigenstates} of the observable $ F
+$.\index{eigenvector}\index{eigenstate} Obviously, observables have
+definite values ($=$~eigenvalues) in their eigenstates. This means that
+the eigenstates are precisely those states ($=$~ensembles) whose existence
+was guaranteed by Statement \ref{postulateJ1}.
+
+Importantly, there are no quantum probability measures ($=$~states) that
+give definite answers to all experimental questions. Thus, by assuming
+the orthomodularity of the propositional lattice (Postulate
+\ref{postulateK13}), we automatically explained the probabilistic nature
+of quantum states (Statement \ref{postulateJ2}).
+
+\emph{Mixed} quantum states\index{mixed state} are expressed as mixtures (\ref{eq:rho}) of
+pure states. The coefficients $ \rho_{i} $ in this
+formula reflect the probabilities of the pure states in the mixture.
+Thus, in quantum mechanics there are two types of uncertainties. The
+first type is present in mixed states. This is the same uncertainty
+familiar to us from classical (statistical) physics. It appears in
+situations where the experimenter does not have complete control over
+the preparation of the system, for example, when he throws a die. The
+second type of uncertainty is present even in pure quantum states
+(\ref{eq:1.17a}). It has no analog in classical physics, it cannot be
+gotten rid of by improved control of the initial conditions. This
+uncertainty reflects the unavoidable presence of chance in microscopic
+phenomena.
+
+We will not discuss mixed quantum states in this book. Therefore, we
+will only deal with uncertainties of the second fundamental type. Hence,
+speaking of a quantum state $ \phi $, we always have in mind a certain
+state vector $ | \phi \rangle $, determined up to a phase factor
+$ e^{i \alpha } $. In the following, we will use the terms ``quantum
+state'' and ``state vector'' as synonyms.
+
+%s5.3 #&#
+\subsection{Complete sets of commuting observables}\label{ss:compatible}
+In Subsection \ref{ss:compatibility} we defined the idea of compatible
+propositions, and in Lemma \ref{LemmaA.17} we showed that the
+compatibility of propositions is equivalent to the commutativity of the
+corresponding projections. For physics, these properties are important
+because for a pair of compatible propositions ($=$~projections, $=$
+subspaces), there are states in which both these propositions have
+certain values, i.\,e., they are simultaneously measurable without any
+statistical randomness. Similar claims can be made about two compatible
+($=$~commuting) Hermitian operators ($=$~observables). In accordance with
+Theorem \ref{TheoremA.20}, a pair of such operators has a common basis
+of eigenvectors ($=$~eigenstates). In these eigenstates both observables
+have definite (eigen)values.
+
+We assume that for every physical system one can always find at least
+one minimal and complete set of mutually commuting observables
+$ K, L, M, \ldots $\,.\footnote{A set $ K, L, M, \ldots $ is called
+\emph{minimal} if not one observable from this set can be expressed as a
+function of other observables in the set. The set is \emph{complete} if no
+new observable can be added to it without destroying the minimality
+property. An example of a complete set of mutually commuting observables
+for one massive particle is $ \{M, P_{x}, P_{y}, P_{z}, S_{z} \} $,
+where $M$, $\boldsymbol{P}$ and $ \boldsymbol{S} $ are the operators of
+mass, momentum and spin, respectively (see Section \ref{sc:massive}).}
+Then we can construct an orthonormal basis $ |e_{i} \rangle $ of common
+eigenvectors of these operators so that each such eigenvector is
+uniquely marked by eigenvalues $ k_{i}, l_{i}, m_{i}, \ldots $ of the
+operators $ K, L, M, \ldots $\,. That is, if $ | e_{i} \rangle $ and
+$ | e_{j} \rangle $ are two different basis vectors, then their sets of
+eigenvalues $ \{k_{i}, l_{i}, m_{i}, \ldots \} $ and $ \{k_{j}, l_{j},
+m_{j}, \ldots \} $ are not the same.
+
+%s5.4 #&#
+\subsection{Wave functions}\label{ss:wave_function}
+Each state vector $ | \phi \rangle $ can be represented as a linear
+combination of the basis vectors constructed in the previous subsection,
+%
+%e20 #&#
+\begin{align}
+| \phi \rangle = \sum_{i} \phi_{i}
+|e_{i} \rangle , \label{eq:(4.33)}
+\end{align}
+%
+where in the bra-ket notation (see Appendix \ref{ss:bra-ket}) the
+coefficients are expressed as
+%
+%e21 #&#
+\begin{align}
+\phi_{i} = \langle e_{i} | \phi \rangle . \label{eq:(4.33a)}
+\end{align}
+
+The set of complex numbers $ \phi_{i} $ can be considered as a function
+$ \phi (k, l, m, \ldots ) $ on the common spectrum of the observables
+$ K, L, M, \ldots $\,. This is called the \emph{wave function}\index{wave function}
+of the state $ | \phi \rangle $ in the
+\emph{representation} defined by the observables $ K, L, M, \ldots $\,. We will
+discuss examples of one-particle wave functions in Sections
+\ref{sc:representations}--\ref{ss:position-representation}.
+
+%s5.5 #&#
+\subsection{Expectation values}\label{ss:expectation}
+Formula (\ref{eq:op-obs}) defines a spectral resolution of the
+observable $ F $, where index $ f $ runs through all eigenvalues of
+$ F $. The spectral projections $ P_{f} $ can be expanded through basis
+eigenvectors, so we have
+%
+%e22 #&#
+\begin{align}
+P_{f} \equiv \sum_{i=1}^{m} \bigl\llvert
+e_{i}^{f} \big\rangle \big\langle e_{i}^{f}
+\bigr\rrvert . \label{eq:1.39a}
+\end{align}
+%
+Here $  \llvert   e_{i}^{f}  \rangle  $ are orthogonal eigenvectors of
+the operator $ F $ that are inside the eigensubspace $ \mathscr{F}
+_{f} $, and $ m $ is the dimension of this subspace.\footnote{If
+$ m> 1 $, then the eigenvalue $ f $ is called \emph{degenerate}.\index{degenerate eigenvalue}}
+Then from (\ref{eq:phix}) one can find
+the probability for measuring $ f $ in each pure state $\phi $,
+%
+%e23 #&#
+\begin{align}
+( \phi | P_{f} ) = \Biggl\llVert \sum_{i=1}^{m}
+\big\llvert e_{i}^{f} \big\rangle \bigl\langle e_{i}^{f}
+\big| \phi \bigr\rangle \Biggr\rrVert ^{2}= \sum_{i=1}^{m}
+\bigl\llvert \bigl\langle e_{i}^{f} \big| \phi \big\rangle
+\bigr\rrvert ^{2}. \label{eq:(4.34)}
+\end{align}
+
+Sometimes we need to know the weighted average, or the \emph{expectation}
+\emph{value},\label{lb:expectation}\index{expectation value} $ \langle F \rangle $ of the observable
+$ F $ in the state $ | \phi \rangle , $
+%
+\begin{align*}
+\langle F \rangle \equiv \sum_{f} ( \phi |
+P_{f} ) f.
+\end{align*}
+%
+Substituting here equation (\ref{eq:(4.34)}), we obtain
+%
+\begin{align*}
+\langle F \rangle = \sum_{j=1}^{n} |\langle
+e_{j} | \phi \rangle |^{2} f_{j} \equiv \sum
+_{j=1}^{n} |\phi_{j}|^{2}
+f_{j},
+\end{align*}
+%
+where the summation is carried out over the entire basis of eigenvectors
+$ | e_{j} \rangle $. From expansions (\ref{eq:(4.33)}),
+(\ref{eq:op-obs}) and (\ref{eq:1.39a}) it follows that the combination
+$ \langle \phi | F | \phi \rangle $ is a more compact notation for the
+expectation value $ \langle F \rangle $. Indeed
+%
+%e24 #&#
+\begin{align}
+\langle \phi |F| \phi \rangle &= \biggl( \sum_{i}
+\phi_{i}^{*} \langle e_{i} | \biggr)
+\biggl( \sum_{j} | e_{j} \rangle
+f_{j} \langle e_{j} | \biggr) \biggl( \sum
+_{k} \phi_{k} |e_{k} \rangle
+\biggr)
+\nonumber
+\\
+&= \sum_{ijk} \phi_{i}^{*}
+f_{j} \phi_{k} \langle e_{i} | e_{j}
+\rangle \langle e_{j} | e_{k} \rangle = \sum
+_{ijk} \phi_{i}^{*} f_{j}
+\phi_{k}\delta_{ij} \delta_{jk}
+\nonumber
+\\
+&= \sum_{j} \llvert \phi_{j} \rrvert
+^{2} f_{j} = \langle F \rangle . \label{eq:fff}
+\end{align}
+
+%s5.6 #&#
+\subsection{Basic rules of classical and quantum mechanics}\label{ss:rules}
+The results obtained in this chapter can be summarized as follows. If
+the physical system is prepared in a pure state $ \phi $ and we want to
+calculate the probability $ \omega $ to measure the observable $ F $
+within the interval $ E \subseteq \mathbb{R} $, then we need to perform
+the following steps.
+
+\bigskip
+\noindent
+{In classical mechanics:}
+%
+%
+%5 items enumerated
+%the first item: 1
+%the last item: 5
+% the (last) widest item: 5
+\begin{enumerate}
+\item[(1)] Determine the phase space $ \mathcal{S} $ of the physical
+system.
+\item[(2)] Find the real function $ f: \mathcal{S} \to \mathbb{R} $
+corresponding to our observable $ F $.
+\item[(3)] Find the subset $ U \subseteq \mathcal{S} $ corresponding to
+the spectral interval $ E $, where $ U $ is the collection of all points
+$ s \in \mathcal{S} $ such that $ f(s) \in E $ (see Figure~\ref{fig:4.12x}).
+\item[(4)] Find the point $ s_{\phi } \in \mathcal{S} $ representing the
+pure classical state $ \phi $.
+\item[(5)] The probability $ \omega $ is 1 if $ s_{\phi } \in U $ and
+$ \omega = 0 $ otherwise.
+\end{enumerate}
+%
+%
+%\subsubsection*
+%\bigskip
+%\noindent
+{In quantum mechanics:}
+%
+%
+%6 items enumerated
+%the first item: 1
+%the last item: 6
+% the (last) widest item: 6
+\begin{enumerate}
+\item[(1)] Determine the Hilbert space $ \mathscr{H} $ of the physical
+system.
+\item[(2)] Find the Hermitian operator $ F $ corresponding to our
+observable in $ \mathscr{H} $.
+\item[(3)] Find the eigenvalues and eigenvectors of $ F $.
+\item[(4)] Find the spectral projection $ P_{E} $ corresponding to the
+spectral interval $ E $.
+\item[(5)] Find the unit vector $ | \phi \rangle $ (defined up to a phase
+factor) representing the state $ \phi $ in the Hilbert space
+$ \mathscr{H} $.
+\item[(6)] Substitute all these ingredients in the probaility formula $ \omega =
+\langle \phi | P_{E} | \phi \rangle $.
+\end{enumerate}
+%
+At the moment, the classical and quantum recipes seem completely
+unrelated to each other. Nevertheless, we are sure that such a
+connection must exist, because we know that both these theories are
+variants of the probability formalism on orthomodular lattices. In
+Section \ref{sc:classical}, we will see that in the macroscopic world
+with massive objects and poor resolution of measuring devices, the
+classical recipe appears as a reasonable approximation to the quantum
+one.
+
+%s6 #&#
+\section{Interpretations of quantum mechanics}\label{sc:complete}
+So far in this chapter, we were occupied with the mathematical formalism
+of quantum mechanics. Many details of this formalism (wave functions,
+superpositions of states, Hermitian operators, nonstandard logic, etc.)
+seem very abstract and detached from reality. This situation has
+generated a lot of debates about the physical meaning and interpretation
+of quantum laws. In this section, we will suggest our point of view on
+these controversies.
+
+%s6.1 #&#
+\subsection{Quantum nonpredictability}\label{ss:unpredictability}
+Experiments with quantum microsystems revealed one simple but
+nonetheless mysterious fact: if we prepare $ N $ absolutely identical
+physical systems under the same conditions and measure the value of the
+same physical quantity, we can obtain $ N $ different results.
+
+Let us illustrate this statement with two examples. From experience we
+know that each photon passing through the aperture of the pinhole camera
+will hit some point on the photographic plate. However, the next photon,
+most likely, will hit another point. And, in general, the locations of
+hits are randomly distributed over the surface. Quantum mechanics does
+not even try to predict the fate of each individual photon. It only
+knows how to calculate the probability density for the points of impact,
+but the behavior of each individual photon remains completely random and
+unpredictable.\looseness=1
+
+Another example of this -- obviously random -- behavior is the decay of
+radioactive nuclei. The \tsup{232}Th  nucleus has a half-life of 14
+billion years. This means that in any sample containing thorium,
+approximately half of all \tsup{232}Th  nuclei will decay during this
+period. In principle, quantum physicists can calculate the decay
+probability of a nucleus by solving the corresponding Schr\"{o}dinger
+equation.\footnote{Although our current knowledge of the nature of
+nuclear forces is completely inadequate
+to perform this kind of calculation for thorium.} However, they cannot
+even approximately guess when the given nucleus decays. It can happen
+today or in 100 billion years.\index{Schr\"odinger equation}
+
+It would be wrong to think that the probabilistic nature of microscopic
+systems has little effect on our macroscopic world. Very often the
+effects of random quantum processes can be amplified and lead to
+macroscopic phenomena, which are equally random. One well-known example
+of such amplification is the thought experiment with ``Schr\"{o}dinger's
+cat'' \cite{cat}.\index{Schr\"{o}dinger's cat}\index{Schr\"{o}dinger, E.}\vfill
+
+%\vspace*{-3pt}
+%s6.2 #&#
+\subsection{Collapse of wave function}\label{ss:unpredictability2}
+%\vspace*{-3pt}
+In the \emph{orthodox interpretation}\index{orthodox interpretation} of
+quantum mechanics, the behavior described above is called the ``collapse
+of the quantum probability distribution''\index{wave function collapse}  and is often surrounded with
+a certain aura of mystery.\footnote{To emphasize the analogy with the
+classical case, here we specifically talk about the collapse of the
+``probability distribution,'' and not about the collapse of the ``wave
+function,'' as in other works. It is precisely the probability
+distribution that is subject to experimental observation, and the wave
+function is a purely theoretical concept.} In this interpretation, the
+most controversial point of quantum mechanics is its different attitude
+to the physical system and the measuring device. The system is regarded
+as a quantum object that can exist in strange
+superpositions,\footnote{The electron in the previous example is
+allegedly in a superposition of states smeared over the surface of the
+photographic plate, and the thorium nucleus is in a superposition of the
+decayed and undecayed states.} while the measuring device is a classical
+object whose state (readout) is fully unambiguous. It is believed that
+at the time of measurement, an uncontrolled interaction between the
+system and the measuring device occurs, so that the superposition
+collapses into one of its components, which is recorded by the
+instrument. Inside the theory, this difference of attitudes is expressed
+in the fact that the system is described by a wave function, but the
+measuring device is described by an Hermitian operator. This leads to a number of
+unpleasant questions.
+
+Indeed, the measuring device consists of the same atoms as the physical
+system and the rest of the universe. Therefore, it is rather strange
+when such devices are put into a separate category of objects. But if
+we decided to combine the device and the system into one wave function,
+when would it collapse? Maybe this collapse would require the
+participation of a conscious observer? Does this mean that by making
+observations, we control the course of physical processes?
+
+Sometimes a mystery is seen in the fact that the quantum-mechanical
+probability distribution ($=$~wave function) has two mutually exclusive
+laws of evolution. While we are not looking at the system, this
+distribution develops smoothly and predictably (in accordance with the
+Schr\"{o}dinger equation), and at the time of measurement it experiences
+a random unpredictable collapse.
+
+%s6.3 #&#
+\subsection{Collapse of classical probability distribution}\label{ss:unpredictability3}
+By itself, the collapse of the probability distribution is not something
+strange. A similar collapse occurs in the classical world as well. For example,
+when shooting from a rifle at a target, it is almost impossible to
+predict the hit location of each specific bullet. Therefore, the state
+of the bullet before it hits the target ($=$~before the measurement) is
+conveniently described by the probability distribution. At the moment
+of the hit, the bullet punches the target at a specific place, and the
+probability is immediately replaced by certainty. The measurement leads
+to the ``collapse of the probability distribution,'' exactly as in the
+formalism of quantum mechanics.
+
+The probability density for the bullet changes smoothly (spreads out)
+from the moment of the shot and up to the time of impact. The
+unpredictable collapse of this probability distribution occurs
+instantaneously in the entire space. These behaviors are completely
+analogous to the two (allegedly contradictory) variants of quantum
+evolution, but the classical collapse does not raise any controversy among
+theorists and philosophers.
+
+We rightly believe that the collapse of classical probability is the
+natural behavior of any probability distribution. Then, why does the
+collapse of quantum probability still trouble theoreticians?
+
+The fact is that in the case of the bullet and the target, we are sure
+that the bullet was \emph{somewhere} at each time instant, even when we did
+not see it. In all these moments the bullet had a definite position,
+momentum, rotation speed about its axis (spin) and other properties. Our
+description of the bullet had some element of randomness only because
+of our laziness, unwillingness or inability to completely control the
+act of shooting. By describing the state of the bullet by a probability
+distribution, we simply admitted the level of our ignorance. When we
+looked at the pierced target and thus ``collapsed'' the probability
+distribution, we had absolutely no influence on the state of the bullet,
+but simply improved (updated) our knowledge about it. The probability
+distribution and its collapse are things that occur exclusively in our
+heads and do not have actual physical existence.
+
+%s6.4 #&#
+\subsection{Hidden variables}\label{ss:hidden}
+Einstein believed that the same logic should be applied to measurements
+in the microworld. He wrote:\index{Einstein, A.}
+%
+\begin{quote}
+I think that a particle must have a separate reality independent of the
+measurements. That is an electron has spin, location and so forth even
+when it is not being measured. I like to think that the moon is there
+even if I am not looking at it.
+\end{quote}
+%
+If we follow this logic blindly, we must admit that even at the
+microscopic level, nature must be regular and deterministic. Then the
+observed randomness of quantum processes should be explained by some yet
+unknown ``hidden'' variables that cannot be observed and controlled
+\emph{yet}. If we exaggerate somewhat, the theory of hidden variables reduces
+to the idea that each electron has a navigation system that directs it
+to the designated point on the photographic plate. Each nucleus has an
+alarm clock inside it, and the nucleus decays at the call of this alarm
+clock. The behavior of quantum systems only seems random to us, since
+we have not yet penetrated the designs of these ``navigation systems''
+and ``alarm clocks''.
+
+According to the theory of ``hidden variables,'' the randomness in the
+microworld has no special quantum-mechanical nature. This is the same
+classic pseudo-ran\-domness that we see when shooting at a target or
+throwing dice. Then we have to admit that modern quantum mechanics is
+not the last word. Future theory will teach us how to fully describe the
+properties of individual systems and to predict events without reference
+to the quantum chance. Of course, such faith cannot be refuted, but so
+far no one has succeeded in constructing a convincing theory of hidden
+variables predicting (at least approximately, but beyond the limits of
+quantum probabilities) the results of microscopic measurements.
+
+%s6.5 #&#
+\subsection{Quantum-logical interpretation}\label{ss:q-logic}
+The most famous thought experiment in quantum mechanics is the two-hole
+interference, which demonstrates the limits of classical probability
+theory. Recall that in this experiment (see Section \ref{sc:thought}
+and Subsection \ref{sc:scatter2}) we did not have the right to add the
+probabilities for passing through alternative holes. Instead, quantum
+mechanics recommended adding the so-called probability amplitudes and
+then squaring the resulting sum \cite{Feynman-lecturesIII}.
+
+This observation leads to the suspicion that the usual postulates of
+probability (and logic) do not operate in microsystems. Thus, we
+naturally approach the idea of quantum logic as the basis of quantum
+mechanics. It turns out that both fundamental features of quantum
+measurements -- the randomness of outcomes and the addition of
+probability amplitudes for alternative events -- find a simple and
+concise explanation in quantum logic (see Section \ref{sc:1.3}). Both
+these laws of quantum mechanics follow directly from the orthomodular
+logic of experimental propositions. As we know from Piron's theorem,
+such logic is realized by a system of projections in the Hilbert space,
+and by Gleason's theorem any state ($=$~probability measure) on such a
+system must be stochastic, random.
+
+As we saw in Section \ref{sc:1.3} (see Figure~\ref{fig:4.12y}), the
+Boolean deterministic logic of classical mechanics is only a particular
+case of the orthomodular quantum logic with its probabilities. Thus,
+even in formal reasoning, it is the \emph{particular} classical theory that
+needs a special explanation and interpretation, and not the
+\emph{general} quantum mechanics.
+%
+\begin{quote}
+$\ldots$ classical mechanics is loaded with metaphysical hypotheses which
+clearly exceed our everyday experience. Since quantum mechanics is based
+on strongly relaxed hypotheses of this kind, classical mechanics is less
+intuitive and less plausible than quantum mechanics. Hence classical
+mechanics, its language and its logic cannot be the basis of an adequate
+interpretation of quantum mechanics -- P. Mittelstaedt
+\cite{Mittelstaedt}.\index{Mittelstaedt, P.}
+\end{quote}
+
+%s6.6 #&#
+\subsection{Quantum randomness and limits of knowledge}\label{ss:collapse2}
+So, we came to the conclusion that quantum probability, its collapse and
+the existence of superpositions of states are inevitable consequences
+of the special orthomodular nature of the logic of experimental
+propositions. The laws of probability, built on this logic, differ from
+the classical laws of probability that are familiar to us. In
+particular, any state ($=$~a probability measure on logical propositions)
+must be stochastic, i.\,e., it is impossible to get rid of the element of
+chance in measurements. This also means that there is no mystery in the
+collapse of the wave function, and there is no need to introduce an
+artificial boundary between the physical system and the measuring
+apparatus.
+
+The imaginary paradox of the quantum formalism is connected, on the one
+hand, with the weirdness of quantum logic, and on the other hand with
+unrealistic expectations about the power of science. Theoretical
+physicists experience an internal protest when faced with real
+physically measurable effects,\footnote{Such as random hits of
+electrons on the screen or decay of nuclei.} which they are powerless
+to control and/or predict. These are facts without explanations, effects
+without causes. It seems that microparticles are subject to some
+annoying mysterious random force. But in our view, instead of grieving,
+physicists should have celebrated their success.
+
+To us, the idea of the fundamental, irreducible and fundamentally
+inexplicable nature of quantum probabilities seems very attractive,
+because it may signal the fulfillment of the centuries-old dream of
+scientists searching for deep laws of nature. Perhaps, in such an
+elegant way, nature has evaded the need to answer our endless questions
+``why?'' Indeed, if at the fundamental level nature were deterministic,
+then we would face a terrifying prospect of unraveling the endless
+sequences of cause--effect relationships. Each phenomenon would have its
+own cause, which, in turn, would have a deeper reason, and so on,
+\emph{ad infinitum}. Quantum mechanics breaks this chain and at some point
+gives us the full right to answer: ``I don't know. It's just an
+accident.'' And if some phenomenon is truly random, then there is no
+need to seek an explanation for it. The chain of questions ``why?''
+breaks. The quest for understanding ends in a logical, natural and
+satisfying way.
+
+So, perhaps, the apparent ``incompleteness'' of quantum theory is not
+a problem to be solved, but an accurate reflection of the fundamental
+essence of nature, in particular, its inherent unpredictability? In this
+connection, the following quote from Einstein seems suitable:
+%
+\begin{quote}
+I now imagine a quantum theoretician who may even admit that the
+quantum-theoretical description refers to ensembles of systems and not
+to individual systems, but who, nevertheless, clings to the idea that
+the type of description of the statistical quantum theory will, in its
+essential features, be retained in the future. He may argue as follows:
+True, I admit that the quantum-theoretical description is an incomplete
+description of the individual system. I even admit that a complete
+theoretical description is, in principle, thinkable. But I consider it
+proven that the search for such a complete description would be aimless.
+For the lawfulness of nature is thus constructed that the laws can be
+completely and suitably formulated within the framework of our
+incomplete description. To this I can only reply as follows: Your point
+of view -- taken as theoretical
+possibility~--~is incontestable~--~A.~Einstein \cite{incontestable}.\index{Einstein, A.}
+\end{quote}
+%
+The most important philosophical lesson of quantum mechanics is the call
+to abandon speculations about unobservable things and their use in the
+foundations of the theory. Quantum mechanics does not know whether the
+moon is there or not. Quantum mechanics says that the moon will be there
+when we look.
+\end{document}

@@ -43,7 +43,7 @@ ps: $(psfile)
 	@echo Output $<
 
 $(psfile): $(dvifile)
-	$(at)xdvipsk -M1 -j1 -u +$(mapfile) -o $@ $<
+	$(at)dvips -M1 -j1 -u +$(mapfile) -o $@ $<
 
 $(pdffile): $(psfile)
 	$(at)ps2pdf $<

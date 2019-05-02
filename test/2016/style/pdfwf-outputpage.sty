@@ -1,0 +1,595 @@
+%% pdfwf-outputpage.sty - paketas skirtas ivairiems PDFWF projektu
+%% lapo priedamas (cropmarks, grid, inner skelet). Perdarytas is pagecrop.
+%% VTeX,  2013
+%% Linas Stonys, lstonys@vtex.lt
+%% generated from dtx
+%%
+%% Jungikliai:
+%% \HPROOF - Home Proof
+%% \PROOF  - Proof
+%% \CRC    - CRC
+%% \DIMENSIONS - write page dimensions under id line
+%% \CROPMARKS -  print cropmarks
+%%
+\def\filedate{2017/01/17}
+\def\fileversion{v1.20}
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{pdfwf-outputpage}[\filedate\space\fileversion,\space PDFWF output page addons (cropmarks, grid, inner skelet).]
+
+\newif\if@innerskel\@innerskelfalse
+
+\def\doc@stage@hook{}
+
+\def\HPROOF{\special{mt:hproof}%
+  \global\overfullrule=5\p@
+  \global\@innerskeltrue
+  \gdef\doc@stage{100}%
+  \gdef\vtex@info@runtime@docstage{HPROOF}%
+  \doc@stage@hook
+  }
+
+\def\H@PROOF{%
+  \global\overfullrule=5\p@
+  \global\@innerskeltrue
+  \gdef\doc@stage{100}%
+  }
+
+\def\PROOF{\special{mt:proof}%
+  \global\overfullrule\z@
+  \global\@innerskelfalse
+  \gdef\doc@stage{200}%
+  \gdef\vtex@info@runtime@docstage{PROOF}%
+  \AtBeginDocument{\check@proof@settings}%
+  \doc@stage@hook
+  }
+
+\def\CRC{\special{mt:crc}%
+  \global\overfullrule\z@
+  \global\@innerskelfalse
+  \gdef\@id@line{\hfill}%
+  \gdef\@id@dim@@{\hfill}%
+  \gdef\doc@stage{300}%
+  \gdef\vtex@info@runtime@docstage{CRC}%
+  \global\@setgridfalse%
+  \AtBeginDocument{\check@vtex@settings}%
+  \doc@stage@hook
+  }
+
+%% PROOF modos kontrole
+
+\def\check@proof@settings{%
+  \if@innerskel\special{mt:error Turn off innerskel!}\fi
+  }
+
+%% CRC modos kontrole
+\def\check@vtex@settings{%
+  \if@setgrid\special{mt:error Turn off SETGRID!}\fi%
+  \if@innerskel\special{mt:error Turn off innerskel!}\fi%
+  \@ifundefined{ifpi@draft}{}{%
+    \ifpi@draft
+      \special{mt:error Turn off Gin (graphics) draft!}%
+    \fi
+    }%
+  \@ifundefined{@@showcites}{}{\special{mt:error Colored cites commands!}}%
+  \@ifundefined{ifproofmode}{}{%
+    \ifproofmode
+      \special{mt:error Turn off index draft info!}%
+    \fi
+    }%
+  }
+
+\AtBeginDocument{%
+  \@ifundefined{ifpi@draft}{}{%
+    \ifpi@draft
+      \special{mt:warning Turn off Gin (graphics) draft!}%
+    \fi}}
+
+%%jei aux faile bus apibrezta runtime info, ji bus surasyta i dvi.
+\@input{\jobname.runtime.info}
+\def\runtime@info@list{maker,distribution,format,cmdline,publisher,%
+  project,manuscript,historyone,docstage,pdftype,outputdir}
+\def\write@runtime@info{%
+  \@for\runtime@info:={\runtime@info@list}\do{%
+    \edef\rt@info@cmd{vtex@info@runtime@\runtime@info}%
+    \edef\rt@info@str{vtex:info.runtime.\runtime@info}%
+    \expandafter\@ifundefined\expandafter{\rt@info@cmd}%
+        {}%
+        {\expandafter\special{\expandafter\rt@info@str\expandafter
+          =\expandafter{\expandafter\csname\rt@info@cmd\endcsname}}}%
+  }}
+\AtBeginDocument{\write@runtime@info}%
+
+%% spalvos:
+\@ifundefined{color}{\RequirePackage{color}}{}
+\gdef\b@black@color{\bgroup\color[gray]{0}}%
+\gdef\e@black@color{\egroup}%
+
+%% prikabiname VTEX patch faila
+\AtBeginDocument{\RequirePackage{vtexfix}}
+
+\newcount\@hour
+\newcount\@minute
+\def\timenow{\@hour=\time \divide\@hour by 60 \number\@hour:%
+  \multiply\@hour by 60 \@minute=\time \global\advance\@minute
+  by -\@hour%
+  \ifnum\@minute<10 0\number\@minute\else\number\@minute\fi}
+
+\edef\TODAY{\the\year/\two@digits{\the\month}/\two@digits{\the\day}}
+
+\font\@@@pffont=cmtt8
+
+\newcount\@@@sheetcount
+\def\@id@dim@@{\hfill}
+%% Write dimensions in id line in HPROOF mode
+\def\DIMENSIONS{%
+  \AtBeginDocument{\calc@pagecapacity}%
+  \global\let\@id@dim@@\put@dimensions
+  }
+
+\def\put@dimensions{%
+  \@ifundefined{trimbox@width}{}{crop: (\trimbox@width, \trimbox@height)}%
+  \hfill
+  cap: \the\pagecapacity\
+  \hfill
+  \@tempcnta=\textwidth \multiply\@tempcnta by10
+  \divide\@tempcnta by18647 \advance\@tempcnta by1 type wd: \the\@tempcnta ,
+  \@tempcnta=\textheight \multiply\@tempcnta by10
+  \divide\@tempcnta by18647 \advance\@tempcnta by1 ht: \the\@tempcnta ,
+  \@tempcnta=\columnwidth \multiply\@tempcnta by10
+  \divide\@tempcnta by18647 \advance\@tempcnta by1 col.wd: \the\@tempcnta
+  (1/100mm)
+  \hss
+  }
+
+\RequirePackage{ifpdf}
+\ifpdf
+  \def\dvi@special{\@gobble}
+\else
+  \def\dvi@special{\special}
+\fi
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%
+%% This is the code that makes the "inner skeleton".
+%%
+\@ifundefined{skel@rule@width}{\gdef\skel@rule@width{.4pt}}{}
+
+\def\@@@innerskel{{\normalcolor
+  \vbox to \z@{%
+    \vbox to \z@{\vss\hrule height\skel@rule@width width\textwidth}%
+    \vskip \headheight
+    \vbox to \z@{\vss\hrule height\skel@rule@width width\textwidth}%
+    \vskip \headsep
+    \vbox to \z@{\vss\hrule height\skel@rule@width width\textwidth}%
+    \hbox to \textwidth{\llap{\vrule height\textheight width\skel@rule@width}%
+    \hfil\vrule height\textheight width\skel@rule@width}%
+    \vbox to \z@{\vss\hrule height\skel@rule@width width\textwidth}%
+    \vskip \footskip
+    \vbox to \z@{\vss\hrule height\skel@rule@width width\textwidth}%
+    \vss
+    }}}
+
+\newif\if@showcropmarks \@showcropmarksfalse
+\def\CROPMARKS{\@showcropmarkstrue}
+\def\NOCROPMARKS{\@showcropmarksfalse}
+
+%%%%%%%%% Baziniai cropmark puslapio nustatymai
+%% Lapo krastine cropmark'ams:
+\@ifundefined{croppage@offset}{\def\croppage@offset{20mm}}{}
+%% Text box poslinkis:
+\@ifundefined{croppagebody@offset}{\let\croppagebody@offset\croppage@offset}{}
+%% Lapo dydis be cropmark'u:
+\@ifundefined{trimbox@width}{\xdef\trimbox@width {\paperwidth}}{}
+\@ifundefined{trimbox@height}{\xdef\trimbox@height{\paperheight}}{}
+
+%% \setcroppage reikia ijungti \AtBeginDocument. Jis padidins lapa, kad itilptu cropmar'kai
+\def\setcroppage{%
+  \if@showcropmarks
+    \ifdim\paperwidth=\trimbox@width
+      \advance\paperwidth by\dimexpr \croppage@offset*2\relax
+      \advance\paperheight by\dimexpr \croppage@offset*2\relax
+    \fi
+  \fi
+  }
+
+%% cropmark'o ilgis
+\@ifundefined{crop@length}{\gdef\crop@length{.45in}}{}
+%% cropmark'o atitraukimas nuo trimbox
+\@ifundefined{crop@offset}{\gdef\crop@offset{.19in}}{}
+
+%% Linijos storis:
+\def\crop@rule@width{\skel@rule@width}
+
+\def\@cropmark@topleft{%
+  \b@black@color
+  \moveleft\dimexpr\crop@length+\crop@offset\relax
+  \vbox to\z@{%
+    \vskip-\dimexpr(\crop@rule@width/2)\relax
+    \vbox to\z@{\vrule width\crop@length\space height \crop@rule@width\vss}%
+    \vss
+    }%
+  \moveleft\dimexpr\crop@rule@width/2\relax
+  \vbox to\z@{%
+    \vskip-\dimexpr\crop@length+\crop@offset\relax
+    \vbox to\z@{\vrule width\crop@rule@width\space height \crop@length\space depth 0pt\vss}%
+    \vss
+    }%
+  \e@black@color
+  }
+
+\def\@cropmark@topright{%
+  \b@black@color
+  \moveright\dimexpr\trimbox@width+\crop@offset\relax
+  \vbox to\z@{%
+    \vskip-\dimexpr(\crop@rule@width/2)\relax
+    \vbox to\z@{\vrule width\crop@length\space height \crop@rule@width\vss}%
+    \vss
+    }%
+  \moveright\dimexpr\trimbox@width-(\crop@rule@width/2)\relax
+  \vbox to\z@{%
+    \vskip-\dimexpr\crop@length+\crop@offset\relax
+    \vbox to\z@{\vrule width\crop@rule@width\space height \crop@length\vss}%
+    \vss
+    }%
+  \e@black@color
+  }
+
+\def\@cropmark@bottomleft{%
+  \b@black@color
+  \moveleft\dimexpr\crop@length+\crop@offset\relax
+  \vbox to\z@{%
+    \vskip-\dimexpr(\crop@rule@width/2)\relax
+    \vbox to\z@{\vrule width\crop@length\space height \crop@rule@width\vss}%
+    \vss
+    }%
+  \moveleft\dimexpr\crop@rule@width/2\relax
+  \vbox to\z@{%
+    \vskip\crop@offset
+    \vbox to\z@{\vrule width\crop@rule@width\space height \crop@length\vss}%
+    \vss
+    }%
+  \e@black@color
+  }
+
+\def\@cropmark@bottomright{%
+  \b@black@color
+  \moveright\dimexpr\trimbox@width+\crop@offset\relax
+  \vbox to\z@{%
+    \vskip-\dimexpr(\crop@rule@width/2)\relax
+    \vbox to\z@{\vrule width\crop@length\space height \crop@rule@width\vss}%
+    \vss
+    }%
+  \moveright\dimexpr\trimbox@width-(\crop@rule@width/2)\relax
+  \vbox to\z@{%
+    \vskip\dimexpr\crop@offset\relax
+    \vbox to\z@{\vrule width\crop@rule@width\space height \crop@length\vss}%
+    \vss
+    }%
+  \e@black@color
+  }
+
+%% Modification of output procedure
+%%
+\@ifundefined{@id@line}{%
+  \def\@id@line{\jobname.tex; \TODAY;~\timenow
+  \hfill p.~\number\@@@sheetcount}}{}
+\def\crop@page@info{}
+
+\newbox\@shipout@box
+\def\@outputpage{%
+  \begingroup           % the \endgroup is put in by \aftergroup
+    \let \protect \noexpand
+    \@resetactivechars
+    \let\-\@dischyph
+    \let\'\@acci\let\`\@accii\let\=\@acciii
+    \let\\\@normalcr
+    \let\par\@@par          %% 15 Sep 87
+    \global\advance\@@@sheetcount by1%
+    \shipout \vbox{%
+      \set@typeset@protect
+      \aftergroup \endgroup
+      \aftergroup \set@typeset@protect
+      % correct? or just restore by ending
+      % the group?
+      \if@specialpage
+        \global\@specialpagefalse\@nameuse{ps@\@specialstyle}%
+      \fi
+      \if@twoside
+        \ifodd\count\z@ \let\@thehead\@oddhead \let\@thefoot\@oddfoot
+          \let\@themargin\oddsidemargin
+        \else \let\@thehead\@evenhead
+          \let\@thefoot\@evenfoot \let\@themargin\evensidemargin
+        \fi
+      \fi
+      \reset@font
+      \normalsize
+      \@tempdima=1\baselineskip
+      \expandafter\def\expandafter\v@skipo\expandafter{\the\@tempdima}%
+      \baselineskip\z@skip \lineskip\z@skip \lineskiplimit\z@
+      \@begindvi
+      \csname @beginpage\endcsname
+      \csname pagelabels@hook\endcsname
+      \if@showcropmarks
+        \bgroup
+        \leftskip\z@skip \rightskip\z@skip \@rightskip\z@skip \parfillskip\@flushglue \parindent\z@
+        \moveright\dimexpr -1in+\croppage@offset\relax
+          \vbox to\z@{\vskip \dimexpr -1in+\croppage@offset\relax
+            \vbox to\z@{\vss%
+              \dvi@special{vtex:bmc.artifact.cropmarks}%
+              \@cropmark@topleft
+              \@cropmark@topright%
+              \dvi@special{vtex:emc.artifact.cropmarks}%
+              }%
+            \vskip\trimbox@height
+            \vbox to\z@{%
+              \dvi@special{vtex:bmc.artifact.cropmarks}%
+              \@cropmark@bottomleft
+              \@cropmark@bottomright
+              \hbox{\lower 24pt\hbox to\z@{%
+                \hbox to\trimbox@width{\hfill\@@@pffont\crop@page@info\hfill}\hss}%
+                }%
+              \dvi@special{vtex:emc.artifact.cropmarks}%
+              \vss}%
+              \vss
+            }%
+        \egroup
+        \advance\@themargin by\croppagebody@offset
+        \advance\topmargin by\croppagebody@offset
+      \fi
+      \vskip \topmargin
+      \csname watermark@hook\endcsname  %% 28 May 08
+      \moveright\@themargin \vbox {\if@innerskel\@@@innerskel\fi%
+        \setbox\@tempboxa \vbox to\headheight{%
+         \dvi@special{vtex:bmc.artifact.header}%
+          \vfil
+          \color@hbox
+            \normalcolor
+            \hb@xt@\textwidth {%
+              \let \label \@gobble
+              \let \index \@gobble
+              \let \glossary \@gobble %% 21 Jun 91
+              \@thehead
+              }%
+          \color@endbox
+          \dvi@special{vtex:emc.artifact.header}%
+          }%                        %% 22 Feb 87
+        \dp\@tempboxa \z@
+        \box\@tempboxa
+        \vskip \headsep
+        \if@setgrid
+          \dvi@special{vtex:bmc.artifact.grid}%
+          \set@@grid
+          \dvi@special{vtex:emc.artifact.grid}%
+        \fi
+        \box\@outputbox
+       \moveleft\@themargin
+       \vbox to\z@{\vss\@tempdima=\textwidth \advance\@tempdima by\@themargin%
+         \dvi@special{vtex:bmc.artifact.idline}%
+         \hbox{\lower -24pt\hbox to\@tempdima{\hskip\@themargin\@@@pffont\@id@line}}%
+         \dvi@special{vtex:emc.artifact.idline}%
+         \dvi@special{vtex:bmc.artifact.dimensions}%
+         \hbox to\@tempdima{\vrule width0pt depth12pt\hskip\@themargin\@@@pffont\@id@dim@@}%
+         \dvi@special{vtex:emc.artifact.dimensions}%
+         \hrule height 0pt depth 0pt%
+         \vskip\dimexpr\textheight+\topmargin+\headheight+\headsep+\topskip\relax
+         }%
+        \baselineskip \footskip
+        \dvi@special{vtex:bmc.artifact.footer}%
+        \color@hbox
+          \normalcolor
+          \hb@xt@\textwidth{%
+            \let \label \@gobble
+            \let \index \@gobble      %% 22 Feb 87
+            \let \glossary \@gobble   %% 21 Jun 91
+            \@thefoot
+            }%
+        \color@endbox
+        \dvi@special{vtex:emc.artifact.footer}%
+        }%
+    }%
+  \global \@colht \textheight
+  \stepcounter{page}%
+  \let\firstmark\botmark
+  }
+
+%% GRID'AS SU NUMERUOTOMIS EILUTEMIS
+%% Interfeisas:
+%% \setgridargs{step=5,numsep=1cm, ... }
+
+\newif\if@setgrid \@setgridfalse
+\def\SETGRID{\global\@setgridtrue}
+
+\def\get@args#1=#2[#3]\relax{\@ifundefined{#3@@#1}%
+  {\dbl@error{There is no such option #1 for grid.}}%
+  {\global\@namedef{#3@@#1}{#2}}}
+
+\def\setgridargs#1{%
+  \if?#1?\else
+    \@for\CurrentOption:={#1}\do{%
+      \expandafter\get@args\CurrentOption[grid]\relax
+    }%
+  \fi
+  \global\@setgridtrue
+  }
+
+\newdimen\grid@line
+\def\grid@@line{0pt}
+\def\grid@@numsep{.5cm}
+\def\grid@@numraise{1.5pt}
+\def\grid@@step{1}
+\def\grid@@continues{0}
+\def\grid@@startnumber{1}
+\def\grid@@font{\sffamily\scriptsize}
+\def\output@gridnum@left#1{#1}
+\def\output@gridnum@right#1{#1}
+
+\def\set@@grid@hook{%
+  \if@twocolumn
+  \else
+    \global\let\put@gridnum@right\put@gridnum@left
+  \fi}
+
+\def\put@gridnum#1{%
+  \grid@@font
+  \@nameuse{pre@gridnum@#1}%
+  \@nameuse{put@gridnum@#1}%
+  \@nameuse{post@gridnum@#1}%
+  }
+
+\def\put@gridnum@left{%
+  \ifnum\@tempcntb=\number\grid@@step\relax
+    \ifcase\number\grid@@continues\relax
+      \edef\@@gridnum{\number\@tempcnta}%
+    \or
+      \edef\@@gridnum{\grid@@startnumber}%
+    \else
+      \edef\@@gridnum{\number\@tempcnta/\grid@@startnumber}%
+    \fi
+    \expandafter\output@gridnum@left\expandafter{\@@gridnum}%
+  \fi
+  }
+
+\def\put@gridnum@right{%
+  \ifnum\@tempcntb=\number\grid@@step\relax
+    \bgroup
+      \@tempcntb=\number\grid@@cnt\relax
+      \advance\@tempcnta by\@tempcntb
+      \ifcase\number\grid@@continues\relax
+        \edef\@@gridnum{\number\@tempcnta}%
+      \or
+        \edef\@@gridnum{\advance\@tempcntb by\number\grid@@startnumber\relax
+          \number\@tempcntb}%
+      \else
+        \edef\@@gridnum{%
+          \number\@tempcnta/\advance\@tempcntb by\number\grid@@startnumber\relax
+          \number\@tempcntb}%
+      \fi
+      \expandafter\output@gridnum@right\expandafter{\@@gridnum}%
+    \egroup
+  \fi
+  }
+
+\def\count@@grid{%
+  \@tempcnta\@ne\@tempcntb\@ne\@tempdima=\topskip
+  \loop
+  \advance\@tempcnta by\@ne
+  \advance\@tempdima by\v@skipo
+  \ifdim\@tempdima<\textheight\repeat
+  \advance\@tempcnta by-1\relax
+  \xdef\grid@@cnt{\the\@tempcnta}%
+  }
+
+\def\set@@grid{%
+  \@nameuse{set@@grid@hook}%
+  \setbox\@tempboxa\vtop to\textheight{\vskip\z@
+    \baselineskip\z@skip
+    \count@@grid
+    \@tempcnta=\@ne
+    \@tempcntb=\@ne
+    \@tempdima=\topskip
+    \grid@line=\grid@@line\relax
+    \vbox to\z@{%
+      \vss\kern-.5\grid@line
+      \hbox to\textwidth{%
+        \vrule width\textwidth height \grid@line depth\z@
+        }%
+      \kern-.5\grid@line
+      }%
+    \vbox to\topskip{%
+      \vss\kern-.5\grid@line
+      \hbox to\textwidth{%
+        \raise\grid@@numraise\llap{\put@gridnum{left}\kern\grid@@numsep}%
+        \vrule width\textwidth height \grid@line depth\z@
+        \raise\grid@@numraise\rlap{\kern\grid@@numsep\put@gridnum{right}}%
+        }%
+      \kern-.5\grid@line}%
+    \loop
+    \advance\@tempcnta by\@ne
+    \bgroup
+      \@tempcnta=0\number\grid@@startnumber\relax
+      \advance\@tempcnta by\@ne
+      \xdef\grid@@startnumber{\number\@tempcnta}%
+    \egroup
+    \ifnum\@tempcntb=\number\grid@@step
+      \@tempcntb\@ne
+    \else
+      \advance\@tempcntb by\@ne
+    \fi
+    \advance\@tempdima by\v@skipo
+    \vbox to\v@skipo{%
+      \vss\kern-.5\grid@line
+      \hbox to\textwidth{%
+        \raise\grid@@numraise\llap{\put@gridnum{left}\kern\grid@@numsep}%
+        \vrule width\textwidth height \grid@@line depth\z@
+        \raise\grid@@numraise\rlap{\kern\grid@@numsep\put@gridnum{right}}%
+        }%
+      \kern-.5\grid@line
+      }%
+    \ifdim\@tempdima<\textheight\repeat
+    \bgroup
+      \@tempcnta=0\number\grid@@startnumber\relax
+      \ifx\put@gridnum@right\put@gridnum@left
+      \else
+         \ifx\put@gridnum@right\relax
+         \else
+           \advance\@tempcnta by\number\grid@@cnt\relax
+         \fi
+      \fi
+      \advance\@tempcnta by\@ne
+      \xdef\grid@@startnumber{\number\@tempcnta}%
+    \egroup
+    \vss
+    }%
+    \begingroup
+      \normalcolor
+      \b@black@color
+      \ht\@tempboxa\z@
+      \dp\@tempboxa\z@
+      \box\@tempboxa
+      \e@black@color
+    \endgroup
+  }
+
+%%%% page capacity skaiciavimas
+%%  w = lc alphabet width, points
+%%  L = desired width of line, **points**
+%%  c = number of characters in the line
+%%
+%%  then
+%%
+%%  c=L*35/(1.125*w+15)
+%%
+%%  1pt = 65536sp
+%%
+%%  c=L*35/(1.125*w+15*m)
+%%
+%%  kur L,w yra sp, m=65536
+
+\newcount\pagecapacity
+
+\def\calc@pagecapacity{%
+  \if@twocolumn
+    \pagecapacity=\columnwidth
+    \multiply\pagecapacity by2
+  \else
+    \pagecapacity=\textwidth
+  \fi
+  \multiply\pagecapacity by35
+  \settowidth{\@tempdima}{\normalfont\normalsize abcdefghijklmnopqrstuvwxyz}%
+  \@tempcnta=\@tempdima
+  \@tempcntb=\@tempcnta
+  \divide\@tempcntb by8
+  \advance\@tempcnta by\@tempcntb % 1.125*w
+  \@tempcntb=65536
+  \multiply\@tempcntb by15
+  \advance\@tempcnta by\@tempcntb
+  \divide\pagecapacity by\@tempcnta
+  \@tempcnta=\textheight
+  \advance\@tempcnta by-\topskip
+  \divide\@tempcnta by\baselineskip
+  \advance\@tempcnta by1
+  \multiply\pagecapacity by\@tempcnta
+  }
+
+\let\pagelabels@hook\@empty
+\endinput

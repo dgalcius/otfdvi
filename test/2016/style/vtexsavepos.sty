@@ -1,0 +1,126 @@
+%% vtexsavepos.sty
+%% Deimantas Galcius, deimi@vtex.lt 2009 
+%%
+\NeedsTeXFormat{LaTeX2e}
+\def\get@CVSdate#1Id: #2,v #3 #4 #5 #6 #7${#4}%$
+\def\@version{\get@CVSdate$Id: vtexsavepos.sty,v 1.3 2011/05/23 08:26:24 deimi Exp $}
+\ProvidesPackage{vtexsavepos}[\@version\space vtexsavepos (DG)]
+
+
+
+\newdimen\toppageboundary
+\setlength\toppageboundary{\topskip}
+\addtolength\toppageboundary{.1\p@}
+\def\leftcolwidth{\columnwidth}
+
+\DeclareRobustCommand\vtexsavepos[1]%
+{%
+    \quitvmode
+    \pdfsavepos
+      \global\let\vtexsavepos@pdf\relax    
+      \if@filesw
+        \expandafter\expandafter\expandafter\write\expandafter\expandafter\expandafter\@posfile
+        \expandafter\expandafter\expandafter{\expandafter\expandafter\expandafter\vtexsavepos@pdf
+        \expandafter\expandafter\expandafter{#1\expandafter}%
+        \expandafter{\number\pdflastxpos sp}{\number\pdflastypos sp}{\number\c@page}}%
+      \fi
+  }
+
+
+
+\long\def\vtexsavepos@pdf#1#2#3#4%
+{%
+ \vtexpos@@{#2}{#3}{#4}%
+ %                        \vtexpos@@@<id>{xpos}{ypos}{pagepos}
+ \@ifundefined{vtexpos@@@#1}%
+  {\expandafter\xdef\csname vtexpos@@@#1\endcsname{{\xpos}{\ypos}{#4}}}%
+  {\wlog{vtexsavepos: multiply definition \string\vtexpos@@@#1}}%
+} 
+
+
+\newwrite\@posfile
+\AtBeginDocument%
+{%
+ \begingroup
+ \makeatletter
+ \get@textbox@upper@left@pos
+ \@input{\jobname.pos}%
+ \endgroup
+ \if@filesw
+  \immediate\openout\@posfile\jobname.pos
+  \immediate\write\@posfile{\relax}%
+ \fi
+}
+
+
+\def\vtexpos@@#1#2#3{%
+% pagepos
+   \edef\pagepos{\number#3}%
+% xpos
+   \setlength\@tempdima{#1}\advance\@tempdima by -\textbox@pdf@x@left%
+    \ifodd\pagepos\relax
+     \advance\@tempdima -\oddsidemargin
+     \else	
+     \advance\@tempdima -\evensidemargin	
+    \fi
+    \edef\xpos{\the\@tempdima}%	
+% ypos
+   \setlength\@tempdima{\textbox@pdf@y@top}
+   \advance\@tempdima by-#2\relax
+   \edef\ypos{\the\@tempdima}%
+}
+
+
+\def\@vtexpos@getval#1#2#3{\xdef\xpos{#1}\xdef\ypos{#2}\xdef\pagepos{#3}}
+\def\@@vtexpos#1%
+{%
+ \@ifundefined{vtexpos@@@#1}{\edef\xpos{0pt}\edef\ypos{9999pt}\edef\pagepos{0}}{%
+ \bgroup
+ \expandafter\edef\expandafter\@next{\csname vtexpos@@@#1\endcsname}\relax
+ \expandafter\@vtexpos@getval\@next\relax
+ \egroup
+ }%
+}
+\def\vtexposx#1{\@@vtexpos{#1}\xpos}
+\def\vtexposy#1{\@@vtexpos{#1}\ypos}
+\def\vtexpospage#1{\@@vtexpos{#1}\pagepos}
+
+\def\@ifleftcol#1#2#3%
+{%
+ \@@vtexpos{#1}%
+ \ifdim\xpos<\leftcolwidth#2\else#3\fi
+}
+\def\@iftoppage#1#2#3%
+{%
+ \@@vtexpos{#1}%
+ \ifdim\ypos<\toppageboundary#2\else#3\fi
+}
+
+\def\get@textbox@upper@left@pos{%
+    \bgroup
+      \normalsize
+      \@tempdima\pdfpageheight
+      \advance\@tempdima-\pdfvorigin
+      \advance\@tempdima-\voffset
+      \advance\@tempdima-\topmargin
+      \advance\@tempdima-\headheight
+      \advance\@tempdima-\headsep
+      \xdef\textbox@pdf@y@top{\the\@tempdima}%
+      \@tempdima\pdfhorigin
+      \advance\@tempdima\hoffset	
+      \xdef\textbox@pdf@x@left{\the\@tempdima}%
+    \egroup
+  }
+
+
+
+
+
+
+
+
+
+
+
+\endinput
+

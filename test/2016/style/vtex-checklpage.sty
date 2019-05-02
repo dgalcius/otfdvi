@@ -1,0 +1,115 @@
+%% Copyright (C) 2017 by Sigitas Tolušis, VTEX UAB
+%% Mokslininku 2a, LT-08412 Vilnius, Lithuania
+%%
+%% -------------------------------------------------------
+%%
+%%  Git repository: TeXProd.texroot/vtex-dist.git
+%%            path: tex/latex/controls/vtex-checklpage.sty
+%%
+%%  Changes:
+%%    20170217 - alfa versija
+%%
+%%  Commits and log messages:
+%%    >git log [<revision>...] -- <path>
+%%
+%%  Changes in commits:
+%%    >git log [<revision>...] -p -- <path>
+%%
+%%  Source with annotated lines:
+%%    >git blame <path>
+%%
+%%  Dependency:
+%%    etoolbox    - reikalinga \AfterEndDocument
+%%    vtex-ltxext - reikalinga \vtxPackageError
+%%
+%% -------------------------------------------------------
+%%
+\NeedsTeXFormat{LaTeX2e}[1999/12/01]
+\ProvidesPackage{vtex-checklpage}
+    [2017/04/07 v0.3 lastpage setting and checking]
+
+\RequirePackage{etoolbox}
+
+\newif\ifcheck@grouplevel
+\DeclareOption{checkgroup}{\check@groupleveltrue}
+\DeclareOption{nocheckgroup}{\check@grouplevelfalse}
+
+\newif\ifcheck@lpage
+\DeclareOption{checklpage}{\check@lpagetrue}
+\DeclareOption{nochecklpage}{\check@lpagefalse}
+\ExecuteOptions{checkgroup,checklpage}
+
+\ProcessOptions*
+
+\def\last@page@counter{3}
+\countdef\c@vtx@@lastpage=\last@page@counter
+
+\def\vtx@@checklpage@error#1#2{\vtxPackageError{vtex-checklpage}{#1}{#2}}
+
+\def\vtx@@compare@grouplevel{%
+    \ifcheck@grouplevel
+        \ifnum\currentgrouplevel>\z@
+            \vtx@@checklpage@error{group unclosed}%
+                {There are \number\currentgrouplevel\space open tex groups left.\MessageBreak
+                 Missing \protect\egroup \space somewhere.
+                }%
+        \fi
+    \fi
+    }
+
+\def\vtx@@check@last@page{%
+    \ifcheck@lpage
+        \ifdefined\c@lastpage
+            \xdef\vtx@@declared@lastpage{\number\c@lastpage}%
+        \else
+            \ifdefined\@lastpage
+                \xdef\vtx@@declared@lastpage{\number\@lastpage}%
+            \else
+                \xdef\vtx@@declared@lastpage{0}%
+            \fi
+        \fi
+        \xdef\vtx@@real@lastpage{\number\numexpr\c@page-1\relax}%
+        \ifnum\c@vtx@@lastpage>\z@
+            \xdef\vtx@@calculated@lastpage{\number\c@vtx@@lastpage}%
+        \else
+            \xdef\vtx@@calculated@lastpage{\vtx@@real@lastpage}%
+        \fi
+        \ifnum\vtx@@declared@lastpage>\z@
+            \ifnum\vtx@@declared@lastpage=\vtx@@calculated@lastpage
+                \PackageInfo{vtex-checklpage}
+                    {lastpage set \number\vtx@@declared@lastpage,
+                     real \number\vtx@@real@lastpage\space
+                    }%
+            \else
+                \vtx@@checklpage@error
+                    {wrong \string\lastpage \space number!
+                     Set \number\vtx@@declared@lastpage,
+                     expected \number\vtx@@calculated@lastpage,
+                     real \number\vtx@@real@lastpage\space
+                    }{%
+                     Check the command \string\lastpage{<arg>}.\MessageBreak
+                     <arg> specifies the logical lastpage value.\MessageBreak
+                    }%
+            \fi
+        \else
+            \PackageWarningNoLine{vtex-checklpage}
+                {No settings for lastpage! Real lastpage \number\vtx@@real@lastpage\space}%
+        \fi
+    \fi
+    }
+
+\def\vtx@@set@lastpage{%
+    \global\setcounter{vtx@@lastpage}{\number\c@page}%
+    \global\let\vtx@@set@lastpage\relax
+    }
+
+\def\vtx@@set@previous@lastpage{%
+    \global\setcounter{vtx@@lastpage}{\numexpr\number\c@page-1\relax}%
+    \global\let\vtx@@set@previous@lastpage\relax
+    \global\let\vtx@@set@lastpage\relax
+    }
+
+\AfterEndDocument{%
+    \vtx@@compare@grouplevel
+    \vtx@@check@last@page
+    }

@@ -20,6 +20,6 @@
 | dryrun     | --dry-run    | -n           | false                   | true               |
 | inplace    | --inplace    | -i           | false                   | fileout == filein  |
 | auto       | --auto       | -a           | false                   | run __Makefile all |
-|            |              |              |                         |                    |
+| target     | --target     | -t           |                         |                    |
    
    

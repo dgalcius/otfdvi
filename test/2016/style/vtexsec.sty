@@ -1,0 +1,147 @@
+% Improved sectioning commands
+% Mainly used in journal/book class developments
+%
+% Requires LATEX 2e
+% Vytas Statulevicius, VTEX, vytas@vtex.lt
+%
+% Apibreztos komandos:
+%   \section@sep{} - taskas po sekcijos pavadinimo
+%   \nocontentsline - po sios komandos einancios sekcijos neitraukia i turini
+%
+%  Dar visiskai zalias - reikia perkelti stuff'a is knygu (part, chapter, to@fl, donot uppercase is TTI)
+%  2001.01.07 - pakeistas secnumdepth is 3 i 5
+%  2001.01.15 - kablys tasko idejimui
+%  2002.12.15 - ivesti kabliai \PREstarsecHOOK ir \PREsecHOOK pdf palaikymui
+%  2005.02.09 - ivesta opcija autosecdot
+%  2005.02.22 - \@ssect pakeistas i \x@ssect del hypermark.sty
+%  2006.10.06 - idetos \@ifundefined{c@part} komandos
+%  2008.03.19 - ivestos tuscios sekcijos \emptysection, \emptysubsection, \emptysubsubsection
+
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{vtexsec}[2008/03/19 VTEX sectioning commands (VS)]
+
+% ijungus opcija section* neraso i toc:
+\DeclareOption{normalssect}{\gdef\@normal@ssect{}}
+
+% Put "." after inline section headings:
+\newif\if@autosecdot \@autosecdotfalse
+\DeclareOption{autosecdot}  {\@autosecdottrue}
+\DeclareOption{noautosecdot}{\@autosecdotfalse}
+
+\ProcessOptions
+
+% ************************ Counters
+\setcounter{secnumdepth}{5}
+\@ifundefined{c@part}         {\newcounter {part}}{}
+\@ifundefined{c@chapter}      {\newcounter {chapter}}{}
+\@ifundefined{c@section}      {\newcounter {section}}{}
+\@ifundefined{c@subsection}   {\newcounter {subsection}[section]}{}
+\@ifundefined{c@subsubsection}{\newcounter {subsubsection}[subsection]}{}
+\@ifundefined{c@paragraph}    {\newcounter {paragraph}[subsubsection]}{}
+\@ifundefined{c@subparagraph} {\newcounter {subparagraph}[paragraph]}{}
+
+\renewcommand\thepart         {\@Roman\c@part}
+\renewcommand\thechapter      {\@arabic\c@chapter}
+\renewcommand\thesection      {\@arabic\c@section}
+\renewcommand\thesubsection   {\thesection.\@arabic\c@subsection}
+\renewcommand\thesubsubsection{\thesubsection .\@arabic\c@subsubsection}
+\renewcommand\theparagraph    {\thesubsubsection.\@arabic\c@paragraph}
+\renewcommand\thesubparagraph {\theparagraph.\@arabic\c@subparagraph}
+
+
+% Taskas po sekcijos (paliekam del suderinamumo)
+\def\section@sep{}
+
+% Trick for the hyperref:
+% Jei \section{} tai tasko nereikia:
+\def\setaftersec@dot#1{\if@autosecdot\setbox0=\hbox{#1}\ifdim\wd0>0\p@\def\aftersec@dot{.}\else\def\aftersec@dot{}\fi\fi}
+\let\aftersec@dot\relax
+
+% Itraukimo i turini panaikinimas:
+\def\nocontentsline{%
+\let\@@addcontentsline\addcontentsline%
+\def\addcontentsline##1##2##3{\let\addcontentsline\@@addcontentsline}%
+}
+
+% section* must be includet into TOC:
+\def\@startsection#1#2#3#4#5#6{%
+  \if@noskipsec \leavevmode \fi
+  \par
+  \@tempskipa #4\relax
+  \@afterindenttrue
+  \ifdim \@tempskipa <\z@
+    \@tempskipa -\@tempskipa \@afterindentfalse
+  \fi
+  \if@nobreak
+    \everypar{}%
+  \else
+    \addpenalty\@secpenalty\addvspace\@tempskipa
+  \fi
+  \@ifstar
+    {\@dblarg{\x@ssect{#1}{#2}{#3}{#4}{#5}{#6}}}%
+    {\@dblarg{\@sect{#1}{#2}{#3}{#4}{#5}{#6}}}}
+%
+%
+\def\PREstarsecHOOK#1#2{}
+\def\PREsecHOOK#1{}
+%
+\def\x@ssect#1#2#3#4#5#6[#7]#8{%
+  \@tempskipa #5\relax
+  \PREstarsecHOOK{#1}{#7}%
+  \ifdim \@tempskipa>\z@
+    \begingroup
+      #6{%
+        \@hangfrom{\hskip #3}%
+          \interlinepenalty \@M #8\section@sep\@@par}%
+    \endgroup
+  \else
+    \setaftersec@dot{#8}%
+    \def\@svsechd{#6{\hskip #3\relax #8\section@sep\aftersec@dot}}%
+  \fi%
+  \ifnum #2>\c@secnumdepth \else\@ifundefined{@normal@ssect}{\addcontentsline{toc}{#1}{\protect\numberline{}#7}}{}\fi%
+  \@xsect{#5}}
+
+
+% ivedame galimybe automatiskai ideti taska
+\def\@sect#1#2#3#4#5#6[#7]#8{%
+  \def\currentsec@depth{#2}%
+  \ifnum #2>\c@secnumdepth
+    \let\@svsec\@empty
+  \else
+    \refstepcounter{#1}%
+    \protected@edef\@svsec{\@seccntformat{#1}\relax}%
+  \fi
+  \PREsecHOOK{#1}%
+  \@tempskipa #5\relax
+  \ifdim \@tempskipa>\z@
+    \begingroup
+      #6{%
+        \@hangfrom{\hskip #3\relax\@svsec}%
+          \interlinepenalty \@M #8\section@sep\@@par}%
+    \endgroup
+    \csname #1mark\endcsname{#7}%
+    \addcontentsline{toc}{#1}{%
+      \ifnum #2>\c@secnumdepth \else
+        \protect\numberline{\csname the#1\endcsname}%
+      \fi
+      #7}%
+  \else
+    \setaftersec@dot{#8}%
+    \def\@svsechd{%
+      #6{\hskip #3\relax
+      \@svsec #8\section@sep\aftersec@dot}%
+      \csname #1mark\endcsname{#7}%
+      \addcontentsline{toc}{#1}{%
+        \ifnum #2>\c@secnumdepth \else
+          \protect\numberline{\csname the#1\endcsname}%
+        \fi
+        #7}}%
+  \fi
+  \@xsect{#5}}
+
+%% Empty sections 
+\def\emptysection{\ifnum\doc@stage=100\PREstarsecHOOK{section}{Empty Section H1}\fi}
+\def\emptysubsection{\ifnum\doc@stage=100\PREstarsecHOOK{subsection}{Empty Subsection H2}\fi}
+\def\emptysubsubsection{\ifnum\doc@stage=100\PREstarsecHOOK{subsubsection}{Empty Subsubection H3}\fi}
+
+\endinput

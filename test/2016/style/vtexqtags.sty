@@ -1,0 +1,330 @@
+%% vtexqtags.sty
+%% Deimantas Galcius, deimi@vtex.lt 2011.09.26
+%%
+\NeedsTeXFormat{LaTeX2e}
+\def\get@CVSdate#1Id: #2,v #3 #4 #5 #6 #7${#4}%$
+\def\@version{\get@CVSdate$Id: vtexqtags.sty,v 1.12 2017/03/03 12:38:00 deimi Exp $}
+\ProvidesPackage{vtexqtags}[\@version\space Show ref/cite tags in the margin  (DG)]
+
+
+\RequirePackage{vtexsavepos}
+%\RequirePackage{xcolor}
+\ifdefined\color\else\PackageError{vtexqtags}{Please load 'color' or 'xcolor' package}{\@ehc}\fi
+\RequirePackage{etextools}
+
+\newtoggle{showundefinedrefs}%% Ijungia/isjungia neapibreztu zymiu isvedima parasteje
+\newtoggle{showuncited}      %% Ijungia/isjungia nepacituotu bibitem isvedima
+\newtoggle{showbibitems}     %% Ijungia/isjungia bibitem'i zymiu isvedima
+\newtoggle{showcites}        %% Ijungia/isjungia cite'u spalvinima
+\newtoggle{showuncitedsection}  %% Nepacituotu bibitem sekcijos isvedimas 
+\newtoggle{showseqordersection} %% Sequential order sekcijos isvedimas
+\newtoggle{showcitationsection} %% Citavimo saraso sekcijos isvedimas 
+\newtoggle{citesdebug}          %% Cite informacipos rasymas i .aux faila
+
+\newcommand\showundefinedrefs{\toggletrue{showundefinedrefs}}
+\newcommand\hideundefinedrefs{\togglefalse{showundefinedrefs}}
+\newcommand\showuncited      {\toggletrue{showuncited}}
+\newcommand\hideuncited      {\togglefalse{showuncited}}
+\newcommand\showbibitems     {\toggletrue{showbibitems}}
+\newcommand\hidebibitems     {\togglefalse{showbibitems}}
+\newcommand\showcites        {\toggletrue{showcites}}
+\newcommand\hidecites        {\togglefalse{showcites}}
+\newcommand\citesdebug       {\toggletrue{citesdebug}}
+
+\newcommand\showseqordersection{\toggletrue{showseqordersection}}
+\newcommand\hideseqordersection{\togglefalse{showseqordersection}}
+\newcommand\showuncitedsection {\toggletrue{showuncitedsection}}
+\newcommand\hideuncitedsection {\togglefalse{showuncitedsection}}
+\newcommand\showcitationsection{\toggletrue{showcitationsection}}
+\newcommand\hidecitationsection{\togglefalse{showcitationsection}}
+
+\def\@conflict@bibitemanduncited%
+{%
+  \@latex@error{Simultanous *showuncited* ir *showbibitems*!}\@ehc%
+}
+
+%% AtBeginDocument jau per velai
+\AtEndPreamble% == Before AtBeginDocument
+{\iftoggle{showundefinedrefs}  {\@showundefinedrefs}{}%
+ \iftoggle{showuncited}        {\@showuncited}{}%
+ \iftoggle{showbibitems}       {\@showbibitems}{}%
+ \iftoggle{showcites}          {\@showcites}{}%
+ \iftoggle{showseqordersection}{\@showseqordersection}{}%
+ \iftoggle{showuncitedsection} {\@showuncitedsection}{}%
+ \iftoggle{showcitationsection}{\@showcitationsection}{}%
+ \iftoggle{citesdebug}         {\@citesdebug}{}%
+ %% Negalima naudoti \showbibitems ir \showuncited kartu
+ \iftoggle{showbibitems}{\iftoggle{showuncited}{\@conflict@bibitemanduncited}{}}{}%
+ %%
+}
+
+\def\b@showcites@color{\special{color push gray .3}}%
+\def\e@showcites@color{\special{color pop}}%
+
+\def\@showcites%
+{%
+ \apptocmd\vtex@citex@start   {\b@showcites@color}{}{\PackageError{vtexqtags}{Patch vtex@citex@start failed}\@ehc}%
+ \apptocmd\vtex@citexnum@start{\b@showcites@color}{}{\PackageError{vtexqtags}{Patch vtex@citex@start failed}\@ehc}%
+ \pretocmd\vtex@citex@end     {\e@showcites@color}{}{\PackageError{vtexqtags}{Patch vtex@citex@end failed}\@ehc}%
+ \pretocmd\vtex@citexnum@end  {\e@showcites@color}{}{\PackageError{vtexqtags}{Patch vtex@citex@end failed}\@ehc}%
+}
+
+\newcounter{qtags@bib@id}%
+\newcounter{qtags@ref@id}%
+\let\cur@bibitem\@empty
+
+%% isvedame necituota literatura kaireje parasteje:
+\def\showuncited@skip{\hskip\ifNAT@numbers1\else-1.8\fi em}
+\def\showundefinedrefs@skip{\hskip1em}
+\def\showuncited@uncitedtag{<uncited>}
+\def\showuncited@style#1{{\fboxsep\z@\fboxrule\z@\fcolorbox{tagcolorbg}{tagcolorbg}{\small\color{red}\ttfamily#1}}}
+\def\showuncited@uncited{\showuncited@style{\showuncited@uncitedtag}}
+\def\showundefinedrefs@tag{unknown:}
+\def\showbibitems@tag#1{\showuncited@style{<#1>}}
+\definecolor{tagcolorbg}{gray}{1}
+\def\strutdepth{\dp\strutbox}
+
+% vadjust per pdf koordinates (jei dirba eTeX)
+\def\label@pdfpos@fmt#1{{\showuncited@style{\showundefinedrefs@tag#1}}}
+\def\label@pdfpos#1%
+{%
+  \strut%
+  \vadjust%
+  {%
+    \kern-\strutdepth%
+    \vtop to\strutdepth%
+    {%
+      \baselineskip\strutdepth\vss
+      \hbox{#1}%
+      \null%
+    }%
+  }%
+}%
+\def\label@pdfpos@left#1{\label@pdfpos{\llap{\label@pdfpos@fmt{#1}\showundefinedrefs@skip}}}
+\def\label@pdfpos@right#1{\label@pdfpos{\rlap{\hskip\columnwidth\showundefinedrefs@skip\label@pdfpos@fmt{#1}}}}
+
+%% print undefined ref
+\def\print@undefinedrefs#1%
+{%
+  \edef\qtags@ref@id{refid:#1:\number\c@qtags@ref@id}%
+  \vtexsavepos{\qtags@ref@id}%
+  \if@twocolumn\else\let\label@pdfpos@left\label@pdfpos@right\fi%
+  \@ifleftcol{\qtags@ref@id}%
+    {\label@pdfpos@left{#1}}%
+    {\label@pdfpos@right{#1}}%
+  \stepcounter{qtags@ref@id}%
+}
+%% Idedamas \@latex@warning pranesimas, kad vtexsys skaitydamas loga'a
+%% pagautu "undefined" zymes. (LS)
+\preto\vtex@citeundefined{\@latex@warning{Citation `\@citeb' on page \thepage \space undefined}}
+
+\def\@showundefinedrefs{\preto\vtex@citeundefined{\print@undefinedrefs{\@citeb}}}%                      %% \@citeb - nepacituota zyme
+
+\def\@@showuncited%
+{%
+  \edef\@bibitem@id{bibitem:\cur@bibitem:\number\c@qtags@bib@id}%
+  \vtexsavepos{\@bibitem@id}%
+  \@ifundefined{cited@\cur@bibitem}%
+  {%
+    \@ifleftcol{\@bibitem@id}%
+    {\llap{\showuncited@uncited\showuncited@skip}}%
+    {\rlap{\hskip\columnwidth\showuncited@skip\showuncited@uncited}}%
+  }%
+  {}%
+  \stepcounter{qtags@bib@id}%
+}
+
+\def\@showuncited%
+{%
+  \ifNAT@numbers
+  \pretocmd\vtex@biblabelnum{\@@showuncited}
+    {}{\PackageError{vtexqtags}{Patch vtex@biblabelnum failed}\@ehc}%
+  \else
+  \pretocmd\vtex@biblabel{\@@showuncited}%
+    {}{\PackageError{vtexqtags}{Patch vtex@biblabel failed}\@ehc}%
+  \fi
+}
+\def\@@showbibitems{\llap{\showbibitems@tag{\cur@bibitem}\showuncited@skip}}
+\def\@showbibitems%
+{%
+  \ifNAT@numbers
+  \pretocmd\vtex@biblabelnum{\@@showbibitems}%
+    {}{\PackageError{vtexqtags}{Patch vtex@biblabelnum failed}\@ehc}%
+  \else
+  \pretocmd\vtex@biblabel{\@@showbibitems}%
+    {}{\PackageError{vtexqtags}{Patch vtex@biblabel failed}\@ehc}%
+  \fi
+}
+
+%% cur@bibitem -> perduodamas \@showuncited, \@showbibitems
+\apptocmd\vtex@lbibitem@start{\gdef\cur@bibitem{#2}}      {}{\PackageError{vtexqtags}{Patch vtex@lbibitem@start failed}\@ehc}%
+\apptocmd\bibcite            {\addto@bibitemslist{#1}}    {}{\PackageError{vtexqtags}{Patch bibcite failed}\@ehc}%
+
+
+\newcount\@listcnt        %% temp.counter
+\let\citation@list\@empty %% Citation order list <- aux. \citation
+\let\bibitems@list\@empty %% Bibitems list       <- aux. \bibcite
+\let\uncited@list\@empty  %% uncited list = bibitems list minus citation list
+\let\seq@list\@empty      %% Sequential order list = ?
+\let\uniqseq@list\@empty  %% Unique sequential order list = ?
+
+%% citation #1 
+%%   -> define command 'cite@#1'
+%%   ->  add #1 to \citation@list if not in a list
+\def\citation#1{\bgroup\addto@citationlist\docsvlist{#1}\egroup}
+\def\addto@citationlist%
+{%
+  \def\do##1%
+  {%
+    \expandafter\gdef\csname cited@##1\endcsname{}%
+    \xifinlist{##1}{\citation@list}{}{\expandafter\listxadd\expandafter\citation@list\expandafter{##1}}%
+  }%
+}
+
+%% add cur@bibitem to \bibitems@list
+\def\@bibitem@index#1{\advance\@listcnt\@ne\expandafter\xdef\csname b@#1@index\endcsname{\number\@listcnt}}
+\def\addto@bibitemslist#1{\listxadd\bibitems@list{#1}\@bibitem@index{#1}}
+
+\def\make@uncited@list%
+{%
+  \begingroup
+  \def\do##1{\ifinlist{##1}{\citation@list}{}{\listxadd\uncited@list{##1}}}%
+  \dolistloop{\bibitems@list}%
+  \endgroup%
+}
+
+\def\make@seqorder@list%
+{%
+  \global\@listcnt=0\begingroup
+  \def\do##1{\advance\@listcnt\@ne
+    \expandafter\xdef\csname b@##1@realindex\endcsname{\number\@listcnt}%
+    \ifinlist{##1}{\bibitems@list}{\edef\@tempa{\csname b@##1@index\endcsname}%
+      \listxadd\uniqseq@list{##1}%
+      \ifnum\number\@listcnt<\@tempa\listxadd\seq@list{##1}\fi}{}%
+  }%
+  \dolistloop{\citation@list}%
+  \endgroup%
+}
+
+\def\@bibfmt#1#2#3#4{\hbox{#3\NAT@cmt #2}}
+\def\print@@list@shape{\sffamily\small\noindent}
+\def\print@@list#1#2#3%
+{%
+  \addvspace{\medskipamount}%
+  \bgroup\print@@list@shape #1%
+  \begingroup #2\dolistloop{#3}\endgroup%
+  \egroup\par%
+  \addvspace{\medskipamount}%
+}
+
+\def\process@seqorder@list%
+{%
+  \fontsize{7}{7}\selectfont%
+  \def\do##1{\hbox\bgroup\detokenize{{##1}}~\ensuremath{\to}%
+    \NAT@open\@ifundefined{b@##1}{??}{\@nameuse{b@##1}}\NAT@close%
+    \ifinlist{##1}{\seq@list}%
+    {{\color{red}(bad. pos=\csname b@##1@realindex\endcsname;sb>=\csname b@##1@index\endcsname)}}%
+    {{\color{blue}(ok. pos=\csname b@##1@realindex\endcsname;sb>=\csname b@##1@index\endcsname)}}
+    \egroup,\space}%end-do
+}
+
+\def\process@citation@list%
+{\fontsize{7}{7}\selectfont%
+  \def\do##1{\detokenize{{##1}}\ensuremath{\to}%
+    \NAT@open\@ifundefined{b@##1}{??}{\@nameuse{b@##1}}\NAT@close%
+    ,\space}%end-do
+}
+
+\def\process@uncited@list%
+{\def\do##1{%
+  \edef\@temp{\noexpand\@bibfmt\@nameuse{b@##1}}%
+  \NAT@open\@temp\NAT@close
+  ,\space}%end-do
+}
+
+\def\process@uncited@list@numbers
+{\def\do##1{%
+  \bibnumfmt{\@nameuse{b@##1}}%
+ ,\space}%end-do
+}
+
+\def\print@seqorder@list{\print@@list{\@seqorder@title}{\process@seqorder@list}{\uniqseq@list}}
+\def\print@citation@list{\print@@list{\@citation@title}{\process@citation@list}{\citation@list}}
+\def\print@uncited@list%
+{\if.\uncited@list.\else%
+  \ifNAT@numbers\let\process@uncited@list\process@uncited@list@numbers\fi
+  \print@@list{\@uncited@title}{\process@uncited@list}{\uncited@list}%
+ \fi%
+}
+
+
+\def\@seqorder@title{Sequential citation by order of citation check (applied if reference list is not in an alphabetized order):\newline}
+\def\@citation@title{Citation list:\newline}
+\def\@uncited@title{Uncited bibitems:~}
+
+
+\def\@showuncitedsection{\appto\bibpreamble{\make@uncited@list\print@uncited@list}}
+\def\@showcitationsection%
+{%
+ \ifNAT@numbers
+  \appto\bibpreamble{\print@citation@list}%
+ \else
+  \@latex@info{\string\showcitationsection\space is disabled (nameyear citation).}%
+ \fi
+}
+\def\@showseqordersection%
+{%
+\ifNAT@numbers
+ \appto\bibpreamble{\make@seqorder@list\print@seqorder@list}%
+\else
+ \@latex@info{\string\showseqordersection\space is disabled (nameyear citation).}%
+\fi
+}
+
+\@ifundefined{styledata}{\def\styledata[#1]{}}{}%
+
+\def\@citesdebug%
+  {\RequirePackage{citedbg}}
+
+%%
+\@ifundefined{if@show@SGMLtags}{\newif\if@show@SGMLtags}{}
+\apptocmd\vtex@bibitem@start{\if@show@SGMLtags\gdef\bibitem@code{#1}\fi}      {}{\PackageError{natbib.cfg}{Patch vtex@bibitem@start failed}\@ehc}%
+\apptocmd\vtex@bibitem@end{\print@bibitem@code}           {}{\PackageError{natbib.cfg}{Patch vtex@bibitem@end failed}\@ehc}%
+
+\def\getOrigBibText#1\OrigBibText#2\endOrigBibText#3\END#4\relax{\gdef\@temp@a{#1}\gdef\@temp@b{#2}\gdef\@temp@c{#3}}
+\def\OrigBibTeXBox{\leftskip=0pc
+    \scriptsize
+    \fboxsep=2pt
+    \fbox{\vbox to 0pt{\kern-6pt \hbox to 0pt{\kern-12pt \vtop to 0pt{\hbox to 0pt{\rotatebox{0}{{\bfseries\sffamily \fontsize{4}{4}\selectfont \vbox {\raggedright Orig\\Bib\\Text}}}\hss}\vss}\hss}\vss}%
+     \vtop{\advance\hsize by-\leftmargin
+           \advance\hsize by-\fboxsep
+           \advance\hsize by-\fboxrule
+           \advance\hsize by-\fboxrule
+           \advance\hsize by-2pt
+           \expandafter\strip@prefix\meaning\@temp@b}}%
+}
+
+\let\print@bibitem@code\relax
+%% XML'o kodas isvedimui (SPRBOOK)
+\def\print@bibitem@code@springer%
+{%
+  \if@show@SGMLtags
+  \par%
+  {%
+    \relax\vskip3\p@ plus1\p@ minus1\p@
+    \expandafter\getOrigBibText\bibitem@code\END\OrigBibText\endOrigBibText\END\relax
+    {}% 
+    \if!\@temp@b! \relax\let\@temp@a\bibitem@code
+    \else\OrigBibTeXBox
+    \fi
+    \par\vskip3\p@ plus1\p@ minus1\p@
+    \raggedright\ttfamily\scriptsize
+    \expandafter\strip@prefix\meaning\@temp@a
+    \par\vskip3\p@ plus1\p@ minus1\p@%
+  }%
+  \fi%
+}
+
+
+\endinput
+

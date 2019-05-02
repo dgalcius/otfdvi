@@ -1,0 +1,108 @@
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{htpicture}[2017/12/14 v1.22, pictures for tex4ht]
+\RequirePackage{keyval}
+
+\newcount\c@htpicture@cnt
+\def\htpicture@ext{.png}
+\def\htpicture@name{htpicture-}
+\def\@htpicture@name{\htpicture@name\number\c@htpicture@cnt\htpicture@ext}
+
+\newif\if@htpicture@add@vbox \@htpicture@add@vboxfalse
+\define@key{htpicture}{vbox}[true]{\@htpicture@add@vboxtrue}%
+\def\write@htpicture@code#1{#1}
+  
+% Po stabilaus kompiliavimo htpicture.bat dar karta leidzia latex su 
+% apibrezta komanda \FinalHTPictureRun
+\ifdefined\FinalHTPictureRun
+  \let\copy@makeindex\makeindex
+  \let\copy@makeglossary\makeglossary
+  \nofiles
+  \let\makeglossary\copy@makeglossary
+  \let\makeindex\copy@makeindex
+  %% reikia apibrezti \idxtitle@default kitaip latex sugrius  jei bus \makeindex tex preambuleje
+  \newtoks\idxtitle@default
+  %% Atjungiam visus \index isskyrus aplinko htpicture viduje (kad nesusigadintu vaizdas)
+  %% To reikia, kad pasigamintu inlinehtpicture is \index komandu. Pvz: \index{A}{Uss@\inlinehtpicture{$\Uss$}}
+  \AtBeginDocument{%
+    \let\orig@index\index
+    \let\index\relax
+    }
+  
+\fi
+  
+% \hbox{}\newpage needed to prevent two images in seperate columns,
+% but on the same page in *.htpicture.idv (twocolumn case)
+\def\ht@clearpage{%
+  \clearpage
+  \hbox{}\newpage
+  }
+
+\def\@ifnextsymb#1#2#3{%
+  \let\reserved@d=#1%
+  \def\reserved@a{#2}%
+  \def\reserved@b{#3}%
+  \futurelet\@let@token\@ifnsymb
+  }
+\def\@ifnsymb{%
+  \ifx\@let@token\@sptoken
+    \let\reserved@c\reserved@b
+  \else
+    \ifx\@let@token\reserved@d
+      \let\reserved@c\reserved@a
+    \else
+      \let\reserved@c\reserved@b
+    \fi
+  \fi
+  \reserved@c
+  }
+  
+\newif\if@in@htpicture
+\def\htpicture{\@ifnextsymb[{\@htpicture}{\@htpicture[]}}
+\def\@htpicture[#1]{%
+  \ifdefined\orig@index
+    \let\index\orig@index
+  \fi
+  \let\inlinehtpicture\@gobble
+  \let\printindex\relax
+  \setkeys{htpicture}{#1}%
+  \if@in@htpicture
+  \else
+    \stepcounter{htpicture@cnt}%
+  \fi
+  \@in@htpicturetrue
+  \write@htpicture@code{%
+    \ifdefined\FinalHTPictureRun
+      \relax
+      \ifmmode
+      \else
+        \expandafter\expandafter\expandafter
+        \ht@clearpage
+      \fi
+    \fi
+    \if@htpicture@add@vbox
+      \expandafter\vbox\expandafter\bgroup
+    \fi
+    \special{t4ht++\@htpicture@name}%
+    }%
+  \ignorespaces
+  }
+\def\endhtpicture{%
+  \write@htpicture@code{%
+    \special{t4ht+}%
+    \if@htpicture@add@vbox
+      \expandafter\egroup
+    \fi
+    }%
+  }
+
+\newenvironment{mathhtpicture}
+  {\begin{htpicture}}
+  {\end{htpicture}}
+
+\def\inlinehtpicture#1{%
+  \stepcounter{htpicture@cnt}%
+  \write@htpicture@code{\special{t4ht++\@htpicture@name}}%
+  #1\relax
+  \write@htpicture@code{\special{t4ht+}}}
+
+\endinput

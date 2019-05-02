@@ -1,0 +1,283 @@
+%%
+%% This is file `tabnotes.sty',
+%% generated with the docstrip utility.
+%%
+%% The original source files were:
+%%
+%% tabnotes.dtx  (with options: `package')
+%% 
+%% Copyright (C) 2014 by L. Stonys, VTEX UAB
+%% Mokslinink^^c5^^b3 2a, LT-08412 Vilnius, Lithuania
+%% --------------------------------------------------------------------------
+%%
+%% PURPOSE: Write table notes.
+%%
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{tabnotes}
+    [2016/03/29 v1.06 table notes style]
+
+
+
+
+
+
+
+
+\RequirePackage{keyval}
+\RequirePackage{kvsetkeys}
+\kv@set@family@handler{tabnotetext}{}
+\kv@set@family@handler{tabnotes}{}
+\kv@set@family@handler{tabnotes}{}
+
+\def\tabnote@table@label{table@\the\c@table @tabnote@}
+\let\tabnotetext@hypertarget\@gobble
+\def\tabnoteref@link#1#2{#2}
+\def\@enable@tabnote@links{%
+  \gdef\tabnotetext@hypertarget##1{%
+    \hyper@anchorstart{\tabnote@table@label ##1}%
+    \strut\hyper@anchorend
+    }%
+  \gdef\tabnoteref@link##1##2{%
+    \hyperlink{\tabnote@table@label ##1}{##2}%
+    }
+  }
+\AtBeginDocument{%
+  \@ifpackageloaded{hyperref}{%
+    \ifdefined\hyper@anchorstart
+      \@enable@tabnote@links
+    \fi
+  }{}}
+
+\newcounter{tabnote}
+\newcounter{@tabnote}
+\def\thetabnote{\@alph\c@tabnote}
+\def\missing@mark@qq{??}
+
+%%%%%%%%%%%%%%%%%%%%%% \tabnotessetup
+\define@key{tabnotes}{beforeTextmark}{\def\before@tabnotetext@mark{#1}}
+\define@key{tabnotes}{afterTextmark}{\def\after@tabnotetext@mark{#1}}
+\define@key{tabnotes}{beforeText}{\def\before@tabnotetext@text{#1}}
+\define@key{tabnotes}{afterText}{\def\after@tabnotetext@text{#1}}
+\define@key{tabnotes}{beforeRefmark}{\def\before@tabnoteref@mark{#1}}
+\define@key{tabnotes}{afterRefmark}{\def\after@tabnoteref@mark{#1}}
+\define@key{tabnotes}{leftskip}{\def\tabnotes@leftskip{#1}}
+\define@key{tabnotes}{textskip}{\def\tabnotetext@skip{#1}}
+\define@key{tabnotes}{textsep}{\def\tabnotetext@sep{#1}}
+\define@key{tabnotes}{themark}{\def\thetabnote{#1}}
+\define@key{tabnotes}{noautosep}[true]{\global\let\auto@tabnotetext@sep@fmt\relax}
+\define@key{tabnotes}{autosep}[true]{\global\let\auto@tabnotetext@sep@fmt
+  \@auto@tabnotetext@sep@fmt}
+\define@key{tabnotes}{numbers}[true]{\def\thetabnote{\the\c@tabnote}}
+\define@key{tabnotes}{nonumbers}[true]{\def\thetabnote{\@alph\c@tabnote}}
+\define@key{tabnotes}{width}{\def\tabnotes@width{#1}}
+\define@key{tabnotes}{inline}[true]{\let\tabnotetext@skip\relax}
+\define@key{tabnotes}{noinline}[true]{\let\tabnotetext@skip\tabnotetext@skip@default}
+\def\tabnotessetup#1{\kvsetkeys{tabnotes}{#1}}
+
+%%%%%%%%%%%%%%%%%%%%%% \tabnoteref
+\define@key{tabnoteref}{sep}{\def\tabnoteref@sep{#1}}
+\def\tabnoteref@font{\normalfont}
+\def\tabnoteref@sep@output{\tabnoteref@sep}
+\def\tabnoteref@sep@default{,}
+\def\tabnoteref@sep@fmt{%
+  \ifx\tabnoteref@sep\@empty
+  \else
+    \csname fix@tabnoteref@sepspace\endcsname
+    \tabnoteref@sep@output
+  \fi
+  \global\let\tabnoteref@sep\tabnoteref@sep@default
+  }
+\def\fix@tabnoteref@sepspace{\kern-\scriptspace}%
+
+\def\@thetbnref@fmt#1{\tabnoteref@link{#1}{\@get@tabnoteref{#1}}}
+
+\def\@get@tabnoteref#1{%
+  \@ifundefined{tn@\tabnote@table@label #1}%
+    {\missing@mark@qq}%
+    {\csname tn@\tabnote@table@label #1\endcsname}%
+  }
+
+\def\tabnoteref@fmt#1{#1}
+
+\newcommand{\tabnoteref}[2][]{%
+  \bgroup
+    \let\tabnoteref@sep\@empty
+    \kvsetkeys{tabnotes}{#1}%
+    \kvsetkeys{tabnoteref}{#1}%
+    \csname pre@tabnoteref@hook\endcsname
+    \@for\tabnoteref@id:=#2\do{%
+      \tabnoteref@fmt{%
+        \hbox{\@textsuperscript{%
+          \tabnoteref@font
+          \tabnoteref@sep@fmt
+          \csname before@tabnoteref@mark\endcsname
+          \@thetbnref@fmt{\tabnoteref@id}%
+          \csname after@tabnoteref@mark\endcsname
+          }}%
+        }%
+      }%
+    \csname post@tabnoteref@hook\endcsname
+  \egroup
+  \ignorespaces
+  }
+
+%%%%%%%%%%%%%%%%%%%%%% \tabnotetext
+\newif\if@firsttabnotetext
+\def\tabnotetext@id{}
+\def\tabnotetext@sep{}
+\let\tabnotetext@mark\relax
+\def\tabnotetext@mark@fmt#1{\textsuperscript{#1}}
+\def\tabnotetext@text@fmt#1{#1}
+
+\def\tabnotetext@mark@font{\normalfont}
+\def\tabnotetext@skip{\vskip\z@}
+\let\tabnotetext@skip@default\tabnotetext@skip
+\def\tabnotetext@indent{\noindent\parindent\sv@parindent}
+\def\sv@parindent{12\p@}
+
+\define@key{tabnotetext}{id}{\def\tabnotetext@id{#1}}
+\define@key{tabnotetext}{mark}{\def\tabnotetext@mark{#1}}
+\define@key{tabnotetext}{markcounter}{\def\tabnotetext@markcounter{#1}}
+
+\def\@auto@tabnotetext@sep@fmt{%
+  \if@firsttabnotetext
+  \else
+    \tabnotetext@sep@output
+  \fi
+  }
+\let\auto@tabnotetext@sep@fmt\relax
+\def\tabnotetext@sep@output{\tabnotetext@sep}
+
+\newcommand{\tabnotetext}[2][]{%
+  \bgroup
+  \let\tabnotetext@markcounter\relax
+  \kvsetkeys{tabnotes}{#1}%
+  \kvsetkeys{tabnotetext}{#1}%
+  \csname pre@tabnotetext@hook\endcsname
+  \auto@tabnotetext@sep@fmt
+  \tabnotetext@skip
+  \@write@tabnote@label
+   %% fixing hypertarget possition
+  \setbox\@tempboxa=\hbox to\z@{\vbox{\tabnotetext@hypertarget{\tabnotetext@id}}}%
+  \wd\@tempboxa=\z@
+  \dp\@tempboxa=\z@
+  \ht\@tempboxa=\z@
+  \noindent\box\@tempboxa
+  \tabnotetext@indent
+  \ifx\tabnotetext@mark\@empty
+  \else
+    \tabnotetext@mark@fmt{{%
+      \tabnotetext@mark@font
+      \csname before@tabnotetext@mark\endcsname
+      \tabnotetext@mark
+      \csname after@tabnotetext@mark\endcsname
+      }}%
+  \fi
+  \tabnotetext@text@fmt{%
+    \csname before@tabnotetext@text\endcsname
+    #2%
+    \csname after@tabnotetext@text\endcsname
+    }%
+  \let\tabnotetext@mark\relax
+  \csname post@tabnotetext@hook\endcsname
+  \egroup
+  \@firsttabnotetextfalse
+  \ignorespaces
+  }
+
+\def\legend#1{\tabnotetext[mark={}]{#1}}
+
+\def\@tabnote@mark#1#2{\global\@namedef{tn@#1}{#2}}
+\def\@write@tabnote@label{%
+  \ifx\tabnotetext@mark\relax
+    \ifx\tabnotetext@markcounter\relax
+      \global\advance\c@tabnote by\@ne
+    \else
+      \setcounter{tabnote}{\tabnotetext@markcounter}%
+    \fi
+      \edef\tabnotetext@mark{\thetabnote}%
+  \fi%
+  \ifx\tabnotetext@mark\empty
+  \else
+    \bgroup
+      \protected\def\#{}%
+      \protected\def\dag{}%
+      \protected\def\ddag{}%
+      \immediate\write\@auxout{%
+        \string\@tabnote@mark{\tabnote@table@label\tabnotetext@id}{\tabnotetext@mark}%
+        }%
+    \egroup
+  \fi
+  }%
+
+%%%%%%%%%%%%%%%%%%% \begin{tabnotes}...\end{tabnotes}
+\newtoks\tabnotestoks
+\def\tabnotes@width{\hsize}
+\def\tabnotes@leftskip{2pt}
+\def\tabnotes@size{\footnotesize}
+\def\pre@tabnotes@skip{\vskip 1\p@}
+\def\post@tabnotes@skip{\vskip 1\p@}
+
+\long\def\@tabnotes#1\end#2{%
+  \global\tabnotestoks={#1}%
+  \end{tabnotes}%
+  \global\tabnotestoks={}%
+  \global\tbntoks={}%
+  \ignorespaces}
+
+\newenvironment{tabnotes}[1][]{%
+  \setcounter{tabnote}{0}%
+  \@firsttabnotetexttrue
+  \def\sep{\tabnotetext@sep@output}%
+  \kvsetkeys{tabnotes}{#1}%
+  \csname pre@tabnotes@hook\endcsname
+  \@tabnotes
+  }
+  {\pre@tabnotes@skip
+  \raggedright
+  \parbox[t]{\tabnotes@width}{%
+    \leftskip=\tabnotes@leftskip
+    \tabnotes@size
+    \the\tabnotestoks
+    }%
+  \setcounter{tabnote}{0}%
+  \post@tabnotes@skip
+  }
+
+%%%%%%%%%%%%%%%%%%% \tabnote, \printtabnotes
+\def\add@xtok#1#2{\begingroup\xdef\@act{\global\noexpand#1{\the#1#2}}\@act\endgroup}
+\define@key{tabnote}{mark}{\def\tabnote@mark{#1}}
+\define@key{tabnote}{sep}{\def\tabnoteref@sep{#1}}
+
+\newtoks\tbntoks
+\newcommand{\tabnote}[2][]{%
+  \bgroup
+  \let\tabnote@mark\relax
+  \let\tabnoteref@sep\@empty
+  \setkeys{tabnote}{#1}%
+  \ifx\tabnote@mark\relax
+    \global\advance\c@tabnote by\@ne
+    \edef\@options{,markcounter={\the\c@tabnote}}%
+  \else
+    \edef\@options{,mark={\tabnote@mark}}%
+  \fi%
+  \edef\tabnoteref@id{\the\c@tabnote}%
+  \edef\@tempa{\noexpand\tabnoteref[sep={\tabnoteref@sep}]{\tabnoteref@id}}%
+  \@tempa
+  \add@xtok\tbntoks{\noexpand\tabnotetext[id={\tabnoteref@id}\@options]{#2}}%
+  \egroup
+  }
+
+\newcommand{\printtabnotes}[1][]{%
+  \begin{tabnotes}[#1]
+  \let\auto@tabnotetext@sep@fmt\@auto@tabnotetext@sep@fmt
+  \the\tbntoks
+  \end{tabnotes}%
+  \setcounter{tabnote}{0}%
+  }
+
+%%
+
+\endinput
+%%
+%% End of file `tabnotes.sty'.

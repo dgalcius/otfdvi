@@ -10,6 +10,7 @@ require("l-file")
 
 local texmfsysvar = kpse.expand_var("$TEXMFSYSVAR")
 local texmfvar = kpse.expand_var("$TEXMFVAR")
+local texmfvar = kpse.expand_var("$TEXMFSYSVAR")
 -- global
 lua_font_dir = ""
 local luaotfload_lookup_cache = texmfvar .. "/luatex-cache/generic/names/luaotfload-lookup-cache.luc"
@@ -75,7 +76,8 @@ if kpse_version == "kpathsea version 6.2.1" then
    lua_font_dir = "/luatex-cache/generic/fonts/otf/"
 end
 
-lua_font_dir = texmfsysvar .. lua_font_dir
+--lua_font_dir = texmfsysvar .. lua_font_dir
+lua_font_dir = texmfvar .. lua_font_dir
 
 --print(luaotfload_lookup_names)
 local otf_lookup = dofile(luaotfload_lookup_cache)
@@ -118,11 +120,12 @@ local function parse_features(s)
 end
 
 local function parse_fontname(fontname)
-   local s, d
+   print(fontname)
+   local s, d, x
    local lang_ = "DFLT"
    local base_, ext_, name_, rest_, shape_, filename_
    local _feat = {}
-   print("fontname: ", fontname)
+--   print("fontname: ", fontname)
    s = string.split(fontname, ':')
    name_, rest_ = s[1], s[2]
    s = string.match(name_, '%[(.*)%]')
@@ -141,12 +144,18 @@ local function parse_fontname(fontname)
    if s2 then
       shape_ = s2
    end
-   local x, feat_ = string.match(rest_, '(.*)%+(.*)')
+   if rest_ then
+      x, feat_ = string.match(rest_, '(.*)%+(.*)')
+   else
+      x = fontname
+   end
 -- feat_ = parse_features(feat_)
    if x then
    else
       x = rest_
    end
+
+--   print(x)
 
    s = string.split(x, ";")
    for _i, _j in ipairs(s) do
@@ -187,6 +196,7 @@ function lua_font_lookup_cache(filename, scale, shape, options)
    else
       _s = filename .. "#" .. scale
    end
+   print(_s)
     
    _l = nil or otf_lookup[_s][1]
    print(_l)
@@ -199,13 +209,17 @@ end
 
 function lua_font_name_fls(filename, desing_size, scale, fls, options)
 --   print(inspect(options))
---   print(inspect(options))
 --   os.exit(2)
    local font_lua = string.lower(filename) .. ".luc"
-   local _font_lua_full = fls[font_lua]
+   local _font_lua_full = fls[string.lower(filename) .. ".luc"]
+      or fls[string.lower(filename) .. ".lua"]
+      or lua_font_dir .. string.lower(filename) .. ".luc"
+      or lua_font_dir .. string.lower(filename) .. ".lua"
    local font_lua_l = nil
    if not _font_lua_full then
-      font_lua_l = otf_lookup[filename .. "#" .. scale ][1]
+      if otf_lookup[filename .. "#" .. scale] then
+         font_lua_l = otf_lookup[filename .. "#" .. scale ][1]
+      end
       if font_lua_l then
          font_lua = file.nameonly(font_lua_l) .. ".luc"
          _font_lua_full = lua_font_dir .. font_lua
@@ -218,6 +232,10 @@ function lua_font_name_fls(filename, desing_size, scale, fls, options)
       print("font lua(fls): " .. _font_lua_full)
    end
 
+   if not _font_lua_full then
+      print("Not found:", string.lower(filename) .. ".(lua|luc)")
+      os.exit(9)
+   end
    return _font_lua_full
 end
 
@@ -314,7 +332,7 @@ end
 function getfontdata(fontname, design_size, scale, fls, options)
 --   print("TFM FLS", fls[fontname..".tfm"])
    local tfm = fls[fontname..".tfm"] or kpse.lookup(fontname .. ".tfm")
-   print("TFM", inspect(tfm), fontname)
+--   print("TFM", inspect(tfm))
    local d = {}
 --   local tmeta
    local _otf = false

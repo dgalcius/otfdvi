@@ -1,55 +1,23 @@
+VERSION:=0.1-0
+PACKAGE:=otfdvi
+bindir:=$(shell kpsewhich -var-value=SELFAUTOLOC)
+TEXMFDIST:=$(shell kpsewhich -var-value=TEXMFDIST)
+installdir=$(TEXMFDIST)/scripts/lua/otfdvi
+files = otfdvi otfdvi.conf.lua otfdvi.tmpl.Makefile
+
 SHELL=/usr/bin/env bash
 
 
 texdvi=dvilualatex -recorder
-otfdvi=./otfdvi.lua
-
-default: test.dvi
-
-test.dvi: sample2e.dvi 
-	ruby otfdvi.rb $< $@
-
-diff: sample2e.dt out.dt
-	diff $^
-
-out.dvi: .FORCE
-	./otfdvi.lua
+otfdvi=./otfdvi
 
 %.dt: %.dvi
 	dv2dt $< $@
-
-1: sample2e.dvi 
-	 $(otfdvi) $<
-#	dv2dt sample2e.dvi sample2e.dt
-#	dv2dt out.dvi out.dt
-#	make -f __Makefile all dvitype
-	make -f __Makefile all pdf 
-
-dvitype: sample2e.dvi 
-	 $(otfdvi) $<
-	make -f __Makefile all dvitype
-
-ps: sample2e.ps
 
 %.ps:  %.tex
 	dvilualatex $*
 	$(otfdvi) $*.dvi
 	make -f __Makefile all
-
-png: sample2e.dvi 
-	 $(otfdvi) $<
-	make -f __Makefile all dvipng
-
-svg: sample2e.dvi 
-	 $(otfdvi) $<
-	make -f __Makefile all svg clean
-
-
-2: sample2e.dvi 
-	ruby otfdvi.rb --no-auto --no-htf --psmap test.map --debug $< test.dvi
-	dvips -j1 -u test.map -o sample2e.ps test.dvi
-	ps2pdf sample2e.ps
-#	rm -f test.* *.pfb *.enc *.tfm *.otf
 
 %.dvi: %.tex 
 	$(texdvi) $<
@@ -72,4 +40,20 @@ clean:
 	rm -f *.glyphs
 	rm -f *.png
 	make -f __Makefile clean
+
+
+#ln -s /home/deimi/texmf/scripts/lua/make4ht/make4ht /usr/local/bin/make4ht
+#/home/deimi/.ltenv/shims/make4ht
+install:
+	echo INSTALLDIR = $(installdir)
+	echo BINDIR = $(bindir)
+	mkdir -p $(installdir)
+	mkdir -p $(installdir)/lib
+	cp $(files) $(installdir)
+	cp lib/* $(installdir)/lib
+	ln -s ../../texmf-dist/scripts/lua/otfdvi/otfdvi $(bindir)/otfdvi
+
+#include local.mk
+
+
 .FORCE:

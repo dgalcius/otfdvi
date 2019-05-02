@@ -1,0 +1,86 @@
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{fnotes}[2015/02/03]
+
+\@ifpackageloaded{stfloats}{}{\PackageError{noteins}{Please load stfloats package}\@ehc}
+
+
+\newinsert\noteins
+\skip\noteins=\bigskipamount % space added when footnote is present
+\count\noteins=1000 % footnote magnification factor (1 to 1)
+\dimen\noteins=8pc % maximum footnotes per page
+\def\fnoterule{\kern-3\p@ \hrule \@width 2in \kern 2.6\p@} % the \hrule is .4pt high
+
+
+\gdef \fn@makecol {%
+     \setbox\@outputbox \box\@cclv
+   \xdef\@freelist{\@freelist\@midlist}%
+   \global \let \@midlist \@empty
+   \@combinefloats
+   \ifvoid\footins
+   \else
+     \setbox\@outputbox \vbox {%
+       \boxmaxdepth \@maxdepth
+       \unvbox \@outputbox
+       \vskip \skip\footins
+       \color@begingroup
+         \normalcolor
+         \footnoterule
+         \unvbox \footins
+       \color@endgroup
+       }%
+   \fi
+% ***************************************
+   \ifvoid\noteins
+%     \fl@trace{MAKECOL::  void noteins}%
+   \else
+%     \fl@trace{MAKECOL::  non-void noteins}%
+     \setbox\@outputbox \vbox {%
+       \boxmaxdepth \@maxdepth
+       \unvbox \@outputbox
+       \vskip \skip\noteins
+       \color@begingroup
+         \normalcolor
+         \fnoterule
+         \unvbox \noteins
+       \color@endgroup
+       }%
+   \fi
+% ***************************************
+   \ifvbox\@kludgeins
+     \@makespecialcolbox
+   \else
+     \setbox\@outputbox \vbox to\@colht {%
+       \@texttop
+       \dimen@ \dp\@outputbox
+       \unvbox \@outputbox
+       \vskip -\dimen@
+       \@textbottom
+       }%
+   \fi
+   \global \maxdepth \@maxdepth
+}
+\gdef\@reinserts@notes{\ifvoid\noteins\else\insert\noteins{\unvbox\noteins}\fi}
+\gdef \@reinserts{%
+%  \fl@trace{REINSERT ***********************}%
+  \ifvoid\footins\else\insert\footins{\unvbox\footins}\fi
+  \@reinserts@notes
+  \ifvbox\@kludgeins\insert\@kludgeins
+                      {\unvbox\@kludgeins}\fi
+}
+
+\fnbelowfloat
+
+\long\def\fnote#1{\insert\noteins{%
+    \reset@font\footnotesize
+    \interlinepenalty\interfootnotelinepenalty
+    \splittopskip\footnotesep
+    \splitmaxdepth \dp\strutbox \floatingpenalty \@MM
+    \hsize\columnwidth \@parboxrestore
+    \color@begingroup
+    %{\rule\z@\footnotesep\ignorespaces#1\@finalstrut\strutbox}%
+    \ignorespaces#1\@finalstrut\strutbox
+    \color@endgroup}}%
+
+\def\fnotetext{\fnote}
+
+\endinput

@@ -1,0 +1,175 @@
+%%
+%% This is file `vtexgraphicx.sty',
+%% generated with the docstrip utility.
+%%
+%% The original source files were:
+%%
+%% vtexgraphicx.dtx  (with options: `package')
+%% 
+%% Copyright (C) 2014 by L. Stonys, VTEX UAB
+%% Mokslininkų 2a, LT-08412 Vilnius, Lithuania
+%% --------------------------------------------------------------------------
+\NeedsTeXFormat{LaTeX2e}[1999/12/01]
+\ProvidesPackage{vtexgraphicx}
+    [2017/07/21 v1.8 VTEX graphicx addon]
+
+\RequirePackage{graphicx}
+\RequirePackage{ifpdf}
+\RequirePackage{etoolbox}
+
+\newif\if@loadvtexdvips \@loadvtexdvipstrue
+\newif\if@readpi        \@readpitrue
+\newif\if@addpicture  \@addpicturefalse
+\ifpdf
+  \global\@loadvtexdvipsfalse
+  \ifdefined\pdftype
+    \global\@readpifalse
+  \fi
+\fi
+
+\DeclareOption{novtexdvips}{\global\@loadvtexdvipsfalse}
+\DeclareOption{vtexdvips}{\global\@loadvtexdvipstrue}
+\DeclareOption{noreadpi}{\global\@readpifalse}
+\DeclareOption{readpi}{\global\@readpitrue}
+\DeclareOption{addpicture}{\global\@addpicturetrue}
+\DeclareOption{noaddpicture}{\global\@addpicturefalse}
+
+\ProcessOptions*\relax
+
+\if@loadvtexdvips
+  \input{vtexdvips.def}
+\fi
+
+\@ifundefined{psdraft}{%
+  \newif\ifpi@draft
+  \def\psdraft{\setkeys{Gin}{draft}\global\pi@drafttrue}
+  \def\psfull{\setkeys{Gin}{draft=false}\pi@draftfalse}
+  }{}
+
+\define@key{Gin}{intext}[false]{}
+\def\gr@key@error#1{\@latex@error{vtexgraphicx: key '#1' is forbidden!}\@ehc}
+\def\KV@Gin@clip#1{\gr@key@error{clip}}
+\def\KV@Gin@trim#1{\gr@key@error{trim}}
+\def\KV@Gin@viewport#1{\gr@key@error{viewport}}
+
+%% \vtexgrxinfo{<imagefile>}{<pdftype>}{key=val,...}
+\def\vtexgrxinfo#1#2#3{}
+
+\def\newpi{\@ifnextchar[{\@newpi}{\@newpi[]}}
+\def\@newpi[#1]#2#3{%
+  \@ifundefined{pi@#2}{}{\@warning{Label `#2' multiply defined}}%
+  \global\@namedef{pi@#2}{#3[#1]}%
+  \if.#1.\relax
+    \global\@namedef{@type@pi@#2}{0}%
+  \else
+    \global\@namedef{@type@pi@#2}{1}%
+  \fi
+  }
+
+\def\pifile#1{\message{[PIFILE: #1.pi]}\@input{#1.pi}}
+\@input{\jobname.pi}
+\let\grx@change@ext\@firstofone
+\def\grxNoChangeExt{\let\grx@change@ext\@gobble}
+
+\def\@set@pi@data#1#2#3[#4]\@nil{%
+  \def\pi@width{#1}%
+  \def\pi@height{#2}%
+  \def\pi@ext{#3}%
+  \ifnum1=\pi@type@num
+    \def\pi@bbox{#4 \\}%
+  \else
+    \def\pi@bbox{0 0 {\pi@width} {\pi@height} \\}%
+  \fi
+  % PDF modoje, kadangi .pi faile yra .eps arba .pcx, tai galune keiciam i .pdf.
+  \grx@change@ext{%
+    \ifpdf
+      \def\filename@ext{pdf}%
+    \else
+      \def\filename@ext{\pi@ext}%
+    \fi
+    }%
+  % \if@addpicture=true  = grafika ikeliama tik kai \ifpi@draft=false;  jei false - neikeliama (pvz: .dvi projektai);
+  \if@addpicture
+    \ifpi@draft
+      \Gin@bboxtrue
+    \fi
+  \else
+    \Gin@bboxtrue
+  \fi
+  \gdef\pi@type@num{0}%
+  %% imituoju viewport opcija
+  \let\Gin@viewport@code\Gin@viewport
+  \expandafter\Gread@parse@vp\pi@bbox
+  }
+
+\def\pi@type@num{0}
+\def\check@pi#1{%
+  \@ifundefined{pi@#1}{}{%
+    \edef\pi@type@num{0\@nameuse{@type@pi@#1}}%
+    \expandafter\expandafter\expandafter\@set@pi@data\csname pi@#1\endcsname\@nil
+    }%
+  }%
+
+\if@readpi
+  \appto\post@filename@parse{\check@pi{\Ginclude@graphics@name}}
+\fi
+
+\def\process@grx@draft@error{%
+  \ifGin@draft
+    \special{mt:error graphics not included!}%
+  \fi
+  \global\let\process@grx@draft@error\relax
+  }
+
+\appto\pre@Ginclude@graphics@hook\process@grx@draft@error
+
+\def\Ginclude@graphics#1{%
+  %% Hooked main graphicx v1.0f commands
+  \csname pre@Ginclude@graphics@hook\endcsname
+  \begingroup
+    \let\input@path\Ginput@path
+    \def\Ginclude@graphics@name{#1}%
+    \filename@parse{#1}%
+    \csname post@filename@parse\endcsname
+    \ifx\filename@ext\relax
+      \@for\Gin@temp:=\Gin@extensions\do{%
+        \ifx\Gin@ext\relax
+          \Gin@getbase\Gin@temp
+        \fi
+        }%
+    \else
+      \Gin@getbase{\Gin@sepdefault\filename@ext}%
+      \ifx\Gin@ext\relax
+         \@warning{File `#1' not found}%
+         \def\Gin@base{\filename@area\filename@base}%
+         \edef\Gin@ext{\Gin@sepdefault\filename@ext}%
+      \fi
+    \fi
+    \ifx\Gin@ext\relax
+      \@latex@error{File `#1' not found}%
+        {I could not locate the file with any of these extensions:^^J%
+         \Gin@extensions^^J\@ehc
+        }%
+    \else
+      \@ifundefined{Gin@rule@\Gin@ext}%
+        {\ifx\Gin@rule@*\@undefined
+           \@latex@error{Unknown graphics extension: \Gin@ext}\@ehc
+         \else
+           \csname pre@Gin@setfile\endcsname
+           \expandafter\expandafter\expandafter\Gin@setfile\csname Gin@rule@*\endcsname{\Gin@base\Gin@ext}%
+           \csname post@Gin@setfile\endcsname
+         \fi
+        }{\csname pre@Gin@setfile\endcsname
+          \expandafter\expandafter\expandafter\Gin@setfile
+          \csname Gin@rule@\Gin@ext\endcsname{\Gin@base\Gin@ext}%
+          \csname post@Gin@setfile\endcsname
+ }%
+    \fi
+  \endgroup
+  \csname post@Ginclude@graphics@hook\endcsname
+  }
+%%
+
+\endinput
+%%
+%% End of file `vtexgraphicx.sty'.

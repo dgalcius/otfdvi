@@ -1,0 +1,8 @@
+% Sigitas Tolusis, VTeX, LT
+% E-mail: sigitas@vtex.lt
+%
+\ProvidesFile{omscmbsy.fd}[2000/12/01]
+\DeclareFontShape{OMS}{cmsy}{b}{n}{%
+      <-6> cmbsy5 <6-8> cmbsy7 <8-> cmbsy10%
+      }{}
+\endinput

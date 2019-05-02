@@ -1,0 +1,127 @@
+%% Copyright (C) 2017 by Sigitas Tolušis, VTEX UAB
+%% Mokslininku 2a, LT-08412 Vilnius, Lithuania
+%%
+%% -------------------------------------------------------
+%%
+%%  Git repository: TeXProd.texroot/vtex-dist.git
+%%            path: tex/latex/vtex/vtex-core-tex.sty
+%%
+%%  Changes:
+%%    20170830 - alfa versija
+%%
+%%  Commits and log messages:
+%%    >git log [<revision>...] -- <path>
+%%
+%%  Changes in commits:
+%%    >git log [<revision>...] -p -- <path>
+%%
+%%  Source with annotated lines:
+%%    >git blame <path>
+%%
+%% -------------------------------------------------------
+%%
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{vtex-core-tex}[2017/08/30 v0.1 core tex macros]
+
+\def\do@ifnum@in@range#1#2#3#4{%
+    \ifnum#3>#1\relax
+        \ifnum#3<#2\relax
+            #4%
+        \fi
+    \fi
+    }
+
+\def\round@@dim#1.#2#3\relax{#1.#2}
+
+\def\setmeta@@col@numbers{%
+    \AtBeginDocument{%
+        \ifdefined\meta@@col@numbers
+        \else
+            \if@twocolumn
+                \gdef\meta@@col@numbers{twocolumn}%
+            \else
+                \gdef\meta@@col@numbers{onecolumn}%
+            \fi
+        \fi
+        }%
+    }
+
+\def\start@onecolumn@info@page{%
+    \ifdim\pagegoal=\maxdimen
+        \ifdim\pagetotal=\z@
+        \else
+            \clearpage
+         \fi
+    \else
+        \clearpage
+    \fi
+    \expandafter\@gobble\onecolumn
+    \pagestyle{empty}%
+    \parindent\z@
+    \csname vtx@@set@previous@lastpage\endcsname
+    \csname run@info@page@hook\endcsname
+    }
+
+\def\get@textbox@upper@left@pos{%
+    \bgroup
+        \normalsize
+        \@tempcnta\z@
+        \@tempdimb\baselineskip\relax
+        \@tempdima\textheight\relax
+        \loop
+        \ifdim\@tempdima>\z@\relax
+            \advance\@tempcnta by\@ne
+            \advance\@tempdima by-\@tempdimb\relax
+        \repeat
+        \xdef\lines@per@page{\the\@tempcnta}%
+        \@tempdima=\dimexpr\pdfpageheight-\pdfvorigin-\voffset-\topmargin-\headheight-\headsep\relax
+        \xdef\textbox@pdf@y@top{\the\@tempdima}%
+        \@tempdima=\dimexpr\pdfhorigin+\hoffset\relax
+        \xdef\textbox@pdf@x@left{\the\@tempdima}%
+    \egroup
+  }
+
+\def\space@token{ }
+\edef\backslash@other{\expandafter\@gobble\string\\}
+
+\def\check@next@token@for@pdfmark#1{%
+    \if#1\relax
+    \else
+        \if#1(%
+            \string\(%
+        \else
+            \if#1)%
+                \string\)%
+            \else
+                \if#1\backslash@other
+                    #1#1%
+                \else
+                    #1%
+                \fi
+            \fi
+        \fi
+        \expandafter\check@next@token@for@pdfmark
+    \fi
+    }
+
+\long\gdef\literate@pdfmark#1 #2\relax{%
+    \check@next@token@for@pdfmark#1\relax
+    \ifx\space@token#2\space@token
+    \else
+        \space\literate@pdfmark#2\relax
+    \fi
+    }
+
+\protected\def\dvips@pdf@annotation#1#2#3#4#5{%
+    ps: currentpoint /vtex@yp exch def /vtex@xp exch def
+    [ /Subtype /Caret /Contents (#1)
+              /H /I /Open false /Color [0 0 1] /Border [0 0 0]
+              /Title (#2) /Subj  (#3)
+              /NM (#4) /Name  (#5) /F 64
+              /Rect [vtex@xp vtex@yp vtex@xp 280 add vtex@yp 140 add]
+            /ANN pdfmark
+    }
+
+\endinput
+%%
+%% End of file `vtex-core-tex.sty'.

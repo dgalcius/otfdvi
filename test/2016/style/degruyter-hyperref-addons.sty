@@ -1,0 +1,103 @@
+%% This is file `degruyter-hyperref-addons.sty' (based on vtexhdvips.sty)
+%% Important: must be loaded after hyperref!
+%%
+%% Author: Eimantas Gumbakis, VTeX
+%% Start-date: 2017-06-03
+
+\ProvidesFile{degruyter-hyperref-addons.sty}
+        [2017/06/29 v0.0.2 hyperref addons for DeGruyter projects]
+
+\newif\if@jobnameprefix\global\@jobnameprefixfalse
+\DeclareOption{jobnameprefix}{\global\@jobnameprefixtrue}
+
+\ProcessOptions
+
+\RequirePackage{afterpackage}
+
+%% jobname prefix
+\if@jobnameprefix
+  \def\refstepcounter#1{%
+    \H@refstepcounter{#1}%
+    \edef\This@name{\jobname.#1}%
+    \ifx\This@name\name@of@slide
+    \else
+      \if@skiphyperref
+      \else
+        \if@hyper@item
+          \stepcounter{Item}%
+          \hyper@refstepcounter{Item}%
+        \else
+          \hyper@refstepcounter{#1}%
+        \fi
+      \fi
+    \fi
+    }
+  \def\hyper@makecurrent#1{%
+    \begingroup
+      \edef\Hy@param{#1}%
+      \ifx\Hy@param\Hy@chapterstring
+        \let\Hy@param\Hy@chapapp
+      \fi
+      \ifHy@hypertexnames
+        \let\@number\@firstofone
+        \ifHy@naturalnames
+          \let\textlatin\@firstofone
+          \xdef\@currentHlabel{\jobname.\csname the#1\endcsname}%
+        \else
+          \xdef\@currentHlabel{\jobname.\csname theH#1\endcsname}%
+        \fi
+        \xdef\@currentHref{%
+          \Hy@param.\expandafter\strip@prefix\meaning\@currentHlabel
+        }%
+      \else
+        \Hy@GlobalStepCount\Hy@linkcounter
+        \xdef\@currentHref{\jobname.\Hy@param.\the\Hy@linkcounter}%
+      \fi
+    \endgroup
+    }
+  \def\phantomsection{%
+    \Hy@GlobalStepCount\Hy@linkcounter
+    \xdef\@currentHref{\jobname.section*.\the\Hy@linkcounter}%
+    \Hy@raisedlink{\hyper@anchorstart{\@currentHref}\hyper@anchorend}%
+    }
+  \def\Hy@MakeCurrentHref#1{%
+    \edef\HyperLocalCurrentHref{\jobname.#1}%
+    \@onelevel@sanitize\HyperLocalCurrentHref
+    \global\let\HyperGlobalCurrentHref\HyperLocalCurrentHref
+    \let\HyperLocalCurrentHref\HyperGlobalCurrentHref
+    \ifHy@localanchorname
+      \let\@currentHref\HyperLocalCurrentHref
+    \else
+      \global\let\@currentHref\HyperGlobalCurrentHref
+    \fi
+    }
+\fi %% end jobnameprefix
+
+\AfterPackage{lastpage}{%
+  \preto\lastpage@putlabelhyper{%
+    \ifHy@hypertexnames
+    \else
+      \def\lastpage@reset@hypertexnames{\Hy@hypertexnamesfalse}%
+    \fi
+    \Hy@hypertexnamestrue
+    }%
+  \appto\lastpage@putlabelhyper{%
+    \csname lastpage@reset@hypertexnames\endcsname
+    }
+  }
+
+%% pagelabel destination should reflect the logical page 
+%% (page.I, page.II, ..., page.1, page.2, etc.)
+\preto\Hy@EveryPageAnchor{%
+  \ifHy@hypertexnames
+  \else
+    \def\pageanchor@reset@hypertexnames{\Hy@hypertexnamesfalse}%
+  \fi
+  \Hy@hypertexnamestrue
+  }
+\appto\Hy@EveryPageAnchor{%
+  \csname pageanchor@reset@hypertexnames\endcsname
+  }
+
+
+\endinput

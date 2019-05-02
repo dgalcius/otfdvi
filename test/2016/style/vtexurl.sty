@@ -1,0 +1,153 @@
+%% Copyright (C) 2017 by Linas Stonys VTEX UAB
+%% Mokslininku 2a, LT-08412 Vilnius, Lithuania
+%% --------------------------------------------------------------------------
+%% (generated from dtx)
+%%
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{vtexurl}[2018/01/01, v1.02 VTEX url commands]
+\newif\if@vtexurlbreak
+\newif\if@vtexurlfull
+\newif\if@fullurldoi
+\newif\if@nolinkurl
+
+\DeclareOption{nolinkurl}{%
+    \@nolinkurltrue
+    \edef\vtex@url@no@link@url{1}% iosart tikrina art tokia apibrezta
+    }
+\DeclareOption{fullurlDOI}{\@fullurldoitrue}
+\ProcessOptions
+
+\@ifundefined{href}{\let\href\@secondoftwo}{}
+
+\newif\if@babel@loaded    \@babel@loadedfalse
+\newif\if@hyperref@loaded \@hyperref@loadedfalse
+
+\def\check@if@babel@loaded{%
+    \@ifpackageloaded{babel}{\@babel@loadedtrue}{\@babel@loadedfalse}%
+    \@ifpackageloaded{hyperref}{\@hyperref@loadedtrue}{\@hyperref@loadedfalse}%
+    }
+
+\AtBeginDocument{\check@if@babel@loaded}
+
+\def\vtex@url@babel@fix{%
+    \if@hyperref@loaded
+        \def\@backslashchar{}%
+    \fi
+    \if@babel@loaded
+        \iflanguage{french}{\noextrasfrench}{}%
+    \fi
+    }
+
+\if@nolinkurl
+    \ifdefined\nolinkurl
+    \else
+        \let\nolinkurl\@firstofone
+    \fi
+    \def\surl@nolinkurl{\nolinkurl}
+    \def\doiurl@nolinkurl{\nolinkurl}
+    \def\arxivurl@nolinkurl{\nolinkurl}
+\else
+    \def\surl@nolinkurl{\@firstofone}
+    \def\doiurl@nolinkurl{\@firstofone}
+    \def\arxivurl@nolinkurl{\@firstofone}
+\fi
+
+\if@fullurldoi
+    \@ifundefined{doi@base}{\def\doi@base{https://doi.org/}}{}
+    \def\doiurl@outerdomain{\doi@base}
+\else
+    \@ifundefined{doi@base}{\def\doi@base{http://dx.doi.org/}}{}
+    \def\doiurl@outerdomain{}
+\fi
+
+\def\doiurl@size{\csname doi@size\endcsname}
+\def\doiurl@innerdomain{\doi@base}
+
+\def\spliturl@prefix{http://}
+\def\surl@innerdomain{\spliturl@prefix}
+\@ifundefined{arxiv@base}{\def\arxiv@base{http://arxiv.org/abs/}}{}
+\def\arxivurl@innerdomain{\arxiv@base}
+
+\def\@vtexurl#1#2{%
+    \bgroup
+        \def\vtexurl@type{#1}%
+        \expandafter\let\expandafter\@vtexurl@innerdomain \csname #1@innerdomain\endcsname
+        \expandafter\let\expandafter\@vtexurl@outerdomain \csname #1@outerdomain\endcsname
+        \expandafter\let\expandafter\@vtexurl@nolinkurl   \csname #1@nolinkurl\endcsname
+        \def\\{\empty}%
+        \csname #1@pre@hook\endcsname
+        \vtex@url@babel@fix
+        \check@vtexurl@prefix #2\end
+        \check@vtexurl@break  #2\\\end\relax
+        \csname #1@size\endcsname
+        \if@vtexurlfull
+            \long\def\@vtexurl@innerdomain{}%
+            \long\def\@vtexurl@outerdomain{}%
+        \fi
+        \csname #1@prehrefhook\endcsname
+        \if@vtexurlbreak
+            \href{\@vtexurl@innerdomain #2}{\@vtexurl@outerdomain
+                \@vtexurl@nolinkurl {\@@vtexurl@beforebreak}}%
+            \break
+            \href{\@vtexurl@innerdomain #2}{\@vtexurl@nolinkurl {\@@vtexurl@afterbreak}}%
+        \else
+            \href{\@vtexurl@innerdomain #2}{\@vtexurl@outerdomain \@vtexurl@nolinkurl {#2}}%
+        \fi
+    \egroup
+    }
+
+\def\check@vtexurl@prefix#1#2#3#4#5\end{%
+    \@vtexurlfullfalse
+    \def\@http{http}%
+    \def\@vtexurlstart{#1#2#3#4}%
+    \ifx\@vtexurlstart\@http
+        \@vtexurlfulltrue
+    \else
+        \def\@ftp{ftp:}%
+        \ifx\@vtexurlstart\@ftp
+            \@vtexurlfulltrue
+        \fi
+    \fi
+    }
+
+\def\check@vtexurl@break#1\\#2\end{%
+    \ifx.#2.%
+        \@vtexurlbreakfalse
+    \else
+        \@vtexurlbreaktrue
+        \def\@@vtexurl@beforebreak{#1}%
+        \def\@@vtexurl@afterbreak{#2}%
+    \fi
+    }
+
+\DeclareRobustCommand\surl[1]{\@vtexurl{surl}{#1}}
+\DeclareRobustCommand\doiurl[1]{\@vtexurl{doiurl}{#1}}
+\DeclareRobustCommand\arxivurl[1]{\@vtexurl{arxivurl}{#1}}
+
+\DeclareRobustCommand\shref[2]{{%
+    \vtex@url@babel@fix
+    \def\split@href@prefix{}%
+    \fmt@split@href[#1]#2\\\\%
+    }}
+
+\def\fmt@split@href[#1]#2\\{%
+    \ifx.#2.%
+        \def\next[##1]#2{}%
+    \else
+        \split@href@prefix\href{#1}{\csname surl@size\endcsname#2}%
+        \gdef\split@href@prefix{\break}%
+        \let\next\fmt@split@href
+    \fi
+    \next[#1]%
+    }
+
+\def\semail@prefix{mailto:}
+\DeclareRobustCommand\semail[1]{%
+    \bgroup
+        \let\\\@empty
+        \def\_{\string_}%
+        \xdef\@tempa{#1}%
+    \egroup
+    \shref{\semail@prefix\@tempa}{#1}%
+    }
+\endinput

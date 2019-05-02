@@ -1,0 +1,1648 @@
+%%
+%% This is file `dgruyterx-book.sty',
+%% based on dgruyter.sty (2016/09/28 v1.82 De Gruyter layout)
+%%
+\def\dgx@fmt@name{dgruyterx-book}
+\def\dgx@fmt@date{2018/02/22}
+\def\dgx@fmt@version{0.1.28}
+\NeedsTeXFormat{LaTeX2e}[2014/05/01]
+\ProvidesPackage\dgx@fmt@name
+              [\dgx@fmt@date\space v\dgx@fmt@version\space De Gruyter book layout]
+\emergencystretch1em
+\p@=1bp\relax
+\def\@carsix#1#2#3#4#5#6\@nil{#1#2#3#4#5}
+\newcount\@roundnum@tempcnta
+\newcount\@roundnum@tempcntb
+\ifnum\jobstart@date@info>20171204\relax
+    \def\@roundnum#1.#2.#3\to#4{%
+      \edef\X{\@carsix#200000\@nil}%
+      \@roundnum@tempcntb=\expandafter\@car\X\@nil\relax
+      \@roundnum@tempcnta=\expandafter\@cdr\X\@nil\relax
+      \ifnum\@roundnum@tempcnta>5000\relax
+        \advance\@roundnum@tempcntb by\@ne
+      \fi
+      \@roundnum@tempcnta=#1\relax
+      \ifnum\@roundnum@tempcntb=10\relax
+        \advance\@roundnum@tempcnta by\@ne
+        \@roundnum@tempcntb=\z@
+      \fi
+      %% Nuimamas 0 po tasko: 10.0 -> 10
+      \dimen@=\the\@roundnum@tempcnta.\the\@roundnum@tempcntb pt\relax
+      \edef#4{\strip@pt\dimen@}%  
+      }
+\else
+    \def\@roundnum#1.#2.#3\to#4{%
+      \edef\X{\@carsix#200000\@nil}%
+      \@roundnum@tempcntb=\expandafter\@car\X\@nil\relax
+      \@roundnum@tempcnta=\expandafter\@cdr\X\@nil\relax
+      \ifnum\@roundnum@tempcnta>5000\relax
+        \advance\@roundnum@tempcntb by\@ne
+      \fi
+      \@roundnum@tempcnta=#1\relax
+      \ifnum\@roundnum@tempcntb=10\relax
+        \advance\@roundnum@tempcnta by\@ne
+        \@roundnum@tempcntb=\z@
+      \fi
+      \edef#4{\the\@roundnum@tempcnta.\the\@roundnum@tempcntb}%
+      }
+\fi
+
+\let\orig@set@fontsize\set@fontsize
+\ifdefined\HCode
+\else
+\def\set@fontsize#1#2#3{%
+    \@defaultunits\@tempdimb#2bp\relax\@nnil
+    \@tempdimb\dimexpr\@tempdimb*7200/7227\relax
+    \edef\f@size{\strip@pt\@tempdimb}%
+    \expandafter\@roundnum\f@size..\to\f@size
+    \@defaultunits\@tempskipa#3bp\relax\@nnil
+    \edef\f@baselineskip{\the\@tempskipa}%
+    \edef\f@linespread{#1}%
+    \let\baselinestretch\f@linespread
+      \def\size@update{%
+        \baselineskip\f@baselineskip\relax
+        \baselineskip\f@linespread\baselineskip
+        \normalbaselineskip\baselineskip
+        \setbox\strutbox\hbox{%
+          \vrule\@height.7\baselineskip
+                \@depth.3\baselineskip
+                \@width\z@}%
+        \let\size@update\relax}}
+\fi
+\frenchspacing
+\clubpenalty\@M
+\widowpenalty\@M
+\let\orig@doendpe\@doendpe
+\def\enumerate{%
+  \ifnum \@enumdepth >\thr@@\@toodeep\else
+    \advance\@enumdepth\@ne
+    \edef\@enumctr{enum\romannumeral\the\@enumdepth}%
+      \expandafter
+      \list
+        \csname label\@enumctr\endcsname
+        {\topsep\z@
+         \labelsep\z@
+         \labelwidth\csname leftmargin\romannumeral\the\@enumdepth\endcsname
+         \usecounter\@enumctr\def\makelabel##1{\upshape##1\hss}}%
+  \fi}
+\def\endenumerate{%
+  \ifnum\@listdepth=\@ne
+    \advance\@topsepadd\baselineskip
+  \fi
+  \endlist
+  %\gdef\@doendpe{%
+  %  \@endpetrue
+  %  \everypar{{\setbox\z@\lastbox}\everypar{}\@endpefalse}%
+  %  \global\let\@doendpe\orig@doendpe}
+  }
+\def\itemize{%
+  \ifnum \@itemdepth >\thr@@\@toodeep\else
+    \advance\@itemdepth\@ne
+    \edef\@itemitem{labelitem\romannumeral\the\@itemdepth}%
+    \expandafter
+    \list
+      \csname\@itemitem\endcsname
+      {\topsep\z@
+       \labelsep\z@
+       \labelwidth\csname leftmargin\romannumeral\the\@itemdepth\endcsname
+       \def\makelabel##1{##1\hss}}%
+  \fi}
+\def\enditemize{%
+  \ifnum\@listdepth=\@ne\advance\@topsepadd\baselineskip\fi
+  \endlist
+  %\gdef\@doendpe{%
+  %  \@endpetrue
+  %  \everypar{{\setbox\z@\lastbox}\everypar{}\@endpefalse}%
+  %  \global\let\@doendpe\orig@doendpe}
+  }
+\def\@seccntformat#1{%
+  {\edef\noexpand\DGMetaScience@figurealign{T}\sffamily\bfseries\addfontfeature{Numbers=Monospaced}%
+   \csname the#1\endcsname}%
+  \enskip}
+\def\cleardoublepage{\clearpage\if@twoside \ifodd\c@page\else
+    \hbox{}\thispagestyle{empty}\newpage\if@twocolumn\hbox{}\newpage\fi\fi\fi}
+\ifx\IncludeInRelease\@undefined
+  \RequirePackage{fixltx2e}[2014/05/13]
+\else
+  \IncludeInRelease{2015/01/01}{\fixltx2e}{Nowadays obsolete fixes}
+    \relax
+  \EndIncludeInRelease
+  \IncludeInRelease{0000/00/00}{\fixltx2e}{Nowadays obsolete fixes}
+    \RequirePackage{fixltx2e}[2014/05/13]
+  \EndIncludeInRelease
+\fi
+\def\addpenalty#1{%
+  \ifvmode
+    \if@minipage
+    \else
+      \if@nobreak
+      \else
+        \ifdim\lastskip=\z@
+          \penalty#1\relax
+        \else
+          \@tempskipb\lastskip
+          \begingroup
+            \@tempskipa\@tempskipb
+            \advance \@tempskipb
+              \ifdim\prevdepth>\maxdepth\maxdepth\else
+                 \ifdim \prevdepth < -996\p@ \z@ \else \prevdepth \fi
+               \fi
+             \vskip -\@tempskipb
+             \penalty#1%
+             \ifdim\@tempskipa=\@tempskipb
+             \else
+               \advance\@tempskipb -\@tempskipa
+               \vskip \@tempskipb
+             \fi
+             \vskip \@tempskipa
+          \endgroup
+        \fi
+      \fi
+    \fi
+  \else
+    \@noitemerr
+  \fi}%
+\let\orig@DeclareMathSizes\@DeclareMathSizes
+\ifdefined\HCode
+\else
+\def\@DeclareMathSizes #1#2#3#4#5{%
+  \@defaultunits\dimen@#2bp\relax\@nnil
+  \dimen@\dimexpr\dimen@*7200/7227\relax
+  \edef\@tempa{\strip@pt\dimen@}%
+  \expandafter\@roundnum\@tempa..\to\@tempa
+  \if $#3$%
+    \expandafter\let\csname S@\strip@pt\dimen@\endcsname\math@fontsfalse
+  \else
+    \@defaultunits\dimen@ii#3bp\relax\@nnil
+    \dimen@ii\dimexpr\dimen@ii*7200/7227\relax
+    \edef\@tempb{\strip@pt\dimen@ii}%
+    \expandafter\@roundnum\@tempb..\to\@tempb
+    \@defaultunits\@tempdima #4bp\relax\@nnil
+    \@tempdima\dimexpr\@tempdima*7200/7227\relax
+    \edef\@tempc{\strip@pt\@tempdima}%
+    \expandafter\@roundnum\@tempc..\to\@tempc
+    \@defaultunits\@tempdimb #5bp\relax\@nnil
+    \@tempdimb\dimexpr\@tempdimb*7200/7227\relax
+    \edef\@tempd{\strip@pt\@tempdimb}%
+    \expandafter\@roundnum\@tempd..\to\@tempd
+    \toks@{#1}%
+    \expandafter\xdef\csname S@\@tempa\endcsname{%
+      \gdef\noexpand\tf@size{\@tempb}%
+      \gdef\noexpand\sf@size{\@tempc}%
+      \gdef\noexpand\ssf@size{\@tempd}%
+      \the\toks@
+    }%
+  \fi}
+\fi
+\def\f@rmatError{%
+  \PackageError{\dgx@fmt@name}
+    {You mustn't specify more than one format option}
+    {Please provide at least one of "small", "medium", or "big"\MessageBreak
+     as an optional argument to the \string\usepackage\space command.\MessageBreak
+     You shouldn't try to proceed from here, type x to quit.}}
+\DeclareOption{small}
+  {\ifx\f@rmat\@undefined
+     \let\f@rmat=s
+   \else
+     \f@rmatError
+   \fi}
+\DeclareOption{medium}{%
+  \ifx\f@rmat\@undefined
+    \let\f@rmat=m
+  \else
+    \f@rmatError
+  \fi
+  }
+\DeclareOption{big}
+  {\ifx\f@rmat\@undefined
+     \let\f@rmat=b
+   \else
+     \f@rmatError
+   \fi}
+\DeclareOption{margincol}{\global\if@mainmatter\let\@margincollayout\relax\fi}
+\DeclareOption{online}   {\let\m@de=o}
+\DeclareOption{print}    {\let\m@de=p}
+\DeclareOption{printona4}{\let\m@de=a}
+\DeclareOption{work}     {\let\m@de=w}
+\ExecuteOptions{online}
+\ProcessOptions
+\ifx\f@rmat\@undefined
+  \PackageError{\dgx@fmt@name}
+    {You haven't specified a format option}
+    {You need to specify a format as an optional\MessageBreak
+     argument to the \string\usepackage\space command;\MessageBreak
+     available format options are small, medium, or big.\MessageBreak
+     You shouldn't try to proceed from here, type x to quit.}
+\fi
+\ifx\f@rmat s
+  \paperwidth 155mm
+  \paperheight230mm
+\else
+  \ifx\f@rmat m
+    \paperwidth 170mm
+    \paperheight240mm
+  \else
+    \paperwidth 210mm
+    \paperheight280mm
+  \fi
+\fi
+
+\@twosidetrue
+
+%% allow 0.5bp baseline stretch
+\ifnum\bookstart@date@info>20170708\relax
+  \renewcommand\normalsize{%
+    \@setfontsize\normalsize{9.5}{13bp\@plus0.5bp}%
+    \abovedisplayskip11\p@\@plus2\p@\@minus5.5\p@
+    \abovedisplayshortskip=\abovedisplayskip
+    \belowdisplayshortskip=\abovedisplayskip
+    \belowdisplayskip=\abovedisplayskip
+    \let\@listi\@listI
+    }
+\else
+  \renewcommand\normalsize{%
+    \@setfontsize\normalsize{9.5}{13bp\@plus1sp}%
+    \abovedisplayskip11\p@\@plus2\p@\@minus5.5\p@
+    \abovedisplayshortskip=\abovedisplayskip
+    \belowdisplayshortskip=\abovedisplayskip
+    \belowdisplayskip=\abovedisplayskip
+    \let\@listi\@listI
+    }
+\fi
+\@setfontsize\normalsize\@xpt{13}%
+\AtBeginDocument{\normalsize}
+\renewcommand\small{%
+   \@setfontsize\small{8}{11}%
+   \abovedisplayskip8\p@\@plus3\p@\@minus3\p@
+   \abovedisplayshortskip\z@\@plus2\p@
+   \belowdisplayshortskip3\p@\@plus2\p@\@minus2\p@
+   \belowdisplayskip\abovedisplayskip
+   \def\@listi{\leftmargin\leftmargini}%
+   \def\@listii{\leftmargin\leftmarginii}}
+\let\footnotesize\small
+\renewcommand\scriptsize{\@setfontsize\scriptsize{7}{9}}
+\renewcommand\tiny{\@setfontsize\tiny{5}{6}}
+\renewcommand\large{\@setfontsize\large{12}{15}}
+\renewcommand\Large{\@setfontsize\Large{15}{19.5}}
+\renewcommand\LARGE{\@setfontsize\LARGE{17}{19.5}}
+\renewcommand\huge{\@setfontsize\huge{22}{26}}
+\renewcommand\Huge{\@setfontsize\Huge{24}{26}}
+\DeclareMathSizes{9.5}{9.5}{\@viipt}{\@vpt}
+\DeclareMathSizes{15}{15}{\@xpt}{\@viiipt}
+\DeclareMathSizes{22}{22}{15}{13}
+\DeclareMathSizes{24}{24}{\@xxpt}{\@xviipt}
+\setlength\parindent{6mm}
+\setlength\smallskipamount{3.25\p@\@plus1\p@\@minus1\p@}
+\setlength\medskipamount{6.5\p@\@plus2\p@\@minus2\p@}
+\setlength\bigskipamount{13\p@\@plus4\p@\@minus4\p@}
+\def\showinmm#1{%
+  \@tempdima=0.35146 #1\relax
+  \edef\@tempa{\strip@pt\@tempdima\space mm}
+  \show\@tempa}
+\newdimen\gridwidth
+\ifx\f@rmat s
+  \gridwidth6mm
+\else
+  \ifx\f@rmat m
+    \gridwidth6.5mm
+  \else
+    \if@twocolumn
+      \gridwidth10.5mm
+    \else
+      \gridwidth9.25mm
+    \fi
+  \fi
+\fi
+\textwidth\dimexpr12\gridwidth+44mm\relax
+\oddsidemargin18mm
+\evensidemargin\dimexpr\paperwidth-\textwidth-\oddsidemargin\relax%21mm/30mm/37mm
+\marginparwidth5mm
+\marginparsep4mm
+\ifx\@margincollayout\relax
+    \RequirePackage[strict]{changepage}
+\renewcommand\mainmatter{%
+  \cleardoublepage
+  \advance\textwidth\dimexpr-2\gridwidth-8mm\relax%=96mm/101mm/128.5mm
+  \columnwidth\textwidth
+  \linewidth\textwidth
+  \hsize\textwidth
+  \advance\evensidemargin\dimexpr2\gridwidth+8mm\relax%41mm/51mm/63.5mm
+  \marginparwidth\dimexpr3\gridwidth+8mm\relax%=26mm/27.5mm/35.75mm
+    \long\def\@savemarbox##1##2{%adapted from latex.ltx!!
+      \global\setbox##1%
+      \color@vbox
+      \vtop{%
+        \hsize\marginparwidth
+        \@parboxrestore
+        \@marginparreset
+        \sffamily\small
+        \hskip\z@skip
+        \checkoddpage
+        \ifodd\cp@tempcnt\RaggedRight\else\RaggedLeft\fi
+        ##2%
+        \@minipagefalse
+        \outer@nobreak
+      }%
+      \color@endbox}
+  \marginparsep4mm
+  \@mainmattertrue
+  \pagenumbering{arabic}}
+\renewcommand\backmatter{%
+  \cleardoublepage
+   \advance\textwidth\dimexpr+2\gridwidth+8mm\relax%
+  \columnwidth\textwidth
+  \linewidth\textwidth
+  \hsize\textwidth
+  \advance\evensidemargin\dimexpr-2\gridwidth-8mm\relax%
+  \marginparwidth5mm%
+\@mainmatterfalse}
+\fi
+%\topskip9.5\p@
+\topskip13\p@ % internal decision
+\ifx\f@rmat b\topmargin12mm\else\topmargin10mm\fi
+\headheight3.5mm
+\advance\headheight-0.09mm % in order to get exact spacing along with specs
+\advance\topmargin-1mm
+\ifx\f@rmat b\headsep23mm\else\headsep21mm\fi
+\advance\headsep-\topmargin
+\advance\headsep-\headheight
+% in order to get exact first baseline position
+\ifx\f@rmat m
+\advance\headsep0.38mm
+\fi
+\ifx\f@rmat s
+  \textheight\dimexpr39\baselineskip+\topskip\relax
+\else
+  \ifx\f@rmat m
+    \textheight\dimexpr41\baselineskip+\topskip\relax
+  \else
+    \textheight\dimexpr50\baselineskip+\topskip\relax
+  \fi
+\fi
+\footskip7mm\relax
+\setlength{\skip\footins}{2\baselineskip plus0\baselineskip minus0.5\baselineskip}
+\footnotesep8\p@
+\ifnum\bookstart@date@info>20170709\relax
+  \setlength\floatsep    {19.5\p@\@plus6.5\p@}
+  \setlength\textfloatsep{19.5\p@\@plus6.5\p@}
+  \setlength\intextsep   {19.5\p@\@plus6.5\p@}
+  \setlength\dblfloatsep    {19.5\p@\@plus6.5\p@}
+  \setlength\dbltextfloatsep{19.5\p@\@plus6.5\p@}
+\else
+  \setlength\floatsep    {26\p@\@plus6.5\p@\@minus6.5\p@}
+  \setlength\textfloatsep{26\p@\@plus13\p@\@minus6.5\p@}
+  \setlength\intextsep   {26\p@\@plus6.5\p@\@minus6.5\p@}
+  \setlength\dblfloatsep    {26\p@\@plus13\p@\@minus6.5\p@}
+  \setlength\dbltextfloatsep{26\p@\@plus13\p@\@minus6.5\p@}
+\fi
+\renewcommand\floatpagefraction{.8}
+\renewcommand\dblfloatpagefraction{.8}
+\setlength\@fptop{0\p@}
+\setlength\@dblfptop{0\p@}
+\partopsep\z@
+\parsep\z@
+\itemsep\z@
+\def\@listi  {\leftmargin\leftmargini
+              \topsep11\p@\@plus\z@\@minus\z@}
+\let\@listI\@listi
+\@listi
+\def\@listii {\leftmargin\leftmarginii
+              \labelwidth\leftmarginii
+              \advance\labelwidth-\labelsep
+              \topsep\z@}
+\def\@listiii{\leftmargin\leftmarginiii
+              \labelwidth\leftmarginiii
+              \advance\labelwidth-\labelsep
+              \topsep\z@}
+\def\@listiv {\leftmargin\leftmarginiv
+              \labelwidth\leftmarginiv
+              \advance\labelwidth-\labelsep}
+\def\@listv  {\leftmargin\leftmarginv
+              \labelwidth\leftmarginv
+              \advance\labelwidth-\labelsep}
+\def\@listvi {\leftmargin\leftmarginvi
+              \labelwidth\leftmarginvi
+              \advance\labelwidth-\labelsep}
+\parskip\z@
+\let\@DOI\@empty
+
+\def\@authorwarning{\@latex@warning@no@line{No \noexpand\author given}}
+\def\publisherlogo#1{\gdef\@publisherlogo{#1}}
+{\global\let\Hyphen-\catcode`\-=\active\let-\@empty}
+
+\leftmargini\parindent
+\leftmargin\leftmargini
+\leftmarginii\leftmargini
+\leftmarginiii\leftmargini
+\def\labelitemi{\normalfont\textendash}
+\def\labelitemii{\normalfont\textendash}
+\renewenvironment{description}
+  {%
+    \list{}{\topsep\z@
+            \labelwidth\z@ \itemindent-\leftmargin
+            \let\makelabel\descriptionlabel}%
+  }{%
+    \ifnum\@listdepth=\@ne\advance\@topsepadd\baselineskip\fi
+    \endlist
+    %\gdef\@doendpe{%
+    %  \@endpetrue
+    %  \everypar{{\setbox\z@\lastbox}\everypar{}\@endpefalse}%
+    %  \global\let\@doendpe\orig@doendpe}
+  }
+\renewenvironment{quotation}
+  {%
+    \def\author##1{%
+      \gdef\quotation@author{##1}%
+      \quotation@author
+      }%
+    \list{}{\listparindent\parindent
+            \itemindent   \listparindent
+            \parsep       \z@}%
+            \small
+            \item\relax
+  }{%
+    \endlist
+    %\gdef\@doendpe{%
+    %  \@endpetrue
+    %  \everypar{{\setbox\z@\lastbox}\everypar{}\@endpefalse}%
+    %  \global\let\@doendpe\orig@doendpe}
+  }
+\renewenvironment{quote}
+  {%
+    \def\author##1{%
+      \gdef\quote@author{##1}%
+      \quote@author
+      }%
+    \list{}{}%
+          \small
+          \item\relax
+  }{%
+    \endlist
+    %\gdef\@doendpe{%
+    %  \@endpetrue
+    %  \everypar{{\setbox\z@\lastbox}\everypar{}\@endpefalse}%
+    %  \global\let\@doendpe\orig@doendpe}
+  }
+\setpkgattr{verse}{font}{\small}
+\renewenvironment{verse}
+  {%
+    \def\author##1{%
+      \gdef\verse@author{##1}%
+      \verse@author
+      }%
+    \let\\\@centercr
+    \list{}{\itemsep      \z@
+            \itemindent   -1.5em%
+            \listparindent\itemindent
+            \rightmargin  \leftmargin
+            \advance\leftmargin 1.5em}%
+    \item\relax
+    \verse@font
+  }{%
+    \endlist
+  }
+\newenvironment{legaltext}
+  {%
+    \list{}{\topsep\baselineskip}%
+            \bfseries
+            \item
+            \vrule\@height1.7\baselineskip\@width\z@
+  }{%
+    \topsep\baselineskip
+    \endlist
+  }
+\renewcommand\listoftables{%
+  \if@twocolumn
+    \@restonecoltrue\onecolumn
+  \else
+    \@restonecolfalse
+  \fi
+  \chapter*{\listtablename}%
+  {\small%Maria.Dassing@degruyter.com
+   \@starttoc{lot}}%
+  \if@restonecol\twocolumn\fi}
+\def\l@table{\@dottedtocline{1}{\z@}{}}
+\bibindent\parindent
+
+%% We need unicode representation of every symbol in PDF.
+%% For symbols taken from non-unicode fonts, we use pdftex maps (e.g. for \square symbol from msam10)
+\ifx\XeTeXcharclass\@undefined
+  %\ifx\directlua\undefined
+  \ifnum\pdfoutput>\z@
+    \IfFileExists{dummy-space.pfb}{\pdfinterwordspaceon}{}
+    \RequirePackage{cmap}
+    \InputIfFileExists{glyphtounicode.tex}{}{}
+    \pdfglyphtounicode{arrowright}{2192}
+    \pdfgentounicode=1
+  %\fi
+  \fi
+\fi
+
+%% amsmath pajungtas degruyter-minion-ps-fonts.sty paketo viduje 
+\ifnum\jobstart@date@info>20171204\relax
+\else
+    \RequirePackage[intlimits,tbtags]{amsmath}
+    \RequirePackage{amsfonts}
+    \RequirePackage{amssymb}
+\fi
+
+\ifdefined\HCode
+  \input{degruyter-htfonts.4ht}
+\else
+  \ifcsname use@\fmt@name @math\endcsname
+    \csname use@\fmt@name @math\endcsname
+  \else
+    \ifnum\jobstart@date@info>20171204\relax
+    \else
+      \RequirePackage{degruyter-minion-fonts}
+    \fi
+  \fi
+\fi
+
+\def\thestandardf@@tnote{\@arabic\c@footnote}
+
+\newbox\dg@wordmark
+\ifdefined\HCode
+  \sbox\dg@wordmark{}
+\else
+  \AtBeginDocument{%
+    \sbox\dg@wordmark{\includegraphics[height=2.1mm]{\@publisherlogo}}}
+\fi
+\def\dg@barone{%
+  \ifx\f@encoding\tu@encoding\char"F5F0\else{\fontencoding{TS1}\selectfont\char"CA}\fi}
+\def\dg@bartwo{%
+   \ifx\f@encoding\tu@encoding\char"F5F1\else{\fontencoding{TS1}\selectfont\char"CB}\fi}
+
+\@ifpackagewith{inputenc}{utf8}{\DeclareUnicodeCharacter{2007}{\hphantom{0}}}{}
+\RequirePackage{babel}
+\let\bibcite\org@bibcite
+\def\@tempa{%
+  \def\figurename{Figure}%
+  \def\keywordsname{Keywords}%
+  \def\correctionnotename{Erratum to}%
+  \def\notename{Note}%
+  \def\translationname{Translation}%
+  \def\acknowledgementname{Acknowledgement}%
+  \def\classificationname{Classification}%
+  \def\receivedname{Received}%
+  \def\revisedname{revised}%
+  \def\acceptedname{accepted}%
+  \def\communicatedname{Communicated by}%
+  \def\fundingname{Funding}%
+  \def\conflictofinterestname{Conflict of Interest}%
+  \def\reviewedbyname{Reviewed by}%
+  \def\graphicalabstractname{Graphical abstracts}%
+  \def\listauthorname{List of contributors}%
+  \def\adverttitlename{Also of Interest}%
+  \define@english@refname
+  }
+\expandafter\addto\expandafter\captionsbritish\expandafter{\@tempa}
+\expandafter\addto\expandafter\captionsUKenglish\expandafter{\@tempa}
+\expandafter\addto\expandafter\captionsenglish\expandafter{\@tempa}
+\expandafter\addto\expandafter\captionsamerican\expandafter{\@tempa}
+\expandafter\addto\expandafter\captionsUSenglish\expandafter{\@tempa}
+\def\@tempa{%
+  \def\figurename{Abb.}%
+  \def\tablename{Tab.}%
+  \def\bibname{Literatur}%
+  \def\contentsname{Inhalt}%
+  \def\indexname{Stichwortverzeichnis}%
+  \def\keywordsname{Schlagwörter}%
+  \def\correctionnotename{Erratum zu}%
+  \def\notename{Anmerkung}%
+  \def\acknowledgementname{Danksagung}%
+  \def\classificationname{Klassifikation}%
+  \def\receivedname{Empfangen}%
+  \def\revisedname{überarbeitet}%
+  \def\acceptedname{angenommen}%
+  \def\communicatedname{Übermittelt von}%
+  \def\fundingname{Funding}%
+  \def\conflictofinterestname{Conflict of Interest}%
+  \def\reviewedbyname{Besprochen von}%
+  \def\graphicalabstractname{Kurzzusammenfassungen}%
+  \def\listauthorname{Autorenverzeichnis}%
+  \def\adverttitlename{Weitere empfehlenswerte Titel}}
+\expandafter\addto\expandafter\captionsngerman\expandafter{\@tempa}
+\expandafter\addto\expandafter\captionsgerman\expandafter{\@tempa}
+\RequirePackage{ragged2e}
+\renewcommand\footnoterule{%
+  \kern-3\p@
+  \hrule\@width30\p@\@height3.5\p@\@depth-2\p@
+  \kern1.5\p@}
+\renewcommand\@makefntext[1]{%
+  \noindent
+  \dg@makefnmark
+  \def\reserved@a{bold}\ifx\math@version\reserved@a\mathversion{normal}\fi
+  \def\reserved@a{ssbold}\ifx\math@version\reserved@a\mathversion{ss}\fi
+  #1}
+\def\dg@makefnmark{%
+  \ifx\@thefnmark\@empty
+  \else
+    \textbf{\@thefnmark}\enskip
+  \fi
+  }
+\RequirePackage{amsthm}
+\def\thmhead@plain#1#2#3{%
+  \setbox0=\hbox{%
+    \thmname{#1}\thmnumber{\@ifnotempty{#1}{ }\@upn{#2}}%
+    {\thmnote{ {\the\thm@notefont(#3)}}}}%
+  \ifdim\wd0>\hsize
+    %% \hbox only for label, \thmnote needs to be breakable in this case. 
+    \hbox{%
+      \thmname{#1}%
+      \thmnumber{\@ifnotempty{#1}{ }\@upn{#2}}%
+      }%
+    {\thmnote{ {\the\thm@notefont(#3)}}}%
+  \else
+    \box0
+  \fi
+  }
+\def\@begintheorem#1#2[#3]{%
+  %\global\advance\@listdepth\@ne
+  \deferred@thm@head{\the\thm@headfont \thm@indent
+    \@ifempty{#1}{\let\thmname\@gobble}{\let\thmname\@iden}%
+    \@ifempty{#2}{\let\thmnumber\@gobble}{\let\thmnumber\@iden}%
+    \@ifempty{#3}{\let\thmnote\@gobble}{\let\thmnote\@iden}%
+    \thm@swap\swappedhead\thmhead{#1}{#2}{#3}%
+    \the\thm@headpunct
+    \thmheadnl % possibly a newline.
+    \hskip\thm@headsep
+  }%
+  \ignorespaces}
+\def\@endtheorem{%
+  %\global\advance\@listdepth\m@ne
+  \endtrivlist
+  %\gdef\@doendpe{%
+  %  \@endpetrue
+  %  \everypar{{\setbox\z@\lastbox}\everypar{}\@endpefalse}%
+  %  \global\let\@doendpe\orig@doendpe}
+  }
+\def\thm@space@setup{%
+  \thm@preskip=1\topsep\@plus6\p@\relax
+  \thm@postskip=\thm@preskip
+  }
+\def\proof@labelsep{5\p@}
+\renewenvironment{proof}[1][\proofname]
+  {%
+    \par
+    \labelsep=\proof@labelsep
+    \pushQED{\qed}%
+    \normalfont \topsep6\p@\@plus6\p@\relax
+    \trivlist
+    \item[\hskip\labelsep
+          \itshape
+      #1\@addpunct{.}]\ignorespaces
+  }{%
+    \popQED
+    \endtrivlist
+    %\gdef\@doendpe{%
+    %  \@endpetrue
+    %  \everypar{{\setbox\z@\lastbox}\everypar{}\@endpefalse}%
+    %  \global\let\@doendpe\orig@doendpe}
+  }
+\thm@notefont{\normalfont}
+\newtheoremstyle{dgthm}
+  {.5\baselineskip}
+  {.5\baselineskip}
+  {\itshape}
+  {}
+  {\sffamily\bfseries}
+  {\ifx\thmnote\@gobble.\else\normalfont.\fi}
+  {.5em}
+  {}
+\newtheoremstyle{dgdef}
+  {.5\baselineskip}
+  {.5\baselineskip}
+  {\normalfont}
+  {}
+  {\sffamily\bfseries}
+  {\ifx\thmnote\@gobble.\else\normalfont.\fi}
+  {.5em}
+  {}
+\ifnum\bookstart@date@info>20180114\relax
+  \let\th@plain\th@dgthm
+  \let\th@remark\th@dgthm
+  \let\th@definition\th@dgdef
+\fi
+\RequirePackage{graphicx}
+\RequirePackage{array}
+\RequirePackage{multirow}
+\RequirePackage{tabularx}[2014/05/13]
+\def\TX@endtabularx{%
+   \expandafter\expandafter\expandafter
+     \TX@find@endtabularxa\csname end\TX@\endcsname
+     \endtabularx\TX@\endtabularx\TX@find@endtabularxa
+  \expandafter\TX@newcol\expandafter{\tabularxcolumn{\TX@col@width}}%
+  \let\verb\TX@verb
+  \def\@elt##1{\value{##1}\the\value{##1}\relax}%
+  \edef\TX@ckpt{\cl@@ckpt}%
+  \let\@elt\relax
+  \TX@old@table\maxdimen
+  \TX@col@width\TX@target
+  \global\TX@cols\@ne
+  \TX@typeout@
+    {\@spaces Table Width\@spaces Column Width\@spaces X Columns}%
+  \TX@trial{\def\NC@rewrite@X{%
+          \global\advance\TX@cols\@ne\NC@find p{\TX@col@width}}}%
+  \loop
+    \TX@arith
+    \ifTX@
+    \TX@trial{}%
+  \repeat
+  {\let\@footnotetext\TX@ftntext\let\@xfootnotenext\TX@xftntext
+    \csname tabular*\expandafter\endcsname\expandafter\TX@target
+      \the\toks@
+    \csname endtabular*\endcsname}%
+  \global\TX@ftn\expandafter{\expandafter}\the\TX@ftn
+  \ifnum0=`{\fi}%
+   \expandafter\expandafter\expandafter
+   \TX@find@endtabularxbb
+    \expandafter\end\expandafter{\TX@}%
+    \endtabularx\TX@\endtabularx\TX@find@endtabularxb}
+\RequirePackage{bigstrut}
+\RequirePackage{supertabular}
+\let\bareST@newpage\ST@newpage
+\expandafter\def\expandafter\ST@newpage\expandafter{%
+  \ST@newpage\noalign{\gdef\@tablefont{\tablefont}}}
+\expandafter\def\expandafter\endsupertabular\expandafter{%Claudia.Braeuer@degruyter.com
+  \endsupertabular\par\vskip\baselineskip}
+\expandafter\let\csname endsupertabular*\endcsname\endsupertabular
+\RequirePackage{booktabs}
+\newcolumntype{e}{!{\extracolsep{\fill}}}
+\let\@barearray\@array
+\let\@baretabular\@tabular
+\let\@bareclassz\@classz
+\let\@@barearray\@@array
+\let\endbaretabular\endtabular
+\expandafter\let\csname endbaretabular*\endcsname=\endtabular
+\let\baretablehead\tablehead
+\let\baretablefirsthead\tablefirsthead
+\let\baretabletail\tabletail
+\let\baretablelasttail\tablelasttail
+\def\baretabulars{%
+  \let\@array\@barearray
+  \let\@tabular\@baretabular
+  \let\@classz\@bareclassz
+  \let\@@array\@@barearray
+  \let\endtabular\endbaretabular
+  \expandafter\let\csname endtabular*\endcsname=\endtabular
+  \let\tablehead\baretablehead
+  \let\tablefirsthead\baretablefirsthead
+  \let\tabletail\baretabletail
+  \let\tablelasttail\baretablelasttail
+  \let\ST@newpage\bareST@newpage}
+\def\@array[#1]#2{%
+  \@tempdima \ht \strutbox
+  \advance \@tempdima by\extrarowheight
+  \setbox \@arstrutbox \hbox{\vrule
+             \@height \arraystretch \@tempdima
+             \@depth \arraystretch \dp \strutbox
+             \@width \z@}%
+  \begingroup
+  \@mkpream{#2}%
+  \xdef\@preamble{\noexpand \ialign \@halignto
+                  \bgroup
+                    \expandafter\ifx\d@llarbegin\begingroup\hskip-\col@sep\fi
+                    \@arstrut \@preamble
+                    \expandafter\ifx\d@llarbegin\begingroup\hskip-\col@sep\fi
+                          \tabskip \z@ \cr}%
+  \endgroup
+  \@arrayleft
+  \if #1t\vtop \else \if#1b\vbox \else \vcenter \fi \fi
+  \bgroup
+  \let \@sharp ##\let \protect \relax
+  \lineskip \z@
+  \baselineskip \z@
+  \m@th
+  \leftmargini4mm\relax
+  \leftmarginii\leftmargini
+  \leftmarginiii\leftmargini
+  \@minipagetrue\let\@minipagefalse\relax%no \addvspace before lists, ¡oiga!
+  \let\\\@arraycr \let\tabularnewline\\\let\par\@empty \@preamble}
+\def\@tabular{%
+  \leavevmode
+  \hbox \bgroup\tablefont $\col@sep\tabcolsep \let\d@llarbegin\begingroup%$
+                                    \let\d@llarend\endgroup
+  \ifx\ST@tableformat\@undefined\gdef\@tablefont{\tablefont\tableheadfont}\fi
+  \@tabarray}
+\let\@classzold\@classz
+\def\@classz{%
+   \expandafter\ifx\d@llarbegin\begingroup
+     \toks \count@ =
+     \expandafter{\expandafter\@tablefont\the\toks\count@}%
+   \fi
+   \@classzold}
+\def\@@array[#1]#2{%
+  \@array[#1]{#2}%
+  \expandafter\ifx\d@llarbegin\begingroup
+    \ifx\ST@tableformat\@undefined\toprule\fi
+  \fi}
+\def\endtabular{%
+  \bottomrule
+  \endarray
+  \@minipagefalse%¡oye!
+  $\egroup}%$
+\expandafter\let\csname endtabular*\endcsname=\endtabular
+\def\tablehead#1{%
+  \gdef\@tablehead{%
+    \toprule
+    \noalign{%
+      \global\let\@savcr=\\
+      \global\let\\=\org@tabularcr}%
+    \if!#1!
+      \noalign{\gdef\@tablefont{\tablefont\tablefont}}%
+    \else
+      \noalign{\gdef\@tablefont{\tableheadfont\tablefont}}%
+      #1\midrule
+    \fi
+    \noalign{\global\let\\=\@savcr}}}
+\def\tablefirsthead#1{%
+  \gdef\@table@first@head{\toprule
+    \if!#1!
+      \noalign{\gdef\@tablefont{\tablefont\tablefont}}%
+    \else
+      \noalign{\gdef\@tablefont{\tablefont\tableheadfont}}#1\midrule
+    \fi}}
+\def\tabletail#1{%
+  \gdef\@tabletail{%
+    \if!#1!\else\tailrule\fi
+    \noalign{%
+      \global\let\@savcr=\\
+      \global\let\\=\org@tabularcr}%
+    #1%
+    \noalign{\global\let\\=\@savcr}}}
+\def\tablelasttail#1{%
+  \gdef\@table@last@tail{\if!#1!\else\tailrule\fi#1}}
+\let\@layarray\@array
+\let\@laytabular\@tabular
+\let\@layclassz\@classz
+\let\@@layarray\@@array
+\let\endlaytabular\endtabular
+\expandafter\let\csname endlaytabular*\endcsname=\endtabular
+\let\laytablehead\tablehead
+\let\laytablefirsthead\tablefirsthead
+\let\laytabletail\tabletail
+\let\laytablelasttail\tablelasttail
+\let\layST@newpage\ST@newpage
+\def\layouttabulars{%
+  \let\@array\@layarray
+  \let\@tabular\@laytabular
+  \let\@classz\@layclassz
+  \let\@@array\@@layarray
+  \let\endtabular\endlaytabular
+  \expandafter\let\csname endtabular*\endcsname=\endlaytabular
+  \let\tablehead\laytablehead
+  \let\tablefirsthead\laytablefirsthead
+  \let\tabletail\laytabletail
+  \let\tablelasttail\laytablelasttail
+  \let\ST@newpage\layST@newpage}
+\def\midrule{\noalign{\ifnum0=`}\fi
+  \@aboverulesep=\aboverulesep
+  \global\@belowrulesep=\belowrulesep
+  \global\@thisruleclass=\@ne
+  \gdef\@tablefont{\tablefont}%
+  \@ifnextchar[{\@BTrule}{\@BTrule[\heavyrulewidth]}}%
+\def\tailrule{\noalign{\ifnum0=`}\fi
+  \@aboverulesep=\aboverulesep
+  \global\@belowrulesep=\belowrulesep
+  \global\@thisruleclass=\@ne
+  \gdef\@tablefont{\tableheadfont}%
+  \@ifnextchar[{\@BTrule}{\@BTrule[\lightrulewidth]}}%
+\def\starttabularbody{\noalign{\gdef\@tablefont{\tablefont}}}
+\heavyrulewidth=1\p@
+\lightrulewidth=0.28\p@
+\belowrulesep=2\p@
+\aboverulesep=2\p@
+\newcommand*\tablefont{%
+  \edef\DGMetaScience@figurealign{T}\sffamily\mathversion{ss}\addfontfeature{Numbers=Monospaced}\small}
+\newcommand*\tableheadfont{%
+  \small\sffamily\addfontfeature{Numbers=Monospaced}\bfseries\mathversion{ssbold}}
+\tabcolsep0.5\columnsep
+\RequirePackage{multicol}
+\RequirePackage[singlelinecheck=false,listof,tableposition=top]{caption}
+\def\plist@figure{\figurename\space}
+\def\plist@table{\tablename\space}
+\def\caption@@addcontentsline#1#2{%
+  {\let\\\space
+   \@ifundefined{ext@#1}%
+     {\caption@Error{No float type '#1' defined}}%
+     {\caption@@@addcontentsline
+       {\csname ext@#1\endcsname}%
+       {#1}%
+       {\caption@lstfmt{\@nameuse{plist@#1}}{\@nameuse{the#1}}}%
+       {\ignorespaces #2}}}}
+\DeclareCaptionFont{mathversionSS}{\mathversion{ss}#1}
+\captionsetup{labelsep=colon,font={small,sf},labelfont=bf,textfont=mathversionSS,%
+  justification=RaggedRight,skip=9.5\p@,listformat=simple}
+%% >>> Remove additional space below caption >>>
+\DeclareCaptionFormat{degruyter}{%
+  #1#2#3%
+  \par
+  \dg@caption@endhook
+  }
+\def\dg@caption@postfix{%
+  \def\@captype@table{table}%
+  \ifx\@captype\@captype@table
+    \vskip3.5\p@ %% 13bp between Table caption baseline and top hline
+  \fi
+  }
+\def\dg@caption@endhook{%
+  \ifdim\prevdepth>\z@
+    \ifdim\prevdepth<\maxdimen
+      \addvspace{-\prevdepth}%
+    \fi
+  \fi
+  \csname dg@caption@postfix\endcsname
+  }
+\ifnum\bookstart@date@info>20170709\relax
+  \captionsetup{format=degruyter}
+\fi
+%% <<< Remove additional space below caption <<<
+
+\RequirePackage[rightcaption,ragged]{sidecap}
+\def\sidecaptionrelwidth{20}
+\edef\sidecaptionsep{\the\columnsep}
+\RequirePackage[figuresright]{rotating}
+\setlength\rotFPtop{0\p@ \@plus 1fil}
+
+\RequirePackage{index}
+
+\advance\voffset-1in
+\advance\hoffset-1in
+
+\RequirePackage[hyphens]{url}
+\urlstyle{same}
+\RequirePackage[%
+  unicode=true,
+  breaklinks,
+  linktocpage,
+  bookmarksnumbered,
+  bookmarksdepth=3,
+  pdfborder={0 0 0},
+  hypertexnames=false]{hyperref}
+\ifHy@draft\AtBeginDocument{\let\hyper@anchorstart\@gobble}\fi%fix hyperref-Bug
+
+%% hyperref warning write only to log file.
+\let\Hy@Warning\wlog
+\let\Hy@WarningNoLine\wlog
+\protected\def\GenericWarning#1#2{%
+   \begingroup
+      \def\MessageBreak{^^J#1}%
+      \set@display@protect
+      \wlog{^^J#2\on@line.^^J}%
+   \endgroup
+}
+
+%% With 2016 distribution, hyperref is stopped early if used with tex4ht
+%% Therefore \H@refstepcounter is undefined and may clash later
+\ifdefined\H@refstepcounter
+\else
+  \let\H@refstepcounter\refstepcounter
+\fi
+
+\ifpdf
+\else
+  \RequirePackage{vtexhdvips}
+\fi
+\RequirePackage[jobnameprefix]{degruyter-hyperref-addons}
+\RequirePackage{dgbook-sections}
+
+\ifdefined\HCode
+\else
+  \ifx\XeTeXcharclass\@undefined\ifnum\pdfoutput=\z@
+    \RequirePackage[\ifx\m@de p preserveurlmacro,\else\ifx\m@de a preserveurlmacro,\fi\fi hyphenbreaks]{breakurl}
+    \bgroup
+      \catcode`\&=12\relax
+      \hyper@normalise\burl@addtocharlistafter{=}
+    \egroup
+    \burl@defifstructure
+    \ifx\m@de p%
+      \let\burl\nolinkurl
+      \def\burlalt#1#2{\nolinkurl{#2}}%
+    \else
+      \ifx\m@de a%
+        \let\burl\nolinkurl
+        \def\burlalt#1#2{\nolinkurl{#2}}%
+      \fi
+    \fi
+  \fi\fi
+\fi
+\ifHy@draft
+  \ifx\XeTeXcharclass\@undefined
+    \ifnum\pdfoutput=\z@
+      \AtBeginDocument{\pdfmark{pdfmark=/DOCINFO,Creator={LaTeX -- with \csname ver@degruyter.cls\endcsname}}}
+    \else
+      \pdfinfo{/Creator (TeX -- with \csname ver@degruyter.cls\endcsname)}
+    \fi
+  \else
+    \AtBeginDocument{\@pdfm@mark{docinfo<</Creator(LaTeX -- with \csname ver@degruyter.cls\endcsname)>>}}
+  \fi
+\else
+  \expandafter\def\expandafter\@pdfcreator\expandafter{\@pdfcreator\space -- with \csname ver@degruyter.cls\endcsname}
+\fi
+\def\@afterbox{%
+  \everypar{%
+    \if@nobreak
+      \@nobreakfalse
+      \clubpenalty \@M
+      \if@afterindent \else
+        {\setbox\z@\lastbox}%
+        \everypar{}%2015-04-09
+      \fi
+    \else
+      \clubpenalty \@clubpenalty
+      {\setbox\z@\lastbox}%
+      \everypar{}%
+    \fi}}
+
+\newif\if@pseudochapter
+\newif\if@bookappendix
+\if@monography
+  \def\ps@plain{%
+    \let\@mkboth\@gobbletwo
+    \let\@oddhead\@empty
+    \let\@evenhead\@empty
+    \def\@oddfoot{%
+      \vtop{%
+        \ifx\@DOI\@empty
+        \else
+          {\everypar={}%
+            \sffamily\scriptsize
+            \noindent
+            \@contributioncopyright
+            \par\noindent
+            \@DOI@fmt
+          }%
+          \hfil
+        \fi
+        }%
+      \global\let\@DOI\@empty
+      \ifx\thesection\theplainsection
+        \global\let\@contributioncopyright\@empty
+      \fi}%
+    \let\@evenfoot\@oddfoot
+    }
+  \def\ps@headings{%
+    \let\@oddfoot\@empty
+    \let\@evenfoot\@empty
+    \def\@oddhead{%
+      \small\sffamily\mathversion{ss}%
+      \hfil
+      \rightmark
+      \quad\dg@bartwo\quad
+      \bfseries\normalsize\thepage
+      }%
+    \def\@evenhead{%
+      \small\sffamily\mathversion{ss}%
+      {\bfseries\normalsize\thepage}%
+      \quad\dg@bartwo\quad
+      \leftmark
+      \hfil
+      }%
+    \let\@mkboth\markboth
+    \def\chaptermark##1{%
+      \markboth
+        {%
+          \ifx\thesection\theinchapsection
+            \if@numberedchapters
+              \if@pseudochapter
+                \if@bookappendix
+                  \thechapter\enskip
+                \fi
+              \else
+                \thechapter\enskip
+              \fi
+            \fi
+          \fi
+          \ifx\@runningtitle\@undefined
+            ##1%
+          \else
+            \@runningtitle
+          \fi
+        }{%
+          \ifx\thesection\theinchapsection
+            \if@numberedchapters
+              \if@pseudochapter
+                \if@bookappendix
+                  \thechapter\enskip
+                \fi
+              \else
+                \thechapter\enskip
+              \fi
+            \fi
+          \fi
+          \ifx\@runningtitle\@undefined
+            ##1%
+          \else
+            \@runningtitle
+          \fi
+        }%
+      }%
+    \def\starchaptermark##1{%
+      \markboth
+        {%
+          \ifx\@runningtitle\@undefined
+            ##1%
+          \else
+            \@runningtitle
+          \fi
+        }{%
+          \ifx\@runningtitle\@undefined
+            ##1%
+          \else
+            \@runningtitle
+          \fi        
+        }%
+      }%
+    \def\sectionmark##1{%
+      \ifx\thesection\theinchapsection
+        \markright{%
+          \ifnum\c@secnumdepth>\z@
+            \thesection\enskip
+          \fi
+          ##1%
+          }%
+      \fi
+      }%
+    \def\starsectionmark##1{%
+      \markright{##1}%
+      }%
+    }
+\else
+  \def\ps@plain{%
+    \let\@mkboth\@gobbletwo
+    \let\@oddhead\@empty
+    \let\@evenhead\@empty
+    \def\@oddfoot{%
+      \vtop{%
+        \ifx\@DOI\@empty
+        \else
+          {\everypar={}%
+            \sffamily\scriptsize
+            \noindent
+            \@contributioncopyright
+            \par\noindent
+            \@DOI@fmt
+          }%
+          \hfil
+        \fi
+        }%
+      \global\let\@DOI\@empty
+      \ifx\thesection\theplainsection
+        \global\let\@contributioncopyright\@empty
+      \fi}%
+    \let\@evenfoot\@oddfoot
+    }
+  \def\ps@headings{%
+    \let\@oddfoot\@empty
+    \let\@evenfoot\@empty
+    \def\@oddhead{%
+      \small\sffamily\mathversion{ss}%
+      \hfil
+      \rightmark
+      \quad\dg@bartwo\quad
+      \bfseries\normalsize\thepage
+      }%
+    \def\@evenhead{%
+      \small\sffamily\mathversion{ss}%
+      {\bfseries\normalsize\thepage}%
+      \quad\dg@bartwo\quad
+      \leftmark
+      \hfil
+      }%
+    \let\@mkboth\markboth
+    \def\chaptermark##1{%
+      \markright{%
+        \ifx\thesection\theinchapsection
+          \if@numberedchapters
+            \if@pseudochapter
+              \if@bookappendix
+                \thechapter\enskip
+              \fi
+            \else
+              \thechapter\enskip
+            \fi
+          \fi
+        \fi
+        \ifx\@runningtitle\@undefined
+          ##1%
+        \else
+          \@runningtitle
+        \fi
+        }%
+      }%
+    \def\starchaptermark##1{%
+      \markright{%
+        \ifx\@runningtitle\@undefined
+          ##1%
+        \else
+          \@runningtitle
+        \fi
+        }%
+      }%
+    \let\sectionmark\@gobble
+    \let\starsectionmark\@gobble
+    }
+\fi
+\pagestyle{headings}
+
+\newenvironment{note}[1][]
+ {\par
+  \dimen@\prevdepth
+  \vskip\dimexpr1\baselineskip+\topskip-4\p@\relax
+  \hrule\@height\z@ \nobreak
+  \vskip\dimexpr-1\baselineskip-\topskip+4\p@\relax
+  \prevdepth\dimen@
+  \noindent\vrule\@width\linewidth\@height\p@\par\nobreak
+  \nointerlineskip
+  \noindent
+  \vrule\@width\z@\@height\baselineskip\@depth\z@
+  \if!#1!\else
+    \marginparsep2mm\relax
+    \marginparwidth5mm\relax
+    \marginpar{\leavevmode\smash{\lower7\p@\hbox{\includegraphics[height=13pt,clip]{logos/#1}}}}%
+  \fi
+  \sffamily\mathversion{ss}\small
+  \ignorespaces}
+ {\ifhmode\par\fi\nobreak
+  \vskip\dimexpr-\baselineskip+8.5\p@\relax
+  \normalsize
+  \noindent\vrule\@width\linewidth\@height\p@\par
+  \nointerlineskip
+  \vskip\baselineskip
+  \aftergroup\@afterbox}
+\def\recital#1{%
+  \leavevmode
+  \marginpar{%
+    \ifodd\c@page\raggedright\else\raggedleft\fi
+    \sffamily\bfseries\small#1}}
+\def\runningtitle#1{%
+  \gdef\@runningtitle{#1}%
+  }
+\def\runningauthor#1{%
+  \gdef\@runningauthor{#1}%
+  }
+\def\generaltitledef#1{%
+  \gdef\p@pertitle{#1}%
+  \bgroup
+    \let\footnote\@gobble
+    \let\footnotetext\@gobble
+    \let\articlenote\@gobble
+    \let\contributionnote\@gobble
+    \NR@gettitle{#1}%
+    \ifx\@runningtitle\@undefined
+      \protected@xdef\@runningtitle{#1}%
+    \fi
+  \egroup
+  }
+\def\journalname#1{\gdef\@journalname{#1}}
+\DeclareRobustCommand*\articlenote[1]{%
+  \vskip19.5\p@{\noindent\sffamily\small\dg@bartwo\dg@bartwo\\*[-2\p@]\noindent#1\par}}
+\RequirePackage{lastpage}
+\def\articlesubtype#1{\gdef\@articlesubtype{#1}}
+\def\subtitle#1{\gdef\p@persubtitle{#1}}
+\newcommand*\transabstract[2][]{%
+  \def\@transabstractlang{#1}%
+  \gdef\@transabstract{#2}}
+\newcommand*\transkeywords[2][]{%
+  \def\@transkeywordslang{#1}%
+  \gdef\@transkeywords{#2}}
+\newcommand*\correctionnote[2][]{%
+  \if!#1!\else\expandafter\addto\csname captions\languagename\endcsname{\def\correctionnotename{#1}}\fi
+  \gdef\@correctionnote{#2}}
+\newcommand\classification[2][]{%
+  \if!#1!\else\def\classificationName{#1}\fi
+  \gdef\@classification{#2}}
+\def\received#1{\gdef\@received{#1}}
+\def\revised#1{\gdef\@revised{#1}}
+\def\accepted#1{\gdef\@accepted{#1}}
+\def\communicated#1{\gdef\@communicated{#1}}
+\def\markleft#1{%
+  \begingroup
+    \let\label\relax \let\index\relax \let\glossary\relax
+    \expandafter\@markleft\@themark {#1}%
+    \@temptokena \expandafter{\@themark}%
+    \mark{\the\@temptokena}%
+  \endgroup
+  \if@nobreak\ifvmode\nobreak\fi\fi}
+\def\@markleft#1#2#3{\@temptokena {#2}%
+  \unrestored@protected@xdef\@themark{{#3}{\the\@temptokena}}}
+\def\contributiontitlenote#1{\let\@makefntext\noindent\Footnotetextnote{}{\textsf{\textbf{\notename:}\space\mdseries#1}}}
+\setpkgattr{abstract}{afterskip}{6.5\p@}
+\setpkgattr{keywords}{afterskip}{26\p@}
+\setpkgattr{monography@abstract}{afterskip}{0\p@}
+\def\@makep@pertitle{%
+  \raggedright
+  \sffamily\strut
+  \ifx\@review\@undefined
+    \print@author@block
+  \fi
+  \saved@chapterhead % from dgbook-sections.sty
+  }%
+\def\make@editedbook@papertitle{%
+  \thispagestyle{plain}%
+  \let\articlenote\contributiontitlenote
+  \let\contributionnote\contributiontitlenote
+  \if@twocolumn
+    \@topnewpage[\@makep@pertitle]%
+  \else
+    \@makep@pertitle
+  \fi
+  %% Running head
+  \define@running@author
+  \define@default@mark
+  %%
+  \justifying\parindent\z@
+  \sffamily\normalsize
+  \let\@makefntext\noindent
+  \ifdefined\fnotes@block
+    \fnote{\fnotes@block}%
+  \fi
+  \if@addressblockoutput
+    \fnote{\print@address@block}%
+  \fi
+  \par
+  \normalsize
+  %% Disable baseline stretch for Abstract/Keywords to get exact FM spacing
+  \baselineskip=\dimexpr1\baselineskip\relax
+  \ifx\@abstract\@undefined
+  \else
+    \gdef\fm@fourth@elem{1}%
+    {\bfseries\abstractname:\space}%
+    \textrm{\setlength{\parindent}{6mm}\@abstract}%
+    \par
+    \vskip\abstract@afterskip
+    \global\let\@abstract\@undefined
+    \global\let\last@afterskip@title\@undefined
+  \fi
+  \ifx\@keywords\@undefined
+  \else
+    \gdef\fm@fourth@elem{1}%
+    {\bfseries\keywordsname:\space}\textrm{\@keywords}%
+    \par
+    \vskip\keywords@afterskip
+    \global\let\@keywords\@undefined
+    \global\let\@keywordsset\relax
+    \global\let\last@afterskip@title\@undefined
+  \fi
+  %\ifx\@transabstract\@undefined
+  %\else
+  %  \gdef\fm@ninth@elem{1}%
+  %  \vskip\dg@vgrid
+  %  \if!\@transabstractlang!
+  %    \def\@tempa{Abstract}\ifx\abstractname\@tempa\def\@transabstractlang{ngerman}\else\def\@transabstractlang{english}\fi
+  %  \fi
+  %  {\expandafter\otherlanguage\expandafter{\@transabstractlang}%
+  %    \textbf{\abstractname:\space}%
+  %    \textrm{\@transabstract}%
+  %   \endotherlanguage}
+  %  \par
+  %  \global\let\@transabstract\@undefined
+  %\fi
+  %\ifx\@transkeywords\@undefined
+  %\else
+  %  \gdef\fm@ninth@elem{1}%
+  %  \vskip\dg@vgrid
+  %  \if!\@transkeywordslang!
+  %    \def\@tempa{Keywords}\ifx\keywordsname\@tempa\def\@transkeywordslang{ngerman}\else\def\@transkeywordslang{english}\fi
+  %  \fi
+  %  {\expandafter\otherlanguage\expandafter{\@transkeywordslang}%
+  %    \textbf{\keywordsname:\space}%
+  %    \textrm{\@transkeywords}%
+  %   \endotherlanguage}
+  %  \par
+  %  \global\let\@transkeywords\@undefined
+  %\fi
+  \ifdefined\last@afterskip@title
+    \addvspace{8.5\p@}% title@afterskip (11bp) + 8.5bp = 19.5bp (space between chapter title and text body)
+  \fi
+  }
+
+\def\maketitle{%
+  \if@monography
+    \make@chapter@fm
+  \else
+    \make@editedbook@papertitle
+    \aftergroup\@afterindentfalse
+    \aftergroup\@afterheading
+  \fi
+  }
+  
+\def\make@chapter@fm{%
+  \justifying\parindent\z@
+  \normalsize
+  \ifx\@abstract\@undefined
+  \else
+    \gdef\fm@ninth@elem{1}%
+    \vskip\dg@vgrid
+    {\bfseries\abstractname:\space}%
+    \textrm{\setlength{\parindent}{6mm}\@abstract}\par
+    \vskip\monography@abstract@afterskip
+    \global\let\@abstract\@undefined
+    \global\let\last@afterskip@title\@undefined
+  \fi
+  \ifx\@keywords\@undefined
+  \else
+    \gdef\fm@ninth@elem{1}%
+    \vskip\dg@vgrid
+    {\bfseries\keywordsname:\space}\textrm{\@keywords}\par
+    \global\let\@keywords\@undefined
+    \global\let\@keywordsset\relax
+  \fi
+  }
+
+\let\theinchapsection\thesection
+\def\theplainsection{\arabic{section}}
+\let\theinchapequation\theequation
+\def\theplainequation{\arabic{equation}}
+\let\theinchapfigure\thefigure
+\def\theplainfigure{\arabic{figure}}
+\let\theinchaptable\thetable
+\def\theplaintable{\arabic{table}}
+
+\newenvironment{Env@EndOfContrib}[1]
+ {\if@noskipsec\leavevmode\fi
+  \par
+  \@afterindenttrue
+  \if@nobreak
+    \everypar{}%
+  \else
+    \addpenalty\@secpenalty\addvspace\baselineskip
+  \fi
+  \@nobreakfalse
+  \global\@noskipsectrue
+  \everypar{%
+    \if@noskipsec
+      \global\@noskipsecfalse
+      {\setbox\z@\lastbox}%
+      \clubpenalty\@M
+      {\sffamily\bfseries#1:}%
+      \unskip\hskip0.5em\relax
+    \else
+      \clubpenalty \@clubpenalty
+      \everypar{}%
+    \fi}%
+  \ignorespaces}
+ {\par
+  \vskip\baselineskip
+  \aftergroup\@afterbox}
+\def\acknowledgement{\Env@EndOfContrib\acknowledgementname}
+\let\endacknowledgement\endEnv@EndOfContrib
+\def\funding{\Env@EndOfContrib\fundingname}
+\let\endfunding\endEnv@EndOfContrib
+\def\conflictofinterest{\Env@EndOfContrib\conflictofinterestname}
+\let\endconflictofinterest\endEnv@EndOfContrib
+\newenvironment{thegraphicalabstractsection}
+ {\if@twocolumn
+    \onecolumn
+    \@tempswatrue
+  \else
+    \@tempswafalse
+  \fi
+  \thispagestyle{plain}%
+  \global\@topnum\z@
+  \@afterindentfalse
+  {\parindent\z@
+   \raggedright
+   \leavevmode\vrule\@width\z@\@height\dimexpr\topskip+0.5\baselineskip\relax\@depth\z@
+   \sffamily\bfseries\LARGE
+   \interlinepenalty\@M
+   \graphicalabstractname\par\nobreak
+   \vskip13\p@}%
+  \raggedright
+  \raggedcolumns
+  \multicolsep\z@
+  \@afterheading}
+ {\par
+  \if@tempswa\twocolumn\else\break\fi}
+\newcommand\graphicalabstract[5]{%
+  \begin{multicols}{3}[\vrule\@width\hsize\@height1.5pt\\\vskip13\p@]%
+    \sffamily
+    #1\par
+    {\bfseries#2}\par
+    \vskip\baselineskip
+    #3\par
+    \columnbreak
+    \RaggedRight
+    {\bfseries Abstract:}\space{\rmfamily#4}\par
+    \columnbreak
+    \includegraphics[width=\hsize,trim=0 0 0 2]{#5}\par
+  \end{multicols}}
+\newenvironment{contributors}[1][]
+ {\goodbreak
+  \vskip2\baselineskip
+  \@afterindentfalse
+  {\parindent\z@
+   \raggedright
+   \leavevmode\vrule\@width\z@\@height\dimexpr\topskip+0.5\baselineskip\relax\@depth\z@
+   \sffamily\bfseries\LARGE
+   \interlinepenalty\@M
+   \if"#1"\listauthorname\else#1\fi\par\nobreak
+   \vskip 13\p@}%
+  \@afterheading}
+ {\clearpage}
+\newcommand\furtherreview[4]{%
+  \goodbreak
+  \vskip\baselineskip
+  \def\@reviewauthor{#1}%
+  \def\@reviewtitle{#2}%
+  \def\@reviewdescription{#3}%
+  {\parindent\z@
+   \leavevmode\dg@bartwo\dg@bartwo\par
+   \sffamily\normalsize
+   #1%
+   \vskip0.5\baselineskip\noindent
+   {\raggedright\small
+    \reviewedbyname\space\textbf{#2}%
+    \if$#3$\else:\space#3\fi
+    \par}%
+   \if$#4$\else
+     \vskip0.5\baselineskip\noindent
+     {\small DOI\space#4}%
+   \fi}%
+  \addtocontents{article}%
+    {\textbf{#2.}\space\textit{#1}}%
+  \vskip\baselineskip
+  \@afterbox}
+\RequirePackage{environ}
+\let\@makeadvertisement\@empty
+\long\def\@dvertisementcontent#1{%
+  \gdef\@makeadvertisement{%
+    \null\par\vfill
+    \@tempcnta\z@
+    \raggedright
+    \sffamily
+    \leavevmode
+    \vrule\@width\z@\@height\dimexpr\topskip+0.5\baselineskip\relax\@depth\z@
+    {\fontsize{14}{17}\bfseries\adverttitlename\par}%
+    \nobreak
+    %%\vskip-\lastskip
+    %%\vskip\dimexpr5mm-\lineskip\relax
+    #1\par}}
+\newenvironment{advertisement}[1][]
+ {\if!#1!\relax
+  \else
+    \gdef\@advertisementtitle{#1}%
+  \fi
+  \Collect@Body\@dvertisementcontent}
+ {}
+\def\otherpubl{%
+  \nobreak
+  \nointerlineskip
+  \vskip5mm\relax
+  \ifnum\@tempcnta<5
+    \advance\@tempcnta\@ne
+  \else
+    \ifx\f@rmat s
+      \PackageError{\dgx@fmt@name}
+        {Too many \string\otherpubl\space commands}
+        {Please provide at most five \string\otherpubl\space commands.}
+    \else
+      \ifnum\@tempcnta<6
+        \advance\@tempcnta\@ne
+      \else
+        \PackageError{\dgx@fmt@name}
+        {Too many \string\otherpubl\space commands}
+        {Please provide at most six \string\otherpubl\space commands.}
+      \fi
+    \fi
+  \fi
+  \@ifnextchar[{\@therpubl}{\@therpubl[]}}
+\def\@therpubl[#1]{%
+  \bgroup
+  \if!#1!
+    \let\c@verimage\@undefined
+  \else
+    \def\c@verimage{#1}%
+    \parbox[t]{16mm}{\includegraphics[width=16mm,height=22.48mm]{#1}}%
+    \advance\hsize-16mm
+    \kern\columnsep
+    \advance\hsize-\columnsep
+  \fi
+  \@ifnextchar[{\@@therpubl}{\@@therpubl[]}}
+\def\@@therpubl[#1]#2#3#4{%
+  \parbox[b][22.48mm][t]{\hsize}{\raggedright
+    \if!#1!\else\textbf{#1}\\\fi
+    \emph{#3}\\
+    #2\\
+    #4}%
+  \egroup
+  \par}
+\def\makeadvertisement{%
+  \if@twocolumn
+    \onecolumn
+    \@tempswatrue
+  \else
+    \@tempswafalse
+  \fi
+  \cleardoublepage
+  \pagestyle{empty}%
+  \thispagestyle{empty}%
+  \label{makeadvertisement}%
+  \@makeadvertisement
+  \if@tempswa\twocolumn\else\break\fi
+  \thispagestyle{empty}%
+  \null}
+\endinput
+%%
+%% End of file `dgruyterx.sty'.

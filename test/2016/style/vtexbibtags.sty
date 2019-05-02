@@ -1,0 +1,70 @@
+%% VTEX bibliografijos taginimo komandos naudojamos ivairiuose
+%% projektuose (paimta is sprbibl). 
+%% TeX programavimas: L. Stonys, VTeX, lstonys@vtex.lt
+%% Startas: 2014-08-13
+%% 2014-09-10 - pajungtas vancouver stilius; ideti hookai: start@bibenv@hook, stop@bibenv@hook
+%% 2015-05-25 - bsupplement (OTRS#114041)
+%% 2015-10-06 - iskeltas puslapiu formavimas vancouver stiliuje i vancouver-pages.sty
+%% 2016-12-06 - \unskip at the end of bibliography environment
+%% 2017-02-09 - new environments added: breport, bthesis, bpatent
+
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{vtexbibtags}[2017/03/28, v1.13,
+                                  additional macros for the bibliography tagging]
+
+\RequirePackage{etoolbox}
+\RequirePackage{vtexurl}
+\ifdefined\jobstart@date@info
+\else
+  \RequirePackage{fileinfo}\getFileInfo
+\fi
+
+%\@ifundefined{href}{\let\href\@secondoftwo}{}
+
+\def\MR@url{http://www.ams.org/mathscinet-getitem?mr=}
+\def\MR#1{\href{\MR@url#1}{MR#1}}
+
+\def\set@bibl@cmd#1{\expandafter\def\csname #1\endcsname##1{{\csname #1@style\endcsname ##1}}}
+
+\def\set@bibl@env#1{%
+  \newenvironment{#1}
+    {%
+      \csname start@bibenv@hook\endcsname
+      \csname start@#1@hook\endcsname
+    }{%
+      \ifnum\jobstart@date@info>20161206\relax
+        \unskip
+      \fi
+      \csname stop@#1@hook\endcsname
+      \csname stop@bibenv@hook\endcsname
+      \nolinebreak
+    }%
+  }
+
+\def\bibl@cmds@I{bvolume,binits,bsnm,bparticle,bsuffix,bdegs,%
+  bsertitle,batitle,bjtitle,bctitle,bbtitle,bauthor,%
+  binstitute,bissue,bnumber,bmonth,bedition,bpublisher,blocation,%
+  bisbn,bfpage,blpage,byear,bcomment,bsupplement,%
+  beditor,bseriesno,bconfname,bconflocation,bconfdate,%
+  oauthor,oinstitute}
+\def\do#1{\set@bibl@cmd{#1}}
+\expandafter\docsvlist\expandafter{\bibl@cmds@I}
+
+\def\bibl@envs{barticle,bchapter,botherref,bbook,breport,bthesis,bpatent}
+\def\do#1{\set@bibl@env{#1}}
+\expandafter\docsvlist\expandafter{\bibl@envs}
+
+\@ifundefined{adsurl}{\let\adsurl\surl}{}
+\@ifundefined{url}{\let\url\surl}{}
+
+\let\endbibitem\relax
+\let\betal@style\relax
+\def\@betal{et al.}
+\def\betal{{\betal@style \@betal}}
+\long\def\OrigBibText#1\endOrigBibText{}
+\ifnum\jobstart@date@info<20170329\relax
+  \let\bptok\@gobble
+\else
+  \def\bptok#1{\ignorespaces}
+\fi
+\endinput

@@ -1,0 +1,456 @@
+\documentclass[11pt]{book}
+\raggedbottom                                  
+
+\usepackage{amsmath,mathtools,amssymb}
+\usepackage[activate={true,nocompatibility},final,tracking=true,factor=1100,stretch=10,shrink=10]{microtype}
+
+\usepackage{mwe}
+\usepackage{graphicx}
+\DeclareGraphicsExtensions{.pdf,.PDF,.png,.PNG,.jpg,.jpeg,.JPG,.JPEG}
+
+\usepackage{color}
+\usepackage{listings}
+\lstset{language=Matlab,%
+    breaklines=true,%
+    morekeywords={matlab2tikz},
+    keywordstyle=\color{blue},%
+    morekeywords=[2]{1}, keywordstyle=[2]{\color{black}},
+    identifierstyle=\color{black},%
+    showstringspaces=false,%without this there will be a symbol in the places where there is a space
+    numbers=left,%
+    numberstyle={\tiny \color{black}},% size of the numbers
+    numbersep=9pt, % this defines how far the numbers are from the text
+    emph=[1]{for,end,break},emphstyle=[1]\color{red}, %some words to emphasise
+}
+
+
+\usepackage{fancyvrb}
+
+\usepackage{etex} %adds more registers
+\usepackage{upquote} %to handle correct tex4ht to html conversion of `
+\newcommand{\authorMe}[0]
+ {\author{\footnotesize \href{mailto:user@comain}{John Doe}}}%
+
+\usepackage[us,12hr]{datetime}
+
+\usepackage{ntheorem}
+\newtheorem{theorem}{Theorem}
+\usepackage[english]{babel}
+\usepackage{blindtext}
+\usepackage{caption}
+
+\usepackage{float}  
+\usepackage{bera}
+\usepackage[T1]{fontenc}
+\usepackage{hyperref}
+
+\usepackage[letterpaper,bindingoffset=0.2in,%
+            left=1.2in,right=1.2in,top=.8in,bottom=.8in,%
+            footskip=.25in]{geometry}
+
+\DeclareMathOperator{\Res}{Res}
+
+\begin{document}   
+
+\begin{description}
+\item[] \href{/index.htm}{home}
+\item[] \href{../index.htm}{up}
+\end{description}
+
+\title{My big title}
+\authorMe
+\date{Spring 2018 \hspace{.2in} \tiny{Compiled on \today\ at \currenttime}}
+\maketitle  
+
+\tableofcontents 
+
+\chapter{Introduction} 
+This is main chapter. Here is a nice image
+
+\includegraphics[width=0.7\textwidth]{example-image}
+
+\section{some math}
+
+\blindtext
+\pagestyle{empty}
+\begin{theorem}[Residue Theorem]
+Let $f$ be analytic in the region $G$ except for the isolated 
+singularities $a_1,a_2,\dots,a_m$. If $\gamma$ is a closed 
+rectifiable curve in $G$ which does not pass through any of the 
+points $a_k$ and if $\gamma\approx 0$ in $G$, then
+\[
+  \frac{1}{2\pi i}\int_\gamma\! f = \sum_{k=1}^m 
+  n(\gamma;a_k)\Res(f;a_k)\,.
+\]
+\end{theorem}
+
+\subsection{this is a subsection}
+
+Here is some code in minipage
+
+\begin{minipage}{0.9\textwidth}
+\begin{lstlisting}[basicstyle=\footnotesize]
+%check if we converged or not
+if k>opt.MAX_ITER || gradientNormTol(k)<=opt.gradientNormTol ...
+|| (k>1 && levelSets(k)>levelSets(k-1))% check for getting worst
+   keepRunning = false;
+else
+  ....
+end
+\end{lstlisting}
+\end{minipage}
+
+Here is example using listings
+
+\begin{lstlisting}
+%Evaluate J(u) at u
+function f = objectiveFunc(u)
+ u=u(:);
+ N = size(u,1);
+ f = 0;
+ for i = 1:N-1
+     f  = f + 100*(u(i+1)-u(i)^2)^2 + (1-u(i))^2;
+ end
+end
+\end{lstlisting}
+
+
+\subsubsection{This is subsubsection with images}
+
+These two images should be side by side
+\begin{figure}[H]
+\centering
+\begin{minipage}{0.48\textwidth}
+\centering
+\captionsetup{width=.8\textwidth}
+\includegraphics[width=1\textwidth]{example-image}
+\caption{Contour $J(u)$}
+\end{minipage}
+\hfill\begin{minipage}{0.48\textwidth}
+\centering
+\captionsetup{width=.8\textwidth}
+\includegraphics[width=1\textwidth]{example-image}
+\caption{Zooming on $J(u)$}
+\end{minipage}
+\end{figure}
+
+\chapter{This is a new chapter}
+Here is some verbatim
+
+\begin{Verbatim}
+K>> gradientNormTol(end-6:end)
+....
+          16.1440020280613
+           17.487837406306
+           16.092991548592
+          17.4442963174089
+\end{Verbatim}
+
+\section{This is a section for more math}
+
+\subsection{problem 1}
+\underline{problem} Transform the following problem or system to set of first
+order ODE $t^{2}x^{\prime\prime}+tx^{\prime}+\left(  t^{2}-1\right)  x=0$
+
+\underline{solution} Since this is second order ODE, we need two state
+variables, say $x_{1},x$
+
+Let $x_{1}=x,x_{2}=x^{\prime}$, hence%
+\[
+\left.
+\begin{array}
+[c]{c}%
+x_{1}=x\\
+x_{2}=x^{\prime}%
+\end{array}
+\right\}  \overset{\text{take derivative}}{\longrightarrow}\left.
+\begin{array}
+[c]{c}%
+x_{1}^{\prime}=x^{\prime}\\
+x_{2}^{\prime}=x^{\prime\prime}%
+\end{array}
+\right\}  \overset{\text{replace RHS}}{\longrightarrow}%
+\begin{array}
+[c]{c}%
+x_{1}^{\prime}=x_{2}\\
+x_{2}^{\prime}=-\frac{x^{\prime}}{t}-\frac{\left(  t^{2}-1\right)  x}%
+{t}=-\frac{x_{2}}{t}-\frac{\left(  t^{2}-1\right)  x_{1}}{t}%
+\end{array}
+\]
+Hence the two first order ODE's are (now coupled)%
+\begin{align*}
+x_{1}^{\prime}  &  =x_{2}\\
+x_{2}^{\prime}  &  =-\frac{x_{2}}{t}-\frac{\left(  t^{2}-1\right)  x_{1}}{t}%
+\end{align*}
+The matrix form of the above is%
+\begin{align*}
+\mathbf{x}^{\prime}  &  =A\mathbf{x}\\%
+\begin{pmatrix}
+x_{1}^{\prime}\\
+x_{2}^{\prime}%
+\end{pmatrix}
+&  =%
+\begin{pmatrix}
+0 & 1\\
+-\frac{t^{2}-1}{t} & -\frac{1}{t}%
+\end{pmatrix}%
+\begin{pmatrix}
+x_{1}\\
+x_{2}%
+\end{pmatrix}
+\end{align*}
+
+\subsection{Example on page 500, textbook (Edwards\&Penny, 3rd edition)}
+
+\underline{problem} This problem was solved in textbook using matrix
+exponential. Here is solved using the fundamental matrix only. Use the method
+of variation of parameters to solve $\mathbf{x}^{\prime}=A\mathbf{x}%
++\mathbf{f}\left(  t\right)  $.%
+\begin{align*}
+A &  =%
+\begin{pmatrix}
+4 & 2\\
+3 & -1
+\end{pmatrix}
+\\
+\bar{f}\left(  t\right)   &  =%
+\begin{pmatrix}
+-15\\
+4
+\end{pmatrix}
+te^{-2t}\\
+\bar{x}\left(  0\right)   &  =%
+\begin{pmatrix}
+7\\
+3
+\end{pmatrix}
+\end{align*}
+
+
+\underline{Solution}
+
+The homogeneous solution was found in the book as%
+
+\[
+\bar{x}_{h}=c_{1}%
+\begin{pmatrix}
+1\\
+-2
+\end{pmatrix}
+e^{-2t}+c_{2}%
+\begin{pmatrix}
+2\\
+1
+\end{pmatrix}
+e^{5t}%
+\]
+Following scalar case, the guess would be $\bar{x}_{p}=\left(  \bar{b}+\bar
+{a}t\right)  e^{-2t}$ but since $e^{-2t}$ is in the homogeneous, we have to
+adjust to be $\bar{x}_{p}=\left(  \bar{b}t+\bar{a}t^{2}\right)  e^{-2t}%
++\bar{c}e^{5t}$. Notice we had to add $\bar{c}e^{5t}$, else it will not work
+if we just guessed $\bar{x}_{p}=\left(  \bar{b}t+\bar{a}t^{2}\right)
+e^{-2t}\,$\ based on what we would do in scalar case, we will find we get
+$\bar{a}=\bar{b}=0$. This seems to be a trial and error stage and one just
+have to try to find out. This is why undermined coefficients for systems is
+not as easy to use as with scalar case. Hence
+\[
+\bar{x}_{p}=\left(  \bar{b}t+\bar{a}t^{2}\right)  e^{-2t}+\bar{c}e^{5t}%
+\]
+Now we plug-in this back into the ODE\ and solve for $\bar{a},\bar{b},\bar{c}%
+$. But an easier method is to use Variation of parameters. The fundamental
+matrix is%
+\begin{align*}
+\Phi & =%
+\begin{pmatrix}
+\bar{x}_{1} & \bar{x}_{2}%
+\end{pmatrix}
+\\
+& =%
+\begin{pmatrix}
+e^{-2t} & 2e^{5t}\\
+-2e^{-2t} & e^{5t}%
+\end{pmatrix}
+\end{align*}
+And
+\[
+\Phi^{-1}=\frac{%
+\begin{pmatrix}
+e^{5t} & 2e^{-2t}\\
+-2e^{5t} & e^{-2t}%
+\end{pmatrix}
+^{T}}{\left\vert \Phi\right\vert }=\frac{%
+\begin{pmatrix}
+e^{5t} & -2e^{5t}\\
+2e^{-2t} & e^{-2t}%
+\end{pmatrix}
+}{e^{3t}+4e^{3t}}=\frac{1}{5}%
+\begin{pmatrix}
+e^{2t} & -2e^{2t}\\
+2e^{-5t} & e^{-5t}%
+\end{pmatrix}
+\]
+Hence using
+\begin{align*}
+\bar{x}_{p}  & =\Phi\int\Phi^{-1}\bar{f}\left(  t\right)  dt\\
+& =\frac{1}{5}\Phi\int%
+\begin{pmatrix}
+e^{2t} & -2e^{2t}\\
+2e^{-5t} & e^{-5t}%
+\end{pmatrix}%
+\begin{pmatrix}
+-15te^{-2t}\\
+4te^{-2t}%
+\end{pmatrix}
+dt\\
+& =\frac{1}{5}\Phi\int%
+\begin{pmatrix}
+-23t\\
+-26te^{-7t}%
+\end{pmatrix}
+dt
+\end{align*}
+The integral of  $\allowbreak\int-23tdt=\frac{-23}{2}t^{2}$ and $\int%
+-26te^{-7t}dt=\allowbreak\frac{26}{49}e^{-7t}\left(  7t+1\right)  $ (using
+integration by parts) hence the above simplifies to%
+\begin{align*}
+\bar{x}_{p}  & =\Phi%
+\begin{pmatrix}
+\frac{-23}{10}t^{2}\\
+\frac{26}{245}e^{-7t}+\frac{26}{35}te^{-7t}%
+\end{pmatrix}
+\\
+& =%
+\begin{pmatrix}
+e^{-2t} & 2e^{5t}\\
+-2e^{-2t} & e^{5t}%
+\end{pmatrix}%
+\begin{pmatrix}
+\frac{-23}{10}t^{2}\\
+\frac{26}{245}e^{-7t}+\frac{26}{35}te^{-7t}%
+\end{pmatrix}
+\\
+& =%
+\begin{pmatrix}
+\frac{52}{245}e^{-2t}+\frac{52}{35}te^{-2t}-\frac{23}{10}t^{2}e^{-2t}\\
+\frac{26}{245}e^{-2t}+\frac{26}{35}te^{-2t}+\frac{23}{5}t^{2}e^{-2t}%
+\end{pmatrix}
+\\
+& =%
+\begin{pmatrix}
+\frac{1}{490}e^{-2t}\left(  -1127t^{2}+728t+104\right)  \\
+\frac{1}{245}e^{-2t}\left(  1127t^{2}+182t+26\right)
+\end{pmatrix}
+\end{align*}
+Hence the complete solution is%
+\begin{align*}
+\bar{x}  & =\bar{x}_{h}+\bar{x}_{p}\\
+& =c_{1}%
+\begin{pmatrix}
+1\\
+-2
+\end{pmatrix}
+e^{-2t}+c_{2}%
+\begin{pmatrix}
+2\\
+1
+\end{pmatrix}
+e^{5t}+%
+\begin{pmatrix}
+\frac{1}{490}e^{-2t}\left(  -1127t^{2}+728t+104\right)  \\
+\frac{1}{245}e^{-2t}\left(  1127t^{2}+182t+26\right)
+\end{pmatrix}
+\end{align*}
+To find the constants, we apply initial conditions. At $t=0$%
+\begin{align*}%
+\begin{pmatrix}
+7\\
+3
+\end{pmatrix}
+& =c_{1}%
+\begin{pmatrix}
+1\\
+-2
+\end{pmatrix}
++c_{2}%
+\begin{pmatrix}
+2\\
+1
+\end{pmatrix}
++%
+\begin{pmatrix}
+\frac{52}{245}\\
+\frac{26}{245}%
+\end{pmatrix}
+\\
+c_{1}%
+\begin{pmatrix}
+1\\
+-2
+\end{pmatrix}
++c_{2}%
+\begin{pmatrix}
+2\\
+1
+\end{pmatrix}
+& =%
+\begin{pmatrix}
+7\\
+3
+\end{pmatrix}
+-%
+\begin{pmatrix}
+\frac{52}{245}\\
+\frac{26}{245}%
+\end{pmatrix}
+\\%
+\begin{pmatrix}
+1 & 2\\
+-2 & 1
+\end{pmatrix}%
+\begin{pmatrix}
+c_{1}\\
+c_{2}%
+\end{pmatrix}
+& =%
+\begin{pmatrix}
+\frac{1663}{245}\\
+\frac{709}{245}%
+\end{pmatrix}
+\\%
+\begin{pmatrix}
+1 & 2\\
+0 & 5
+\end{pmatrix}%
+\begin{pmatrix}
+c_{1}\\
+c_{2}%
+\end{pmatrix}
+& =%
+\begin{pmatrix}
+\frac{1663}{245}\\
+\frac{807}{49}%
+\end{pmatrix}
+\end{align*}
+Hence $5c_{2}=\frac{807}{49}$ or $c_{2}=\frac{807}{245}$ and $c_{1}%
++2c_{2}=\frac{1663}{245}$, hence $c_{1}=\frac{1663}{245}-2\left(  \frac
+{807}{245}\right)  =\frac{1}{5}$. Therefore the solution becomes%
+\[
+\bar{x}=\frac{1}{5}%
+\begin{pmatrix}
+1\\
+-2
+\end{pmatrix}
+e^{-2t}+\frac{807}{245}%
+\begin{pmatrix}
+2\\
+1
+\end{pmatrix}
+e^{5t}+%
+\begin{pmatrix}
+\frac{1}{490}e^{-2t}\left(  -1127t^{2}+728t+104\right)  \\
+\frac{1}{245}e^{-2t}\left(  1127t^{2}+182t+26\right)
+\end{pmatrix}
+\]
+
+\end{document}
+

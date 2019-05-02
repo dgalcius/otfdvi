@@ -4,7 +4,7 @@ default: 01.pdf
 
 ps: 01.ps 02.ps
 
-%.dvi:  %.tex
+%.dvi:  %.tex 
 	dvilualatex $*
 
 %.pdf:  %.dvi

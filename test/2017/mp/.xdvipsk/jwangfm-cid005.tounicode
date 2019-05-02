@@ -1,0 +1,82 @@
+/CIDInit /ProcSet findresource begin
+12 dict begin
+begincmap
+/CMapName /jwangfm-cid005 def
+/CMapType 2 def
+/CIDSystemInfo <<
+  /Registry (TeX)
+  /Ordering (GPRWJLYZ+005)
+  /Supplement 0
+>> def
+1 begincodespacerange
+<0000> <FFFF>
+endcodespacerange
+48 beginbfchar
+<0001> <0041>
+<0025> <0042>
+<002C> <0043>
+<0036> <0044>
+<0046> <0045>
+<0067> <0046>
+<006A> <0047>
+<0076> <0048>
+<0080> <0049>
+<0094> <004A>
+<009E> <004C>
+<00AC> <004D>
+<00B1> <004E>
+<00C0> <004F>
+<00EA> <0050>
+<00F1> <0052>
+<00FD> <0053>
+<010A> <0054>
+<013A> <0056>
+<0140> <0057>
+<0186> <0061>
+<01AD> <0062>
+<01B7> <0063>
+<01B9> <010D>
+<01C3> <0064>
+<01D8> <0065>
+<0204> <0066>
+<0207> <0067>
+<021A> <0068>
+<022A> <0069>
+<0240> <006A>
+<0248> <006B>
+<0251> <006C>
+<0269> <006D>
+<0271> <006E>
+<0282> <006F>
+<02B3> <0070>
+<02B9> <0071>
+<02BE> <0072>
+<02D2> <0073>
+<02E5> <0074>
+<02FA> <0075>
+<031D> <0076>
+<0323> <0077>
+<032D> <0078>
+<0330> <0079>
+<0340> <007A>
+<0358> <00660069>
+endbfchar
+2 beginbfrange
+<06B1> <06B5> <0030>
+<06B7> <06B9> <0036>
+endbfrange
+9 beginbfchar
+<072A> <002C>
+<073F> <002E>
+<0749> <002F>
+<075A> <005B>
+<075B> <005D>
+<0766> <0028>
+<0767> <0029>
+<0771> <002D>
+<0840> <007C>
+endbfchar
+endcmap
+CMapName currentdict /CMap defineresource pop
+end
+end

@@ -1,0 +1,134 @@
+%% book-aux-toc.sty
+%% Eimantas Gumbakis, eimantas.gumbakis@vtex.lt 
+%% Start date: 2016-09-16
+%%
+\NeedsTeXFormat{LaTeX2e}
+\def\@version{2017/07/13 v0.2.1}
+\ProvidesPackage{book-aux-toc}
+  [\@version\space Read aux/toc files of whole book]
+
+\edef\@bookaux{\book@code.book.aux}
+
+\newif\if@main@aux@loaded \global\@main@aux@loadedfalse
+\newif\if@start@reading@auxdata \global\@start@reading@auxdatafalse
+\newif\if@stop@reading@auxdata \global\@stop@reading@auxdatafalse
+
+%% load before main aux file is read
+\AtEndPreamble{%
+  \IfFileExists{\@bookaux}
+    {%
+      \begingroup
+        \makeatletter
+        \@input{\@bookaux}%
+      \endgroup
+    }{}%
+  }
+
+%% load after main aux file is read 
+\AtBeginDocument{%
+  \global\@main@aux@loadedtrue
+  \IfFileExists{\@bookaux}
+    {%
+      \begingroup
+        \makeatletter
+        \@input{\@bookaux}%
+      \endgroup
+    }{}%
+  }
+
+\edef\@jobname{\lowercase{\def\noexpand\@jobname{\jobname}}}\@jobname
+
+\RequirePackage{environ}
+\NewEnviron{dviauxdata}{\BODY}
+\NewEnviron{xmlauxdata}{}
+\NewEnviron{partauxdata}[1]{%
+  \edef\@det@jobname{\expandafter\detokenize\expandafter{\@jobname}}%
+  \edef\@det@partauxdata@jobname{\detokenize{#1}}%
+  \if@main@aux@loaded
+    \if@start@reading@auxdata
+      \BODY
+    \else
+      \ifx\@det@jobname\@det@partauxdata@jobname
+        \global\@start@reading@auxdatatrue
+      \fi
+    \fi    
+  \else
+    \if@stop@reading@auxdata
+    \else
+      \ifx\@det@jobname\@det@partauxdata@jobname
+        \global\@stop@reading@auxdatatrue
+      \else
+        \BODY
+      \fi
+    \fi    
+  \fi
+  }
+
+% TOC
+\edef\@booktoc{\book@code.book.toc}
+\NewEnviron{dvitocdata}{}
+\NewEnviron{dvilofdata}{}
+\NewEnviron{dvilotdata}{}
+\NewEnviron{xmltocdata}{}
+\NewEnviron{xmllofdata}{}
+\NewEnviron{xmllotdata}{}
+
+\def\inserttoc{%
+  \@ifnextchar[{\@inserttoc}{\@inserttoc[]}%
+  }
+\def\@inserttoc[#1]#2{%
+  \def\@argii{#2}%
+  \def\toc@arg{toc}%
+  \def\lof@arg{lof}%
+  \def\lot@arg{lot}%
+  \ifx\@argii\toc@arg
+    \def\default@toc@levels{part,chapter,section,subsection,subsubsection}%
+  \fi
+  \ifx\@argii\lof@arg
+    \def\default@toc@levels{figure}%
+  \fi
+  \ifx\@argii\lot@arg
+    \def\default@toc@levels{table}%
+  \fi
+  \def\@argi{#1}%
+  \ifx\@argi\@empty
+    \global\let\desired@toc@levels\default@toc@levels
+  \else
+    \gdef\desired@toc@levels{#1}%
+  \fi
+  \def\do##1{\set@toc@cmd{##1}}%
+  \expandafter\docsvlist\expandafter{\desired@toc@levels}%
+  % Writing to aux in case contentsline data should be filtered by external script (bookauxtoc)
+  %\protect\protected@write\@auxout{}{\string\global\string\def\string\bookauxtoc@toclevels{#1}}%
+  \ifx\@argii\toc@arg
+    \RenewEnviron{dvitocdata}{\BODY}%
+  \fi
+  \ifx\@argii\lof@arg
+    \RenewEnviron{dvilofdata}{\BODY}%
+  \fi
+  \ifx\@argii\lot@arg
+    \RenewEnviron{dvilotdata}{\BODY}%
+  \fi
+  \IfFileExists{\@booktoc}
+    {%
+      \makeatletter
+      \@input{\@booktoc}%
+      \makeatother
+    }
+    {}%
+  }
+
+\def\set@toc@cmd#1{%
+  \expandafter\gdef\csname toc@cmd@#1\endcsname{1}%
+  }
+
+\let\old@contentsline\contentsline
+\def\contentsline#1#2#3#4{%
+  \def\@argi{#1}%
+  \expandafter\ifx\csname toc@cmd@\@argi\endcsname\relax
+  \else
+    \old@contentsline{#1}{#2}{#3}{#4}%
+  \fi
+  }
+
+\endinput

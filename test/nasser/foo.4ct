@@ -1,0 +1,14 @@
+\expandafter\ifx\csname doTocEntry\endcsname\relax \expandafter\endinput\fi 
+\doTocEntry\toclikechapter{}{\csname a:TocLink\endcsname{1}{x1-1000}{QQ2-1-1}{Contents}}{3}\relax 
+\doTocEntry\tocchapter{1}{\csname a:TocLink\endcsname{1}{x1-20001}{QQ2-1-2}{Introduction}}{5}\relax 
+\doTocEntry\tocsection{1.1}{\csname a:TocLink\endcsname{1}{x1-30001.1}{QQ2-1-3}{some math}}{5}\relax 
+\doTocEntry\tocthm{}{\csname a:TocLink\endcsname{1}{x1-3002}{}{{Theorem}{1}{Residue Theorem}}}{5}\relax 
+\doTocEntry\tocsubsection{1.1.1}{\csname a:TocLink\endcsname{1}{x1-40001.1.1}{QQ2-1-4}{this is a subsection}}{6}\relax 
+\doTocEntry\tocsubsubsection{}{\csname a:TocLink\endcsname{1}{x1-50001.1.1}{QQ2-1-5}{This is subsubsection with images}}{6}\relax 
+\doTocEntry\toclof{1.1}{\csname a:TocLink\endcsname{1}{x1-5001r1}{}{\ignorespaces Contour $J(u)$}}{figure}\relax 
+\doTocEntry\toclof{1.2}{\csname a:TocLink\endcsname{1}{x1-5002r2}{}{\ignorespaces Zooming on $J(u)$}}{figure}\relax 
+\doTocEntry\tocchapter{2}{\csname a:TocLink\endcsname{1}{x1-60002}{QQ2-1-8}{This is a new chapter}}{11}\relax 
+\doTocEntry\tocsection{2.1}{\csname a:TocLink\endcsname{1}{x1-70002.1}{QQ2-1-9}{This is a section for more math}}{11}\relax 
+\doTocEntry\tocsubsection{2.1.1}{\csname a:TocLink\endcsname{1}{x1-80002.1.1}{QQ2-1-10}{problem 1}}{11}\relax 
+\doTocEntry\tocsubsection{2.1.2}{\csname a:TocLink\endcsname{1}{x1-90002.1.2}{QQ2-1-11}{Example on page 500, textbook (Edwards\&Penny, 3rd edition)}}{12}\relax 
+\par 

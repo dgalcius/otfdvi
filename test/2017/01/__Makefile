@@ -1,0 +1,115 @@
+SHELL:=/usr/bin/env bash
+fonts:= font17  font15  font16 
+otffonts:= lmroman10-italic.otf  lmroman10-regular.otf  lmroman10-bold.otf 
+
+#export T1FONTS=./
+#export TTFFONTS=./ 
+
+
+lmroman10-italic.otf:=/usr/local/texlive/2016/texmf-dist/fonts/opentype/public/lm/lmroman10-italic.otf
+lmroman10-regular.otf:=/usr/local/texlive/2016/texmf-dist/fonts/opentype/public/lm/lmroman10-regular.otf
+lmroman10-bold.otf:=/usr/local/texlive/2016/texmf-dist/fonts/opentype/public/lm/lmroman10-bold.otf
+
+encfiles:=$(fonts:=.enc)
+tfmfiles:=$(fonts:=.tfm)
+htffiles:=$(fonts:=.htf)
+glyphlistfiles:=$(fonts:=.glyphs)
+
+
+output=out.dvi
+baseout:=$(output:.dvi=)
+mapfile:=ttfonts.map
+dvifile:=$(baseout:=.dvi)
+psfile:=$(baseout:=.ps)
+pdffile:=$(baseout:=.pdf)
+
+
+default: fonts
+
+fonts: tfmfonts
+
+tfmfonts: $(tfmfiles)
+
+pdf: $(pdffile)
+	@echo  Output $<
+
+ps: $(psfile)
+	@echo Output $<
+
+$(psfile): export T1FONTS=.otfdvi/;
+$(psfile): export TFMFONTS=.otfdvi/;
+$(psfile): export VFFONTS=.otfdvi/;
+$(psfile): export ENCFONTS=.otfdvi/;
+$(psfile): export TEXPSHEADERS=.otfdvi/;
+$(psfile): export TEXFONTMAPS=.otfdvi/;
+$(psfile): $(dvifile)
+	dvips -M1 -j1 -u +$(mapfile) -o $@ $<
+
+$(pdffile): $(psfile)
+	ps2pdf $<
+
+clean:
+	rm -f $(tfmfiles) $(encfiles) $(htffiles) $(glyphlistfiles)
+	rm -f $(mapfile) *.pfb *.mdata
+	rm -f $(mapfile) *.t42 *.ttf
+	rm -f __Makefile
+
+.FORCE:
+
+dvipng: $(dvifile)
+	dvipng  -T tight $<
+
+dvitype: $(dvifile)
+	dvitype $<
+
+dvisvg: $(dvifile)
+	dvisvgm --fontmap=+$(mapfile) $<
+
+options:=--vendor=UKWN $(verbose) --no-updmap --warn-missing --x-height=font -V --force
+options_ttf = --no-type1 --type42
+
+## font17:
+##   otffontname: lmroman10-italic.otf
+##   glyphlist: font17.glyphs
+##   design_size: 10
+##   scale: 10
+##   script: 
+##   language: DFLT
+##   feature: tlig;
+##   fullpath: /usr/local/texlive/2016/texmf-dist/fonts/opentype/public/lm/lmroman10-italic.otf
+##   type: otf
+font17.tfm: export T1FONTS=./
+font17.tfm: xoptions=$(options) $(options_otf) 
+font17.tfm: $(lmroman10-italic.otf) .FORCE
+	otftotfm --literal-encoding=font17.enc  --name=font17 --map-file=$(mapfile) --glyphlist=font17.glyphs --design-size=10   $(xoptions) $<
+
+## font15:
+##   otffontname: lmroman10-regular.otf
+##   glyphlist: font15.glyphs
+##   design_size: 10
+##   scale: 10
+##   script: 
+##   language: DFLT
+##   feature: tlig;
+##   fullpath: /usr/local/texlive/2016/texmf-dist/fonts/opentype/public/lm/lmroman10-regular.otf
+##   type: otf
+font15.tfm: export T1FONTS=./
+font15.tfm: xoptions=$(options) $(options_otf) 
+font15.tfm: $(lmroman10-regular.otf) .FORCE
+	otftotfm --literal-encoding=font15.enc  --name=font15 --map-file=$(mapfile) --glyphlist=font15.glyphs --design-size=10   $(xoptions) $<
+
+## font16:
+##   otffontname: lmroman10-bold.otf
+##   glyphlist: font16.glyphs
+##   design_size: 10
+##   scale: 10
+##   script: 
+##   language: DFLT
+##   feature: tlig;
+##   fullpath: /usr/local/texlive/2016/texmf-dist/fonts/opentype/public/lm/lmroman10-bold.otf
+##   type: otf
+font16.tfm: export T1FONTS=./
+font16.tfm: xoptions=$(options) $(options_otf) 
+font16.tfm: $(lmroman10-bold.otf) .FORCE
+	otftotfm --literal-encoding=font16.enc  --name=font16 --map-file=$(mapfile) --glyphlist=font16.glyphs --design-size=10   $(xoptions) $<
+
