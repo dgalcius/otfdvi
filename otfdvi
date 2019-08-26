@@ -36,6 +36,8 @@ local dvi      = require("dvi")
 local lustache = require("lustache")
 
 
+
+
 local options = {
    filein = "",
    fileout = "out.dvi",
@@ -57,6 +59,7 @@ getopt = require("alt_getopt")
 
 local function do_print_version()
    print(_name .. " version " .. version .. " licence GNU GPL v2.0")
+   print(kpse_version)
    print("report problems to https://github.com/dgalcius/otfdvi/issues")
    exit()
 end

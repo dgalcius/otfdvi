@@ -27,7 +27,7 @@ else
       os.exit(9)
    end
 end
-print("luaotfload_lookup_cache:\n", luaotfload_lookup_cache)
+-- print("luaotfload_lookup_cache:\n", luaotfload_lookup_cache)
 
 if file.is_readable(luaotfload_lookup_names) then
 else
@@ -38,8 +38,8 @@ else
       os.exit(9)
    end
 end
-print("luaotfload_lookup_names:\n", luaotfload_lookup_names)
-print("texmfvar:\n ", texmfvar)
+-- print("luaotfload_lookup_names:\n", luaotfload_lookup_names)
+-- print("texmfvar:\n ", texmfvar)
 
 local function resolve_path(suffix, vartable)
    local f = vartable[1] .. suffix
@@ -58,7 +58,6 @@ local function resolve_path(suffix, vartable)
 end
 
 local lua_font_dir = "/luatex-cache/generic/fonts/otl/"
-print("++kpse version++: " ..  kpse_version)
 -- TeX Live 2017
 if kpse_version == "kpathsea version 6.2.3" then
    lua_font_dir = "/luatex-cache/generic/fonts/otl/"
