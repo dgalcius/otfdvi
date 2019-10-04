@@ -1,0 +1,393 @@
+19754 open("/etc/ld.so.cache", O_RDONLY|O_CLOEXEC) = 3 <0.000009>
+19754 open("/lib/x86_64-linux-gnu/libc.so.6", O_RDONLY|O_CLOEXEC) = 3 <0.000009>
+19754 open("/usr/lib/locale/locale-archive", O_RDONLY|O_CLOEXEC) = 3 <0.000010>
+19754 open("/etc/ld.so.cache", O_RDONLY|O_CLOEXEC) = 3 <0.000010>
+19754 open("/lib/x86_64-linux-gnu/libtinfo.so.5", O_RDONLY|O_CLOEXEC) = 3 <0.000009>
+19754 open("/lib/x86_64-linux-gnu/libdl.so.2", O_RDONLY|O_CLOEXEC) = 3 <0.000009>
+19754 open("/lib/x86_64-linux-gnu/libc.so.6", O_RDONLY|O_CLOEXEC) = 3 <0.000008>
+19754 open("/dev/tty", O_RDWR|O_NONBLOCK) = 3 <0.000014>
+19754 open("/usr/lib/locale/locale-archive", O_RDONLY|O_CLOEXEC) = 3 <0.000010>
+19754 open("/proc/meminfo", O_RDONLY|O_CLOEXEC) = 3 <0.000014>
+19754 open("/usr/lib/x86_64-linux-gnu/gconv/gconv-modules.cache", O_RDONLY) = 3 <0.000010>
+19754 open("/home/deimi/.ltenv/shims/lualatex", O_RDONLY) = 3 <0.000009>
+19754 open("/etc/ld.so.cache", O_RDONLY|O_CLOEXEC) = 3 <0.000008>
+19754 open("/lib/x86_64-linux-gnu/libc.so.6", O_RDONLY|O_CLOEXEC) = 3 <0.000008>
+19754 open("/usr/lib/locale/locale-archive", O_RDONLY|O_CLOEXEC) = 3 <0.000009>
+19754 open("/etc/ld.so.cache", O_RDONLY|O_CLOEXEC) = 3 <0.000009>
+19754 open("/lib/x86_64-linux-gnu/libtinfo.so.5", O_RDONLY|O_CLOEXEC) = 3 <0.000009>
+19754 open("/lib/x86_64-linux-gnu/libdl.so.2", O_RDONLY|O_CLOEXEC) = 3 <0.000009>
+19754 open("/lib/x86_64-linux-gnu/libc.so.6", O_RDONLY|O_CLOEXEC) = 3 <0.000006>
+19754 open("/dev/tty", O_RDWR|O_NONBLOCK) = 3 <0.000009>
+19754 open("/usr/lib/locale/locale-archive", O_RDONLY|O_CLOEXEC) = 3 <0.000006>
+19754 open("/proc/meminfo", O_RDONLY|O_CLOEXEC) = 3 <0.000010>
+19754 open("/usr/lib/x86_64-linux-gnu/gconv/gconv-modules.cache", O_RDONLY) = 3 <0.000007>
+19754 open("/home/deimi/.ltenv/libexec/ltenv", O_RDONLY) = 3 <0.000007>
+19754 open("/dev/null", O_WRONLY|O_CREAT|O_TRUNC, 0666) = 3 <0.000010>
+19754 open("/home/deimi/.ltenv/libexec/../libexec/rbenv-realpath.dylib", O_RDONLY|O_CLOEXEC) = -1 ENOENT (No such file or directory) <0.000008>
+19754 open("/usr/share/locale/locale.alias", O_RDONLY|O_CLOEXEC) = 3 <0.000008>
+19754 open("/usr/share/locale/en_US/LC_MESSAGES/libc.mo", O_RDONLY) = -1 ENOENT (No such file or directory) <0.000007>
+19754 open("/usr/share/locale/en/LC_MESSAGES/libc.mo", O_RDONLY) = -1 ENOENT (No such file or directory) <0.000007>
+19754 open("/usr/share/locale-langpack/en_US/LC_MESSAGES/libc.mo", O_RDONLY) = -1 ENOENT (No such file or directory) <0.000006>
+19754 open("/usr/share/locale-langpack/en/LC_MESSAGES/libc.mo", O_RDONLY) = -1 ENOENT (No such file or directory) <0.000007>
+19754 open("/usr/share/locale/en_US/LC_MESSAGES/bash.mo", O_RDONLY) = -1 ENOENT (No such file or directory) <0.000006>
+19754 open("/usr/share/locale/en/LC_MESSAGES/bash.mo", O_RDONLY) = -1 ENOENT (No such file or directory) <0.000005>
+19754 open("/usr/share/locale-langpack/en_US/LC_MESSAGES/bash.mo", O_RDONLY) = -1 ENOENT (No such file or directory) <0.000006>
+19754 open("/usr/share/locale-langpack/en/LC_MESSAGES/bash.mo", O_RDONLY) = -1 ENOENT (No such file or directory) <0.000006>
+19757 open("/etc/ld.so.cache", O_RDONLY|O_CLOEXEC) = 3 <0.000006>
+19757 open("/lib/x86_64-linux-gnu/libc.so.6", O_RDONLY|O_CLOEXEC) = 3 <0.000006>
+19757 open("/usr/lib/locale/locale-archive", O_RDONLY|O_CLOEXEC) = 3 <0.000008>
+19757 open("/usr/share/locale/locale.alias", O_RDONLY|O_CLOEXEC) = 3 <0.000011>
+19757 open("/usr/share/locale/en_US/LC_MESSAGES/coreutils.mo", O_RDONLY) = -1 ENOENT (No such file or directory) <0.000010>
+19757 open("/usr/share/locale/en/LC_MESSAGES/coreutils.mo", O_RDONLY) = -1 ENOENT (No such file or directory) <0.000009>
+19757 open("/usr/share/locale-langpack/en_US/LC_MESSAGES/coreutils.mo", O_RDONLY) = -1 ENOENT (No such file or directory) <0.000024>
+19757 open("/usr/share/locale-langpack/en/LC_MESSAGES/coreutils.mo", O_RDONLY) = 3 <0.000009>
+19756 +++ exited with 1 +++
+19757 +++ exited with 0 +++
+19755 --- SIGCHLD {si_signo=SIGCHLD, si_code=CLD_EXITED, si_pid=19756, si_status=1, si_utime=0, si_stime=0} ---
+19755 +++ exited with 0 +++
+19754 --- SIGCHLD {si_signo=SIGCHLD, si_code=CLD_EXITED, si_pid=19755, si_status=0, si_utime=0, si_stime=0} ---
+19760 open("/etc/ld.so.cache", O_RDONLY|O_CLOEXEC) = 3 <0.000007>
+19760 open("/lib/x86_64-linux-gnu/libc.so.6", O_RDONLY|O_CLOEXEC) = 3 <0.000007>
+19760 open("/usr/lib/locale/locale-archive", O_RDONLY|O_CLOEXEC) = 3 <0.000007>
+19760 +++ exited with 1 +++
+19759 --- SIGCHLD {si_signo=SIGCHLD, si_code=CLD_EXITED, si_pid=19760, si_status=1, si_utime=0, si_stime=0} ---
+19759 +++ exited with 0 +++
+19758 --- SIGCHLD {si_signo=SIGCHLD, si_code=CLD_EXITED, si_pid=19759, si_status=0, si_utime=0, si_stime=0} ---
+19758 +++ exited with 0 +++
+19754 --- SIGCHLD {si_signo=SIGCHLD, si_code=CLD_EXITED, si_pid=19758, si_status=0, si_utime=0, si_stime=0} ---
+19761 +++ exited with 0 +++
+19754 --- SIGCHLD {si_signo=SIGCHLD, si_code=CLD_EXITED, si_pid=19761, si_status=0, si_utime=0, si_stime=0} ---
+19754 open("/etc/ld.so.cache", O_RDONLY|O_CLOEXEC) = 3 <0.000006>
+19754 open("/lib/x86_64-linux-gnu/libc.so.6", O_RDONLY|O_CLOEXEC) = 3 <0.000006>
+19754 open("/usr/lib/locale/locale-archive", O_RDONLY|O_CLOEXEC) = 3 <0.000007>
+19754 open("/etc/ld.so.cache", O_RDONLY|O_CLOEXEC) = 3 <0.000007>
+19754 open("/lib/x86_64-linux-gnu/libtinfo.so.5", O_RDONLY|O_CLOEXEC) = 3 <0.000006>
+19754 open("/lib/x86_64-linux-gnu/libdl.so.2", O_RDONLY|O_CLOEXEC) = 3 <0.000006>
+19754 open("/lib/x86_64-linux-gnu/libc.so.6", O_RDONLY|O_CLOEXEC) = 3 <0.000005>
+19754 open("/dev/tty", O_RDWR|O_NONBLOCK) = 3 <0.000014>
+19754 open("/usr/lib/locale/locale-archive", O_RDONLY|O_CLOEXEC) = 3 <0.000008>
+19754 open("/proc/meminfo", O_RDONLY|O_CLOEXEC) = 3 <0.000013>
+19754 open("/usr/lib/x86_64-linux-gnu/gconv/gconv-modules.cache", O_RDONLY) = 3 <0.000010>
+19754 open("/home/deimi/.ltenv/libexec/ltenv-exec", O_RDONLY) = 3 <0.000009>
+19762 open("/etc/ld.so.cache", O_RDONLY|O_CLOEXEC) = 3 <0.000008>
+19762 open("/lib/x86_64-linux-gnu/libc.so.6", O_RDONLY|O_CLOEXEC) = 3 <0.000008>
+19762 open("/usr/lib/locale/locale-archive", O_RDONLY|O_CLOEXEC) = 3 <0.000009>
+19762 open("/etc/ld.so.cache", O_RDONLY|O_CLOEXEC) = 3 <0.000009>
+19762 open("/lib/x86_64-linux-gnu/libtinfo.so.5", O_RDONLY|O_CLOEXEC) = 3 <0.000007>
+19762 open("/lib/x86_64-linux-gnu/libdl.so.2", O_RDONLY|O_CLOEXEC) = 3 <0.000008>
+19762 open("/lib/x86_64-linux-gnu/libc.so.6", O_RDONLY|O_CLOEXEC) = 3 <0.000008>
+19762 open("/dev/tty", O_RDWR|O_NONBLOCK) = 3 <0.000010>
+19762 open("/usr/lib/locale/locale-archive", O_RDONLY|O_CLOEXEC) = 3 <0.000008>
+19762 open("/proc/meminfo", O_RDONLY|O_CLOEXEC) = 3 <0.000012>
+19762 open("/usr/lib/x86_64-linux-gnu/gconv/gconv-modules.cache", O_RDONLY) = 3 <0.000008>
+19762 open("/home/deimi/.ltenv/libexec/ltenv-version-name", O_RDONLY) = 3 <0.000008>
+19763 open("/etc/ld.so.cache", O_RDONLY|O_CLOEXEC) = 3 <0.000009>
+19763 open("/lib/x86_64-linux-gnu/libc.so.6", O_RDONLY|O_CLOEXEC) = 3 <0.000008>
+19763 open("/usr/lib/locale/locale-archive", O_RDONLY|O_CLOEXEC) = 3 <0.000009>
+19763 open("/etc/ld.so.cache", O_RDONLY|O_CLOEXEC) = 3 <0.000009>
+19763 open("/lib/x86_64-linux-gnu/libtinfo.so.5", O_RDONLY|O_CLOEXEC) = 3 <0.000008>
+19763 open("/lib/x86_64-linux-gnu/libdl.so.2", O_RDONLY|O_CLOEXEC) = 3 <0.000008>
+19763 open("/lib/x86_64-linux-gnu/libc.so.6", O_RDONLY|O_CLOEXEC) = 3 <0.000007>
+19763 open("/dev/tty", O_RDWR|O_NONBLOCK) = 3 <0.000010>
+19763 open("/usr/lib/locale/locale-archive", O_RDONLY|O_CLOEXEC) = 3 <0.000008>
+19763 open("/proc/meminfo", O_RDONLY|O_CLOEXEC) = 3 <0.000011>
+19763 open("/usr/lib/x86_64-linux-gnu/gconv/gconv-modules.cache", O_RDONLY) = 3 <0.000008>
+19763 open("/home/deimi/.ltenv/libexec/ltenv-version-file", O_RDONLY) = 3 <0.000008>
+19763 +++ exited with 0 +++
+19762 --- SIGCHLD {si_signo=SIGCHLD, si_code=CLD_EXITED, si_pid=19763, si_status=0, si_utime=0, si_stime=0} ---
+19765 open("/etc/ld.so.cache", O_RDONLY|O_CLOEXEC) = 3 <0.000010>
+19765 open("/lib/x86_64-linux-gnu/libc.so.6", O_RDONLY|O_CLOEXEC) = 3 <0.000008>
+19765 open("/usr/lib/locale/locale-archive", O_RDONLY|O_CLOEXEC) = 3 <0.000010>
+19765 open("/etc/ld.so.cache", O_RDONLY|O_CLOEXEC) = 3 <0.000009>
+19765 open("/lib/x86_64-linux-gnu/libtinfo.so.5", O_RDONLY|O_CLOEXEC) = 3 <0.000009>
+19765 open("/lib/x86_64-linux-gnu/libdl.so.2", O_RDONLY|O_CLOEXEC) = 3 <0.000009>
+19765 open("/lib/x86_64-linux-gnu/libc.so.6", O_RDONLY|O_CLOEXEC) = 3 <0.000009>
+19765 open("/dev/tty", O_RDWR|O_NONBLOCK) = 3 <0.000011>
+19765 open("/usr/lib/locale/locale-archive", O_RDONLY|O_CLOEXEC) = 3 <0.000008>
+19765 open("/proc/meminfo", O_RDONLY|O_CLOEXEC) = 3 <0.000013>
+19765 open("/usr/lib/x86_64-linux-gnu/gconv/gconv-modules.cache", O_RDONLY) = 3 <0.000009>
+19765 open("/home/deimi/.ltenv/libexec/ltenv-version-file-read", O_RDONLY) = 3 <0.000009>
+19766 open("/etc/ld.so.cache", O_RDONLY|O_CLOEXEC) = 3 <0.000009>
+19766 open("/lib/x86_64-linux-gnu/libc.so.6", O_RDONLY|O_CLOEXEC) = 3 <0.000009>
+19766 open("/usr/lib/locale/locale-archive", O_RDONLY|O_CLOEXEC) = 3 <0.000009>
+19766 open("/home/deimi/local/github/otfdvi/test/01_stefan107/.latex-version", O_RDONLY) = 3 <0.000010>
+19766 +++ exited with 0 +++
+19765 --- SIGCHLD {si_signo=SIGCHLD, si_code=CLD_EXITED, si_pid=19766, si_status=0, si_utime=0, si_stime=0} ---
+19765 +++ exited with 0 +++
+19764 --- SIGCHLD {si_signo=SIGCHLD, si_code=CLD_EXITED, si_pid=19765, si_status=0, si_utime=0, si_stime=0} ---
+19764 +++ exited with 0 +++
+19762 --- SIGCHLD {si_signo=SIGCHLD, si_code=CLD_EXITED, si_pid=19764, si_status=0, si_utime=0, si_stime=0} ---
+19762 +++ exited with 0 +++
+19754 --- SIGCHLD {si_signo=SIGCHLD, si_code=CLD_EXITED, si_pid=19762, si_status=0, si_utime=0, si_stime=0} ---
+19768 open("/etc/ld.so.cache", O_RDONLY|O_CLOEXEC) = 3 <0.000011>
+19769 open("/etc/ld.so.cache", O_RDONLY|O_CLOEXEC) = 3 <0.000009>
+19768 open("/lib/x86_64-linux-gnu/libpcre.so.3", O_RDONLY|O_CLOEXEC) = 3 <0.000009>
+19769 open("/usr/lib/x86_64-linux-gnu/libsigsegv.so.2", O_RDONLY|O_CLOEXEC) = 3 <0.000008>
+19768 open("/lib/x86_64-linux-gnu/libdl.so.2", O_RDONLY|O_CLOEXEC <unfinished ...>
+19769 open("/lib/x86_64-linux-gnu/libdl.so.2", O_RDONLY|O_CLOEXEC <unfinished ...>
+19768 <... open resumed> )              = 3 <0.000009>
+19769 <... open resumed> )              = 3 <0.000008>
+19769 open("/lib/x86_64-linux-gnu/libm.so.6", O_RDONLY|O_CLOEXEC <unfinished ...>
+19768 open("/lib/x86_64-linux-gnu/libc.so.6", O_RDONLY|O_CLOEXEC <unfinished ...>
+19769 <... open resumed> )              = 3 <0.000008>
+19768 <... open resumed> )              = 3 <0.000008>
+19769 open("/lib/x86_64-linux-gnu/libc.so.6", O_RDONLY|O_CLOEXEC) = 3 <0.000008>
+19768 open("/usr/lib/locale/locale-archive", O_RDONLY|O_CLOEXEC) = 3 <0.000010>
+19768 open("/usr/lib/x86_64-linux-gnu/gconv/gconv-modules.cache", O_RDONLY) = 3 <0.000010>
+19769 open("/usr/lib/locale/locale-archive", O_RDONLY|O_CLOEXEC) = 3 <0.000010>
+19769 open("/usr/lib/x86_64-linux-gnu/gconv/gconv-modules.cache", O_RDONLY) = 3 <0.000008>
+19769 open("/proc/self/maps", O_RDONLY) = 3 <0.000017>
+19768 +++ exited with 0 +++
+19769 open("/dev/null", O_RDWR)         = 3 <0.000010>
+19769 +++ exited with 0 +++
+19767 --- SIGCHLD {si_signo=SIGCHLD, si_code=CLD_EXITED, si_pid=19768, si_status=0, si_utime=0, si_stime=0} ---
+19767 +++ exited with 0 +++
+19754 --- SIGCHLD {si_signo=SIGCHLD, si_code=CLD_EXITED, si_pid=19767, si_status=0, si_utime=0, si_stime=0} ---
+19771 open("/etc/ld.so.cache", O_RDONLY|O_CLOEXEC) = 3 <0.000011>
+19772 open("/etc/ld.so.cache", O_RDONLY|O_CLOEXEC) = 3 <0.000009>
+19771 open("/lib/x86_64-linux-gnu/libpcre.so.3", O_RDONLY|O_CLOEXEC) = 3 <0.000009>
+19772 open("/usr/lib/x86_64-linux-gnu/libsigsegv.so.2", O_RDONLY|O_CLOEXEC) = 3 <0.000008>
+19772 open("/lib/x86_64-linux-gnu/libdl.so.2", O_RDONLY|O_CLOEXEC <unfinished ...>
+19771 open("/lib/x86_64-linux-gnu/libdl.so.2", O_RDONLY|O_CLOEXEC <unfinished ...>
+19772 <... open resumed> )              = 3 <0.000009>
+19771 <... open resumed> )              = 3 <0.000007>
+19772 open("/lib/x86_64-linux-gnu/libm.so.6", O_RDONLY|O_CLOEXEC <unfinished ...>
+19771 open("/lib/x86_64-linux-gnu/libc.so.6", O_RDONLY|O_CLOEXEC <unfinished ...>
+19772 <... open resumed> )              = 3 <0.000008>
+19771 <... open resumed> )              = 3 <0.000007>
+19772 open("/lib/x86_64-linux-gnu/libc.so.6", O_RDONLY|O_CLOEXEC) = 3 <0.000009>
+19771 open("/usr/lib/locale/locale-archive", O_RDONLY|O_CLOEXEC) = 3 <0.000012>
+19771 open("/usr/lib/x86_64-linux-gnu/gconv/gconv-modules.cache", O_RDONLY) = 3 <0.000011>
+19772 open("/usr/lib/locale/locale-archive", O_RDONLY|O_CLOEXEC) = 3 <0.000008>
+19772 open("/usr/lib/x86_64-linux-gnu/gconv/gconv-modules.cache", O_RDONLY) = 3 <0.000008>
+19772 open("/proc/self/maps", O_RDONLY) = 3 <0.000016>
+19771 +++ exited with 0 +++
+19772 open("/dev/null", O_RDWR)         = 3 <0.000011>
+19772 +++ exited with 0 +++
+19770 --- SIGCHLD {si_signo=SIGCHLD, si_code=CLD_EXITED, si_pid=19771, si_status=0, si_utime=0, si_stime=0} ---
+19770 +++ exited with 0 +++
+19754 --- SIGCHLD {si_signo=SIGCHLD, si_code=CLD_EXITED, si_pid=19770, si_status=0, si_utime=0, si_stime=0} ---
+19754 open("/etc/ld.so.cache", O_RDONLY|O_CLOEXEC) = 3 <0.000009>
+19754 open("/lib/x86_64-linux-gnu/libdl.so.2", O_RDONLY|O_CLOEXEC) = 3 <0.000009>
+19754 open("/lib/x86_64-linux-gnu/libm.so.6", O_RDONLY|O_CLOEXEC) = 3 <0.000009>
+19754 open("/lib/x86_64-linux-gnu/libc.so.6", O_RDONLY|O_CLOEXEC) = 3 <0.000008>
+19754 open("/usr/lib/locale/locale-archive", O_RDONLY|O_CLOEXEC) = 3 <0.000010>
+19754 open("/etc/ld.so.cache", O_RDONLY|O_CLOEXEC) = 3 <0.000009>
+19754 open("/lib/x86_64-linux-gnu/tls/x86_64/libc.so", O_RDONLY|O_CLOEXEC) = -1 ENOENT (No such file or directory) <0.000008>
+19754 open("/lib/x86_64-linux-gnu/tls/libc.so", O_RDONLY|O_CLOEXEC) = -1 ENOENT (No such file or directory) <0.000007>
+19754 open("/lib/x86_64-linux-gnu/x86_64/libc.so", O_RDONLY|O_CLOEXEC) = -1 ENOENT (No such file or directory) <0.000007>
+19754 open("/lib/x86_64-linux-gnu/libc.so", O_RDONLY|O_CLOEXEC) = -1 ENOENT (No such file or directory) <0.000007>
+19754 open("/usr/lib/x86_64-linux-gnu/tls/x86_64/libc.so", O_RDONLY|O_CLOEXEC) = -1 ENOENT (No such file or directory) <0.000007>
+19754 open("/usr/lib/x86_64-linux-gnu/tls/libc.so", O_RDONLY|O_CLOEXEC) = -1 ENOENT (No such file or directory) <0.000007>
+19754 open("/usr/lib/x86_64-linux-gnu/x86_64/libc.so", O_RDONLY|O_CLOEXEC) = -1 ENOENT (No such file or directory) <0.000007>
+19754 open("/usr/lib/x86_64-linux-gnu/libc.so", O_RDONLY|O_CLOEXEC) = 3 <0.000009>
+19754 open("/etc/ld.so.cache", O_RDONLY|O_CLOEXEC) = 3 <0.000008>
+19754 open("/lib/x86_64-linux-gnu/libgcc.so", O_RDONLY|O_CLOEXEC) = -1 ENOENT (No such file or directory) <0.000008>
+19754 open("/usr/lib/x86_64-linux-gnu/libgcc.so", O_RDONLY|O_CLOEXEC) = -1 ENOENT (No such file or directory) <0.000007>
+19754 open("/lib/tls/x86_64/libgcc.so", O_RDONLY|O_CLOEXEC) = -1 ENOENT (No such file or directory) <0.000007>
+19754 open("/lib/tls/libgcc.so", O_RDONLY|O_CLOEXEC) = -1 ENOENT (No such file or directory) <0.000007>
+19754 open("/lib/x86_64/libgcc.so", O_RDONLY|O_CLOEXEC) = -1 ENOENT (No such file or directory) <0.000008>
+19754 open("/lib/libgcc.so", O_RDONLY|O_CLOEXEC) = -1 ENOENT (No such file or directory) <0.000007>
+19754 open("/usr/lib/tls/x86_64/libgcc.so", O_RDONLY|O_CLOEXEC) = -1 ENOENT (No such file or directory) <0.000008>
+19754 open("/usr/lib/tls/libgcc.so", O_RDONLY|O_CLOEXEC) = -1 ENOENT (No such file or directory) <0.000007>
+19754 open("/usr/lib/x86_64/libgcc.so", O_RDONLY|O_CLOEXEC) = -1 ENOENT (No such file or directory) <0.000007>
+19754 open("/usr/lib/libgcc.so", O_RDONLY|O_CLOEXEC) = -1 ENOENT (No such file or directory) <0.000007>
+19754 open("/etc/ld.so.cache", O_RDONLY|O_CLOEXEC) = 3 <0.000009>
+19754 open("/usr/lib/x86_64-linux-gnu/libm.so", O_RDONLY|O_CLOEXEC) = 3 <0.000010>
+19754 open("/etc/ld.so.cache", O_RDONLY|O_CLOEXEC) = 3 <0.000008>
+19754 open("/usr/lib/x86_64-linux-gnu/libdl.so", O_RDONLY|O_CLOEXEC) = 3 <0.000009>
+19754 open("/usr/local/texlive/2019/texmf-vtex/web2c/texmf.cnf", O_RDONLY) = 3 <0.000010>
+19754 open("/usr/local/texlive/vtex-dist/ls-R", O_RDONLY) = 3 <0.000008>
+19754 open("/usr/local/texlive/2019/texmf-config/ls-R", O_RDONLY) = 3 <0.000009>
+19754 open("/usr/local/texlive/2019/texmf-vtex/ls-R", O_RDONLY) = 3 <0.000007>
+19754 open("/usr/local/texlive/2019/texmf-dist/ls-R", O_RDONLY) = 3 <0.000007>
+19754 open("/etc/localtime", O_RDONLY|O_CLOEXEC) = 3 <0.000010>
+19754 open("/usr/local/texlive/2019/texmf-vtex/web2c/luatex/lualatex.fmt", O_RDONLY) = 3 <0.000006>
+19754 open("lualatex19754.fls", O_WRONLY|O_CREAT|O_TRUNC, 0666) = 4 <0.000027>
+19754 open("./stefan107.tex", O_RDONLY) = 3 <0.000011>
+19754 open("stefan107.log", O_WRONLY|O_CREAT|O_TRUNC, 0666) = 5 <0.011661>
+19754 open("/usr/local/texlive/2019/texmf-dist/tex/latex/latexconfig/lualatexquotejobname.lua", O_RDONLY) = 6 <0.000007>
+19754 open("/usr/local/texlive/2019/texmf-dist/tex/latex/base/ltluatex.lua", O_RDONLY) = 6 <0.000007>
+19754 open("/usr/local/texlive/2019/texmf-dist/tex/luatex/luaotfload/luaotfload-main.lua", O_RDONLY) = 6 <0.000008>
+19754 open("/usr/local/texlive/2019/texmf-dist/tex/luatex/luaotfload/luaotfload-init.lua", O_RDONLY) = 6 <0.000008>
+19754 open("/usr/local/texlive/2019/texmf-dist/tex/luatex/lualibs/lualibs.lua", O_RDONLY) = 6 <0.000007>
+19754 open("/usr/local/texlive/2019/texmf-dist/tex/luatex/lualibs/lualibs-basic.lua", O_RDONLY) = 6 <0.000006>
+19754 open("/usr/local/texlive/2019/texmf-dist/tex/luatex/lualibs/lualibs-basic-merged.lua", O_RDONLY) = 6 <0.000006>
+19754 open("/usr/local/texlive/2019/texmf-dist/tex/luatex/lualibs/lualibs-compat.lua", O_RDONLY) = 6 <0.000006>
+19754 open("/usr/local/texlive/2019/texmf-dist/tex/luatex/lualibs/lualibs-extended.lua", O_RDONLY) = 6 <0.000006>
+19754 open("/usr/local/texlive/2019/texmf-dist/tex/luatex/lualibs/lualibs-extended-merged.lua", O_RDONLY) = 6 <0.000007>
+19754 open("/usr/local/texlive/2019/texmf-dist/tex/luatex/luaotfload/luaotfload-log.lua", O_RDONLY) = 6 <0.000008>
+19754 open("/usr/local/texlive/2019/texmf-dist/tex/luatex/luaotfload/fontloader-basics-gen.lua", O_RDONLY) = 6 <0.000008>
+19754 open("/home/deimi/.texlive2019/texmf-vtex/m_t_x_t_e_s_t.tmp", O_WRONLY|O_CREAT|O_TRUNC, 0666) = 6 <0.000032>
+19754 open("/usr/local/texlive/2019/texmf-dist/tex/luatex/luaotfload/luaotfload-parsers.lua", O_RDONLY) = 6 <0.000008>
+19754 open("/usr/local/texlive/2019/texmf-dist/tex/luatex/luaotfload/luaotfload-configuration.lua", O_RDONLY) = 6 <0.000007>
+19754 open("/usr/local/texlive/2019/texmf-dist/tex/luatex/luaotfload/luaotfload-status.lua", O_RDONLY) = 6 <0.000008>
+19754 open("/usr/local/texlive/2019/texmf-dist/tex/luatex/luaotfload/fontloader-2019-02-14/lua.lua", O_RDONLY) = -1 ENOENT (No such file or directory) <0.000007>
+19754 open("/usr/local/texlive/2019/texmf-dist/tex/luatex/luaotfload/fontloader-2019-02-14.lua", O_RDONLY) = 6 <0.000008>
+19754 open("/usr/local/texlive/2019/texmf-dist/tex/luatex/luaotfload/luaotfload-loaders.lua", O_RDONLY) = 6 <0.000007>
+19754 open("/usr/local/texlive/2019/texmf-vtex/tex/luatex/luaotfload/luaotfload-database.lua", O_RDONLY) = 6 <0.000007>
+19754 open("/usr/local/texlive/2019/texmf-dist/tex/luatex/luaotfload/luaotfload-colors.lua", O_RDONLY) = 6 <0.000007>
+19754 open("/usr/local/texlive/2019/texmf-dist/tex/luatex/luaotfload/luaotfload-resolvers.lua", O_RDONLY) = 6 <0.000007>
+19754 open("/usr/local/texlive/2019/texmf-dist/tex/luatex/luaotfload/luaotfload-features.lua", O_RDONLY) = 6 <0.000007>
+19754 open("/usr/local/texlive/2019/texmf-dist/tex/luatex/luaotfload/luaotfload-letterspace.lua", O_RDONLY) = 6 <0.000007>
+19754 open("/usr/local/texlive/2019/texmf-dist/tex/luatex/luaotfload/luaotfload-auxiliary.lua", O_RDONLY) = 6 <0.000007>
+19754 open("/usr/local/texlive/vtex-dist/tex/latex/publisher/dgbook/projects/stefan1.cls", O_RDONLY) = 6 <0.000008>
+19754 open("/usr/local/texlive/vtex-dist/tex/latex/publisher/dgbook/projects/stefan1.cls", O_RDONLY) = 6 <0.000006>
+19754 open("stefan107.synctex(busy)", O_WRONLY|O_CREAT|O_TRUNC, 0666) = 7 <0.000029>
+19754 open("/usr/local/texlive/2019/texmf-dist/tex/latex/etoolbox/etoolbox.sty", O_RDONLY) = 8 <0.000007>
+19754 open("/usr/local/texlive/2019/texmf-dist/tex/latex/etoolbox/etoolbox.sty", O_RDONLY) = 8 <0.000006>
+19754 open("/usr/local/texlive/vtex-dist/tex/latex/publisher/dgbook/common/dgbook.cls", O_RDONLY) = 8 <0.000008>
+19754 open("/usr/local/texlive/vtex-dist/tex/latex/publisher/dgbook/common/dgbook.cls", O_RDONLY) = 8 <0.000007>
+19754 open("/usr/local/texlive/2019/texmf-dist/tex/generic/oberdiek/ifpdf.sty", O_RDONLY) = 9 <0.000008>
+19754 open("/usr/local/texlive/2019/texmf-dist/tex/generic/oberdiek/ifpdf.sty", O_RDONLY) = 9 <0.000006>
+19754 open("/usr/local/texlive/vtex-dist/tex/latex/pdfwf/pdfwf-settings.sty", O_RDONLY) = 9 <0.000008>
+19754 open("/usr/local/texlive/vtex-dist/tex/latex/pdfwf/pdfwf-settings.sty", O_RDONLY) = 9 <0.000006>
+19754 open("/usr/local/texlive/vtex-dist/tex/latex/data/specialsout.sty", O_RDONLY) = 10 <0.000007>
+19754 open("/usr/local/texlive/vtex-dist/tex/latex/data/specialsout.sty", O_RDONLY) = 10 <0.000007>
+19754 open("/usr/local/texlive/2019/texmf-dist/tex/generic/iftex/iftex.sty", O_RDONLY) = 11 <0.000041>
+19754 open("/usr/local/texlive/2019/texmf-dist/tex/generic/iftex/iftex.sty", O_RDONLY) = 11 <0.000007>
+19754 open("stefan107.specials", O_WRONLY|O_CREAT|O_TRUNC, 0666) = 11 <0.000035>
+19754 open("/usr/local/texlive/vtex-dist/tex/latex/pdfwf/pdfwf-outputpage.sty", O_RDONLY) = 9 <0.000007>
+19754 open("/usr/local/texlive/vtex-dist/tex/latex/pdfwf/pdfwf-outputpage.sty", O_RDONLY) = 9 <0.000006>
+19754 open("./stefan107.runtime.info", O_RDONLY) = 10 <0.000007>
+19754 open("./stefan107.runtime.info", O_RDONLY) = 10 <0.000006>
+19754 open("/usr/local/texlive/2019/texmf-dist/tex/latex/graphics/color.sty", O_RDONLY) = 10 <0.000007>
+19754 open("/usr/local/texlive/2019/texmf-dist/tex/latex/graphics/color.sty", O_RDONLY) = 10 <0.000006>
+19754 open("/usr/local/texlive/2019/texmf-dist/tex/latex/graphics-cfg/color.cfg", O_RDONLY) = 12 <0.000009>
+19754 open("/usr/local/texlive/2019/texmf-dist/tex/latex/graphics-cfg/color.cfg", O_RDONLY) = 12 <0.000007>
+19754 open("/usr/local/texlive/2019/texmf-dist/tex/latex/graphics-def/luatex.def", O_RDONLY) = 12 <0.000008>
+19754 open("/usr/local/texlive/2019/texmf-dist/tex/latex/graphics-def/luatex.def", O_RDONLY) = 12 <0.000007>
+19754 open("/usr/local/texlive/2019/texmf-dist/fonts/map/fontname/texfonts.map", O_RDONLY) = 10 <0.000008>
+19754 open("/usr/local/texlive/2019/texmf-dist/fonts/tfm/public/cm/cmtt8.tfm", O_RDONLY) = 10 <0.000006>
+19754 open("/usr/local/texlive/vtex-dist/tex/latex/pdfwf/pdfwf-graphics.sty", O_RDONLY) = 9 <0.000007>
+19754 open("/usr/local/texlive/vtex-dist/tex/latex/pdfwf/pdfwf-graphics.sty", O_RDONLY) = 9 <0.000006>
+19754 open("/usr/local/texlive/vtex-dist/tex/latex/graphics/vtexgraphicx.sty", O_RDONLY) = 10 <0.000007>
+19754 open("/usr/local/texlive/vtex-dist/tex/latex/graphics/vtexgraphicx.sty", O_RDONLY) = 10 <0.000007>
+19754 open("/usr/local/texlive/2019/texmf-dist/tex/latex/graphics/graphicx.sty", O_RDONLY) = 12 <0.000008>
+19754 open("/usr/local/texlive/2019/texmf-dist/tex/latex/graphics/graphicx.sty", O_RDONLY) = 12 <0.000007>
+19754 open("/usr/local/texlive/2019/texmf-dist/tex/latex/graphics/keyval.sty", O_RDONLY) = 13 <0.000007>
+19754 open("/usr/local/texlive/2019/texmf-dist/tex/latex/graphics/keyval.sty", O_RDONLY) = 13 <0.000008>
+19754 open("/usr/local/texlive/2019/texmf-dist/tex/latex/graphics/graphics.sty", O_RDONLY) = 13 <0.000007>
+19754 open("/usr/local/texlive/2019/texmf-dist/tex/latex/graphics/graphics.sty", O_RDONLY) = 13 <0.000006>
+19754 open("/usr/local/texlive/2019/texmf-dist/tex/latex/graphics/trig.sty", O_RDONLY) = 14 <0.000007>
+19754 open("/usr/local/texlive/2019/texmf-dist/tex/latex/graphics/trig.sty", O_RDONLY) = 14 <0.000007>
+19754 open("/usr/local/texlive/2019/texmf-dist/tex/latex/graphics-cfg/graphics.cfg", O_RDONLY) = 14 <0.000008>
+19754 open("/usr/local/texlive/2019/texmf-dist/tex/latex/graphics-cfg/graphics.cfg", O_RDONLY) = 14 <0.000008>
+19754 open("./stefan107.pi", O_RDONLY)  = 12 <0.000008>
+19754 open("./stefan107.pi", O_RDONLY)  = 12 <0.000007>
+19754 open("/usr/local/texlive/vtex-dist/tex/latex/info/fileinfo.sty", O_RDONLY) = 10 <0.000008>
+19754 open("/usr/local/texlive/vtex-dist/tex/latex/info/fileinfo.sty", O_RDONLY) = 10 <0.000007>
+19754 open("./stefan107.tex", O_RDONLY) = 10 <0.000009>
+19754 open("./stefan107.tex", O_RDONLY) = 10 <0.000006>
+19754 open("/usr/local/texlive/vtex-dist/tex/latex/graphics/htpicture.sty", O_RDONLY) = 9 <0.000007>
+19754 open("/usr/local/texlive/vtex-dist/tex/latex/graphics/htpicture.sty", O_RDONLY) = 9 <0.000006>
+19754 open("/usr/local/texlive/2019/texmf-dist/tex/latex/ncctools/afterpackage.sty", O_RDONLY) = 10 <0.000006>
+19754 open("/usr/local/texlive/2019/texmf-dist/tex/latex/ncctools/afterpackage.sty", O_RDONLY) = 10 <0.000005>
+19754 open("/usr/local/texlive/vtex-dist/tex/generic/tex4ht/htmisc.sty", O_RDONLY) = 9 <0.000018>
+19754 open("/usr/local/texlive/vtex-dist/tex/generic/tex4ht/htmisc.sty", O_RDONLY) = 9 <0.000007>
+19754 open("/usr/local/texlive/vtex-dist/tex/latex/userdata/dgbook/stefan1-projdata.cfg", O_RDONLY) = 9 <0.000007>
+19754 open("/usr/local/texlive/vtex-dist/tex/latex/userdata/dgbook/stefan1-projdata.cfg", O_RDONLY) = 9 <0.000007>
+19754 open("/usr/local/texlive/2019/texmf-dist/tex/latex/base/book.cls", O_RDONLY) = 9 <0.000008>
+19754 open("/usr/local/texlive/2019/texmf-dist/tex/latex/base/book.cls", O_RDONLY) = 9 <0.000007>
+19754 open("/usr/local/texlive/2019/texmf-dist/tex/latex/base/bk10.clo", O_RDONLY) = 10 <0.000007>
+19754 open("/usr/local/texlive/2019/texmf-dist/tex/latex/base/bk10.clo", O_RDONLY) = 10 <0.000007>
+19754 open("/home/deimi/.texlive2019/texmf-vtex/luatex-cache/generic/names/luaotfload-names.luc", O_RDONLY) = 12 <0.000010>
+19754 open("/home/deimi/.texlive2019/texmf-vtex/luatex-cache/generic/fonts/otl/lmroman10-regular.luc", O_RDONLY) = 12 <0.000013>
+19754 open("/home/deimi/.texlive2019/texmf-vtex/luatex-cache/generic/fonts/otl/lmroman10-regular.luc", O_RDONLY) = 13 <0.000007>
+19754 open("/usr/local/texlive/vtex-dist/tex/latex/vtex/vtex-ltxext.sty", O_RDONLY) = 9 <0.000007>
+19754 open("/usr/local/texlive/vtex-dist/tex/latex/vtex/vtex-ltxext.sty", O_RDONLY) = 9 <0.000005>
+19754 open("/usr/local/texlive/2019/texmf-dist/tex/generic/luatex85/luatex85.sty", O_RDONLY) = 10 <0.000007>
+19754 open("/usr/local/texlive/2019/texmf-dist/tex/generic/luatex85/luatex85.sty", O_RDONLY) = 10 <0.000007>
+19754 open("/usr/local/texlive/vtex-dist/tex/latex/macro/printead.sty", O_RDONLY) = 9 <0.000006>
+19754 open("/usr/local/texlive/vtex-dist/tex/latex/macro/printead.sty", O_RDONLY) = 9 <0.000006>
+19754 open("/usr/local/texlive/2019/texmf-dist/tex/latex/base/textcomp.sty", O_RDONLY) = 9 <0.000009>
+19754 open("/usr/local/texlive/2019/texmf-dist/tex/latex/base/textcomp.sty", O_RDONLY) = 9 <0.000006>
+19754 open("/usr/local/texlive/2019/texmf-dist/tex/latex/base/ts1enc.def", O_RDONLY) = 10 <0.000007>
+19754 open("/usr/local/texlive/2019/texmf-dist/tex/latex/base/ts1enc.def", O_RDONLY) = 10 <0.000006>
+19754 open("/usr/local/texlive/2019/texmf-dist/tex/latex/amsmath/amsmath.sty", O_RDONLY) = 9 <0.000007>
+19754 open("/usr/local/texlive/2019/texmf-dist/tex/latex/amsmath/amsmath.sty", O_RDONLY) = 9 <0.000006>
+19754 open("/usr/local/texlive/2019/texmf-dist/tex/latex/amsmath/amstext.sty", O_RDONLY) = 10 <0.000006>
+19754 open("/usr/local/texlive/2019/texmf-dist/tex/latex/amsmath/amstext.sty", O_RDONLY) = 10 <0.000006>
+19754 open("/usr/local/texlive/2019/texmf-dist/tex/latex/amsmath/amsgen.sty", O_RDONLY) = 12 <0.000006>
+19754 open("/usr/local/texlive/2019/texmf-dist/tex/latex/amsmath/amsgen.sty", O_RDONLY) = 12 <0.000006>
+19754 open("/usr/local/texlive/2019/texmf-dist/tex/latex/amsmath/amsbsy.sty", O_RDONLY) = 10 <0.000007>
+19754 open("/usr/local/texlive/2019/texmf-dist/tex/latex/amsmath/amsbsy.sty", O_RDONLY) = 10 <0.000006>
+19754 open("/usr/local/texlive/2019/texmf-dist/tex/latex/amsmath/amsopn.sty", O_RDONLY) = 10 <0.000005>
+19754 open("/usr/local/texlive/2019/texmf-dist/tex/latex/amsmath/amsopn.sty", O_RDONLY) = 10 <0.000005>
+19754 open("/usr/local/texlive/2019/texmf-dist/tex/latex/amsfonts/amsfonts.sty", O_RDONLY) = 9 <0.000007>
+19754 open("/usr/local/texlive/2019/texmf-dist/tex/latex/amsfonts/amsfonts.sty", O_RDONLY) = 9 <0.000007>
+19754 open("/usr/local/texlive/vtex-dist/tex/latex/publisher/degruyter/degruyter-minion-ps-fonts.sty", O_RDONLY) = 9 <0.000007>
+19754 open("/usr/local/texlive/vtex-dist/tex/latex/publisher/degruyter/degruyter-minion-ps-fonts.sty", O_RDONLY) = 9 <0.000007>
+19754 open("/usr/local/texlive/2019/texmf-dist/tex/latex/fontspec/fontspec.sty", O_RDONLY) = 10 <0.000007>
+19754 open("/usr/local/texlive/2019/texmf-dist/tex/latex/fontspec/fontspec.sty", O_RDONLY) = 10 <0.000022>
+19754 open("/usr/local/texlive/2019/texmf-dist/tex/latex/l3packages/xparse/xparse.sty", O_RDONLY) = 12 <0.000006>
+19754 open("/usr/local/texlive/2019/texmf-dist/tex/latex/l3packages/xparse/xparse.sty", O_RDONLY) = 12 <0.000005>
+19754 open("/usr/local/texlive/2019/texmf-dist/tex/latex/l3kernel/expl3.sty", O_RDONLY) = 13 <0.000007>
+19754 open("/usr/local/texlive/2019/texmf-dist/tex/latex/l3kernel/expl3.sty", O_RDONLY) = 13 <0.000006>
+19754 open("/usr/local/texlive/2019/texmf-dist/tex/latex/l3kernel/expl3-code.tex", O_RDONLY) = 14 <0.000006>
+19754 open("/usr/local/texlive/2019/texmf-dist/tex/latex/l3kernel/expl3-code.tex", O_RDONLY) = 14 <0.000006>
+19754 open("/usr/local/texlive/2019/texmf-dist/tex/latex/l3kernel/expl3.lua", O_RDONLY) = 15 <0.000007>
+19754 open("/usr/local/texlive/2019/texmf-dist/fonts/tfm/public/cm/cmr10.tfm", O_RDONLY) = 15 <0.000008>
+19754 open("/usr/local/texlive/2019/texmf-dist/fonts/tfm/public/cm/cmr10.tfm", O_RDONLY) = 15 <0.000008>
+19754 open("/usr/local/texlive/2019/texmf-dist/fonts/tfm/public/cm/cmr10.tfm", O_RDONLY) = 15 <0.000007>
+19754 open("/usr/local/texlive/2019/texmf-dist/fonts/tfm/public/cm/cmr10.tfm", O_RDONLY) = 15 <0.000007>
+19754 open("/usr/local/texlive/2019/texmf-dist/fonts/tfm/public/cm/cmr10.tfm", O_RDONLY) = 15 <0.000007>
+19754 open("/usr/local/texlive/2019/texmf-dist/fonts/tfm/public/cm/cmr10.tfm", O_RDONLY) = 15 <0.000008>
+19754 open("/usr/local/texlive/2019/texmf-dist/fonts/tfm/public/cm/cmr10.tfm", O_RDONLY) = 15 <0.000007>
+19754 open("/usr/local/texlive/2019/texmf-dist/fonts/tfm/public/cm/cmr10.tfm", O_RDONLY) = 15 <0.000008>
+19754 open("/usr/local/texlive/2019/texmf-dist/fonts/tfm/public/cm/cmr10.tfm", O_RDONLY) = 15 <0.000007>
+19754 open("/usr/local/texlive/2019/texmf-dist/fonts/tfm/public/cm/cmr10.tfm", O_RDONLY) = 15 <0.000007>
+19754 open("/usr/local/texlive/2019/texmf-dist/tex/generic/unicode-data/UnicodeData.txt", O_RDONLY) = 15 <0.000007>
+19754 open("/usr/local/texlive/2019/texmf-dist/tex/generic/unicode-data/UnicodeData.txt", O_RDONLY) = 15 <0.000005>
+19754 open("/usr/local/texlive/2019/texmf-dist/tex/generic/unicode-data/CaseFolding.txt", O_RDONLY) = 15 <0.000007>
+19754 open("/usr/local/texlive/2019/texmf-dist/tex/generic/unicode-data/CaseFolding.txt", O_RDONLY) = 15 <0.000005>
+19754 open("/usr/local/texlive/2019/texmf-dist/tex/generic/unicode-data/SpecialCasing.txt", O_RDONLY) = 15 <0.000007>
+19754 open("/usr/local/texlive/2019/texmf-dist/tex/generic/unicode-data/SpecialCasing.txt", O_RDONLY) = 15 <0.000005>
+19754 open("/usr/local/texlive/2019/texmf-dist/tex/latex/l3kernel/l3pdfmode.def", O_RDONLY) = 14 <0.000007>
+19754 open("/usr/local/texlive/2019/texmf-dist/tex/latex/l3kernel/l3pdfmode.def", O_RDONLY) = 14 <0.000006>
+19754 open("/usr/local/texlive/2019/texmf-dist/tex/latex/fontspec/fontspec.lua", O_RDONLY) = 12 <0.000007>
+19754 open("/usr/local/texlive/2019/texmf-dist/tex/latex/fontspec/fontspec-luatex.sty", O_RDONLY) = 12 <0.000006>
+19754 open("/usr/local/texlive/2019/texmf-dist/tex/latex/fontspec/fontspec-luatex.sty", O_RDONLY) = 12 <0.000006>
+19754 open("/usr/local/texlive/2019/texmf-dist/tex/latex/base/tuenc.def", O_RDONLY) = 13 <0.000007>
+19754 open("/usr/local/texlive/2019/texmf-dist/tex/latex/base/fontenc.sty", O_RDONLY) = 13 <0.000016>
+19754 open("/usr/local/texlive/2019/texmf-dist/tex/latex/base/fontenc.sty", O_RDONLY) = 13 <0.000005>
+19754 open("/usr/local/texlive/2019/texmf-dist/tex/latex/base/tuenc.def", O_RDONLY) = 14 <0.000006>
+19754 open("/usr/local/texlive/2019/texmf-dist/tex/latex/base/tuenc.def", O_RDONLY) = 14 <0.000006>
+19754 open("/usr/local/texlive/2019/texmf-vtex/tex/latex/fontspec/fontspec.cfg", O_RDONLY) = 13 <0.000007>
+19754 open("/usr/local/texlive/2019/texmf-vtex/tex/latex/fontspec/fontspec.cfg", O_RDONLY) = 13 <0.000007>
+19754 open("/home/deimi/.texlive2019/texmf-vtex/luatex-cache/generic/fonts/otl/lmroman10-bold.luc", O_RDONLY) = 13 <0.000055>
+19754 open("/home/deimi/.texlive2019/texmf-vtex/luatex-cache/generic/fonts/otl/lmroman10-bold.luc", O_RDONLY) = 14 <0.000009>
+19754 open("/home/deimi/.texlive2019/texmf-vtex/luatex-cache/generic/fonts/otl/lmroman10-italic.luc", O_RDONLY) = 13 <0.000008>
+19754 open("/home/deimi/.texlive2019/texmf-vtex/luatex-cache/generic/fonts/otl/lmroman10-italic.luc", O_RDONLY) = 14 <0.000007>
+19754 open("/usr/local/texlive/vtex-dist/fonts/opentype/fontfont/DGMetaSerifScience/DGMetaSerifScience-Regular.otf", O_RDONLY) = 10 <0.000008>
+19754 open("/usr/local/texlive/vtex-dist/tex/luatex/luarealchar/luaotfload-glyphlist.lua", O_RDONLY) = 10 <0.000008>
+19754 open("/home/deimi/.texlive2019/texmf-vtex/luatex-cache/generic/fonts/otl/dgmetaserifscience-regular.lua", O_WRONLY|O_CREAT|O_TRUNC, 0666) = 10 <0.000072>
+19754 open("/home/deimi/.texlive2019/texmf-vtex/luatex-cache/generic/fonts/otl/dgmetaserifscience-regular.lua", O_RDONLY) = 10 <0.000009>
+19754 open("/home/deimi/.texlive2019/texmf-vtex/luatex-cache/generic/fonts/otl/dgmetaserifscience-regular.luc", O_WRONLY|O_CREAT|O_TRUNC, 0666) = 10 <0.000029>
+19754 open("/usr/local/texlive/vtex-dist/fonts/opentype/fontfont/DGMetaSerifScience/DGMetaSerifScience-Bold.otf", O_RDONLY) = 10 <0.000008>
+19754 open("/home/deimi/.texlive2019/texmf-vtex/luatex-cache/generic/fonts/otl/dgmetaserifscience-bold.lua", O_WRONLY|O_CREAT|O_TRUNC, 0666) = 10 <0.000542>
+19754 open("/home/deimi/.texlive2019/texmf-vtex/luatex-cache/generic/fonts/otl/dgmetaserifscience-bold.lua", O_RDONLY) = 10 <0.000010>
+19754 open("/home/deimi/.texlive2019/texmf-vtex/luatex-cache/generic/fonts/otl/dgmetaserifscience-bold.luc", O_WRONLY|O_CREAT|O_TRUNC, 0666) = 10 <0.000069>
+19754 open("/usr/local/texlive/vtex-dist/fonts/opentype/fontfont/DGMetaSerifScience/DGMetaSerifScience-Italic.otf", O_RDONLY) = 10 <0.000007>
+19754 open("/home/deimi/.texlive2019/texmf-vtex/luatex-cache/generic/fonts/otl/dgmetaserifscience-italic.lua", O_WRONLY|O_CREAT|O_TRUNC, 0666) = 10 <0.000072>
+19754 open("/home/deimi/.texlive2019/texmf-vtex/luatex-cache/generic/fonts/otl/dgmetaserifscience-italic.lua", O_RDONLY) = 10 <0.000011>
+19754 open("/home/deimi/.texlive2019/texmf-vtex/luatex-cache/generic/fonts/otl/dgmetaserifscience-italic.luc", O_WRONLY|O_CREAT|O_TRUNC, 0666) = 10 <0.000028>
+19754 open("/usr/local/texlive/vtex-dist/fonts/opentype/fontfont/DGMetaSerifScience/DGMetaSerifScience-BoldItalic.otf", O_RDONLY) = 10 <0.000008>
+19754 open("/home/deimi/.texlive2019/texmf-vtex/luatex-cache/generic/fonts/otl/dgmetaserifscience-bolditalic.lua", O_WRONLY|O_CREAT|O_TRUNC, 0666) = 10 <0.000074>
+19754 open("/home/deimi/.texlive2019/texmf-vtex/luatex-cache/generic/fonts/otl/dgmetaserifscience-bolditalic.lua", O_RDONLY) = 10 <0.000011>
+19754 open("/home/deimi/.texlive2019/texmf-vtex/luatex-cache/generic/fonts/otl/dgmetaserifscience-bolditalic.luc", O_WRONLY|O_CREAT|O_TRUNC, 0666) = 10 <0.000030>
+19754 open("/usr/local/texlive/vtex-dist/fonts/opentype/fontfont/DGMetaScience/DGMetaScience-Regular.otf", O_RDONLY) = 10 <0.000008>
+19754 open("/home/deimi/.texlive2019/texmf-vtex/luatex-cache/generic/fonts/otl/dgmetascience-regular.lua", O_WRONLY|O_CREAT|O_TRUNC, 0666) = 10 <0.000070>
+19754 open("/home/deimi/.texlive2019/texmf-vtex/luatex-cache/generic/fonts/otl/dgmetascience-regular.lua", O_RDONLY) = 10 <0.000010>
+19754 open("/home/deimi/.texlive2019/texmf-vtex/luatex-cache/generic/fonts/otl/dgmetascience-regular.luc", O_WRONLY|O_CREAT|O_TRUNC, 0666) = 10 <0.000059>
+19754 open("/usr/local/texlive/vtex-dist/fonts/opentype/fontfont/DGMetaScience/DGMetaScience-Bold.otf", O_RDONLY) = 10 <0.000007>
+19754 --- SIGINT {si_signo=SIGINT, si_code=SI_USER, si_pid=15504, si_uid=1000} ---
+19754 --- SIGINT {si_signo=SIGINT, si_code=SI_USER, si_pid=15504, si_uid=1000} ---
+19754 --- SIGINT {si_signo=SIGINT, si_code=SI_USER, si_pid=15504, si_uid=1000} ---
+19754 --- SIGINT {si_signo=SIGINT, si_code=SI_USER, si_pid=15504, si_uid=1000} ---
+19754 --- SIGINT {si_signo=SIGINT, si_code=SI_USER, si_pid=15504, si_uid=1000} ---
+19754 --- SIGINT {si_signo=SIGINT, si_code=SI_USER, si_pid=15504, si_uid=1000} ---
+19754 open("/home/deimi/.texlive2019/texmf-vtex/luatex-cache/generic/fonts/otl/dgmetascience-bold.lua", O_WRONLY|O_CREAT|O_TRUNC, 0666) = 10 <0.000067>
+19754 open("/home/deimi/.texlive2019/texmf-vtex/luatex-cache/generic/fonts/otl/dgmetascience-bold.lua", O_RDONLY) = 10 <0.000011>
+19754 open("/home/deimi/.texlive2019/texmf-vtex/luatex-cache/generic/fonts/otl/dgmetascience-bold.luc", O_WRONLY|O_CREAT|O_TRUNC, 0666) = 10 <0.000031>
+19754 +++ exited with 1 +++

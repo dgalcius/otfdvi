@@ -1,0 +1,12 @@
+%% Output of setruntimeinfo.bat.
+\gdef\vtex@info@runtime@maker{pdfwf_luatex} 
+\gdef\vtex@info@runtime@format{2016}
+\gdef\vtex@info@runtime@distribution{vtex}
+\gdef\vtex@info@runtime@cmdline{vtex 2016 pdfwf_luatex print stefan107.tex print -interaction=batchmode}
+\gdef\vtex@info@runtime@publisher{DGBOOK}
+\gdef\vtex@info@runtime@project{STEFAN1}
+\gdef\vtex@info@runtime@manuscript{STEFAN107}
+\gdef\vtex@info@runtime@historyone{}
+\gdef\vtex@info@runtime@pdftype{print}
+\gdef\vtex@info@runtime@outputdir{print}
+\gdef\vtex@info@runtime@historyone{2018.04.09 14:38}

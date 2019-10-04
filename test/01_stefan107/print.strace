@@ -1,0 +1,234 @@
+19729 open("/etc/ld.so.cache", O_RDONLY|O_CLOEXEC) = 3 <0.000010>
+19729 open("/lib/x86_64-linux-gnu/libc.so.6", O_RDONLY|O_CLOEXEC) = 3 <0.000007>
+19729 open("/usr/lib/locale/locale-archive", O_RDONLY|O_CLOEXEC) = 3 <0.000008>
+19729 open("/etc/ld.so.cache", O_RDONLY|O_CLOEXEC) = 3 <0.000007>
+19729 open("/lib/x86_64-linux-gnu/libtinfo.so.5", O_RDONLY|O_CLOEXEC) = 3 <0.000007>
+19729 open("/lib/x86_64-linux-gnu/libdl.so.2", O_RDONLY|O_CLOEXEC) = 3 <0.000007>
+19729 open("/lib/x86_64-linux-gnu/libc.so.6", O_RDONLY|O_CLOEXEC) = 3 <0.000005>
+19729 open("/dev/tty", O_RDWR|O_NONBLOCK) = 3 <0.000010>
+19729 open("/usr/lib/locale/locale-archive", O_RDONLY|O_CLOEXEC) = 3 <0.000007>
+19729 open("/proc/meminfo", O_RDONLY|O_CLOEXEC) = 3 <0.000011>
+19729 open("/usr/lib/x86_64-linux-gnu/gconv/gconv-modules.cache", O_RDONLY) = 3 <0.000007>
+19729 open("/home/deimi/.ltenv/shims/lualatex", O_RDONLY) = 3 <0.000008>
+19729 open("/etc/ld.so.cache", O_RDONLY|O_CLOEXEC) = 3 <0.000007>
+19729 open("/lib/x86_64-linux-gnu/libc.so.6", O_RDONLY|O_CLOEXEC) = 3 <0.000006>
+19729 open("/usr/lib/locale/locale-archive", O_RDONLY|O_CLOEXEC) = 3 <0.000008>
+19729 open("/etc/ld.so.cache", O_RDONLY|O_CLOEXEC) = 3 <0.000006>
+19729 open("/lib/x86_64-linux-gnu/libtinfo.so.5", O_RDONLY|O_CLOEXEC) = 3 <0.000006>
+19729 open("/lib/x86_64-linux-gnu/libdl.so.2", O_RDONLY|O_CLOEXEC) = 3 <0.000006>
+19729 open("/lib/x86_64-linux-gnu/libc.so.6", O_RDONLY|O_CLOEXEC) = 3 <0.000006>
+19729 open("/dev/tty", O_RDWR|O_NONBLOCK) = 3 <0.000008>
+19729 open("/usr/lib/locale/locale-archive", O_RDONLY|O_CLOEXEC) = 3 <0.000006>
+19729 open("/proc/meminfo", O_RDONLY|O_CLOEXEC) = 3 <0.000010>
+19729 open("/usr/lib/x86_64-linux-gnu/gconv/gconv-modules.cache", O_RDONLY) = 3 <0.000007>
+19729 open("/home/deimi/.ltenv/libexec/ltenv", O_RDONLY) = 3 <0.000008>
+19729 open("/dev/null", O_WRONLY|O_CREAT|O_TRUNC, 0666) = 3 <0.000015>
+19729 open("/home/deimi/.ltenv/libexec/../libexec/rbenv-realpath.dylib", O_RDONLY|O_CLOEXEC) = -1 ENOENT (No such file or directory) <0.000010>
+19729 open("/usr/share/locale/locale.alias", O_RDONLY|O_CLOEXEC) = 3 <0.000011>
+19729 open("/usr/share/locale/en_US/LC_MESSAGES/libc.mo", O_RDONLY) = -1 ENOENT (No such file or directory) <0.000009>
+19729 open("/usr/share/locale/en/LC_MESSAGES/libc.mo", O_RDONLY) = -1 ENOENT (No such file or directory) <0.000008>
+19729 open("/usr/share/locale-langpack/en_US/LC_MESSAGES/libc.mo", O_RDONLY) = -1 ENOENT (No such file or directory) <0.000008>
+19729 open("/usr/share/locale-langpack/en/LC_MESSAGES/libc.mo", O_RDONLY) = -1 ENOENT (No such file or directory) <0.000007>
+19729 open("/usr/share/locale/en_US/LC_MESSAGES/bash.mo", O_RDONLY) = -1 ENOENT (No such file or directory) <0.000008>
+19729 open("/usr/share/locale/en/LC_MESSAGES/bash.mo", O_RDONLY) = -1 ENOENT (No such file or directory) <0.000007>
+19729 open("/usr/share/locale-langpack/en_US/LC_MESSAGES/bash.mo", O_RDONLY) = -1 ENOENT (No such file or directory) <0.000008>
+19729 open("/usr/share/locale-langpack/en/LC_MESSAGES/bash.mo", O_RDONLY) = -1 ENOENT (No such file or directory) <0.000008>
+19732 open("/etc/ld.so.cache", O_RDONLY|O_CLOEXEC) = 3 <0.000008>
+19732 open("/lib/x86_64-linux-gnu/libc.so.6", O_RDONLY|O_CLOEXEC) = 3 <0.000008>
+19732 open("/usr/lib/locale/locale-archive", O_RDONLY|O_CLOEXEC) = 3 <0.000009>
+19732 open("/usr/share/locale/locale.alias", O_RDONLY|O_CLOEXEC) = 3 <0.000010>
+19732 open("/usr/share/locale/en_US/LC_MESSAGES/coreutils.mo", O_RDONLY) = -1 ENOENT (No such file or directory) <0.000008>
+19732 open("/usr/share/locale/en/LC_MESSAGES/coreutils.mo", O_RDONLY) = -1 ENOENT (No such file or directory) <0.000008>
+19732 open("/usr/share/locale-langpack/en_US/LC_MESSAGES/coreutils.mo", O_RDONLY) = -1 ENOENT (No such file or directory) <0.000010>
+19732 open("/usr/share/locale-langpack/en/LC_MESSAGES/coreutils.mo", O_RDONLY) = 3 <0.000008>
+19731 +++ exited with 1 +++
+19732 +++ exited with 0 +++
+19730 --- SIGCHLD {si_signo=SIGCHLD, si_code=CLD_EXITED, si_pid=19731, si_status=1, si_utime=0, si_stime=0} ---
+19730 +++ exited with 0 +++
+19729 --- SIGCHLD {si_signo=SIGCHLD, si_code=CLD_EXITED, si_pid=19730, si_status=0, si_utime=0, si_stime=0} ---
+19735 open("/etc/ld.so.cache", O_RDONLY|O_CLOEXEC) = 3 <0.000008>
+19735 open("/lib/x86_64-linux-gnu/libc.so.6", O_RDONLY|O_CLOEXEC) = 3 <0.000008>
+19735 open("/usr/lib/locale/locale-archive", O_RDONLY|O_CLOEXEC) = 3 <0.000009>
+19735 +++ exited with 1 +++
+19734 --- SIGCHLD {si_signo=SIGCHLD, si_code=CLD_EXITED, si_pid=19735, si_status=1, si_utime=0, si_stime=0} ---
+19734 +++ exited with 0 +++
+19733 --- SIGCHLD {si_signo=SIGCHLD, si_code=CLD_EXITED, si_pid=19734, si_status=0, si_utime=0, si_stime=0} ---
+19733 +++ exited with 0 +++
+19729 --- SIGCHLD {si_signo=SIGCHLD, si_code=CLD_EXITED, si_pid=19733, si_status=0, si_utime=0, si_stime=0} ---
+19736 +++ exited with 0 +++
+19729 --- SIGCHLD {si_signo=SIGCHLD, si_code=CLD_EXITED, si_pid=19736, si_status=0, si_utime=0, si_stime=0} ---
+19729 open("/etc/ld.so.cache", O_RDONLY|O_CLOEXEC) = 3 <0.000008>
+19729 open("/lib/x86_64-linux-gnu/libc.so.6", O_RDONLY|O_CLOEXEC) = 3 <0.000008>
+19729 open("/usr/lib/locale/locale-archive", O_RDONLY|O_CLOEXEC) = 3 <0.000010>
+19729 open("/etc/ld.so.cache", O_RDONLY|O_CLOEXEC) = 3 <0.000008>
+19729 open("/lib/x86_64-linux-gnu/libtinfo.so.5", O_RDONLY|O_CLOEXEC) = 3 <0.000008>
+19729 open("/lib/x86_64-linux-gnu/libdl.so.2", O_RDONLY|O_CLOEXEC) = 3 <0.000008>
+19729 open("/lib/x86_64-linux-gnu/libc.so.6", O_RDONLY|O_CLOEXEC) = 3 <0.000008>
+19729 open("/dev/tty", O_RDWR|O_NONBLOCK) = 3 <0.000012>
+19729 open("/usr/lib/locale/locale-archive", O_RDONLY|O_CLOEXEC) = 3 <0.000009>
+19729 open("/proc/meminfo", O_RDONLY|O_CLOEXEC) = 3 <0.000014>
+19729 open("/usr/lib/x86_64-linux-gnu/gconv/gconv-modules.cache", O_RDONLY) = 3 <0.000010>
+19729 open("/home/deimi/.ltenv/libexec/ltenv-exec", O_RDONLY) = 3 <0.000010>
+19737 open("/etc/ld.so.cache", O_RDONLY|O_CLOEXEC) = 3 <0.000010>
+19737 open("/lib/x86_64-linux-gnu/libc.so.6", O_RDONLY|O_CLOEXEC) = 3 <0.000009>
+19737 open("/usr/lib/locale/locale-archive", O_RDONLY|O_CLOEXEC) = 3 <0.000011>
+19737 open("/etc/ld.so.cache", O_RDONLY|O_CLOEXEC) = 3 <0.000009>
+19737 open("/lib/x86_64-linux-gnu/libtinfo.so.5", O_RDONLY|O_CLOEXEC) = 3 <0.000009>
+19737 open("/lib/x86_64-linux-gnu/libdl.so.2", O_RDONLY|O_CLOEXEC) = 3 <0.000010>
+19737 open("/lib/x86_64-linux-gnu/libc.so.6", O_RDONLY|O_CLOEXEC) = 3 <0.000009>
+19737 open("/dev/tty", O_RDWR|O_NONBLOCK) = 3 <0.000012>
+19737 open("/usr/lib/locale/locale-archive", O_RDONLY|O_CLOEXEC) = 3 <0.000009>
+19737 open("/proc/meminfo", O_RDONLY|O_CLOEXEC) = 3 <0.000014>
+19737 open("/usr/lib/x86_64-linux-gnu/gconv/gconv-modules.cache", O_RDONLY) = 3 <0.000010>
+19737 open("/home/deimi/.ltenv/libexec/ltenv-version-name", O_RDONLY) = 3 <0.000011>
+19738 open("/etc/ld.so.cache", O_RDONLY|O_CLOEXEC) = 3 <0.000009>
+19738 open("/lib/x86_64-linux-gnu/libc.so.6", O_RDONLY|O_CLOEXEC) = 3 <0.000009>
+19738 open("/usr/lib/locale/locale-archive", O_RDONLY|O_CLOEXEC) = 3 <0.000011>
+19738 open("/etc/ld.so.cache", O_RDONLY|O_CLOEXEC) = 3 <0.000010>
+19738 open("/lib/x86_64-linux-gnu/libtinfo.so.5", O_RDONLY|O_CLOEXEC) = 3 <0.000010>
+19738 open("/lib/x86_64-linux-gnu/libdl.so.2", O_RDONLY|O_CLOEXEC) = 3 <0.000009>
+19738 open("/lib/x86_64-linux-gnu/libc.so.6", O_RDONLY|O_CLOEXEC) = 3 <0.000009>
+19738 open("/dev/tty", O_RDWR|O_NONBLOCK) = 3 <0.000013>
+19738 open("/usr/lib/locale/locale-archive", O_RDONLY|O_CLOEXEC) = 3 <0.000010>
+19738 open("/proc/meminfo", O_RDONLY|O_CLOEXEC) = 3 <0.000014>
+19738 open("/usr/lib/x86_64-linux-gnu/gconv/gconv-modules.cache", O_RDONLY) = 3 <0.000010>
+19738 open("/home/deimi/.ltenv/libexec/ltenv-version-file", O_RDONLY) = 3 <0.000009>
+19738 +++ exited with 0 +++
+19737 --- SIGCHLD {si_signo=SIGCHLD, si_code=CLD_EXITED, si_pid=19738, si_status=0, si_utime=0, si_stime=0} ---
+19740 open("/etc/ld.so.cache", O_RDONLY|O_CLOEXEC) = 3 <0.000009>
+19740 open("/lib/x86_64-linux-gnu/libc.so.6", O_RDONLY|O_CLOEXEC) = 3 <0.000008>
+19740 open("/usr/lib/locale/locale-archive", O_RDONLY|O_CLOEXEC) = 3 <0.000010>
+19740 open("/etc/ld.so.cache", O_RDONLY|O_CLOEXEC) = 3 <0.000009>
+19740 open("/lib/x86_64-linux-gnu/libtinfo.so.5", O_RDONLY|O_CLOEXEC) = 3 <0.000008>
+19740 open("/lib/x86_64-linux-gnu/libdl.so.2", O_RDONLY|O_CLOEXEC) = 3 <0.000008>
+19740 open("/lib/x86_64-linux-gnu/libc.so.6", O_RDONLY|O_CLOEXEC) = 3 <0.000009>
+19740 open("/dev/tty", O_RDWR|O_NONBLOCK) = 3 <0.000011>
+19740 open("/usr/lib/locale/locale-archive", O_RDONLY|O_CLOEXEC) = 3 <0.000009>
+19740 open("/proc/meminfo", O_RDONLY|O_CLOEXEC) = 3 <0.000012>
+19740 open("/usr/lib/x86_64-linux-gnu/gconv/gconv-modules.cache", O_RDONLY) = 3 <0.000010>
+19740 open("/home/deimi/.ltenv/libexec/ltenv-version-file-read", O_RDONLY) = 3 <0.000010>
+19741 open("/etc/ld.so.cache", O_RDONLY|O_CLOEXEC) = 3 <0.000010>
+19741 open("/lib/x86_64-linux-gnu/libc.so.6", O_RDONLY|O_CLOEXEC) = 3 <0.000009>
+19741 open("/usr/lib/locale/locale-archive", O_RDONLY|O_CLOEXEC) = 3 <0.000009>
+19741 open("/home/deimi/local/github/otfdvi/test/01_stefan107/.latex-version", O_RDONLY) = 3 <0.000011>
+19741 +++ exited with 0 +++
+19740 --- SIGCHLD {si_signo=SIGCHLD, si_code=CLD_EXITED, si_pid=19741, si_status=0, si_utime=0, si_stime=0} ---
+19740 +++ exited with 0 +++
+19739 --- SIGCHLD {si_signo=SIGCHLD, si_code=CLD_EXITED, si_pid=19740, si_status=0, si_utime=0, si_stime=0} ---
+19739 +++ exited with 0 +++
+19737 --- SIGCHLD {si_signo=SIGCHLD, si_code=CLD_EXITED, si_pid=19739, si_status=0, si_utime=0, si_stime=0} ---
+19737 +++ exited with 0 +++
+19729 --- SIGCHLD {si_signo=SIGCHLD, si_code=CLD_EXITED, si_pid=19737, si_status=0, si_utime=0, si_stime=0} ---
+19743 open("/etc/ld.so.cache", O_RDONLY|O_CLOEXEC) = 3 <0.000010>
+19744 open("/etc/ld.so.cache", O_RDONLY|O_CLOEXEC) = 3 <0.000010>
+19743 open("/lib/x86_64-linux-gnu/libpcre.so.3", O_RDONLY|O_CLOEXEC) = 3 <0.000011>
+19744 open("/usr/lib/x86_64-linux-gnu/libsigsegv.so.2", O_RDONLY|O_CLOEXEC) = 3 <0.000009>
+19743 open("/lib/x86_64-linux-gnu/libdl.so.2", O_RDONLY|O_CLOEXEC <unfinished ...>
+19744 open("/lib/x86_64-linux-gnu/libdl.so.2", O_RDONLY|O_CLOEXEC <unfinished ...>
+19743 <... open resumed> )              = 3 <0.000010>
+19744 <... open resumed> )              = 3 <0.000009>
+19744 open("/lib/x86_64-linux-gnu/libm.so.6", O_RDONLY|O_CLOEXEC <unfinished ...>
+19743 open("/lib/x86_64-linux-gnu/libc.so.6", O_RDONLY|O_CLOEXEC <unfinished ...>
+19744 <... open resumed> )              = 3 <0.000009>
+19743 <... open resumed> )              = 3 <0.000008>
+19744 open("/lib/x86_64-linux-gnu/libc.so.6", O_RDONLY|O_CLOEXEC) = 3 <0.000008>
+19743 open("/usr/lib/locale/locale-archive", O_RDONLY|O_CLOEXEC) = 3 <0.000010>
+19743 open("/usr/lib/x86_64-linux-gnu/gconv/gconv-modules.cache", O_RDONLY) = 3 <0.000011>
+19744 open("/usr/lib/locale/locale-archive", O_RDONLY|O_CLOEXEC) = 3 <0.000009>
+19744 open("/usr/lib/x86_64-linux-gnu/gconv/gconv-modules.cache", O_RDONLY) = 3 <0.000010>
+19744 open("/proc/self/maps", O_RDONLY) = 3 <0.000020>
+19743 +++ exited with 0 +++
+19744 open("/dev/null", O_RDWR)         = 3 <0.000012>
+19744 +++ exited with 0 +++
+19742 --- SIGCHLD {si_signo=SIGCHLD, si_code=CLD_EXITED, si_pid=19743, si_status=0, si_utime=0, si_stime=0} ---
+19742 +++ exited with 0 +++
+19729 --- SIGCHLD {si_signo=SIGCHLD, si_code=CLD_EXITED, si_pid=19742, si_status=0, si_utime=0, si_stime=0} ---
+19746 open("/etc/ld.so.cache", O_RDONLY|O_CLOEXEC) = 3 <0.000011>
+19747 open("/etc/ld.so.cache", O_RDONLY|O_CLOEXEC) = 3 <0.000009>
+19746 open("/lib/x86_64-linux-gnu/libpcre.so.3", O_RDONLY|O_CLOEXEC) = 3 <0.000011>
+19747 open("/usr/lib/x86_64-linux-gnu/libsigsegv.so.2", O_RDONLY|O_CLOEXEC) = 3 <0.000009>
+19746 open("/lib/x86_64-linux-gnu/libdl.so.2", O_RDONLY|O_CLOEXEC <unfinished ...>
+19747 open("/lib/x86_64-linux-gnu/libdl.so.2", O_RDONLY|O_CLOEXEC <unfinished ...>
+19746 <... open resumed> )              = 3 <0.000009>
+19747 <... open resumed> )              = 3 <0.000008>
+19747 open("/lib/x86_64-linux-gnu/libm.so.6", O_RDONLY|O_CLOEXEC <unfinished ...>
+19746 open("/lib/x86_64-linux-gnu/libc.so.6", O_RDONLY|O_CLOEXEC <unfinished ...>
+19747 <... open resumed> )              = 3 <0.000009>
+19746 <... open resumed> )              = 3 <0.000008>
+19747 open("/lib/x86_64-linux-gnu/libc.so.6", O_RDONLY|O_CLOEXEC) = 3 <0.000008>
+19746 open("/usr/lib/locale/locale-archive", O_RDONLY|O_CLOEXEC) = 3 <0.000012>
+19747 open("/usr/lib/locale/locale-archive", O_RDONLY|O_CLOEXEC) = 3 <0.000011>
+19747 open("/usr/lib/x86_64-linux-gnu/gconv/gconv-modules.cache", O_RDONLY) = 3 <0.000010>
+19746 open("/usr/lib/x86_64-linux-gnu/gconv/gconv-modules.cache", O_RDONLY) = 3 <0.000011>
+19747 open("/proc/self/maps", O_RDONLY) = 3 <0.000019>
+19746 +++ exited with 0 +++
+19747 open("/dev/null", O_RDWR)         = 3 <0.000012>
+19747 +++ exited with 0 +++
+19745 --- SIGCHLD {si_signo=SIGCHLD, si_code=CLD_EXITED, si_pid=19746, si_status=0, si_utime=0, si_stime=0} ---
+19745 +++ exited with 0 +++
+19729 --- SIGCHLD {si_signo=SIGCHLD, si_code=CLD_EXITED, si_pid=19745, si_status=0, si_utime=0, si_stime=0} ---
+19729 open("/etc/ld.so.cache", O_RDONLY|O_CLOEXEC) = 3 <0.000010>
+19729 open("/lib/x86_64-linux-gnu/libdl.so.2", O_RDONLY|O_CLOEXEC) = 3 <0.000008>
+19729 open("/lib/x86_64-linux-gnu/libm.so.6", O_RDONLY|O_CLOEXEC) = 3 <0.000009>
+19729 open("/lib/x86_64-linux-gnu/libc.so.6", O_RDONLY|O_CLOEXEC) = 3 <0.000010>
+19729 open("/usr/lib/locale/locale-archive", O_RDONLY|O_CLOEXEC) = 3 <0.000010>
+19729 open("/etc/ld.so.cache", O_RDONLY|O_CLOEXEC) = 3 <0.000011>
+19729 open("/lib/x86_64-linux-gnu/tls/x86_64/libc.so", O_RDONLY|O_CLOEXEC) = -1 ENOENT (No such file or directory) <0.000008>
+19729 open("/lib/x86_64-linux-gnu/tls/libc.so", O_RDONLY|O_CLOEXEC) = -1 ENOENT (No such file or directory) <0.000007>
+19729 open("/lib/x86_64-linux-gnu/x86_64/libc.so", O_RDONLY|O_CLOEXEC) = -1 ENOENT (No such file or directory) <0.000007>
+19729 open("/lib/x86_64-linux-gnu/libc.so", O_RDONLY|O_CLOEXEC) = -1 ENOENT (No such file or directory) <0.000008>
+19729 open("/usr/lib/x86_64-linux-gnu/tls/x86_64/libc.so", O_RDONLY|O_CLOEXEC) = -1 ENOENT (No such file or directory) <0.000008>
+19729 open("/usr/lib/x86_64-linux-gnu/tls/libc.so", O_RDONLY|O_CLOEXEC) = -1 ENOENT (No such file or directory) <0.000007>
+19729 open("/usr/lib/x86_64-linux-gnu/x86_64/libc.so", O_RDONLY|O_CLOEXEC) = -1 ENOENT (No such file or directory) <0.000008>
+19729 open("/usr/lib/x86_64-linux-gnu/libc.so", O_RDONLY|O_CLOEXEC) = 3 <0.000009>
+19729 open("/etc/ld.so.cache", O_RDONLY|O_CLOEXEC) = 3 <0.000008>
+19729 open("/lib/x86_64-linux-gnu/libgcc.so", O_RDONLY|O_CLOEXEC) = -1 ENOENT (No such file or directory) <0.000008>
+19729 open("/usr/lib/x86_64-linux-gnu/libgcc.so", O_RDONLY|O_CLOEXEC) = -1 ENOENT (No such file or directory) <0.000007>
+19729 open("/lib/tls/x86_64/libgcc.so", O_RDONLY|O_CLOEXEC) = -1 ENOENT (No such file or directory) <0.000007>
+19729 open("/lib/tls/libgcc.so", O_RDONLY|O_CLOEXEC) = -1 ENOENT (No such file or directory) <0.000007>
+19729 open("/lib/x86_64/libgcc.so", O_RDONLY|O_CLOEXEC) = -1 ENOENT (No such file or directory) <0.000007>
+19729 open("/lib/libgcc.so", O_RDONLY|O_CLOEXEC) = -1 ENOENT (No such file or directory) <0.000007>
+19729 open("/usr/lib/tls/x86_64/libgcc.so", O_RDONLY|O_CLOEXEC) = -1 ENOENT (No such file or directory) <0.000008>
+19729 open("/usr/lib/tls/libgcc.so", O_RDONLY|O_CLOEXEC) = -1 ENOENT (No such file or directory) <0.000007>
+19729 open("/usr/lib/x86_64/libgcc.so", O_RDONLY|O_CLOEXEC) = -1 ENOENT (No such file or directory) <0.000008>
+19729 open("/usr/lib/libgcc.so", O_RDONLY|O_CLOEXEC) = -1 ENOENT (No such file or directory) <0.000008>
+19729 open("/etc/ld.so.cache", O_RDONLY|O_CLOEXEC) = 3 <0.000008>
+19729 open("/usr/lib/x86_64-linux-gnu/libm.so", O_RDONLY|O_CLOEXEC) = 3 <0.000011>
+19729 open("/etc/ld.so.cache", O_RDONLY|O_CLOEXEC) = 3 <0.000009>
+19729 open("/usr/lib/x86_64-linux-gnu/libdl.so", O_RDONLY|O_CLOEXEC) = 3 <0.000010>
+19729 open("/usr/local/texlive/2019/texmf-vtex/web2c/texmf.cnf", O_RDONLY) = 3 <0.000009>
+19729 open("/usr/local/texlive/vtex-dist/ls-R", O_RDONLY) = 3 <0.000009>
+19729 open("/usr/local/texlive/2019/texmf-config/ls-R", O_RDONLY) = 3 <0.000008>
+19729 open("/usr/local/texlive/2019/texmf-vtex/ls-R", O_RDONLY) = 3 <0.000006>
+19729 open("/usr/local/texlive/2019/texmf-dist/ls-R", O_RDONLY) = 3 <0.000007>
+19729 open("/etc/localtime", O_RDONLY|O_CLOEXEC) = 3 <0.000011>
+19729 open("/usr/local/texlive/2019/texmf-vtex/web2c/luatex/lualatex.fmt", O_RDONLY) = 3 <0.000007>
+19729 open("lualatex19729.fls", O_WRONLY|O_CREAT|O_TRUNC, 0666) = 4 <0.000025>
+19729 open("/usr/local/texlive/2019/texmf-dist/tex/latex/tools/x.tex", O_RDONLY) = 3 <0.000016>
+19729 open("x.log", O_WRONLY|O_CREAT|O_TRUNC, 0666) = 5 <0.000030>
+19729 open("/usr/local/texlive/2019/texmf-dist/tex/latex/latexconfig/lualatexquotejobname.lua", O_RDONLY) = 6 <0.000012>
+19729 open("/usr/local/texlive/2019/texmf-dist/tex/latex/base/ltluatex.lua", O_RDONLY) = 6 <0.000007>
+19729 open("/usr/local/texlive/2019/texmf-dist/tex/luatex/luaotfload/luaotfload-main.lua", O_RDONLY) = 6 <0.000007>
+19729 open("/usr/local/texlive/2019/texmf-dist/tex/luatex/luaotfload/luaotfload-init.lua", O_RDONLY) = 6 <0.000006>
+19729 open("/usr/local/texlive/2019/texmf-dist/tex/luatex/lualibs/lualibs.lua", O_RDONLY) = 6 <0.000006>
+19729 open("/usr/local/texlive/2019/texmf-dist/tex/luatex/lualibs/lualibs-basic.lua", O_RDONLY) = 6 <0.000006>
+19729 open("/usr/local/texlive/2019/texmf-dist/tex/luatex/lualibs/lualibs-basic-merged.lua", O_RDONLY) = 6 <0.000006>
+19729 open("/usr/local/texlive/2019/texmf-dist/tex/luatex/lualibs/lualibs-compat.lua", O_RDONLY) = 6 <0.000007>
+19729 open("/usr/local/texlive/2019/texmf-dist/tex/luatex/lualibs/lualibs-extended.lua", O_RDONLY) = 6 <0.000006>
+19729 open("/usr/local/texlive/2019/texmf-dist/tex/luatex/lualibs/lualibs-extended-merged.lua", O_RDONLY) = 6 <0.000006>
+19729 open("/usr/local/texlive/2019/texmf-dist/tex/luatex/luaotfload/luaotfload-log.lua", O_RDONLY) = 6 <0.000007>
+19729 open("/usr/local/texlive/2019/texmf-dist/tex/luatex/luaotfload/fontloader-basics-gen.lua", O_RDONLY) = 6 <0.000007>
+19729 open("/home/deimi/.texlive2019/texmf-vtex/m_t_x_t_e_s_t.tmp", O_WRONLY|O_CREAT|O_TRUNC, 0666) = 6 <0.000033>
+19729 open("/usr/local/texlive/2019/texmf-dist/tex/luatex/luaotfload/luaotfload-parsers.lua", O_RDONLY) = 6 <0.000007>
+19729 open("/usr/local/texlive/2019/texmf-dist/tex/luatex/luaotfload/luaotfload-configuration.lua", O_RDONLY) = 6 <0.000007>
+19729 open("/usr/local/texlive/2019/texmf-dist/tex/luatex/luaotfload/luaotfload-status.lua", O_RDONLY) = 6 <0.000007>
+19729 open("/usr/local/texlive/2019/texmf-dist/tex/luatex/luaotfload/fontloader-2019-02-14/lua.lua", O_RDONLY) = -1 ENOENT (No such file or directory) <0.000008>
+19729 open("/usr/local/texlive/2019/texmf-dist/tex/luatex/luaotfload/fontloader-2019-02-14.lua", O_RDONLY) = 6 <0.000008>
+19729 open("/usr/local/texlive/2019/texmf-dist/tex/luatex/luaotfload/luaotfload-loaders.lua", O_RDONLY) = 6 <0.000007>
+19729 open("/usr/local/texlive/2019/texmf-vtex/tex/luatex/luaotfload/luaotfload-database.lua", O_RDONLY) = 6 <0.000007>
+19729 open("/usr/local/texlive/2019/texmf-dist/tex/luatex/luaotfload/luaotfload-colors.lua", O_RDONLY) = 6 <0.000007>
+19729 open("/usr/local/texlive/2019/texmf-dist/tex/luatex/luaotfload/luaotfload-resolvers.lua", O_RDONLY) = 6 <0.000007>
+19729 open("/usr/local/texlive/2019/texmf-dist/tex/luatex/luaotfload/luaotfload-features.lua", O_RDONLY) = 6 <0.000006>
+19729 open("/usr/local/texlive/2019/texmf-dist/tex/luatex/luaotfload/luaotfload-letterspace.lua", O_RDONLY) = 6 <0.000007>
+19729 open("/usr/local/texlive/2019/texmf-dist/tex/luatex/luaotfload/luaotfload-auxiliary.lua", O_RDONLY) = 6 <0.000013>
+19729 +++ exited with 1 +++
