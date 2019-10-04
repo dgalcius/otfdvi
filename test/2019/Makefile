@@ -1,7 +1,8 @@
 otfdvi:=../../otfdvi
 
+f = 02
 
-defaults: 01.pdf
+default: 02.pdf
 
 %.dvi:  %.tex .FORCE
 	dvilualatex -recorder $*
@@ -37,7 +38,8 @@ clean:
 	rm -f *.aux *.log *.fls *.enc
 	rm -f __Makefile ttfonts.map
 	rm -f *.glyphs
-	rm -f *.tfm
+	rm -f *.tfm *.pdf *.dvi
+
 
 testx:
 #	$(otfdvi) --help --output=123 --fake -n 999 -S lopas - -1 -2 -3

@@ -1,4 +1,0 @@
-#!/usr/bin/env bash
-
-../../otfdvi.lua $1
-make -f __Makefile fonts ps clean
